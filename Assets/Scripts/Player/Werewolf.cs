@@ -68,8 +68,12 @@ namespace ThePackt{  //to be used in every class
 
 
         private void FixedUpdate()
-        {    
-            
+        {
+            if (Mathf.Abs(_rb.velocity.y) == 0)
+            {
+                _isGrounded = true;
+            }
+
             if (_isDashing)
             {
                 UpdateSpriteDirection(_direction);
@@ -116,15 +120,6 @@ namespace ThePackt{  //to be used in every class
                 _sprite.transform.rotation = Quaternion.Euler(0,0,0);     
             }
             _isFacingLeft = !_isFacingLeft;
-        }
-
-
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            Debug.Log(collision.collider.gameObject.name);
-            _isGrounded = true; //Here you are considering every collision, 
-                                //that means that if the player collides with something which is not "terrain" will be considered grounded
         }
 
         #endregion
