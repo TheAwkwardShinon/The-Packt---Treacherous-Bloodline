@@ -28,8 +28,13 @@ public class Enemy : MonoBehaviour
 
         if (_health <= 0)
         {
-            Destroy(gameObject);
+            Die(); 
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
     #endregion

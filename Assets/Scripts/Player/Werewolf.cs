@@ -21,8 +21,10 @@ namespace ThePackt{  //to be used in every class
         [SerializeField] protected float _dashMultiplier;
         [SerializeField] protected float _jumpForce;
         [SerializeField] protected float _powerBaseWerewolfAttack;
+        [SerializeField] protected float _powerBaseHumanAttack;
         [SerializeField] protected float _rangeBaseWerewolfAttack;
         [SerializeField] protected Transform _attackPoint;
+        [SerializeField] protected GameObject _bullet;
         private Vector2 _direction;
         private bool _isFacingLeft = true;
         private bool _isGrounded = true;
@@ -62,7 +64,9 @@ namespace ThePackt{  //to be used in every class
         private void BaseHumanAttack()  //method name always uppercase
         {
             Debug.Log("human attacking");
-            //TODO
+            
+            GameObject blt = Instantiate(_bullet, _attackPoint.position, _attackPoint.rotation);
+            blt.GetComponent<Bullet>().SetAttackPower(_powerBaseHumanAttack);
         }
 
         private void BaseWereWolfAttack()  //method name always uppercase
