@@ -1,13 +1,13 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ThePackt
 {
     /* 
-    * Models the members of the Ayatana's clan
-    */
-    public class Class_Ayatana : Werewolf
+     * Models the members of the Moonsighters' clan
+     */
+    public class Class_Moonsighters : Werewolf
     {
         #region variables
 

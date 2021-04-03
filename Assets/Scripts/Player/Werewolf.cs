@@ -5,9 +5,13 @@ using UnityEngine;
 //code design pattern sample: tell me if u like it or not.
 
 namespace ThePackt{  //to be used in every class
+
+    /* 
+     * Models the all the playable characters
+     */
     public class Werewolf : MonoBehaviour
     {
-        //use it in order to make teh code cleaner
+        //use it in order to make the code cleaner
         #region variables  
         protected Rigidbody2D _rb; // put '_' before every protected or private variable
         protected Animator _anim;
@@ -15,7 +19,7 @@ namespace ThePackt{  //to be used in every class
         private Vector2 _direction;
 
         #endregion
-        
+
 
         #region methods
 
@@ -23,6 +27,9 @@ namespace ThePackt{  //to be used in every class
         #region characterController
 
         /* method description using '/*' */
+        /* 
+         * Implements the standard movement
+         */
         private void Move()  //method name always uppercase
         {
             transform.position += new Vector3(Input.GetAxis("Horizontal"),0,0) * Time.deltaTime * _speed;
