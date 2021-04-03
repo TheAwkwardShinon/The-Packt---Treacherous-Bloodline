@@ -20,6 +20,9 @@ namespace ThePackt{  //to be used in every class
 
         [SerializeField] protected float _dashMultiplier;
         [SerializeField] protected float _jumpForce;
+        [SerializeField] protected float _powerBaseWerewolfAttack;
+        [SerializeField] protected float _rangeBaseWerewolfAttack;
+        [SerializeField] protected Transform _attackPoint;
         private Vector2 _direction;
         private bool _isFacingLeft = true;
         private bool _isGrounded = true;
@@ -65,7 +68,15 @@ namespace ThePackt{  //to be used in every class
         private void BaseWereWolfAttack()  //method name always uppercase
         {
             Debug.Log("werewolf attacking");
-            //TODO
+
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _rangeBaseWerewolfAttack, 1 << LayerMask.NameToLayer("Enemies"));
+            
+            foreach(Collider2D enemy in hitEnemies)
+            {
+                Debug.Log(enemy.gameObject.name + " hit");
+                enemy.gameObject.GetComponent<Enemy>().ApplyDamage(_powerBaseWerewolfAttack);
+                Debug.Log(enemy.gameObject.name + " health: " + enemy.gameObject.GetComponent<Enemy>().GetHealth());
+            }
         }
 
         private void UpdatePosition(Vector2 movement, float delta)
@@ -146,8 +157,13 @@ namespace ThePackt{  //to be used in every class
 
         }
 
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(_attackPoint.position, _rangeBaseWerewolfAttack);
+        }
+
         #endregion
-  
+
 
 
 
