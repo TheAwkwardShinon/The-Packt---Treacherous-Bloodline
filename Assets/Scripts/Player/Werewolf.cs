@@ -53,7 +53,7 @@ namespace ThePackt{  //to be used in every class
         {
             Debug.Log("jumping");
             _isGrounded = false;
-            _rb.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
+            _rb.AddForce(new Vector2(0,_jumpForce), ForceMode2D.Impulse);
         }
 
 
