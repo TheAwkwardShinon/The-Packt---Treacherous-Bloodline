@@ -14,13 +14,12 @@ namespace ThePackt{  //to be used in every class
         //use it in order to make the code cleaner
         #region variables  
         protected Rigidbody2D _rb; // put '_' before every protected or private variable
-        protected Collider2D _col;
         protected Animator _anim;
         [SerializeField] private GameObject _sprite;
         [SerializeField] protected float _speed; //use serializefield if you want to initialize the variable from unity's inspector.
+
         [SerializeField] protected float _dashMultiplier;
         [SerializeField] protected float _jumpForce;
-        [SerializeField] protected float _extraHeight; // must be adjusted if the jump force is reduced, else there could be a double jump issue  
         [SerializeField] protected float _powerBaseWerewolfAttack;
         [SerializeField] protected float _powerBaseHumanAttack;
         [SerializeField] protected float _rangeBaseWerewolfAttack;
@@ -28,6 +27,7 @@ namespace ThePackt{  //to be used in every class
         [SerializeField] protected GameObject _bullet;
         private Vector2 _direction;
         private bool _isFacingLeft = true;
+        private bool _isGrounded = true;
         private bool _isDashing = false;
         private bool _isMoving = false;
         private bool _isJumping = false;
@@ -57,6 +57,7 @@ namespace ThePackt{  //to be used in every class
         private void Jump()  //method name always uppercase
         {
             Debug.Log("jumping");
+            _isGrounded = false;
             _rb.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
         }
 
@@ -111,31 +112,23 @@ namespace ThePackt{  //to be used in every class
             _isFacingLeft = !_isFacingLeft;
         }
 
-        public bool CheckIsGrounded()
-        {
-            LayerMask lm = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Enemies");
-            RaycastHit2D rayhit = Physics2D.BoxCast(_col.bounds.center, new Vector3(_col.bounds.size.x - 0.1f, _col.bounds.size.y, 0f), 0f, Vector2.down, _extraHeight, lm);
-
-            // if (rayhit.collider != null)
-            //     Debug.Log(rayhit.collider.gameObject.name);
-
-            return rayhit.collider != null;
-        }
-
         #endregion 
 
         // Start is called before the first frame update
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            _col = gameObject.GetComponent<BoxCollider2D>();
             //to be done later :  _anim = gameObject.GetComponent<Animator>();
         }
 
 
         private void FixedUpdate()
         {
-            
+            if (Mathf.Abs(_rb.velocity.y) == 0)
+            {
+                _isGrounded = true;
+            }
+
             if (_isDashing)
             {
                 UpdateSpriteDirection(_direction);
@@ -229,6 +222,10 @@ namespace ThePackt{  //to be used in every class
 
         public bool GetIsUsingItem(){
             return _isUsingItem;
+        }
+
+        public bool GetIsGrounded(){
+            return _isGrounded;
         }
 
         public Transform GetAttackPoint()
