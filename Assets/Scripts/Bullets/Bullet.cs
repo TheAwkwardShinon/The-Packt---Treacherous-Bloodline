@@ -6,8 +6,10 @@ public class Bullet : MonoBehaviour
 {
     #region variables
     [SerializeField] protected float _speed;
+    [SerializeField] protected float _range;
     private Rigidbody2D _rb;
     private float _attackPower;
+    private Vector2 _startPos;
     #endregion
 
     #region methods
@@ -17,12 +19,16 @@ public class Bullet : MonoBehaviour
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
         _rb.velocity = transform.right * _speed;
+        _startPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Vector2.Distance(transform.position, _startPos) >= _range)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,7 +39,11 @@ public class Bullet : MonoBehaviour
             enemy.ApplyDamage(_attackPower);
         }
 
-        Destroy(gameObject);
+        // Does not destroy bullets on impact with player or other bullets 
+        if (!collision.gameObject.CompareTag("Player") & !(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     #endregion

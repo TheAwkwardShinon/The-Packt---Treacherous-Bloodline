@@ -193,6 +193,11 @@ namespace ThePackt{  //to be used in every class
             return _isHuman;
         }
 
+        public bool GetIsFacingLeft()
+        {
+            return _isFacingLeft;
+        }
+
         public bool GetIsUsingBaseWereWolfAttack(){
             return _isUsingBaseWereWolfAttack;
         }
@@ -221,6 +226,11 @@ namespace ThePackt{  //to be used in every class
 
         public bool GetIsGrounded(){
             return _isGrounded;
+        }
+
+        public Transform GetAttackPoint()
+        {
+            return _attackPoint;
         }
 
         #endregion 
@@ -276,6 +286,7 @@ namespace ThePackt{  //to be used in every class
         public void SetDirection(Vector2 direction){
             _direction = direction;
         }
+
         #endregion
     }
 }

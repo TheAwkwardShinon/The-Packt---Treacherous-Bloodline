@@ -8,9 +8,7 @@ namespace ThePackt{
        private Werewolf _player;
        private bool _allowInput = true; //true until we implement aniamtor
        private Vector2 _movement;
-
-
-
+       [SerializeField] private GameObject _camera;
 
 
         private void Start()
@@ -82,8 +80,25 @@ namespace ThePackt{
             {
                 if (_player.GetIsHuman())
                 {
-                    Debug.Log("pressed human attacking");
-                    _player.SetIsUsingHumanBaseAttack(true);
+                    Vector2 mousePos = _camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
+
+                    Transform attPoint = _player.GetAttackPoint();
+                    Vector2 attPointPos = attPoint.transform.position;
+                    bool clickedLeft = true;
+                    if (attPointPos.x < mousePos.x)
+                    {
+                        clickedLeft = false;
+                    }
+
+                    if (_player.GetIsFacingLeft() == clickedLeft)
+                    {
+                        Vector2 attackDir = mousePos - attPointPos;
+                        attPoint.transform.right = attackDir;
+
+                        Debug.Log("pressed human attacking with angle");
+                        _player.SetIsUsingHumanBaseAttack(true);
+                    }
+
                     //TODO set animator trigger
                 }
                 else

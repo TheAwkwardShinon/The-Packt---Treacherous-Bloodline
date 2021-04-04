@@ -3931,6 +3931,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chara_03
       objectReference: {fileID: 0}
+    - target: {fileID: 1553394608689126, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4675954415004836, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -4064,6 +4068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0353ae64fa8938c439991f9d18fea342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 519420028}
 --- !u!4 &2071652613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4675954415004836, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
