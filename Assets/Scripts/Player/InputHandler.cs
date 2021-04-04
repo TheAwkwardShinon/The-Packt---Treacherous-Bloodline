@@ -54,15 +54,12 @@ namespace ThePackt{
         }
 
         private void HandleJumpInput(float delta){
-            // Debug.Log("is pressing w?");
-            if(Input.GetKeyDown(KeyCode.W) && _player.GetIsGrounded()){ //Stamina??
-                // Debug.Log("yes!");
+            if(Input.GetKeyDown(KeyCode.W) && _player.CheckIsGrounded())
+            {
+                // Debug.Log("grounded");
                 _player.SetIsJumping(true);
-                //if stamina then spend it here
                 //TODO set animator trigger
             } 
-            // else Debug.Log("no");
-            
         }
 
         private void HandleCrouchInput(float delta)
