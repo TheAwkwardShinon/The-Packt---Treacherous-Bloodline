@@ -18,7 +18,7 @@ namespace ThePackt{
         #endregion
 
 
-
+        #region methods
 
         private void Start()
         {
@@ -27,7 +27,7 @@ namespace ThePackt{
             _moveControl = GetComponent<MovementController>();
         }
 
-
+        /* in the update we shoul check if the palyer is performing inputs */
         private void Update()
         {
             
@@ -47,6 +47,7 @@ namespace ThePackt{
             }
         }
 
+        /* method that check if is possible to move, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
          private void HandleMovementInput(float delta)
         {
             if(_player.GetIsGrounded() && _player.GetCurrentState().Equals(State.IDLE)){
@@ -61,6 +62,9 @@ namespace ThePackt{
             //TODO animator trigger
         }
 
+
+        /* method that check if is possible to dash, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
+
         private void HandleDashInput(float delta){
             if(_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE)){
                 if (Input.GetKey(KeyCode.Space)){ //TODO adding stamina??? not a good idea to dash-spamming.
@@ -72,6 +76,8 @@ namespace ThePackt{
             }
         }
 
+        /* method that check if is possible to jump, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
+
         private void HandleJumpInput(float delta){
             if(_player.GetCurrentState().Equals(State.IDLE) &&_player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) && _player.GetIsGrounded()){
                 if(Input.GetKeyDown(KeyCode.W) && _player.GetIsGrounded()){ 
@@ -82,6 +88,8 @@ namespace ThePackt{
             }
             //TODO SPECIAL ABILITY DOUBLE JUMP
         }
+
+        /* method that check if is possible to move, changes state, activates the aniamtion trigger. This method checks if you release the input in order to change state */
 
         private void HandleCrouchInput(float delta)
         {
@@ -100,7 +108,9 @@ namespace ThePackt{
                 }
             }
         }
-        
+
+        /* method that check if is possible to attack, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
+
         private void HandleAttackInput(float delta)
         {
             if(_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE) || _player.GetCurrentState().Equals(State.CROUCH)){
@@ -121,6 +131,8 @@ namespace ThePackt{
                 }
             }
         }
+
+        /* method that check if is possible to transform, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
 
         private void HandleTransformationInput(float delta)
         {
@@ -144,5 +156,6 @@ namespace ThePackt{
                 }
             }
         }
+        #endregion
     }
 }

@@ -11,13 +11,13 @@ namespace ThePackt{  //to be used in every class
      */
     public class Werewolf : MonoBehaviour
     {
-        public enum State {IDLE, MOVE, JUMP, ATTACK, CROUCH, DASH, TRANSFORMING};
+        public enum State {IDLE, MOVE, JUMP, ATTACK, CROUCH, DASH, TRANSFORMING}; //our state checker (to be updated with other states).
         //use it in order to make the code cleaner
         #region variables  
-        protected Rigidbody2D _rb; // put '_' before every protected or private variable
+        protected Rigidbody2D _rb;
         protected Animator _anim;
         [SerializeField] private GameObject _sprite;
-        [SerializeField] protected float _speed; //use serializefield if you want to initialize the variable from unity's inspector.
+        [SerializeField] protected float _speed; 
 
         [SerializeField] protected float _dashMultiplier;
         [SerializeField] protected float _jumpForce;
@@ -92,7 +92,6 @@ namespace ThePackt{  //to be used in every class
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            //to be done later :  _anim = gameObject.GetComponent<Animator>();
         }
 
 
