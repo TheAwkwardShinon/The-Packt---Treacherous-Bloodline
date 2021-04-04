@@ -14,6 +14,44 @@ namespace ThePackt
         private Animator _animator;
         private int _vertical;
         private int _horizontal;
+
+        private const string PLAYER_IDLE = "idle";
+        private const string PLAYER_MOVE = "move";
+        private const string PLAYER_JUMP = "jump";
+
+        private const string PLAYER_DASH = "dash";
+
+        private const string PLAYER_JUMP_ATTACK = "jump_attack";
+        private const string PLAYER_CROUCH = "crouch";
+
+        private const string PLAYER_CROUCH_MOVE = "crouch_move";
+
+        private const string PLAYER_CROUCH_ATTACK = "crouch_attack";
+
+        private const string PLAYER_HUMAN_ATTACK = "human_attack";
+
+        private const string PLAYER_WEREWOLF_ATTACK = "werewolf_attack";
+
+        private const string PLAYER_USE_ITEM = "using_item";
+
+        private const string PLAYER_SPECIAL_ABILITY = "special_ability";
+
+        private const string PLAYER_ULTIMATE = "ultimate";
+
+        private const string PLAYER_UNCONSCIOUS = "unconscious";
+
+        private const string PLAYER_INTERACT = "interact";
+
+        private const string PLAYER_HEALING_BUDDY = "healing_buddy";
+
+        private const string PLAYER_COMEBACK = "comeback"; //from unconscious state
+
+        private const string PLAYER_DEATH = "death";
+
+        private const string PLAYER_TRANSFORMATION = "transformation";
+
+        private const string PLAYER_BACK_HUMAN = "detrasfromation";
+
         #endregion
 
 

@@ -11,6 +11,7 @@ namespace ThePackt{  //to be used in every class
      */
     public class Werewolf : MonoBehaviour
     {
+        public enum State {IDLE, MOVE, JUMP, ATTACK, CROUCH, DASH, TRANSFORMING};
         //use it in order to make the code cleaner
         #region variables  
         protected Rigidbody2D _rb; // put '_' before every protected or private variable
@@ -28,18 +29,28 @@ namespace ThePackt{  //to be used in every class
         private Vector2 _direction;
         private bool _isFacingLeft = true;
         private bool _isGrounded = true;
+        private bool _isHuman = true;
+
+        private State _currentState = State.IDLE;
+
+        
+        /*
+
+        private bool _isIdle = true;
         private bool _isDashing = false;
         private bool _isMoving = false;
         private bool _isJumping = false;
         private bool _isCrouching = false;
+        */
         private bool _isUsingBaseWereWolfAttack = false;
         private bool _isUsingBaseHumanAttack = false;
         private bool _isUsingSpecialAttack = false;
         private bool _isUsingItem = false;
-        private bool _isHuman = true;
+      
+
         private bool _isTransformingToWereWolf = false;
         private bool _isTransformingToHuman = false;
-
+        /**/
 
 
         #endregion
@@ -50,16 +61,6 @@ namespace ThePackt{  //to be used in every class
 
         #region characterController
 
-        /* method description using '/*' */
-        /* 
-         * Implements the standard jump
-         */
-        private void Jump()  //method name always uppercase
-        {
-            Debug.Log("jumping");
-            _isGrounded = false;
-            _rb.AddForce(new Vector2(0,_jumpForce), ForceMode2D.Impulse);
-        }
 
         private void BaseHumanAttack()  //method name always uppercase
         {
@@ -83,34 +84,7 @@ namespace ThePackt{  //to be used in every class
             }
         }
 
-        private void UpdatePosition(Vector2 movement, float delta)
-        {
-            if (movement.magnitude != 0)
-                _rb.velocity = Vector3.zero;
-            //_rb.velocity = movement * _speed * delta;
-            transform.position += new Vector3(movement.x, movement.y, 0) * Time.deltaTime * _speed;
-            //_rb.MovePosition(_rb.position + movement * delta);       
-        }
-
-        private void UpdateSpriteDirection(Vector3 movement)
-        {
-            if (movement.x > 0 && _isFacingLeft ||
-                movement.x < 0 && !_isFacingLeft)
-                Flip();
-        }
-
-        private void Flip()
-        {
-            if (_isFacingLeft)
-            {
-                _sprite.transform.rotation = Quaternion.Euler(0, 180, 0);
-            }
-            else
-            {
-                _sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
-            _isFacingLeft = !_isFacingLeft;
-        }
+       
 
         #endregion 
 
@@ -127,24 +101,6 @@ namespace ThePackt{  //to be used in every class
             if (Mathf.Abs(_rb.velocity.y) == 0)
             {
                 _isGrounded = true;
-            }
-
-            if (_isDashing)
-            {
-                UpdateSpriteDirection(_direction);
-                UpdatePosition(_direction * _speed * _dashMultiplier, Time.fixedDeltaTime);
-                _isDashing = false;
-            }
-            else if (_isJumping){
-                //UpdateSpriteDirection(_direction);
-                Jump();
-                _isJumping = false;
-            }
-            else if(_isMoving)
-            {
-                UpdateSpriteDirection(_direction);
-                UpdatePosition(_direction * _speed, Time.fixedDeltaTime);
-                _isMoving = false;
             }
             
             if (_isUsingBaseHumanAttack)
@@ -172,6 +128,7 @@ namespace ThePackt{  //to be used in every class
 
 
         #region getter
+        /*
         public bool GetIsDashing(){
             return _isDashing;
         }
@@ -186,7 +143,7 @@ namespace ThePackt{  //to be used in every class
 
         public bool GetIsCrouching(){
             return _isCrouching;
-        }
+        }*/
 
         public bool GetIsHuman()
         {
@@ -218,14 +175,47 @@ namespace ThePackt{  //to be used in every class
         public bool GetIsUsingItem(){
             return _isUsingItem;
         }
+/*
+        public bool GetIsIdle(){
+            return _isIdle;
+        }*/
 
         public bool GetIsGrounded(){
             return _isGrounded;
         }
 
+        public float GetSpeed(){
+            return _speed;
+        }
+
+        public float GetJumpForce(){
+            return _jumpForce;
+        }
+
+        public float GetDashMultiplier(){
+            return _dashMultiplier;
+        }
+
+        public bool GetIsFacingLeft(){
+            return _isFacingLeft;
+        }
+
+        public Vector2 GetDirection(){
+            return _direction;
+        }
+
+        public GameObject GetSprite(){
+            return _sprite;
+        }
+
+        public State GetCurrentState(){
+            return _currentState;
+        }
+
         #endregion 
 
         #region setter
+        /*
         public void SetIsDashing(bool value){
             _isDashing = value;
         }
@@ -241,7 +231,7 @@ namespace ThePackt{  //to be used in every class
         public void SetIsCrouching(bool value){
              _isCrouching = value;
         }
-
+*/
         public void SetIsHuman(bool value)
         {
             _isHuman = value;
@@ -272,9 +262,25 @@ namespace ThePackt{  //to be used in every class
         public void SetIsUsingItem(bool value){
              _isUsingItem = value;
         }
+/*
+        public void SetIsIdle(bool value){
+            _isIdle = value;
+        }*/
 
         public void SetDirection(Vector2 direction){
             _direction = direction;
+        }
+
+        public void SetIsFacingLeft(bool value){
+            _isFacingLeft = value;
+        }
+
+        public void SetisGrounded(bool value){
+            _isGrounded = value;
+        }
+
+        public void SetCurrentState(State s){
+            _currentState = s;
         }
         #endregion
     }
