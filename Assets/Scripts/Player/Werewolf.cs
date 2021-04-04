@@ -20,6 +20,11 @@ namespace ThePackt{  //to be used in every class
 
         [SerializeField] protected float _dashMultiplier;
         [SerializeField] protected float _jumpForce;
+        [SerializeField] protected float _powerBaseWerewolfAttack;
+        [SerializeField] protected float _powerBaseHumanAttack;
+        [SerializeField] protected float _rangeBaseWerewolfAttack;
+        [SerializeField] protected Transform _attackPoint;
+        [SerializeField] protected GameObject _bullet;
         private Vector2 _direction;
         private bool _isFacingLeft = true;
         private bool _isGrounded = true;
@@ -27,14 +32,15 @@ namespace ThePackt{  //to be used in every class
         private bool _isMoving = false;
         private bool _isJumping = false;
         private bool _isCrouching = false;
-        private bool _isUsingWereWolfBaseAttack = false;
+        private bool _isUsingBaseWereWolfAttack = false;
         private bool _isUsingBaseHumanAttack = false;
         private bool _isUsingSpecialAttack = false;
         private bool _isUsingItem = false;
+        private bool _isHuman = true;
+        private bool _isTransformingToWereWolf = false;
+        private bool _isTransformingToHuman = false;
 
-    
-   
-       
+
 
         #endregion
 
@@ -46,9 +52,8 @@ namespace ThePackt{  //to be used in every class
 
         /* method description using '/*' */
         /* 
-         * Implements the standard movement
+         * Implements the standard jump
          */
-       
         private void Jump()  //method name always uppercase
         {
             Debug.Log("jumping");
@@ -56,6 +61,56 @@ namespace ThePackt{  //to be used in every class
             _rb.AddForce(new Vector2(0,_jumpForce), ForceMode2D.Impulse);
         }
 
+        private void BaseHumanAttack()  //method name always uppercase
+        {
+            Debug.Log("human attacking");
+            
+            GameObject blt = Instantiate(_bullet, _attackPoint.position, _attackPoint.rotation);
+            blt.GetComponent<Bullet>().SetAttackPower(_powerBaseHumanAttack);
+        }
+
+        private void BaseWereWolfAttack()  //method name always uppercase
+        {
+            Debug.Log("werewolf attacking");
+
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _rangeBaseWerewolfAttack, 1 << LayerMask.NameToLayer("Enemies"));
+            
+            foreach(Collider2D enemy in hitEnemies)
+            {
+                Debug.Log(enemy.gameObject.name + " hit");
+                enemy.gameObject.GetComponent<Enemy>().ApplyDamage(_powerBaseWerewolfAttack);
+                Debug.Log(enemy.gameObject.name + " health: " + enemy.gameObject.GetComponent<Enemy>().GetHealth());
+            }
+        }
+
+        private void UpdatePosition(Vector2 movement, float delta)
+        {
+            if (movement.magnitude != 0)
+                _rb.velocity = Vector3.zero;
+            //_rb.velocity = movement * _speed * delta;
+            transform.position += new Vector3(movement.x, movement.y, 0) * Time.deltaTime * _speed;
+            //_rb.MovePosition(_rb.position + movement * delta);       
+        }
+
+        private void UpdateSpriteDirection(Vector3 movement)
+        {
+            if (movement.x > 0 && _isFacingLeft ||
+                movement.x < 0 && !_isFacingLeft)
+                Flip();
+        }
+
+        private void Flip()
+        {
+            if (_isFacingLeft)
+            {
+                _sprite.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else
+            {
+                _sprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            _isFacingLeft = !_isFacingLeft;
+        }
 
         #endregion 
 
@@ -92,38 +147,27 @@ namespace ThePackt{  //to be used in every class
                 _isMoving = false;
             }
             
+            if (_isUsingBaseHumanAttack)
+            {
+                BaseHumanAttack();
+                _isUsingBaseHumanAttack = false;
+            }
+            
+            if (_isUsingBaseWereWolfAttack)
+            {
+                BaseWereWolfAttack();
+                _isUsingBaseWereWolfAttack = false;
+            }
+
         }
 
-
-        private void UpdatePosition(Vector2 movement, float delta)
-        { 
-            if (movement.magnitude != 0)
-                _rb.velocity = Vector3.zero; 
-            //_rb.velocity = movement * _speed * delta;
-            transform.position += new Vector3(movement.x,movement.y,0) * Time.deltaTime * _speed;
-            //_rb.MovePosition(_rb.position + movement * delta);       
-         }
-
-         private void UpdateSpriteDirection(Vector3 movement)
+        private void OnDrawGizmosSelected()
         {
-            if (movement.x > 0 && _isFacingLeft ||
-                movement.x < 0 && !_isFacingLeft)
-                Flip();
-        }
-
-        private void Flip()
-        {
-            if(_isFacingLeft){
-                _sprite.transform.rotation = Quaternion.Euler(0,180,0);
-            }
-            else{
-                _sprite.transform.rotation = Quaternion.Euler(0,0,0);     
-            }
-            _isFacingLeft = !_isFacingLeft;
+            Gizmos.DrawWireSphere(_attackPoint.position, _rangeBaseWerewolfAttack);
         }
 
         #endregion
-  
+
 
 
 
@@ -144,12 +188,27 @@ namespace ThePackt{  //to be used in every class
             return _isCrouching;
         }
 
-        public bool GetIsUsingWereWolfBaseAttack(){
-            return _isUsingWereWolfBaseAttack;
+        public bool GetIsHuman()
+        {
+            return _isHuman;
         }
 
-        public bool GetUsingHumanBaseAttack(){
+        public bool GetIsUsingBaseWereWolfAttack(){
+            return _isUsingBaseWereWolfAttack;
+        }
+
+        public bool GetIsUsingHumanBaseAttack(){
             return _isUsingBaseHumanAttack;
+        }
+
+        public bool GetIsTransformingToWereWolf()
+        {
+            return _isTransformingToWereWolf;
+        }
+
+        public bool GetIsTransformingToHuman()
+        {
+            return _isTransformingToHuman;
         }
 
         public bool GetIsUsingSpecialAttack(){
@@ -183,12 +242,27 @@ namespace ThePackt{  //to be used in every class
              _isCrouching = value;
         }
 
-        public void SetIsUsingWereWolfBaseAttack(bool value){
-             _isUsingWereWolfBaseAttack = value;
+        public void SetIsHuman(bool value)
+        {
+            _isHuman = value;
         }
 
-        public void SetUsingHumanBaseAttack(bool value){
+        public void SetIsUsingBaseWereWolfAttack(bool value){
+            _isUsingBaseWereWolfAttack = value;
+        }
+
+        public void SetIsUsingHumanBaseAttack(bool value){
              _isUsingBaseHumanAttack = value;
+        }
+
+        public void SetIsTransformingToWereWolf(bool value)
+        {
+            _isTransformingToWereWolf = value;
+        }
+
+        public void SetIsTransformingToHuman(bool value)
+        {
+            _isTransformingToHuman = value;
         }
 
         public void SetIsUsingSpecialAttack(bool value){

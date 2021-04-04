@@ -30,8 +30,9 @@ namespace ThePackt{
 
                 HandleJumpInput(Time.deltaTime);
 
-               //TODO  HandleAttacks(Time.deltaTime);
+                HandleAttackInput(Time.deltaTime);
 
+                HandleTransformationInput(Time.deltaTime);
             }
         }
 
@@ -64,6 +65,57 @@ namespace ThePackt{
             } 
             // else Debug.Log("no");
             
+        }
+
+        private void HandleCrouchInput(float delta)
+        {
+            if (Input.GetKey(KeyCode.S))
+            {
+                _player.SetIsCrouching(true);
+                //TODO set animator trigger
+            }
+        }
+
+        private void HandleAttackInput(float delta)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                if (_player.GetIsHuman())
+                {
+                    Debug.Log("pressed human attacking");
+                    _player.SetIsUsingHumanBaseAttack(true);
+                    //TODO set animator trigger
+                }
+                else
+                {
+                    Debug.Log("pressed werewolf attacking");
+                    _player.SetIsUsingBaseWereWolfAttack(true);
+                    //TODO set animator trigger
+                }
+            }
+        }
+
+        private void HandleTransformationInput(float delta)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                if (_player.GetIsHuman())
+                {
+                    Debug.Log("transforming to werewolf");
+
+                    _player.SetIsTransformingToWereWolf(true);
+                    //TODO set animator trigger
+                    _player.SetIsHuman(false);
+                }
+                else
+                {
+                    Debug.Log("transforming to human");
+
+                    _player.SetIsTransformingToHuman(true);
+                    //TODO set animator trigger
+                    _player.SetIsHuman(true);
+                }
+            }
         }
 
 
