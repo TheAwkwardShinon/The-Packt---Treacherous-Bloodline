@@ -150,6 +150,11 @@ namespace ThePackt{  //to be used in every class
             return _isHuman;
         }
 
+        public bool GetIsFacingLeft()
+        {
+            return _isFacingLeft;
+        }
+
         public bool GetIsUsingBaseWereWolfAttack(){
             return _isUsingBaseWereWolfAttack;
         }
@@ -196,10 +201,6 @@ namespace ThePackt{  //to be used in every class
             return _dashMultiplier;
         }
 
-        public bool GetIsFacingLeft(){
-            return _isFacingLeft;
-        }
-
         public Vector2 GetDirection(){
             return _direction;
         }
@@ -210,6 +211,10 @@ namespace ThePackt{  //to be used in every class
 
         public State GetCurrentState(){
             return _currentState;
+        }
+        public Transform GetAttackPoint()
+        {
+            return _attackPoint;
         }
 
         #endregion 
