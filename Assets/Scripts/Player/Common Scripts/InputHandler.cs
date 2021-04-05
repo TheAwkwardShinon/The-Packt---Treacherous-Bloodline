@@ -92,6 +92,7 @@ namespace ThePackt{
          private void HandleMovementInput(float delta)
         {
             if(_player.GetIsGrounded() && _player.GetCurrentState().Equals(State.IDLE) || _player.GetCurrentState().Equals(State.CROUCH) && _player.GetIsGrounded()){
+                Debug.Log(_player.GetIsGrounded());
                 _movement.x = Input.GetAxisRaw("Horizontal");
                 _movement.y = 0;
                 _movement.Normalize();
@@ -132,7 +133,8 @@ namespace ThePackt{
 
         private void HandleJumpInput(float delta){
             if(_player.GetCurrentState().Equals(State.IDLE) &&_player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) && _player.GetIsGrounded()){
-                if(Input.GetKeyDown(KeyCode.W)){ 
+                if(Input.GetKeyDown(KeyCode.W)){
+                    Debug.Log(_player.GetIsGrounded());
                     _player.SetCurrentState(State.JUMP);
                     _moveControl.Jumping();
                     //TODO set animator trigger
@@ -166,7 +168,8 @@ namespace ThePackt{
 
         private void HandleAttackInput(float delta)
         {
-            if(_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE) || _player.GetCurrentState().Equals(State.CROUCH)){
+            // set the right conditions
+            if (_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE) || _player.GetCurrentState().Equals(State.CROUCH)){
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     if (_player.GetIsHuman())
@@ -181,19 +184,24 @@ namespace ThePackt{
                             clickedLeft = false;
                         }
 
+                        //checks if the player is facing towards the point of the click: the attack is executed only if he does
                         if (_player.GetIsFacingLeft() == clickedLeft)
                         {
+                            _player.SetCurrentState(State.ATTACK);
+
                             Vector2 attackDir = mousePos - attPointPos;
                             attPoint.transform.right = attackDir;
 
-                            Debug.Log("pressed human attacking with angle");
-                            _player.SetIsUsingHumanBaseAttack(true);
+                            Debug.Log("[" + Time.time + "]" + "pressed human attack");
+                            _combat.BaseHumanAttack();
                         }
                     }
                     else
                     {
-                        Debug.Log("["+Time.time+"]"+"pressed werewolf attacking");
-                        _player.SetIsUsingBaseWereWolfAttack(true);
+                        _player.SetCurrentState(State.ATTACK);
+
+                        Debug.Log("["+Time.time+"]"+"pressed werewolf attack");
+                        _combat.BaseWereWolfAttack();
                         //TODO set animator trigger
                     }
                 }
@@ -204,23 +212,32 @@ namespace ThePackt{
 
         private void HandleTransformationInput(float delta)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            // player can transform while jumping and while moving?
+            if (_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded())
             {
-                if (_player.GetIsHuman())
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    Debug.Log("["+Time.time+"]"+"transforming to werewolf");
+                    if (_player.GetIsHuman())
+                    {
+                        _player.SetCurrentState(State.TRANSFORM);
+                        Debug.Log("[" + Time.time + "]" + "transforming to werewolf");
 
-                    _player.SetIsTransformingToWereWolf(true);
-                    //TODO set animator trigger
-                    _player.SetIsHuman(false);
-                }
-                else
-                {
-                    Debug.Log("transforming to human");
+                        //TODO set animator trigger
+                        _player.SetIsHuman(false);
 
-                    _player.SetIsTransformingToHuman(true);
-                    //TODO set animator trigger
-                    _player.SetIsHuman(true);
+                        _player.SetCurrentState(State.IDLE);
+                    }
+                    else
+                    {
+                        _player.SetCurrentState(State.TRANSFORM);
+
+                        Debug.Log("[" + Time.time + "]" + "transforming to human");
+
+                        //TODO set animator trigger
+                        _player.SetIsHuman(true);
+
+                        _player.SetCurrentState(State.IDLE);
+                    }
                 }
             }
         }
