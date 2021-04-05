@@ -22,7 +22,7 @@ namespace ThePackt{
         /* method that perform the movement action */
         public void Moving()
         {
-            //Debug.Log("moving");
+            Debug.Log("moving");
             UpdateSpriteDirection(_player.GetDirection());
             UpdatePosition(_player.GetDirection() * _player.GetSpeed() , Time.fixedDeltaTime);
             if(_player.GetCurrentState().Equals(State.CROUCH_MOVE))
@@ -33,7 +33,6 @@ namespace ThePackt{
         /* method that perform the jumping action */
         public void Jumping(){
             Debug.Log("jumping");
-            _player.SetisGrounded(false);
             _rb.AddForce(new Vector2(_player.GetDirection().x,_player.GetJumpForce()), ForceMode2D.Impulse);
             //_rb.velocity += new Vector2(_player.GetDirection().x,_player.GetJumpForce());
             Debug.Log("jumped");

@@ -92,20 +92,21 @@ namespace ThePackt{
          private void HandleMovementInput(float delta)
         {
             if(_player.GetIsGrounded() && _player.GetCurrentState().Equals(State.IDLE) || _player.GetCurrentState().Equals(State.CROUCH) && _player.GetIsGrounded()){
-                Debug.Log(_player.GetIsGrounded());
-                _movement.x = Input.GetAxisRaw("Horizontal");
-                _movement.y = 0;
-                _movement.Normalize();
-                _player.SetDirection(_movement);
-                if( _player.GetCurrentState().Equals(State.CROUCH)){
-                    _player.SetCurrentState(State.CROUCH_MOVE);
-                    //TODO ANIAMTION TRIGGER
+                if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
+                    _movement.x = Input.GetAxisRaw("Horizontal");
+                    _movement.y = 0;
+                    _movement.Normalize();
+                    _player.SetDirection(_movement);
+                    if( _player.GetCurrentState().Equals(State.CROUCH)){
+                        _player.SetCurrentState(State.CROUCH_MOVE);
+                        //TODO ANIAMTION TRIGGER
+                    }
+                    else{ 
+                        _player.SetCurrentState(State.MOVE);
+                        //TODO ANIMATION TRIGGER
+                    }
+                    _moveControl.Moving();
                 }
-                else{ 
-                    _player.SetCurrentState(State.MOVE);
-                    //TODO ANIMATION TRIGGER
-                }
-                 _moveControl.Moving();
             }/*  modificare solo la rotazione dello sprite
             else  if(!_player.GetIsGrounded()){
                 _movement.x = Input.GetAxisRaw("Horizontal");

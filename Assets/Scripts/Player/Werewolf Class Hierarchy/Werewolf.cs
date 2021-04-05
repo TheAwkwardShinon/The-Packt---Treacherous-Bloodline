@@ -83,12 +83,14 @@ namespace ThePackt{  //to be used in every class
             _isGrounded = (hit != null);
             //Debug.Log(_isGrounded);
 
+
+/*
             if (Mathf.Abs(_rb.velocity.y) == 0)
             {
                 _isGrounded = true;
             }
             else _isGrounded = false;
-            
+            */
         }
 
         private void OnDrawGizmosSelected()
@@ -96,7 +98,7 @@ namespace ThePackt{  //to be used in every class
             Gizmos.DrawWireSphere(_attackPoint.position, _rangeBaseWerewolfAttack);
             Gizmos.color = Color.red;
 
-            _col = gameObject.GetComponent<BoxCollider2D>();
+            _col = gameObject.GetComponent<CapsuleCollider2D>();
             Vector2 temp = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
             Gizmos.DrawCube(temp, new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f));
         }
