@@ -32,8 +32,12 @@ namespace ThePackt{
         /* method that perform the jumping action */
         public void Jumping(){
             Debug.Log("jumping");
+            _player.SetisGrounded(false);
             _rb.AddForce(new Vector2(_player.GetDirection().x,_player.GetJumpForce()), ForceMode2D.Impulse);
+            //_rb.velocity += new Vector2(_player.GetDirection().x,_player.GetJumpForce());
+            Debug.Log("jumped");
             _player.SetCurrentState(State.IDLE);
+            Debug.Log("now i am idle");
         }
 
         /* method that perform the Dashing action */

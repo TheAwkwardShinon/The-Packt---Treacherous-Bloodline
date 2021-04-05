@@ -94,13 +94,14 @@ namespace ThePackt{  //to be used in every class
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            _col = gameObject.GetComponent<BoxCollider2D>();
+            _col = gameObject.GetComponent<CapsuleCollider2D>();
         }
 
 
-        private void FixedUpdate()
+        private void Update()
         {
-            CheckIsGrounded();
+            if(_isGrounded == false)
+                CheckIsGrounded();
 
             if (_isUsingBaseHumanAttack)
             {
@@ -119,7 +120,8 @@ namespace ThePackt{  //to be used in every class
         public void CheckIsGrounded()
         {
             
-            LayerMask lm = 1 << LayerMask.NameToLayer("Ground");
+            //LayerMask lm = 1 << LayerMask.NameToLayer("Ground");
+            //LayerMask lm = LayerMask.GetMask("Ground");
 
             /* raycast implementation
             RaycastHit2D rayhit = Physics2D.BoxCast(_col.bounds.center, new Vector3(_col.bounds.size.x - 0.1f, _col.bounds.size.y, 0f), 0f, Vector2.down, _extraHeight, lm);
@@ -129,29 +131,35 @@ namespace ThePackt{  //to be used in every class
             _isGrounded = (rayhit.collider != null);
             */
 
-            /* uncomment this
+         
             
-            Vector2 boxCenter = transform.position + Vector3.down * _col.bounds.size.y;
+            //Vector2 boxCenter = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
             //Debug.Log(boxCenter + Vector2.down * _extraHeight);
-            // prova.transform.position = boxCenter;
-            Collider2D hit = Physics2D.OverlapBox(boxCenter, new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f), 0f, lm);
+            //prova.transform.position = boxCenter;
+            //Collider2D hit = Physics2D.OverlapCircle(boxCenter,0.1f,lm);
+            /*Collider2D hit = Physics2D.OverlapBox(boxCenter, new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f), 0f, lm);
 
             if (hit != null)
                 Debug.Log(hit.gameObject.name);
 
-            _isGrounded = (hit != null);
-            */
+            _isGrounded = (hit != null);*/
+            
 
             if (Mathf.Abs(_rb.velocity.y) == 0)
             {
                 _isGrounded = true;
             }
             else _isGrounded = false;
+            
         }
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(_attackPoint.position, _rangeBaseWerewolfAttack);
+            Gizmos.color = Color.red;
+             _col = gameObject.GetComponent<CapsuleCollider2D>();
+            Vector2 temp = _col.bounds.center + Vector3.down *_col.bounds.size.y * 0.5f;
+            Gizmos.DrawCube(temp,new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f));
         }
 
         #endregion

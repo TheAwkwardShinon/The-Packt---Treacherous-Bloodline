@@ -3477,37 +3477,6 @@ Transform:
   m_Father: {fileID: 2071652613}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!1 &1878954805 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1319779072505410, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
-  m_PrefabInstance: {fileID: 2071652607}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1878954806
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1878954805}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.11068947}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 1}
-    oldSize: {x: 0.06, y: 0.21}
-    newSize: {x: 0.73, y: 0.48}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.06, y: 0.22137894}
-  m_EdgeRadius: 0
 --- !u!1001 &2005903387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3988,7 +3957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4675954415004836, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.28
+      value: -3.239
       objectReference: {fileID: 0}
     - target: {fileID: 4675954415004836, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4044,13 +4013,14 @@ MonoBehaviour:
   _sprite: {fileID: 2071652608}
   _speed: 5
   _dashMultiplier: 5
-  _jumpForce: 2.3
-  _extraHeight: 0
+  _jumpForce: 2.5
+  _extraHeight: 0.004
   _powerBaseWerewolfAttack: 10
   _powerBaseHumanAttack: 10
   _rangeBaseWerewolfAttack: 0.35
   _attackPoint: {fileID: 1867279136}
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
+  prova: {fileID: 0}
 --- !u!50 &2071652610
 Rigidbody2D:
   serializedVersion: 4
@@ -4063,41 +4033,15 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.47778076
+  m_Mass: 0.3100689
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &2071652611
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071652608}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.07768321, y: -0.47165152}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.91121817, y: 1.0554883}
-  m_EdgeRadius: 0
 --- !u!114 &2071652612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4110,6 +4054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0353ae64fa8938c439991f9d18fea342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 519420028}
 --- !u!4 &2071652613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4675954415004836, guid: ba91827772c36b440ab61f47c756e0f7, type: 3}
@@ -4170,6 +4115,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064e7946b63d1324db763bba89a556e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!70 &2071652618
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071652608}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.00000034059798, y: -0.48353094}
+  m_Size: {x: 0.67192286, y: 1.0859612}
+  m_Direction: 0
 --- !u!1 &2102550357
 GameObject:
   m_ObjectHideFlags: 0
