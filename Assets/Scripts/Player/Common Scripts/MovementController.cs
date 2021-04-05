@@ -31,7 +31,7 @@ namespace ThePackt{
 
         /* method that perform the jumping action */
         public void Jumping(){
-            _player.SetisGrounded(false);
+            Debug.Log("jumping");
             _rb.AddForce(new Vector2(_player.GetDirection().x,_player.GetJumpForce()), ForceMode2D.Impulse);
             _player.SetCurrentState(State.IDLE);
         }

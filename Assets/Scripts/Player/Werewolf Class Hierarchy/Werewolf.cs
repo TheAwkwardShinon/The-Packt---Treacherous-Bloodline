@@ -15,17 +15,19 @@ namespace ThePackt{  //to be used in every class
         //use it in order to make the code cleaner
         #region variables  
         protected Rigidbody2D _rb;
+        protected Collider2D _col;
         protected Animator _anim;
         [SerializeField] private GameObject _sprite;
         [SerializeField] protected float _speed; 
-
         [SerializeField] protected float _dashMultiplier;
         [SerializeField] protected float _jumpForce;
+        [SerializeField] protected float _extraHeight; // must be adjusted if the jump force is reduced, else there could be a double jump issue
         [SerializeField] protected float _powerBaseWerewolfAttack;
         [SerializeField] protected float _powerBaseHumanAttack;
         [SerializeField] protected float _rangeBaseWerewolfAttack;
         [SerializeField] protected Transform _attackPoint;
         [SerializeField] protected GameObject _bullet;
+        [SerializeField] protected GameObject prova;
         private Vector2 _direction;
         private bool _isFacingLeft = true;
         private bool _isGrounded = true;
@@ -92,16 +94,14 @@ namespace ThePackt{  //to be used in every class
         private void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
+            _col = gameObject.GetComponent<BoxCollider2D>();
         }
 
 
         private void FixedUpdate()
         {
-            if (Mathf.Abs(_rb.velocity.y) == 0)
-            {
-                _isGrounded = true;
-            }
-            
+            CheckIsGrounded();
+
             if (_isUsingBaseHumanAttack)
             {
                 BaseHumanAttack();
@@ -114,6 +114,39 @@ namespace ThePackt{  //to be used in every class
                 _isUsingBaseWereWolfAttack = false;
             }
 
+        }
+
+        public void CheckIsGrounded()
+        {
+            
+            LayerMask lm = 1 << LayerMask.NameToLayer("Ground");
+
+            /* raycast implementation
+            RaycastHit2D rayhit = Physics2D.BoxCast(_col.bounds.center, new Vector3(_col.bounds.size.x - 0.1f, _col.bounds.size.y, 0f), 0f, Vector2.down, _extraHeight, lm);
+            if (rayhit.collider != null)
+                Debug.Log(rayhit.collider.gameObject.name);
+
+            _isGrounded = (rayhit.collider != null);
+            */
+
+            /* uncomment this
+            
+            Vector2 boxCenter = transform.position + Vector3.down * _col.bounds.size.y;
+            //Debug.Log(boxCenter + Vector2.down * _extraHeight);
+            // prova.transform.position = boxCenter;
+            Collider2D hit = Physics2D.OverlapBox(boxCenter, new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f), 0f, lm);
+
+            if (hit != null)
+                Debug.Log(hit.gameObject.name);
+
+            _isGrounded = (hit != null);
+            */
+
+            if (Mathf.Abs(_rb.velocity.y) == 0)
+            {
+                _isGrounded = true;
+            }
+            else _isGrounded = false;
         }
 
         private void OnDrawGizmosSelected()
