@@ -7,14 +7,53 @@ namespace ThePackt{
     public class InputHandler : MonoBehaviour
     {
         #region variables
-       private Werewolf _player;
+        private Werewolf _player;
 
-       private MovementController _moveControl;
-       private CombatSystem _combat;
-       private bool _allowInput = true; //true until we implement aniamtor
-       private Vector2 _movement;
+        private MovementController _moveControl;
+        private CombatSystem _combat;
+        private AnimatorHandler _anim;
+        private bool _allowInput = true; //true until we implement aniamtor
+        private Vector2 _movement;
 
+        #endregion
 
+        #region costants
+        private const string PLAYER_IDLE = "idle";
+        private const string PLAYER_MOVE = "move";
+        private const string PLAYER_JUMP = "jump";
+
+        private const string PLAYER_DASH = "dash";
+
+        private const string PLAYER_JUMP_ATTACK = "jump_attack";
+        private const string PLAYER_CROUCH = "crouch";
+
+        private const string PLAYER_CROUCH_MOVE = "crouch_move";
+
+        private const string PLAYER_CROUCH_ATTACK = "crouch_attack";
+
+        private const string PLAYER_HUMAN_ATTACK = "human_attack";
+
+        private const string PLAYER_WEREWOLF_ATTACK = "werewolf_attack";
+
+        private const string PLAYER_USE_ITEM = "using_item";
+
+        private const string PLAYER_SPECIAL_ABILITY = "special_ability";
+
+        private const string PLAYER_ULTIMATE = "ultimate";
+
+        private const string PLAYER_UNCONSCIOUS = "unconscious";
+
+        private const string PLAYER_INTERACT = "interact";
+
+        private const string PLAYER_HEALING_BUDDY = "healing_buddy";
+
+        private const string PLAYER_COMEBACK = "comeback"; //from unconscious state
+
+        private const string PLAYER_DEATH = "death";
+
+        private const string PLAYER_TRANSFORMATION = "transformation";
+
+        private const string PLAYER_BACK_HUMAN = "detrasfromation";
         #endregion
 
 
@@ -50,16 +89,27 @@ namespace ThePackt{
         /* method that check if is possible to move, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
          private void HandleMovementInput(float delta)
         {
-            if(_player.GetIsGrounded() && _player.GetCurrentState().Equals(State.IDLE)){
-                Debug.Log(Time.time+" isgrounded = true");
+            if(_player.GetIsGrounded() && _player.GetCurrentState().Equals(State.IDLE) || _player.GetCurrentState().Equals(State.CROUCH) && _player.GetIsGrounded()){
                 _movement.x = Input.GetAxisRaw("Horizontal");
                 _movement.y = 0;
                 _movement.Normalize();
                 _player.SetDirection(_movement);
-                _player.SetCurrentState(State.MOVE);
-                _moveControl.Moving();
+                if( _player.GetCurrentState().Equals(State.CROUCH)){
+                    _player.SetCurrentState(State.CROUCH_MOVE);
+                    //TODO ANIAMTION TRIGGER
+                }
+                else{ 
+                    _player.SetCurrentState(State.MOVE);
+                    //TODO ANIMATION TRIGGER
+                }
+                 _moveControl.Moving();
             }
-            //TODO animator trigger
+            else  if(!_player.GetIsGrounded()){
+                _movement.x = Input.GetAxisRaw("Horizontal");
+                _movement.y = 0;
+                _movement.Normalize();
+                _player.SetDirection(_movement);
+            }
         }
 
 
@@ -80,7 +130,7 @@ namespace ThePackt{
 
         private void HandleJumpInput(float delta){
             if(_player.GetCurrentState().Equals(State.IDLE) &&_player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) && _player.GetIsGrounded()){
-                if(Input.GetKeyDown(KeyCode.W) && _player.GetIsGrounded()){ 
+                if(Input.GetKeyDown(KeyCode.W)){ 
                     _player.SetCurrentState(State.JUMP);
                     _moveControl.Jumping();
                     //TODO set animator trigger
@@ -93,7 +143,8 @@ namespace ThePackt{
 
         private void HandleCrouchInput(float delta)
         {
-            if(_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) || _player.GetCurrentState().Equals(State.CROUCH)){
+            if(_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) 
+                || _player.GetCurrentState().Equals(State.CROUCH) || _player.GetCurrentState().Equals(State.CROUCH_MOVE) ){
                 if (Input.GetKey(KeyCode.S))
                 {
                     _player.SetCurrentState(State.CROUCH);

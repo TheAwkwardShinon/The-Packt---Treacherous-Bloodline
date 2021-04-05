@@ -11,7 +11,7 @@ namespace ThePackt{  //to be used in every class
      */
     public class Werewolf : MonoBehaviour
     {
-        public enum State {IDLE, MOVE, JUMP, ATTACK, CROUCH, DASH, TRANSFORMING}; //our state checker (to be updated with other states).
+        public enum State {IDLE, MOVE, JUMP, ATTACK, CROUCH, CROUCH_MOVE, DASH, TRANSFORMING}; //our state checker (to be updated with other states).
         //use it in order to make the code cleaner
         #region variables  
         protected Rigidbody2D _rb;

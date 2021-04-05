@@ -24,7 +24,9 @@ namespace ThePackt{
         {
             UpdateSpriteDirection(_player.GetDirection());
             UpdatePosition(_player.GetDirection() * _player.GetSpeed() , Time.fixedDeltaTime);
-            _player.SetCurrentState(State.IDLE);
+            if(_player.GetCurrentState().Equals(State.CROUCH_MOVE))
+                 _player.SetCurrentState(State.CROUCH);
+            else _player.SetCurrentState(State.IDLE);
         }
 
         /* method that perform the jumping action */
@@ -51,7 +53,7 @@ namespace ThePackt{
             //transform.position += new Vector3(movement.x, movement.y, 0) * delta;
             _rb.MovePosition(_rb.position + movement * delta);       
         }
-        
+
         /* method that check if the prefab should be flipped */
         private void UpdateSpriteDirection(Vector3 movement)
         {
