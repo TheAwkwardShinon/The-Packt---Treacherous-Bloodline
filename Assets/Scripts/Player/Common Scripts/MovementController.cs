@@ -22,6 +22,7 @@ namespace ThePackt{
         /* method that perform the movement action */
         public void Moving()
         {
+            //Debug.Log("moving");
             UpdateSpriteDirection(_player.GetDirection());
             UpdatePosition(_player.GetDirection() * _player.GetSpeed() , Time.fixedDeltaTime);
             if(_player.GetCurrentState().Equals(State.CROUCH_MOVE))
