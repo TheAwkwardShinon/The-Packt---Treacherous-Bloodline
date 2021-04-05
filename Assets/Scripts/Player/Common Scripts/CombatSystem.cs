@@ -33,7 +33,7 @@ namespace ThePackt{
         {
             Debug.Log("werewolf attacking");
 
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetRangeBaseWerewolfAttack(), 1 << LayerMask.NameToLayer("Enemies"));
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetRangeBaseWerewolfAttack(), LayerMask.GetMask("Enemies"));
 
             foreach (Collider2D enemy in hitEnemies)
             {

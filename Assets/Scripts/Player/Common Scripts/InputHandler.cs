@@ -91,8 +91,11 @@ namespace ThePackt{
         /* method that check if is possible to move, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
          private void HandleMovementInput(float delta)
         {
-            if(_player.GetIsGrounded() && _player.GetCurrentState().Equals(State.IDLE) || _player.GetCurrentState().Equals(State.CROUCH) && _player.GetIsGrounded()){
-                if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
+            bool validPos = _player.GetIsGrounded() || _player.GetIsOnEnemy();
+            if (_player.GetCurrentState().Equals(State.IDLE) && validPos || _player.GetCurrentState().Equals(State.CROUCH) && validPos)
+            {
+                //Debug.Log("valid pos: g=" + _player.GetIsGrounded() + "  e=" + _player.GetIsOnEnemy());
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
                     _movement.x = Input.GetAxisRaw("Horizontal");
                     _movement.y = 0;
                     _movement.Normalize();
