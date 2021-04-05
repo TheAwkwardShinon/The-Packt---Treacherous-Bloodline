@@ -103,13 +103,13 @@ namespace ThePackt{
                     //TODO ANIMATION TRIGGER
                 }
                  _moveControl.Moving();
-            }
+            }/*  modificare solo la rotazione dello sprite
             else  if(!_player.GetIsGrounded()){
                 _movement.x = Input.GetAxisRaw("Horizontal");
                 _movement.y = 0;
                 _movement.Normalize();
                 _player.SetDirection(_movement);
-            }
+            }*/
         }
 
 
