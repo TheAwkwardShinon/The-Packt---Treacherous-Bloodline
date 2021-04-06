@@ -25,9 +25,12 @@ namespace ThePackt{  //to be used in every class
         [SerializeField] protected float _powerBaseWerewolfAttack;
         [SerializeField] protected float _powerBaseHumanAttack;
         [SerializeField] protected float _rangeBaseWerewolfAttack;
+        [SerializeField] protected float _dashCooldownTime;
         [SerializeField] protected Transform _attackPoint;
         [SerializeField] protected GameObject _bullet;
         // [SerializeField] protected GameObject prova;
+        protected Dictionary<string, float> _cooldownTimes;
+        private List<Cooldown> _cooldowns;
         private Vector2 _direction;
         private bool _isFacingLeft = true;
         private bool _isGrounded = true;
@@ -39,10 +42,13 @@ namespace ThePackt{  //to be used in every class
         private bool _isUsingSpecialAttack = false;
         private bool _isUsingItem = false;
         /**/
-
-
         #endregion
 
+        // better to create a class containing these constants, expecially for cooldowns
+        #region costants
+        //action names
+        private const string DASH = "dash";
+        #endregion
 
         #region methods 
 
@@ -51,12 +57,51 @@ namespace ThePackt{  //to be used in every class
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<CapsuleCollider2D>();
+            _cooldowns = new List<Cooldown>();
+            _cooldownTimes = new Dictionary<string, float>();
+
+            _cooldownTimes.Add(DASH, _dashCooldownTime);
         }
 
 
         private void Update()
         {
             CheckUnderFeet();
+
+            ProcessCooldowns();
+        }
+
+        public void ProcessCooldowns()
+        {
+            float deltaTime = Time.deltaTime;
+
+            for (int i = _cooldowns.Count - 1; i >= 0; i--)
+            {
+                if (_cooldowns[i].DecrementCooldown(deltaTime))
+                {
+                    _cooldowns.RemoveAt(i);
+                    // Debug.Log("removed cooldown");
+                }
+            }
+        }
+
+        public bool IsOnCooldown(string actionName)
+        {
+            foreach(Cooldown cd in _cooldowns)
+            {
+                if(cd.GetActionName() == actionName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void PutOnCooldown(string actionName)
+        {
+            // Debug.Log("put cooldown");
+            _cooldowns.Add(new Cooldown(actionName, _cooldownTimes[actionName]));
         }
 
         public void CheckUnderFeet()

@@ -4018,9 +4018,9 @@ MonoBehaviour:
   _powerBaseWerewolfAttack: 10
   _powerBaseHumanAttack: 10
   _rangeBaseWerewolfAttack: 0.35
+  _dashCooldownTime: 5
   _attackPoint: {fileID: 1867279136}
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
-  prova: {fileID: 0}
 --- !u!50 &2071652610
 Rigidbody2D:
   serializedVersion: 4

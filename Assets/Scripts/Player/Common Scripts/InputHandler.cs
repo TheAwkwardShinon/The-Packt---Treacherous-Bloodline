@@ -18,6 +18,7 @@ namespace ThePackt{
 
         #endregion
 
+        // better to create a class containing these constants, expecially for cooldowns
         #region costants
         private const string PLAYER_IDLE = "idle";
         private const string PLAYER_MOVE = "move";
@@ -121,14 +122,13 @@ namespace ThePackt{
 
 
         /* method that check if is possible to dash, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
-
         private void HandleDashInput(float delta){
-            if(_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE)){
-                if (Input.GetKey(KeyCode.Space)){ //TODO adding stamina??? not a good idea to dash-spamming.
+            if(_player.GetCurrentState().Equals(State.IDLE) && !_player.IsOnCooldown(PLAYER_DASH)||_player.GetCurrentState().Equals(State.MOVE) && !_player.IsOnCooldown(PLAYER_DASH))
+            {
+                if (Input.GetKey(KeyCode.Space)){
                     _player.SetCurrentState(State.DASH);
                     _moveControl.Dashing();
                     //TODO set trigger like : _animatorHandler.ActivateTargetTrigger("Dash");
-                    //if stamina then spend it here.
                 }
             }
         }
@@ -217,7 +217,7 @@ namespace ThePackt{
         private void HandleTransformationInput(float delta)
         {
             // player can transform while jumping and while moving?
-            if (_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded())
+            if (_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded() || _player.GetCurrentState().Equals(State.MOVE) && _player.GetIsGrounded())
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
