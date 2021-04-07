@@ -73,28 +73,30 @@ namespace ThePackt{
             
             if (_allowInput) //true until we implement aniamtor
             {
+                /*
+                StartCoroutine("HandleMovementInput");
+                StartCoroutine("HandleDashInput");
+                StartCoroutine("HandleJumpInput");
+                StartCoroutine("HandleCrouchInput");
+                StartCoroutine("HandleAttackInput");
+                StartCoroutine("HandleTransformationInput");
+                */
+                HandleMovementInput();
+                HandleDashInput();
+                HandleJumpInput();
+                HandleCrouchInput();
+                HandleTransformationInput();
+                HandleAttackInput();
 
-                HandleMovementInput(Time.deltaTime);
-
-                HandleDashInput(Time.deltaTime);
-
-                HandleJumpInput(Time.deltaTime);
-
-                HandleCrouchInput(Time.deltaTime);
-
-                HandleAttackInput(Time.deltaTime);
-
-                HandleTransformationInput(Time.deltaTime);
             }
         }
 
         /* method that check if is possible to move, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
-         private void HandleMovementInput(float delta)
+         private void HandleMovementInput()
         {
             bool validPos = _player.GetIsGrounded() || _player.GetIsOnEnemy();
-            if (_player.GetCurrentState().Equals(State.IDLE) && validPos || _player.GetCurrentState().Equals(State.CROUCH) && validPos)
+             if (_player.GetCurrentState().Equals(State.IDLE) && validPos || _player.GetCurrentState().Equals(State.CROUCH) && validPos)
             {
-                //Debug.Log("valid pos: g=" + _player.GetIsGrounded() + "  e=" + _player.GetIsOnEnemy());
                 if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
                     _movement.x = Input.GetAxisRaw("Horizontal");
                     _movement.y = 0;
@@ -110,19 +112,25 @@ namespace ThePackt{
                     }
                     _moveControl.Moving();
                 }
-            }/*  modificare solo la rotazione dello sprite
-            else  if(!_player.GetIsGrounded()){
-                _movement.x = Input.GetAxisRaw("Horizontal");
-                _movement.y = 0;
-                _movement.Normalize();
-                _player.SetDirection(_movement);
-            }*/
+            }
+            else if(_player.GetCurrentState().Equals(State.MOVE) && !validPos || _player.GetCurrentState().Equals(State.IDLE) && !validPos){
+                if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){  /* falling in the right direction --> seems more realistic */
+                    _movement.x = Input.GetAxisRaw("Horizontal");
+                    _movement.y = Physics2D.gravity.y *100f;
+                    _movement.Normalize();
+                    _player.SetDirection(_movement);
+                    _player.SetCurrentState(State.MOVE);
+                    _moveControl.Moving();
+                }
+                else if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+                    _player.SetCurrentState(State.IDLE);
+            }
         }
 
 
         /* method that check if is possible to dash, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
 
-        private void HandleDashInput(float delta){
+        private void HandleDashInput(){
             if(_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE)){
                 if (Input.GetKey(KeyCode.Space)){ //TODO adding stamina??? not a good idea to dash-spamming.
                     _player.SetCurrentState(State.DASH);
@@ -135,7 +143,7 @@ namespace ThePackt{
 
         /* method that check if is possible to jump, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
 
-        private void HandleJumpInput(float delta){
+        private void HandleJumpInput(){
             if(_player.GetCurrentState().Equals(State.IDLE) &&_player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) && _player.GetIsGrounded()){
                 if(Input.GetKeyDown(KeyCode.W)){
                     Debug.Log(_player.GetIsGrounded());
@@ -149,7 +157,7 @@ namespace ThePackt{
 
         /* method that check if is possible to move, changes state, activates the aniamtion trigger. This method checks if you release the input in order to change state */
 
-        private void HandleCrouchInput(float delta)
+        private void HandleCrouchInput()
         {
             if(_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded()||_player.GetCurrentState().Equals(State.MOVE) 
                 || _player.GetCurrentState().Equals(State.CROUCH) || _player.GetCurrentState().Equals(State.CROUCH_MOVE) ){
@@ -170,7 +178,7 @@ namespace ThePackt{
 
         /* method that check if is possible to attack, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
 
-        private void HandleAttackInput(float delta)
+        private void HandleAttackInput()
         {
             // set the right conditions
             if (_player.GetCurrentState().Equals(State.IDLE)||_player.GetCurrentState().Equals(State.MOVE) || _player.GetCurrentState().Equals(State.CROUCH)){
@@ -214,7 +222,7 @@ namespace ThePackt{
 
         /* method that check if is possible to transform, changes state, activates the aniamtion trigger and then call the handler in order to perform teh action */
 
-        private void HandleTransformationInput(float delta)
+        private void HandleTransformationInput()
         {
             // player can transform while jumping and while moving?
             if (_player.GetCurrentState().Equals(State.IDLE) && _player.GetIsGrounded())

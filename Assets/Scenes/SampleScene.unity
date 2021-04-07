@@ -4010,17 +4010,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca60fedf9188e484594ce125da876366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 2071652608}
   _speed: 5
   _dashMultiplier: 5
-  _jumpForce: 3
+  _jumpForce: 50
   _extraHeight: 0.1
   _powerBaseWerewolfAttack: 10
   _powerBaseHumanAttack: 10
   _rangeBaseWerewolfAttack: 0.35
   _attackPoint: {fileID: 1867279136}
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
-  prova: {fileID: 0}
+  _playerData: {fileID: 0}
+  _sprite: {fileID: 2071652608}
 --- !u!50 &2071652610
 Rigidbody2D:
   serializedVersion: 4
@@ -4032,8 +4032,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
-  m_Mass: 0.29649717
+  m_UseAutoMass: 0
+  m_Mass: 20
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -4097,9 +4097,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2071652608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 803d8176c3b8dbb41837945a697618e1, type: 3}
+  m_Script: {fileID: 11500000, guid: ba11b86734c7f0042958b612cafefbdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputHoldTime: 0.2
 --- !u!95 &2071652616
 Animator:
   serializedVersion: 3
@@ -4131,6 +4132,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 064e7946b63d1324db763bba89a556e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2071652618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071652608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: b6cd15bf0c2ed9a44908792b8cfd5047, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5dedd23b-7384-4188-b629-4cb62f3dc4a0
+    m_ActionName: Gameplay/Movement[/DualShock4GamepadHID/leftStick,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e5857c16-a468-4e3f-a020-5a7ae792bdcf
+    m_ActionName: Gameplay/Jump[/Keyboard/w,/DualShock4GamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b05c04fd-12f2-42fb-8c0d-6eec2ba746e7
+    m_ActionName: Gameplay/Dash[/Keyboard/space,/DualShock4GamepadHID/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b7ffd7a-05b2-45d7-a4b1-7591355e7b7f
+    m_ActionName: Gameplay/Crouch
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 519420031}
 --- !u!1 &2102550357
 GameObject:
   m_ObjectHideFlags: 0
