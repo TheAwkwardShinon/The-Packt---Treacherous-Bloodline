@@ -12,6 +12,11 @@ namespace ThePackt{
         private Rigidbody2D _rb;
         #endregion
 
+        // better to create a class containing these constants, expecially for cooldowns
+        #region constants
+        private const string DASH = "dash";
+        #endregion
+
         #region methods
         private void Start()
         {
@@ -45,6 +50,7 @@ namespace ThePackt{
             UpdateSpriteDirection(_player.GetDirection());
             UpdatePosition(_player.GetDirection()* _player.GetSpeed() * _player.GetDashMultiplier(), Time.fixedDeltaTime);
             _player.SetCurrentState(State.IDLE);
+            _player.PutOnCooldown(DASH);
         }
 
         /* method that change the position of the gameObject (the character)

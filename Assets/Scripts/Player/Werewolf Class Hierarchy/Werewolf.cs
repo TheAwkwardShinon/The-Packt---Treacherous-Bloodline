@@ -23,8 +23,12 @@ namespace ThePackt{  //to be used in every class
         [SerializeField] protected float _powerBaseWerewolfAttack;
         [SerializeField] protected float _powerBaseHumanAttack;
         [SerializeField] protected float _rangeBaseWerewolfAttack;
-
+        [SerializeField] protected float _dashCooldownTime;
+        [SerializeField] protected Transform _attackPoint;
+        [SerializeField] protected GameObject _bullet;
         // [SerializeField] protected GameObject prova;
+        protected Dictionary<string, float> _cooldownTimes;
+        private List<Cooldown> _cooldowns;
         private Vector2 _direction;
         public Vector2 _currentVelocity { get; private set; }
         public int _facingDirection { get; private set; }    
@@ -46,8 +50,7 @@ namespace ThePackt{  //to be used in every class
         
         #region components
         public  Animator _anim {get; private set;} 
-        [SerializeField] protected Transform _attackPoint;
-        [SerializeField] protected GameObject _bullet;
+
         protected Rigidbody2D _rb;
         protected Collider2D _col;
 
@@ -85,6 +88,11 @@ namespace ThePackt{  //to be used in every class
 
         #endregion
 
+        // better to create a class containing these constants, expecially for cooldowns
+        #region costants
+        //action names
+        private const string DASH = "dash";
+        #endregion
 
         #region methods
 
@@ -118,6 +126,10 @@ namespace ThePackt{  //to be used in every class
             _anim = GetComponent<Animator>();
             _facingDirection = 1;
             _stateMachine.Initialize(_idleState);
+            _cooldowns = new List<Cooldown>();
+            _cooldownTimes = new Dictionary<string, float>();
+
+            _cooldownTimes.Add(DASH, _dashCooldownTime);
         }
 
 
@@ -189,6 +201,41 @@ namespace ThePackt{  //to be used in every class
         {
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
+
+            ProcessCooldowns();
+        }
+
+        public void ProcessCooldowns()
+        {
+            float deltaTime = Time.deltaTime;
+
+            for (int i = _cooldowns.Count - 1; i >= 0; i--)
+            {
+                if (_cooldowns[i].DecrementCooldown(deltaTime))
+                {
+                    _cooldowns.RemoveAt(i);
+                    // Debug.Log("removed cooldown");
+                }
+            }
+        }
+
+        public bool IsOnCooldown(string actionName)
+        {
+            foreach(Cooldown cd in _cooldowns)
+            {
+                if(cd.GetActionName() == actionName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void PutOnCooldown(string actionName)
+        {
+            // Debug.Log("put cooldown");
+            _cooldowns.Add(new Cooldown(actionName, _cooldownTimes[actionName]));
         }
 
         public void CheckUnderFeet()
