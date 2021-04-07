@@ -23,11 +23,11 @@ namespace ThePackt{  //to be used in every class
         [SerializeField] protected float _powerBaseWerewolfAttack;
         [SerializeField] protected float _powerBaseHumanAttack;
         [SerializeField] protected float _rangeBaseWerewolfAttack;
-        [SerializeField] protected float _dashCooldownTime;
+        [SerializeField] protected List<Cooldown.CooldownData> _cooldownTimes;
         [SerializeField] protected Transform _attackPoint;
         [SerializeField] protected GameObject _bullet;
         // [SerializeField] protected GameObject prova;
-        protected Dictionary<string, float> _cooldownTimes;
+        protected Dictionary<string, float> _cooldownDict;
         private List<Cooldown> _cooldowns;
         private Vector2 _direction;
         public Vector2 _currentVelocity { get; private set; }
@@ -127,9 +127,11 @@ namespace ThePackt{  //to be used in every class
             _facingDirection = 1;
             _stateMachine.Initialize(_idleState);
             _cooldowns = new List<Cooldown>();
-            _cooldownTimes = new Dictionary<string, float>();
+            _cooldownDict = new Dictionary<string, float>();
 
-            _cooldownTimes.Add(DASH, _dashCooldownTime);
+            foreach(Cooldown.CooldownData cd in _cooldownTimes){
+                _cooldownDict.Add(cd.action, cd.time);
+            }
         }
 
 
@@ -235,7 +237,7 @@ namespace ThePackt{  //to be used in every class
         public void PutOnCooldown(string actionName)
         {
             // Debug.Log("put cooldown");
-            _cooldowns.Add(new Cooldown(actionName, _cooldownTimes[actionName]));
+            _cooldowns.Add(new Cooldown(actionName, _cooldownDict[actionName]));
         }
 
         public void CheckUnderFeet()

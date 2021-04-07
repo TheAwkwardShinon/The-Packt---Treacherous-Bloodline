@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using UnityEngine;
 
 namespace ThePackt
@@ -11,7 +12,6 @@ namespace ThePackt
         float _remainingTime;
 
         #endregion
-
 
         #region methods
 
@@ -28,6 +28,15 @@ namespace ThePackt
             // Debug.Log(_remainingTime == 0f);
 
             return _remainingTime == 0f;
+        }
+        #endregion
+
+        #region inner classes
+        [Serializable]
+        public class CooldownData
+        {
+            public string action;
+            public float time;
         }
         #endregion
 
