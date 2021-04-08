@@ -36,8 +36,21 @@ namespace ThePackt{
         }
 
         public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+
+        if (!_isExitingState)
         {
-            base.LogicUpdate();
-        }
+            if (_xInput != 0)
+            {
+                _stateMachine.ChangeState(_player._moveState);
+            }
+            else if (_yInput == -1)
+            {
+                _stateMachine.ChangeState(_player._crouchIdleState);
+            }
+        }       
+        
+    }
     }
 }

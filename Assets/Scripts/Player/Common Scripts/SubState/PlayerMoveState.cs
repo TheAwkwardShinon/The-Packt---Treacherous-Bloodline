@@ -27,23 +27,23 @@ namespace ThePackt{
 
         public override void LogicUpdate()
         {
-           // base.LogicUpdate;
-            /*
-            player.CheckIfShouldFlip(xInput);
+            base.LogicUpdate();
 
-            player.SetVelocityX(playerData.movementVelocity * xInput);
+            _player.CheckIfShouldFlip(_xInput);
 
-            if (!isExitingState)
+            _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
+
+            if (!_isExitingState)
             {
                 if (_xInput == 0)
                 {
-                    _stateMachine.ChangeState(player.IdleState);
+                    _stateMachine.ChangeState(_player._idleState);
                 }
                 else if (_yInput == -1)
                 {
-                    _stateMachine.ChangeState(player.CrouchMoveState);
+                    _stateMachine.ChangeState(_player._crouchMoveState);
                 }
-            }     */   
+            }        
         }
 
         public override void PhysicsUpdate()

@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace ThePackt{
-    public class PlayerCrouchIdleState : PlayerGroundedState
+    public class PlayerCrouchMoveState : PlayerGroundedState
     {
-        public PlayerCrouchIdleState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerCrouchMoveState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
 
         public override void Enter()
         {
             base.Enter();
-        
-            _player.SetVelocityZero();
             _player.SetColliderHeight(_player.GetPlayerData().crouchColliderHeight);
-            
         }
 
         public override void Exit()
@@ -30,15 +27,19 @@ namespace ThePackt{
 
             if (!_isExitingState)
             {
-                if(_xInput != 0)
+                _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
+                _player.CheckIfShouldFlip(_xInput);
+
+                if(_xInput == 0)
                 {
-                    _stateMachine.ChangeState(_player._crouchMoveState);
+                    _stateMachine.ChangeState(_player._crouchIdleState);
                 }
                 else if(_yInput != -1 && !_isTouchingCeiling)
                 {
-                    _stateMachine.ChangeState(_player._idleState);
+                    _stateMachine.ChangeState(_player._moveState);
                 }
-            } 
+            }
+
         }
     }
 }
