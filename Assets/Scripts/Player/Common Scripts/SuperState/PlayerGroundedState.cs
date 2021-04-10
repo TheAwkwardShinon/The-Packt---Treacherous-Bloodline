@@ -37,9 +37,9 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("numero salti resettato a 1");
+            Debug.Log("[GROUNDED STATE] numero salti resettato a 1");
             _player._jumpState.ResetAmountOfJumpsLeft();
-            _player._dashState.ResetCanDash();
+            _player._dashState.ResetCanDash(); //todo usless line
         }
 
         public override void Exit()
@@ -51,19 +51,24 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
+            Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
+
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;
             _dashInput = _player._inputHandler._dashInput;
-            if (_jumpInput && _player._jumpState.CanJump())
+            if (_jumpInput && _player._jumpState.CanJump() && _isGrounded)
             {
+                Debug.Log("[GROUNDED STATE] player pushing to jump, player is grounded -> "+_isGrounded+" and can jump so passing to jump state...");
                 _stateMachine.ChangeState(_player._jumpState);
             }else if (!_isGrounded)
             {
+                Debug.Log("[GROUNDED STATE] dunno wht, but the player is no more on the ground. changing state to on air ... ");
                 _stateMachine.ChangeState(_player._inAirState);
             }
             else if (_dashInput && _player._dashState.CheckIfCanDash())
             {
+                Debug.Log("[GROUNDED STATE] palyer is pushing space so he is wanna dash. changing to dash state...");
                 _stateMachine.ChangeState(_player._dashState);
             }
         }

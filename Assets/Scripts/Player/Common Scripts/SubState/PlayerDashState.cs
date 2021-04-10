@@ -42,10 +42,10 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
+/*
             if (!_isExitingState)
             {
-
+                Debug.Log("[DASH STATE] is not exiting from state, just setting directions and velocity");
                 _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
                 _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
                 _dashDirection = Vector2.right * _player._facingDirection;
@@ -57,17 +57,32 @@ namespace ThePackt{
             }
             else
             {
+                Debug.Log("[DASH STATE] is exiting from state, set velocity and check if ability is done");
                 _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);
                 if (Time.time >= _startTime + _player.GetPlayerData().dashTime)
                 {
+                    Debug.Log("[DASH STATE] ability done");
                     _player.SetRigidBodyDrag(0f);
                     _isAbilityDone = true;
                     _lastDashTime = Time.time;
                 }
+            }*/
+            Debug.Log("[DASH STATE] performing dash");
+            _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
+            _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+            _dashDirection = Vector2.right * _player._facingDirection;
+            _dashDirection.Normalize();
+            _player.CheckIfShouldFlip(Mathf.RoundToInt(_dashDirection.x));
+            _player.SetRigidBodyDrag(_player.GetPlayerData().drag);
+            _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);
+            if (Time.time >= _startTime + _player.GetPlayerData().dashTime)
+            {
+                Debug.Log("[DASH STATE] ability done");
+                _player.SetRigidBodyDrag(0f);
+                _isAbilityDone = true;
+                _lastDashTime = Time.time;
             }
-            /*if(_player.GetIsGrounded())
-                _player._stateMachine.ChangeState(_player._idleState);
-            else _player._stateMachine.ChangeState(_player._inAirState);*/
+           
         }
 
         public override void PhysicsUpdate()

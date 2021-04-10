@@ -22,7 +22,7 @@ MonoBehaviour:
   maxHoldTime: 1
   holdTimeScale: 0.25
   dashTime: 0.2
-  dashVelocity: 9
+  dashVelocity: 12
   drag: 5
   dashEndYMultiplier: 0.15
   distBetweenAfterImages: 0.5
@@ -32,5 +32,5 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckRadius: 1.5
+  groundCheckRadius: 0.1
   wallCheckDistance: 0.5

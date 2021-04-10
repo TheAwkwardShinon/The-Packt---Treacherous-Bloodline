@@ -19,8 +19,9 @@ namespace ThePackt{
             _player._inputHandler.UseJumpInput();
             _player.SetVelocityY(_player.GetPlayerData().jumpVelocity);
             _isAbilityDone = true;
+            Debug.Log("[JUMP STATE] entered + number of jump left before perform this: "+amountOfJumpsLeft);
             amountOfJumpsLeft--;
-            Debug.Log("jump left = "+ amountOfJumpsLeft);
+            Debug.Log("[JUMP STATE] numebr of jump left after this jump = "+ amountOfJumpsLeft);
             _player._inAirState.SetIsJumping();
         }
 
@@ -37,15 +38,15 @@ namespace ThePackt{
 
         public bool CanJump()
         {
-            Debug.Log("numero di salti rimasti prima del check: "+amountOfJumpsLeft);
+            Debug.Log("[CAN JUMP] number of jump left: "+amountOfJumpsLeft);
             if (amountOfJumpsLeft > 0)
             {
-                Debug.Log("Perche ritorna true???");
+                Debug.Log("[CAN JUMP] returning true");
                 return true;
             }
             else
             {
-                Debug.Log("menomale");
+                Debug.Log("[CAN JUMP] returning false");
                 return false;
             }
         }

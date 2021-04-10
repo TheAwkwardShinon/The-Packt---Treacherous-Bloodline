@@ -9,17 +9,29 @@ namespace ThePackt{
         {
         }
 
+        public override void Enter()
+        {
+            base.Enter();
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+        }
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            Debug.Log("stuck here??");
+            Debug.Log("[LAND STATE] wait to understand what state will be, idle or move?");
             
                 if (_xInput != 0)
                 {
+                    Debug.Log("[LAND STATE] changing to move state...");
                     _stateMachine.ChangeState(_player._moveState);
                 }
                 else
                 {
+                    Debug.Log("[LAND STATE] changing state to idle state...");
                     _stateMachine.ChangeState(_player._idleState);
                 }
                   

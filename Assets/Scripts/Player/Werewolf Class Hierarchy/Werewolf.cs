@@ -159,6 +159,7 @@ namespace ThePackt{  //to be used in every class
             _stateMachine._currentState.LogicUpdate();
         }
 
+
     
         #endregion
 
@@ -260,9 +261,9 @@ namespace ThePackt{  //to be used in every class
 
         public void CheckUnderFeet()
         {
-
+/*
             LayerMask lm = LayerMask.GetMask("Ground", "Enemies");
-            Vector2 boxCenter = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
+            
             Collider2D hit = Physics2D.OverlapBox(boxCenter, new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f), 0f, lm);
             _isGrounded = false;
             _isOnEnemy = false;
@@ -277,6 +278,7 @@ namespace ThePackt{  //to be used in every class
                     _isOnEnemy = true;
                 }
             }
+            */
         }
 
 
@@ -310,8 +312,10 @@ namespace ThePackt{  //to be used in every class
         }
 
          public bool CheckIfGrounded()
-        {
-            return Physics2D.OverlapCircle(_ledgeCheck.position, _playerData.groundCheckRadius, _playerData.whatIsGround);
+        {   
+            //return Physics2D.OverlapCircle(_ledgeCheck.position, _playerData.groundCheckRadius, _playerData.whatIsGround);
+            Vector2 boxCenter = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
+            return Physics2D.OverlapBox(boxCenter, new Vector3(_col.bounds.size.x - 0.01f, _extraHeight, 0f), 0f, _playerData.whatIsGround);
         }
 
         public bool CheckIfTouchingWall()

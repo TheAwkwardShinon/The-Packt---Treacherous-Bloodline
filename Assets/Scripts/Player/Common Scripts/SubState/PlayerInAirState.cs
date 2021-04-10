@@ -33,7 +33,7 @@ namespace ThePackt{
         public override void Checks()
         {
             base.Checks();
-
+            Debug.Log("[PLAYER IS IN AIR] IN CHECKS(), CHECKING IS GROUNDED");
             _isGrounded = _player.CheckIfGrounded();
             _isTouchingWall = _player.CheckIfTouchingWall();
             
@@ -61,17 +61,19 @@ namespace ThePackt{
             _jumpInput = _player._inputHandler._jumpInput;
             _jumpInputStop = _player._inputHandler._jumpInputStop;
             _dashInput = _player._inputHandler._dashInput;
-            //_isGrounded = _player.CheckIfGrounded();
+            _isGrounded = _player.CheckIfGrounded();
+            Debug.Log("[PLAYER IS IN AIR] is grounded: "+_isGrounded);
 
             CheckJumpMultiplier();
 
             if (_isGrounded && _player._currentVelocity.y < 0.01f)
-            {            
+            {        
+                Debug.Log("[PLAYER IS IN AIR] seems that is grounded: "+_isGrounded + " so changing state to Land state...");    
                 _stateMachine.ChangeState(_player._landState);
             }
             else if(_jumpInput && _player._jumpState.CanJump())
             {
-                Debug.Log("seriously am i here???");
+                Debug.Log("[PLAYER IS IN AIR] player can jump, entering in jump state... ");
                 _stateMachine.ChangeState(_player._jumpState); //if more jump can be done
             }
             else if(_isTouchingWall && _xInput == _player._facingDirection && _player._currentVelocity.y <= 0)
@@ -80,10 +82,12 @@ namespace ThePackt{
             }
             else if(_dashInput && _player._dashState.CheckIfCanDash())
             {
+                Debug.Log("[PLAYER IS IN AIR] player can dash and player is pressing pace, entering in dash state... ");
                 _stateMachine.ChangeState(_player._dashState);
             }
             else
             {
+                Debug.Log("[PLAYER IS IN AIR] no input from palyer, just falling, waiting to land");
                 _player.CheckIfShouldFlip(_xInput);
                 _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
 
@@ -113,6 +117,7 @@ namespace ThePackt{
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
+            Debug.Log("[PLAYER IS IN AIR] PHYSICS UPDATE --> CALLING CHECKS");
         }
 
         public void SetIsJumping() => _isJumping = true;
