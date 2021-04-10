@@ -21,5 +21,9 @@ namespace ThePackt{
             }
         
         }
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
+        }
     }
 }

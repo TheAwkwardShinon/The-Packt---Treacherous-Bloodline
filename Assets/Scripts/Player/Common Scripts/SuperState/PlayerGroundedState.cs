@@ -11,6 +11,9 @@ namespace ThePackt{
         protected int _yInput;
 
         protected bool _isTouchingCeiling;
+        private bool _isTouchingLedge;
+        private bool _isTouchingWall;
+
 
         private bool _jumpInput;
         private bool _isGrounded;
@@ -24,16 +27,19 @@ namespace ThePackt{
         {
             base.Checks();
 
-            _isGrounded = _player.GetIsGrounded();
+            _isGrounded = _player.CheckIfGrounded();
+            _isTouchingWall = _player.CheckIfTouchingWall();
+            _isTouchingLedge = _player.CheckIfTouchingLedge();
+            _isTouchingCeiling = _player.CheckForCeiling();
            
         }
 
         public override void Enter()
         {
             base.Enter();
-
-           // _player._jumpState.ResetAmountOfJumpsLeft();
-            //_player._dashState.ResetCanDash();
+            Debug.Log("numero salti resettato a 1");
+            _player._jumpState.ResetAmountOfJumpsLeft();
+            _player._dashState.ResetCanDash();
         }
 
         public override void Exit()
@@ -44,23 +50,16 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-/*
+
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;
             _dashInput = _player._inputHandler._dashInput;
-
-            if (_player._inputHandler.AttackInputs[(int)CombatInputs.primary] ) //more attacks and special abilities
-            {
-                _stateMachine.ChangeState(_player._attackState);
-            }
-            
-            else if (_jumpInput && _player._jumpState.CanJump())
+            if (_jumpInput && _player._jumpState.CanJump())
             {
                 _stateMachine.ChangeState(_player._jumpState);
             }else if (!_isGrounded)
             {
-                _player._inAirState.StartCoyoteTime();
                 _stateMachine.ChangeState(_player._inAirState);
             }
             else if (_dashInput && _player._dashState.CheckIfCanDash())
@@ -72,8 +71,6 @@ namespace ThePackt{
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-        }
-        */
         }
     }
 }

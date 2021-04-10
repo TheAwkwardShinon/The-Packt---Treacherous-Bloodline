@@ -40,8 +40,8 @@ namespace ThePackt{
 
         private void Update()
         {
-            Check_jump_inputHoldTime();
-            CheckDash_inputHoldTime();
+            CheckJumpInputHoldTime();
+            CheckDashInputHoldTime();
         }
 /*
         public void OnPrimaryAttackInput(InputAction.CallbackContext context)
@@ -79,7 +79,7 @@ namespace ThePackt{
             
         }
 
-        public void On_jumpInput(InputAction.CallbackContext context)
+        public void OnJumpInput(InputAction.CallbackContext context)
         {
             if (context.started)
             {
@@ -109,7 +109,7 @@ namespace ThePackt{
             }
         }
 
-        public void On_dashDirectionInput(InputAction.CallbackContext context)
+        public void OnDashDirectionInput(InputAction.CallbackContext context)
         {
             _raw_dashDirectionInput = context.ReadValue<Vector2>();
 
@@ -121,11 +121,11 @@ namespace ThePackt{
             _dashDirectionInput = Vector2Int.RoundToInt(_raw_dashDirectionInput.normalized);
         }
 
-        public void Use_jumpInput() => _jumpInput = false;
+        public void UseJumpInput() => _jumpInput = false;
 
         public void UseDashInput() => _dashInput = false;
 
-        private void Check_jump_inputHoldTime()
+        private void CheckJumpInputHoldTime()
         {
             if(Time.time >= _jumpInputStartTime + _inputHoldTime)
             {
@@ -133,12 +133,14 @@ namespace ThePackt{
             }
         }
 
-        private void CheckDash_inputHoldTime()
+        private void CheckDashInputHoldTime()
         {
             if(Time.time >=  _dashInputStartTime + _inputHoldTime)
             {
             _dashInput = false;
             }
         }
+
+        
     }
 }

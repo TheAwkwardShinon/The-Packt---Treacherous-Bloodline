@@ -12,18 +12,22 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            if (!_isExitingState)
-            {
+            Debug.Log("stuck here??");
+            
                 if (_xInput != 0)
                 {
                     _stateMachine.ChangeState(_player._moveState);
                 }
-                else if (_isAnimationFinished)
+                else
                 {
                     _stateMachine.ChangeState(_player._idleState);
                 }
-            }       
+                  
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
         }
     }
 }

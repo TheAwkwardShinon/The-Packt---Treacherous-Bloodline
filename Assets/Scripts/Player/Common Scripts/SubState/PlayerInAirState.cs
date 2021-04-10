@@ -34,10 +34,7 @@ namespace ThePackt{
         {
             base.Checks();
 
-            _oldIsTouchingWall = _isTouchingWall;
-            _oldIsTouchingWallBack = _isTouchingWallBack;
-
-            _isGrounded = _player.GetIsGrounded();
+            _isGrounded = _player.CheckIfGrounded();
             _isTouchingWall = _player.CheckIfTouchingWall();
             
             _isTouchingLedge = _player.CheckIfTouchingLedge();
@@ -53,7 +50,6 @@ namespace ThePackt{
         public override void Exit()
         {
             base.Exit();
-            _oldIsTouchingWall = false;
             _isTouchingWall = false;
         }
 
@@ -65,25 +61,17 @@ namespace ThePackt{
             _jumpInput = _player._inputHandler._jumpInput;
             _jumpInputStop = _player._inputHandler._jumpInputStop;
             _dashInput = _player._inputHandler._dashInput;
+            //_isGrounded = _player.CheckIfGrounded();
 
             CheckJumpMultiplier();
-            /*
-            if (_player.InputHandler.AttackInputs[(int)CombatInputs.primary])
-            {
-                stateMachine.ChangeState(player.PrimaryAttackState);
-            }
-            */
+
             if (_isGrounded && _player._currentVelocity.y < 0.01f)
             {            
                 _stateMachine.ChangeState(_player._landState);
             }
-            /*
-            else if(_isTouchingWall && !_isTouchingLedge && !_isGrounded)
-            {
-                stateMachine.ChangeState(_player._slideState);
-            }*/
             else if(_jumpInput && _player._jumpState.CanJump())
             {
+                Debug.Log("seriously am i here???");
                 _stateMachine.ChangeState(_player._jumpState); //if more jump can be done
             }
             else if(_isTouchingWall && _xInput == _player._facingDirection && _player._currentVelocity.y <= 0)

@@ -24,14 +24,8 @@ namespace ThePackt{
 
             CanDash = false;
             _player._inputHandler.UseDashInput();
-
-            _isHolding = true;
             _dashDirection = Vector2.right * _player._facingDirection;
 
-            Time.timeScale = _player.GetPlayerData().holdTimeScale;
-            _startTime = Time.unscaledTime;
-
-            _player._dashDirectionIndicator.gameObject.SetActive(true);
 
         }
 
@@ -54,62 +48,33 @@ namespace ThePackt{
 
                 _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
                 _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+                _dashDirection = Vector2.right * _player._facingDirection;
+                _dashDirection.Normalize();
+                _player.CheckIfShouldFlip(Mathf.RoundToInt(_dashDirection.x));
+                _player.SetRigidBodyDrag(_player.GetPlayerData().drag);
+                _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);                    
 
-
-                if (_isHolding)
-                {
-                    _dashDirectionInput = _player._inputHandler._dashDirectionInput;
-                    _dashInputStop = _player._inputHandler._dashInputStop;
-
-                    if(_dashDirectionInput != Vector2.zero)
-                    {
-                        _dashDirection = _dashDirectionInput;
-                        _dashDirection.Normalize();
-                    }
-
-                    float angle = Vector2.SignedAngle(Vector2.right, _dashDirection);
-                    _player._dashDirectionIndicator.rotation = Quaternion.Euler(0f, 0f, angle - 45f);
-
-                    if(_dashInputStop || Time.unscaledTime >= _startTime + _player.GetPlayerData().maxHoldTime)
-                    {
-                        _isHolding = false;
-                        Time.timeScale = 1f;
-                        _startTime = Time.time;
-                        _player.CheckIfShouldFlip(Mathf.RoundToInt(_dashDirection.x));
-                        _player.SetRigidBodyDrag(_player.GetPlayerData().drag);
-                        _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);
-                        _player._dashDirectionIndicator.gameObject.SetActive(false);
-                        //PlaceAfterImage();
-                    }
-                }
-                else
-                {
-                    _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);
-                   // CheckIfShouldPlaceAfterImage();
-
-                    if (Time.time >= _startTime + _player.GetPlayerData().dashTime)
-                    {
-                        _player.SetRigidBodyDrag(0f);
-                        _isAbilityDone = true;
-                        _lastDashTime = Time.time;
-                    }
-                }
             }
-        }
-/*
-        private void CheckIfShouldPlaceAfterImage()
-        {
-            if(Vector2.Distance(player.transform.position, lastAIPos) >= playerData.distBetweenAfterImages)
+            else
             {
-                PlaceAfterImage();
+                _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);
+                if (Time.time >= _startTime + _player.GetPlayerData().dashTime)
+                {
+                    _player.SetRigidBodyDrag(0f);
+                    _isAbilityDone = true;
+                    _lastDashTime = Time.time;
+                }
             }
+            /*if(_player.GetIsGrounded())
+                _player._stateMachine.ChangeState(_player._idleState);
+            else _player._stateMachine.ChangeState(_player._inAirState);*/
         }
 
-        private void PlaceAfterImage()
+        public override void PhysicsUpdate()
         {
-            _playerAfterImagePool.Instance.GetFromPool();
-            _lastAIPos = player.transform.position;
-        }*/
+            base.PhysicsUpdate();
+        }
+
 
         public bool CheckIfCanDash()
         {

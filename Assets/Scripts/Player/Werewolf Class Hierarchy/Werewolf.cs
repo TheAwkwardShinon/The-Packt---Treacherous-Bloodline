@@ -112,15 +112,15 @@ namespace ThePackt{  //to be used in every class
 
         private void Awake(){
             _stateMachine = new PlayerStateMachine();
-            _idleState = new PlayerIdleState(this,_stateMachine,_playerData,"idle");
-            _moveState = new PlayerMoveState(this,_stateMachine,_playerData,"move");
-            _jumpState = new PlayerJumpState(this, _stateMachine, _playerData, "jump");
-            _inAirState = new PlayerInAirState(this, _stateMachine, _playerData, "jump");
-            _crouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, _playerData, "crouchIdle");
-            _crouchMoveState = new PlayerCrouchMoveState(this, _stateMachine, _playerData, "crouchMove");
-            _landState = new PlayerLandState(this, _stateMachine, _playerData, "land");
-            _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "wallSlide");
-            _dashState = new PlayerDashState(this, _stateMachine, _playerData, "dash");
+            _idleState = new PlayerIdleState(this,_stateMachine,_playerData,"Idle");
+            _moveState = new PlayerMoveState(this,_stateMachine,_playerData,"Move");
+            _jumpState = new PlayerJumpState(this, _stateMachine, _playerData, "InAir");
+            _inAirState = new PlayerInAirState(this, _stateMachine, _playerData, "InAir");
+            _crouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, _playerData, "CrouchIdle");
+            _crouchMoveState = new PlayerCrouchMoveState(this, _stateMachine, _playerData, "CrouchMove");
+            _landState = new PlayerLandState(this, _stateMachine, _playerData, "Land");
+            _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
+            _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
 
            
             /* to be coded */
@@ -140,7 +140,8 @@ namespace ThePackt{  //to be used in every class
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
             _anim = GetComponent<Animator>();
-            _facingDirection = 1;
+            _inputHandler = GetComponent<newInputHandler>();
+            _facingDirection = -1;
             _stateMachine.Initialize(_idleState);
             _cooldowns = new List<Cooldown>();
             _cooldownDict = new Dictionary<string, float>();
@@ -217,6 +218,12 @@ namespace ThePackt{  //to be used in every class
 
             ProcessCooldowns();
         }
+
+        private void AnimationTrigger() => _stateMachine._currentState.AnimationTrigger();
+
+        private void AnimtionFinishTrigger() => _stateMachine._currentState.AnimationFinishTrigger();
+
+
 
         public void ProcessCooldowns()
         {
@@ -302,6 +309,10 @@ namespace ThePackt{  //to be used in every class
             return Physics2D.OverlapCircle(_ceilingCheck.position, _playerData.groundCheckRadius, _playerData.whatIsGround);
         }
 
+         public bool CheckIfGrounded()
+        {
+            return Physics2D.OverlapCircle(_ledgeCheck.position, _playerData.groundCheckRadius, _playerData.whatIsGround);
+        }
 
         public bool CheckIfTouchingWall()
         {

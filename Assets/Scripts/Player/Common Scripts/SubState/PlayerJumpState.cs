@@ -20,17 +20,32 @@ namespace ThePackt{
             _player.SetVelocityY(_player.GetPlayerData().jumpVelocity);
             _isAbilityDone = true;
             amountOfJumpsLeft--;
+            Debug.Log("jump left = "+ amountOfJumpsLeft);
             _player._inAirState.SetIsJumping();
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+
+        }
+
+        public override void PhysicsUpdate()
+        {
+            base.PhysicsUpdate();
         }
 
         public bool CanJump()
         {
+            Debug.Log("numero di salti rimasti prima del check: "+amountOfJumpsLeft);
             if (amountOfJumpsLeft > 0)
             {
+                Debug.Log("Perche ritorna true???");
                 return true;
             }
             else
             {
+                Debug.Log("menomale");
                 return false;
             }
         }

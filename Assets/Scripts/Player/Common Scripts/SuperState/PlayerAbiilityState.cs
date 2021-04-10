@@ -17,7 +17,7 @@ namespace ThePackt{
         {
             base.Checks();
 
-            _isGrounded = _player.GetIsGrounded();
+            _isGrounded = _player.CheckIfGrounded();
         }
 
         public override void Enter()
@@ -41,11 +41,11 @@ namespace ThePackt{
                 if (_isGrounded && _player._currentVelocity.y < 0.01f)
                 {
                     _stateMachine.ChangeState(_player._idleState);
-                }/*
+                }
                 else
                 {
-                    //_stateMachine.ChangeState(_player._inAirState);
-                }*/
+                    _stateMachine.ChangeState(_player._inAirState);
+                }
             }
         }
 
