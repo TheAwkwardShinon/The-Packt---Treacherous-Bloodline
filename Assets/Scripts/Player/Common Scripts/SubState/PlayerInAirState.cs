@@ -9,6 +9,7 @@ namespace ThePackt{
         private int _xInput;
         private bool _jumpInput;
         private bool _jumpInputStop;
+        private bool _attackInput;
         private bool _grabInput;
         private bool _dashInput;
 
@@ -60,6 +61,7 @@ namespace ThePackt{
             _xInput = _player._inputHandler._normInputX;
             _jumpInput = _player._inputHandler._jumpInput;
             _jumpInputStop = _player._inputHandler._jumpInputStop;
+            _attackInput = _player._inputHandler._attackInput;
             _dashInput = _player._inputHandler._dashInput;
             _isGrounded = _player.CheckIfGrounded();
             Debug.Log("[PLAYER IS IN AIR] is grounded: "+_isGrounded);
@@ -84,6 +86,11 @@ namespace ThePackt{
             {
                 Debug.Log("[PLAYER IS IN AIR] player can dash and player is pressing pace, entering in dash state... ");
                 _stateMachine.ChangeState(_player._dashState);
+            }
+            else if (_attackInput && _player._attackState.CheckIfCanAttack())
+            {
+                Debug.Log("[PLAYER IS IN AIR] player can attack and player is pressing left mouse, entering in attack state... ");
+                _stateMachine.ChangeState(_player._attackState);
             }
             else
             {

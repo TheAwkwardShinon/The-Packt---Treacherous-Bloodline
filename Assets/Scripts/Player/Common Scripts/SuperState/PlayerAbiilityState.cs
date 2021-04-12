@@ -35,7 +35,7 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
+            
             if (_isAbilityDone)
             {
                 if (_isGrounded && _player._currentVelocity.y < 0.01f)

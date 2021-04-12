@@ -76,11 +76,9 @@ namespace ThePackt{  //to be used in every class
         public PlayerLandState _landState { get; private set; }
         public PlayerWallSlideState _wallSlideState { get; private set; }
         public PlayerDashState _dashState { get; private set; }
-        /* to be implemented 
-
-        
-       
         public PlayerAttackState _attackState { get; private set; }
+
+        /* to be implemented 
         public PlayerTransformState _transformState { get; private set; }
         public PlayerDetransformState _detransformState {get; private set;}
         */
@@ -121,15 +119,14 @@ namespace ThePackt{  //to be used in every class
             _landState = new PlayerLandState(this, _stateMachine, _playerData, "Land");
             _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
             _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
+            _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "Attack");
 
-           
+
             /* to be coded */
 
             /*
             
             
-            
-            _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "attack");
             _transformState = new PlayerTransformState(this, _stateMachine, _playerData, "transformation");
             _detransformState = new PlayerDetransformState(this,_stateMachine,_playerData,"detransformation");
             */

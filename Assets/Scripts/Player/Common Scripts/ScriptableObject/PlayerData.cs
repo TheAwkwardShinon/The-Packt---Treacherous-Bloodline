@@ -36,6 +36,11 @@ public class PlayerData : ScriptableObject
     public float crouchColliderHeight = 0.8f;
     public float standColliderHeight = 1.6f;
 
+    [Header("Attack State")]
+    public float powerBaseWerewolf = 10f;
+    public float rangeBaseWerewolf = 0.35f;
+    public float powerBaseHuman = 10f;
+
     [Header("Layer masks")]
     public LayerMask whatIsGround;
     public float groundCheckRadius = 0.3f;
