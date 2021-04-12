@@ -53,12 +53,13 @@ namespace ThePackt{
             base.LogicUpdate();
 
             Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
+            Debug.Log("attack input state " + _attackInput);
 
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;
             _dashInput = _player._inputHandler._dashInput;
-            _attackInput = _player._inputHandler._attackInput;
+            _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             if (_jumpInput && _player._jumpState.CanJump() && _isGrounded)
             {
                 Debug.Log("[GROUNDED STATE] player pushing to jump, player is grounded -> "+_isGrounded+" and can jump so passing to jump state...");

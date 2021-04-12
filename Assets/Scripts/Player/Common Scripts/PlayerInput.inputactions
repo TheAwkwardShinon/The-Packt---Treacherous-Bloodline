@@ -52,22 +52,6 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "MouseX",
-                    "type": "PassThrough",
-                    "id": "799f1a42-c0b3-4021-93ee-b04feafa1631",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "MouseY",
-                    "type": "PassThrough",
-                    "id": "bb4d1c5c-1cc6-4085-b74a-6dddfcc45df3",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -249,6 +233,17 @@
                 },
                 {
                     "name": "",
+                    "id": "e5beb36a-50da-4481-8758-11948429a5d0",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "974d5354-846e-4fcd-ad79-d9ec3767392a",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
@@ -288,28 +283,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "AttackDirection",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8c18ba6b-9921-418b-ba5a-16ebc692f6d3",
-                    "path": "<Mouse>/delta/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseX",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8ed39a18-b41d-409b-9907-bcffd0a6ca10",
-                    "path": "<Mouse>/delta/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseY",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

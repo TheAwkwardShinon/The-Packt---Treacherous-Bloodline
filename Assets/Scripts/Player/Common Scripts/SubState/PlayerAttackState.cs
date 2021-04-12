@@ -15,31 +15,26 @@ namespace ThePackt
         public override void Enter()
         {
             base.Enter();
-            _player._inputHandler.UseBaseAttackInput();
 
-            if (_player.GetIsHuman())
+            if (_player._inputHandler._attackInputs[Constants.BASE])
             {
-                Debug.Log("[ATTACK STATE] entered (human)");
-                BaseHumanAttack();
-                _isAbilityDone = true;
-                Debug.Log("[ATTACK STATE] ability done (human)");
-            }
-            else
-            {
-                Debug.Log("[ATTACK STATE] entered (werewolf)");
-                BaseWereWolfAttack();
-                _isAbilityDone = true;
-                Debug.Log("[ATTACK STATE] ability done (werewolf)");
-            }
+                _player._inputHandler.UseBaseAttackInput();
 
-            /*
-            if (Time.time >= _startTime + _player.GetPlayerData().attackTime)
-            {
-                Debug.Log("[ATTACK STATE] ability done");
-                _isAbilityDone = true;
-                _lastAttackTime = Time.time;
+                if (_player.GetIsHuman())
+                {
+                    Debug.Log("[ATTACK STATE] entered (base human)");
+                    BaseHumanAttack();
+                    _isAbilityDone = true;
+                    Debug.Log("[ATTACK STATE] ability done (base human)");
+                }
+                else
+                {
+                    Debug.Log("[ATTACK STATE] entered (base werewolf)");
+                    BaseWereWolfAttack();
+                    _isAbilityDone = true;
+                    Debug.Log("[ATTACK STATE] ability done (base werewolf)");
+                }
             }
-            */
         }
 
         public override void LogicUpdate()

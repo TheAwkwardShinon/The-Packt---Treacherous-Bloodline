@@ -61,7 +61,7 @@ namespace ThePackt{
             _xInput = _player._inputHandler._normInputX;
             _jumpInput = _player._inputHandler._jumpInput;
             _jumpInputStop = _player._inputHandler._jumpInputStop;
-            _attackInput = _player._inputHandler._attackInput;
+            _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             _dashInput = _player._inputHandler._dashInput;
             _isGrounded = _player.CheckIfGrounded();
             Debug.Log("[PLAYER IS IN AIR] is grounded: "+_isGrounded);

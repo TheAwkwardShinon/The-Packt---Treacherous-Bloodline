@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 namespace ThePackt{
     public class newInputHandler : MonoBehaviour
     {
-        private PlayerInput playerInput;
+        private PlayerInput playerInputComponent;
+        // private PlayerInputClass playerInputObject;
         private Werewolf player;
         private Camera cam;
 
@@ -21,22 +22,26 @@ namespace ThePackt{
         public bool _jumpInputStop { get; private set; }
         public bool _dashInput { get; private set; }
         public bool _dashInputStop { get; private set; }
-        public bool _attackInput { get; private set; }
-        public bool _attackInputStop { get; private set; }
         public Dictionary<string, bool> _attackInputs { get; private set; }
+        public Dictionary<string, bool> _attackInputsStop { get; private set; }
 
         [SerializeField]
         private float _inputHoldTime = 0.2f;
 
         private float _jumpInputStartTime;
         private float _dashInputStartTime;
-        private float _attackInputStartTime;
+        public Dictionary<string, float> _attackInputsStartTime { get; private set; }
 
         private void Start()
         {
-            playerInput = GetComponent<PlayerInput>();
             player = GetComponent<Werewolf>();
             _attackInputs = new Dictionary<string, bool>();
+            _attackInputsStop = new Dictionary<string, bool>();
+            _attackInputsStartTime = new Dictionary<string, float>();
+
+            playerInputComponent = GetComponent<PlayerInput>();
+            // playerInputObject = new PlayerInputClass();
+            // playerInputObject.Gameplay.Attack.performed += context => OnAttackInput(context);
 
             //int count = Enum.GetValues(typeof(CombatInputs)).Length;
             //_attackInputs = new bool[count];
@@ -48,35 +53,36 @@ namespace ThePackt{
         {
             CheckJumpInputHoldTime();
             CheckDashInputHoldTime();
-            CheckAttackInputHoldTime();
-        }
-/*
-        public void OnPrimaryAttackInput(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                _attackInputs[(int)CombatInputs.primary] = true;
-            }
-
-            if (context.canceled)
-            {
-                _attackInputs[(int)CombatInputs.primary] = false;
-            }
+            CheckBaseAttackInputHoldTime();
         }
 
-        public void OnSecondaryAttackInput(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                _attackInputs[(int)CombatInputs.secondary] = true;
-            }
+        /*
+                public void OnPrimaryAttackInput(InputAction.CallbackContext context)
+                {
+                    if (context.started)
+                    {
+                        _attackInputs[(int)CombatInputs.primary] = true;
+                    }
 
-            if (context.canceled)
-            {
-                _attackInputs[(int)CombatInputs.secondary] = false;
-            }
-        }
-*/
+                    if (context.canceled)
+                    {
+                        _attackInputs[(int)CombatInputs.primary] = false;
+                    }
+                }
+
+                public void OnSecondaryAttackInput(InputAction.CallbackContext context)
+                {
+                    if (context.started)
+                    {
+                        _attackInputs[(int)CombatInputs.secondary] = true;
+                    }
+
+                    if (context.canceled)
+                    {
+                        _attackInputs[(int)CombatInputs.secondary] = false;
+                    }
+                }
+        */
         public void OnMoveInput(InputAction.CallbackContext context)
         {
             _rawMovementInput = context.ReadValue<Vector2>();
@@ -121,7 +127,7 @@ namespace ThePackt{
         {
             _raw_dashDirectionInput = context.ReadValue<Vector2>();
 
-            if(playerInput.currentControlScheme == "Keyboard")
+            if(playerInputComponent.currentControlScheme == "Keyboard")
             {
                 _raw_dashDirectionInput = cam.ScreenToWorldPoint((Vector3)_raw_dashDirectionInput) - transform.position;
             }
@@ -131,20 +137,20 @@ namespace ThePackt{
 
         public void OnAttackInput(InputAction.CallbackContext context)
         {
-            Debug.Log("attack");
+            Debug.Log("base attack");
 
             if (context.started)
             {
                 if (SetAttackDirection())
                 {
-                    _attackInput = true;
-                    _attackInputStop = false;
-                    _attackInputStartTime = Time.time;
+                    _attackInputs[Constants.BASE] = true;
+                    _attackInputsStop[Constants.BASE] = false;
+                    _attackInputsStartTime[Constants.BASE] = Time.time;
                 }
             }
             else if (context.canceled)
             {
-                _attackInputStop = true;
+                _attackInputsStop[Constants.BASE] = true;
             }
         }
 
@@ -155,8 +161,9 @@ namespace ThePackt{
             bool pointedLeft = true;
             bool facingLeft = player._facingDirection == -1 ? true : false;
 
-            if (playerInput.currentControlScheme == "Keyboard")
+            if (playerInputComponent.currentControlScheme == "Keyboard")
             {
+                //da togliere quando funzionerà input sul mouse
                 Vector2 mousePos = cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
 
                 Vector2 attPointPos = attPoint.transform.position;
@@ -215,24 +222,15 @@ namespace ThePackt{
 
             _attackDirectionInput = context.ReadValue<Vector2>();
 
-            if (playerInput.currentControlScheme == "Keyboard")
+            //da aggiungere quando funzionerà input sul mouse
+            /*
+            if (playerInputComponent.currentControlScheme == "Keyboard")
             {
                 _attackDirectionInput = cam.ScreenToWorldPoint((Vector3) _attackDirectionInput) - transform.position;
             }
+            */
 
             // Debug.Log("direction (left): " + _attackDirectionInput.x);
-        }
-
-        public void OnMouseXInput(InputAction.CallbackContext context)
-        {
-            float a = context.ReadValue<float>();
-            Debug.Log("mouse x: " + a);
-        }
-
-        public void OnMouseYInput(InputAction.CallbackContext context)
-        {
-            float a = context.ReadValue<float>();
-            Debug.Log("mouse y: " + a);
         }
 
         public void UseJumpInput() => _jumpInput = false;
@@ -257,11 +255,14 @@ namespace ThePackt{
             }
         }
 
-        private void CheckAttackInputHoldTime()
+        private void CheckBaseAttackInputHoldTime()
         {
-            if (Time.time >= _dashInputStartTime + _inputHoldTime)
+            if (_attackInputsStartTime.ContainsKey(Constants.BASE))
             {
-                _attackInput = false;
+                if (Time.time >= _attackInputsStartTime[Constants.BASE] + _inputHoldTime)
+                {
+                    _attackInputs[Constants.BASE] = false;
+                }
             }
         }
     }

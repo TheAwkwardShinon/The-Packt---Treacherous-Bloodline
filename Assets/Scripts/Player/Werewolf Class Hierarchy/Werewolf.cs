@@ -49,7 +49,7 @@ namespace ThePackt{  //to be used in every class
         
         private bool _isGrounded = true;
         private bool _isOnEnemy = true;
-        private bool _isHuman = true;
+        private bool _isHuman = false;
         private bool _isUsingSpecialAttack = false;
         private bool _isUsingItem = false;
 
