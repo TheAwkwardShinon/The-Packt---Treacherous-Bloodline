@@ -4466,12 +4466,10 @@
           "BitsRequired": 8
         }
       },
-      "Name": "CustomCubeState",
+      "Name": "CustomPlayerState",
       "Guid": "b91d6ae1-f195-42e8-97fa-23afd5a060a9",
-      "Groups": [
-        "samples"
-      ]
+      "Groups": []
     }
   ],
-  "ActiveGroup": "samples"
+  "ActiveGroup": "Everything"
 }
