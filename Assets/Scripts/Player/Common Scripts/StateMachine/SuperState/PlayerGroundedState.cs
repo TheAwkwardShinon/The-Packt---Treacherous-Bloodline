@@ -18,6 +18,7 @@ namespace ThePackt{
         private bool _jumpInput;
         private bool _isGrounded;
         private bool _dashInput;
+        private bool _attackInput;
 
         public PlayerGroundedState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
@@ -52,11 +53,13 @@ namespace ThePackt{
             base.LogicUpdate();
 
             Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
+            Debug.Log("attack input state " + _attackInput);
 
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;
             _dashInput = _player._inputHandler._dashInput;
+            _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             if (_jumpInput && _player._jumpState.CanJump() && _isGrounded)
             {
                 Debug.Log("[GROUNDED STATE] player pushing to jump, player is grounded -> "+_isGrounded+" and can jump so passing to jump state...");
@@ -70,6 +73,11 @@ namespace ThePackt{
             {
                 Debug.Log("[GROUNDED STATE] palyer is pushing space so he is wanna dash. changing to dash state...");
                 _stateMachine.ChangeState(_player._dashState);
+            }
+            else if (_attackInput && _player._attackState.CheckIfCanAttack())
+            {
+                Debug.Log("[GROUNDED STATE] player can attack and player is pressing left mouse, entering in attack state... ");
+                _stateMachine.ChangeState(_player._attackState);
             }
         }
 
