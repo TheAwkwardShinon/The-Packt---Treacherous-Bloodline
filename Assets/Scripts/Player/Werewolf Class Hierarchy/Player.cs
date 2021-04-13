@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 namespace ThePackt{
-    public class Player : MonoBehaviour
+    public class Player : Bolt.EntityBehaviour<ICustomPlayerState>
     {
         #region variables
 
@@ -66,6 +66,13 @@ namespace ThePackt{
 
         #region core methods
 
+        // executed when the player prefab is instatiated (quite as Start())
+        public override void Attached()
+        {
+            // synchronize the bolt player state transform with the player gameobject transform
+            state.SetTransforms(state.PlayerTransform, transform);
+        }
+
         /* initialize every "common" possible state in the fsm */
         private void Awake(){
             _stateMachine = new PlayerStateMachine();
@@ -92,9 +99,10 @@ namespace ThePackt{
             _stateMachine.Initialize(_idleState);
         }
 
-        /* at every frame set the current velocity and update the current state */
-        private void Update()
+        // executed at every frame as Update(), but called only on the owner's computer
+        public override void SimulateOwner()
         {
+            /* at every frame set the current velocity and update the current state */
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
         }

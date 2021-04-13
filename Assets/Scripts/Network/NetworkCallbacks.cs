@@ -7,7 +7,7 @@ public class NetworkCallbacks : GlobalEventListener
 {
     public GameObject playerPrefab;
 
-    public override void SceneLoadLocalDone(string scene)
+    public override void SceneLoadLocalDone(string scene, Bolt.IProtocolToken token)
     {
         // when the scene is loaded instantiate the player in the given position
         Vector2 spawnPos = new Vector2(0, 0);
