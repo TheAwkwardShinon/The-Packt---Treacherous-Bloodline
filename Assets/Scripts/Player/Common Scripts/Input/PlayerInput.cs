@@ -269,7 +269,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d8750b61-fc5a-485a-ba7f-32ac0ef194f1"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
