@@ -16,8 +16,6 @@ public class Menu : GlobalEventListener
 
     public override void BoltStartDone()
     {
-        base.BoltStartDone();
-
         // creates a session startin with the specified scene
         BoltMatchmaking.CreateSession(sessionID: "test", sceneToLoad: "NetworkTestScene");
     }
@@ -25,7 +23,20 @@ public class Menu : GlobalEventListener
     // called from client button
     public void StartClient()
     {
-
+        BoltLauncher.StartClient();
     }
 
+    public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+    {
+        // look through all photon sessions and join one using bolt matchmaking
+        foreach(var session in sessionList)
+        {
+            UdpSession photonSession = session.Value as UdpSession;
+
+            if(photonSession.Source == UdpSessionSource.Photon)
+            {
+                BoltMatchmaking.JoinSession(photonSession);
+            }
+        }
+    }
 }
