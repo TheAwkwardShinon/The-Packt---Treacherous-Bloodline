@@ -9,7 +9,7 @@ namespace ThePackt{
     {
         private PlayerInput playerInputComponent;
         // private PlayerInputClass playerInputObject;
-        private Werewolf player;
+        private Player player;
         private Camera cam;
 
         public Vector2 _rawMovementInput { get; private set; }
@@ -34,7 +34,7 @@ namespace ThePackt{
 
         private void Start()
         {
-            player = GetComponent<Werewolf>();
+            player = GetComponent<Player>();
             _attackInputs = new Dictionary<string, bool>();
             _attackInputsStop = new Dictionary<string, bool>();
             _attackInputsStartTime = new Dictionary<string, float>();
