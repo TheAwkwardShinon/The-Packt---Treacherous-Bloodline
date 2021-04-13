@@ -66,12 +66,15 @@ namespace ThePackt{
 
         #region core methods
 
+        //UNCOMMENT TO TEST IN NETWORK
+        /*
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
         {
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.PlayerTransform, transform);
         }
+        */
 
         /* initialize every "common" possible state in the fsm */
         private void Awake(){
@@ -99,10 +102,21 @@ namespace ThePackt{
             _stateMachine.Initialize(_idleState);
         }
 
+        //UNCOMMENT TO TEST IN NETWORK
+        /*
         // executed at every frame as Update(), but called only on the owner's computer
         public override void SimulateOwner()
         {
-            /* at every frame set the current velocity and update the current state */
+            // at every frame set the current velocity and update the current state
+            _currentVelocity = _rb.velocity;
+            _stateMachine._currentState.LogicUpdate();
+        }
+        */
+
+        //COMMENT TO TEST IN NETWORK
+        private void Update()
+        {
+            // at every frame set the current velocity and update the current state
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
         }

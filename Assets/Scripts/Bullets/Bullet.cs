@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Bolt.EntityBehaviour<ICustomBulletState>
 {
     #region variables
     [SerializeField] protected float _speed;
@@ -13,6 +13,13 @@ public class Bullet : MonoBehaviour
     #endregion
 
     #region methods
+
+    // executed when the player prefab is instatiated (quite as Start())
+    public override void Attached()
+    {
+        // synchronize the bolt player state transform with the player gameobject transform
+        state.SetTransforms(state.BulletTransform, transform);
+    }
 
     // Start is called before the first frame update
     void Start()
