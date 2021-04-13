@@ -60,7 +60,12 @@ namespace ThePackt{
             _jumpInput = _player._inputHandler._jumpInput;;
             _dashInput = _player._inputHandler._dashInput;
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
-            if (_jumpInput && _player._jumpState.CanJump() && _isGrounded)
+
+            _isTouchingCeiling = _player.CheckForCeiling();
+            _isGrounded = _player.CheckIfGrounded();
+
+
+            if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling)
             {
                 Debug.Log("[GROUNDED STATE] player pushing to jump, player is grounded -> "+_isGrounded+" and can jump so passing to jump state...");
                 _stateMachine.ChangeState(_player._jumpState);

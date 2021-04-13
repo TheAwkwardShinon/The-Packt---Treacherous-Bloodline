@@ -6,7 +6,12 @@ namespace ThePackt
 {
     public class PlayerAttackState : PlayerAbilityState
     {
+        #region variables
         public bool CanAttack { get; private set; }
+
+        #endregion
+
+        #region methods
 
         public PlayerAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
@@ -72,5 +77,7 @@ namespace ThePackt
         }
 
         public void ResetCanAttack() => CanAttack = true;
+
+        #endregion
     }
 }

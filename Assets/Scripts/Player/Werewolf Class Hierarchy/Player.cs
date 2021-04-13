@@ -99,6 +99,14 @@ namespace ThePackt{
             _stateMachine._currentState.LogicUpdate();
         }
 
+        private void OnDrawGizmos() {
+            _col = GetComponent<BoxCollider2D>();
+            Gizmos.color = Color.red;
+            Vector2 temp = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
+
+            Gizmos.DrawCube(new Vector3(temp.x,temp.y,0),new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f));
+        }
+
         #endregion
 
         #region velocity modificator
@@ -155,7 +163,8 @@ namespace ThePackt{
         /* method that returns true if the player is touching a ceiling with his head, false instead */
         public bool CheckForCeiling()
         {
-            return Physics2D.OverlapCircle(_ceilingCheck.position, _playerData.groundCheckRadius, _playerData.whatIsGround);
+            _workspace = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
+            return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f), 0f, _playerData.whatIsCeiling);
         }
 
         /* method that returns true if the player is grounded, false instead */
@@ -168,13 +177,13 @@ namespace ThePackt{
         /* method that returns true if the player is touching a wall (in the direction that he's facing), false instead */
         public bool CheckIfTouchingWall()
         {
-            return Physics2D.Raycast(_wallCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsGround);
+            return Physics2D.Raycast(_wallCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsWall);
         }
 
         /* method that returns true if the player is very close to a ledge (and he is heading to it), false instead */
         public bool CheckIfTouchingLedge()
         {
-            return Physics2D.Raycast(_ledgeCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsGround);
+            return Physics2D.Raycast(_ledgeCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsLedge);
         }
 
         /* method that flip the player if he's moving in the opposite direction that he's facing */

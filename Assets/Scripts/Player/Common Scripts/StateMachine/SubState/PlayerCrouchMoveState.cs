@@ -5,26 +5,39 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerCrouchMoveState : PlayerGroundedState
     {
+        #region variables
+        private float _heightValue;
+        #endregion
+
+        #region methods
         public PlayerCrouchMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
 
+
+        /* when the player enter in this state we change the collider height */
         public override void Enter()
         {
             base.Enter();
+            _heightValue = _player.GetPlayerData().ceilingHeight;
+            _player.GetPlayerData().ceilingHeight = _heightValue *2 +0.05f;
             _player.SetColliderHeight(_player.GetPlayerData().crouchColliderHeight);
         }
 
+        /* reset the collider height */
         public override void Exit()
         {
             base.Exit();
             _player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
+            _player.GetPlayerData().ceilingHeight = _heightValue;
+
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
 
+            _isTouchingCeiling = _player.CheckForCeiling();
             if (!_isExitingState)
             {
                 _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
@@ -38,8 +51,11 @@ namespace ThePackt{
                 {
                     _stateMachine.ChangeState(_player._moveState);
                 }
+
             }
 
         }
+
+        #endregion
     }
 }
