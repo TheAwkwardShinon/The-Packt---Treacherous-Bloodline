@@ -20,7 +20,7 @@ namespace ThePackt{
         private bool _dashInput;
         private bool _attackInput;
 
-        public PlayerGroundedState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
 

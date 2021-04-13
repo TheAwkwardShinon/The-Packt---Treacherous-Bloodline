@@ -109,6 +109,7 @@ namespace ThePackt{  //to be used in every class
         #region base methods 
 
         private void Awake(){
+            /*
             _stateMachine = new PlayerStateMachine();
             _idleState = new PlayerIdleState(this,_stateMachine,_playerData,"Idle");
             _moveState = new PlayerMoveState(this,_stateMachine,_playerData,"Move");
@@ -120,7 +121,7 @@ namespace ThePackt{  //to be used in every class
             _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
             _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
             _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "Attack");
-
+*/
 
             /* to be coded */
 

@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/ability Data")]
-public class AbilityData : ScriptableObject
-{
-  #region variables
-  public string abilityName;
-  [TextArea] public string description;
 
-  public string className;
+namespace ThePackt{
 
-  public Sprite _icon;
+    [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/ability Data")]
 
-  public int abilityCost;
+    public class AbilityData : ScriptableObject
+    {
+    #region variables
+    public string abilityName;
+    [TextArea] public string description;
 
-  public List<AbilityData> _unlockableAbilities;
+    public string className;
 
-  #endregion
+    public Sprite _icon;
 
-  #region methods
-  public virtual void gainAbility(Player player){
-    
-  }
+    public int abilityCost;
 
-  #endregion
+    public List<AbilityData> _unlockableAbilities;
 
+    #endregion
+
+    #region methods
+    public virtual void gainAbility(Player player){
+        
+    }
+
+    #endregion
+
+    }
 }

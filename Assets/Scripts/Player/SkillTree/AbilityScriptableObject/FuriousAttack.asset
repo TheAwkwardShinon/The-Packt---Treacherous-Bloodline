@@ -12,3 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531b82c762627c34cbe778cc5f2e9834, type: 3}
   m_Name: FuriousAttack
   m_EditorClassIdentifier: 
+  abilityName: 
+  description: 
+  className: 
+  _icon: {fileID: 0}
+  abilityCost: 0
+  _unlockableAbilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -27,7 +27,7 @@ namespace ThePackt{
 
         private float _startWallJumpCoyoteTime;
 
-        public PlayerInAirState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
 

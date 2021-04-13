@@ -15,7 +15,7 @@ namespace ThePackt{
         private Vector2 _dashDirectionInput;
         private Vector2 _lastAIPos;
 
-        public PlayerDashState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerDashState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
         public override void Enter()

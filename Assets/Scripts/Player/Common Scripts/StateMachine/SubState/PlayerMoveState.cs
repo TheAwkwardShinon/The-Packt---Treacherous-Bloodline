@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerMoveState : PlayerGroundedState
     {
-        public PlayerMoveState(Werewolf player, PlayerStateMachine stateMachine,PlayerData data, string animation) : base(player, stateMachine,data,animation)
+        public PlayerMoveState(Player player, PlayerStateMachine stateMachine,PlayerData data, string animation) : base(player, stateMachine,data,animation)
         {
         }
 

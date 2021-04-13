@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerCrouchMoveState : PlayerGroundedState
     {
-        public PlayerCrouchMoveState(Werewolf player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerCrouchMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
 

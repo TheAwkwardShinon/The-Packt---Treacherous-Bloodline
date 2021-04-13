@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerState 
     {
-        protected Werewolf _player;
+        protected Player _player;
         protected PlayerStateMachine _stateMachine;
 
         protected float _startTime;
@@ -18,7 +18,7 @@ namespace ThePackt{
         protected bool _isExitingState;
 
         
-        public PlayerState(Werewolf player, PlayerStateMachine stateMachine, PlayerData data, string animationName){
+        public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName){
             _player = player;
             _stateMachine = stateMachine;
             _aniamtionName = animationName;
