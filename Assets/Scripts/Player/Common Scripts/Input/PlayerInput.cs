@@ -250,7 +250,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -269,7 +269,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d8750b61-fc5a-485a-ba7f-32ac0ef194f1"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

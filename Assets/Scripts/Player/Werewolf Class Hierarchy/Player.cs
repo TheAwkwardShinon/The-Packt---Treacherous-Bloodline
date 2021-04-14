@@ -31,7 +31,15 @@ namespace ThePackt{
         #endregion
 
         #region flags
-        private bool _isHuman = true;
+        protected bool _isHuman = true;
+        protected bool weakActive = false;
+        protected bool mediumActive = false;
+        protected bool attackModifier = false;
+
+        protected bool passive1 = false;
+        protected bool passive2 = false;
+
+        protected bool passive3 = false;
 
         #endregion
 
@@ -83,7 +91,7 @@ namespace ThePackt{
 
 
         /* get core components and initialize the fsm */
-        private void Start(){
+        public virtual void Start(){
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
             _anim = GetComponent<Animator>();
@@ -93,7 +101,7 @@ namespace ThePackt{
         }
 
         /* at every frame set the current velocity and update the current state */
-        private void Update()
+        public virtual void Update()
         {
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
@@ -258,6 +266,9 @@ namespace ThePackt{
 
         }
 
+        public void SetWeakActive(bool value){
+            weakActive = value;
+        }
         #endregion
 
 

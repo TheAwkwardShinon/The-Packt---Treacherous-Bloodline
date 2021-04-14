@@ -25,8 +25,13 @@ namespace ThePackt{
     #endregion
 
     #region methods
-    public virtual void gainAbility(Player player){
+    public virtual void GainAbility(Player player){
         
+    }
+
+    /* method that returns true if the node isn't a leaf */
+    public bool HasChildren(){
+        return _unlockableAbilities.Count != 0;
     }
 
     #endregion
