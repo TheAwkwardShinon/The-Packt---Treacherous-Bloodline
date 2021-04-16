@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace ThePackt{
     [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/Player Data/Base Data")]
     public class PlayerData : ScriptableObject

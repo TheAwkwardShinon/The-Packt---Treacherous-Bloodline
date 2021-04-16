@@ -31,7 +31,7 @@ namespace ThePackt{
         #endregion
 
         #region flags
-        protected bool _isHuman = true;
+        protected bool _isHuman = false;
         protected bool weakActive = false;
         protected bool mediumActive = false;
         protected bool attackModifier = false;
@@ -74,15 +74,19 @@ namespace ThePackt{
 
         #region core methods
 
-        //UNCOMMENT TO TEST IN NETWORK
-        /*
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
         {
             // synchronize the bolt player state transform with the player gameobject transform
-            state.SetTransforms(state.PlayerTransform, transform);
+            state.SetTransforms(state.Transform, transform);
+            //state.SetTransforms(state.AttackDirection, _attackPoint.transform);
+
+            state.Health = _playerData.currentLifePoints;
+            state.AddCallback("Health", HealthCallback);
+
+            //state.OnBaseHumanAttack = _attackState.BaseHumanAttack;
+            //state.OnBaseWereWolfAttack = _attackState.BaseWereWolfAttack;
         }
-        */
 
         /* initialize every "common" possible state in the fsm */
         private void Awake(){
@@ -110,10 +114,6 @@ namespace ThePackt{
             _stateMachine.Initialize(_idleState);
         }
 
-        /* at every frame set the current velocity and update the current state */
-        //public virtual void Update(){}
-        //UNCOMMENT TO TEST IN NETWORK
-        /*
         // executed at every frame as Update(), but called only on the owner's computer
         public override void SimulateOwner()
         {
@@ -121,15 +121,17 @@ namespace ThePackt{
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
         }
-        */
+        
 
         //COMMENT TO TEST IN NETWORK
+        /*
         public virtual void Update()
         {
             // at every frame set the current velocity and update the current state
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
         }
+        */
 
         private void OnDrawGizmos() {
             _col = GetComponent<BoxCollider2D>();
@@ -190,6 +192,33 @@ namespace ThePackt{
 
         #endregion
 
+        #region stats modification
+        public void ApplyDamage(float damage)
+        {
+            state.Health -= damage;
+        }
+
+        private void Die()
+        {
+            BoltNetwork.Destroy(gameObject);
+        }
+        #endregion
+
+        #region callbacks
+
+        //called when state.PlayerHealth is modified -> we update the local health and do checks on it
+        private void HealthCallback()
+        {
+            Debug.Log("health: " + _playerData.currentLifePoints);
+            _playerData.currentLifePoints = state.Health; 
+            if (_playerData.currentLifePoints <= 0)
+            {
+                Die();
+            }
+        }
+
+        #endregion
+
         #region check methods
 
         /* method that returns true if the player is touching a ceiling with his head, false instead */
@@ -233,7 +262,6 @@ namespace ThePackt{
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
         }
-
 
         #endregion
 

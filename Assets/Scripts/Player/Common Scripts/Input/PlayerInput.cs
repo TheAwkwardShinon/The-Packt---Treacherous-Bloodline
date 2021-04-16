@@ -247,7 +247,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e5beb36a-50da-4481-8758-11948429a5d0"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

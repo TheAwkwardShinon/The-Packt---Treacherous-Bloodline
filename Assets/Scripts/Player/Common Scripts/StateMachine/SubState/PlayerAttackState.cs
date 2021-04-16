@@ -28,14 +28,16 @@ namespace ThePackt
 
                 if (_player.GetIsHuman())
                 {
-                    Debug.Log("[ATTACK STATE] entered (base human)");
+                    Debug.Log("[ATTACK STATE] entered (base human) ciaone");
+                    //_player.state.BaseHumanAttack();
                     BaseHumanAttack();
                     _isAbilityDone = true;
-                    Debug.Log("[ATTACK STATE] ability done (base human)");
+                    Debug.Log("[ATTACK STATE] ability done (base human) ciaone");
                 }
                 else
                 {
                     Debug.Log("[ATTACK STATE] entered (base werewolf)");
+                    //_player.state.BaseWereWolfAttack();
                     BaseWereWolfAttack();
                     _isAbilityDone = true;
                     Debug.Log("[ATTACK STATE] ability done (base werewolf)");
@@ -53,22 +55,45 @@ namespace ThePackt
             base.PhysicsUpdate();
         }
 
-        public void BaseHumanAttack() 
+        public void BaseHumanAttack()
         {
-            //GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
-            GameObject blt = GameObject.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+            GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
         }
 
         public void BaseWereWolfAttack()
         {
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies"));
-
-            foreach (Collider2D enemy in hitEnemies)
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies", "Players"));
+            Debug.Log("werewolf attack is owner ");
+            foreach (Collider2D collision in hitEnemies)
             {
-                Debug.Log(enemy.gameObject.name + " hit");
-                enemy.gameObject.GetComponent<Enemy>().ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
-                Debug.Log(enemy.gameObject.name + " health: " + enemy.gameObject.GetComponent<Enemy>().GetHealth());
+                Debug.Log(collision.gameObject.name + " hit");
+
+                Enemy enemy;
+                Player hitPlayer;
+                if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
+                {
+                    enemy = collision.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                        Debug.Log(collision.gameObject.name + " health: " + enemy.GetHealth());
+                    }
+                }
+                else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
+                {
+                    hitPlayer = collision.GetComponent<Player>();
+                    Debug.Log("player hit is owner: " + hitPlayer.entity.IsOwner);
+                    Debug.Log("player attacker is owner: " + _player.entity.IsOwner);
+                    if (hitPlayer != null)
+                    {
+                        if (hitPlayer.entity.IsOwner != _player.entity.IsOwner)
+                        {
+                            Debug.Log("hit other player health is owner: " + collision.gameObject.name);
+                            hitPlayer.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                        }
+                    }
+                }
             }
         }
 

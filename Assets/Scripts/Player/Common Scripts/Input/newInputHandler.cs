@@ -141,7 +141,7 @@ namespace ThePackt{
 
             if (context.started)
             {
-                if (SetAttackDirection())
+                if (CheckSetAttackDirection())
                 {
                     _attackInputs[Constants.BASE] = true;
                     _attackInputsStop[Constants.BASE] = false;
@@ -154,7 +154,7 @@ namespace ThePackt{
             }
         }
 
-        private bool SetAttackDirection()
+        private bool CheckSetAttackDirection()
         {
             Transform attPoint = player.GetAttackPoint();
             bool clickedLeft = true;

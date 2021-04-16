@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Die()
+    private void Die()
     {
         Destroy(gameObject);
     }

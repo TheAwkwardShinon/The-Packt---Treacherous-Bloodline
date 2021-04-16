@@ -18,7 +18,7 @@ namespace ThePackt{
             
         }
 
-        public override void Update()
+        public override void SimulateOwner()
         {
             
         }
