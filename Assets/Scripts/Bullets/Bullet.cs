@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThePackt
 {
-    public class Bullet : Bolt.EntityBehaviour<ICustomBulletState>
+    public class Bullet : MonoBehaviour
     {
         #region variables
         [SerializeField] protected float _speed;
@@ -15,11 +15,13 @@ namespace ThePackt
         #endregion
 
         #region methods
+        /*
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
         }
+        */
 
         // Start is called before the first frame update
         void Start()
@@ -38,6 +40,22 @@ namespace ThePackt
             }
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.ApplyDamage(_attackPower);
+            }
+
+            // Does not destroy bullets on impact with player or other bullets 
+            if (!(LayerMask.LayerToName(collision.gameObject.layer) == "Players") && !(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets"))
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        /*
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Enemy enemy;
@@ -82,6 +100,7 @@ namespace ThePackt
                 BoltNetwork.Destroy(gameObject);
             }
         }
+        */
 
         #endregion
 
