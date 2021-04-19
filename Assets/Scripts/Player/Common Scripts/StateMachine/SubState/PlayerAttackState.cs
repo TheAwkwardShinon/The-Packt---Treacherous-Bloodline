@@ -57,24 +57,10 @@ namespace ThePackt
 
         public void BaseHumanAttack()
         {
-            // GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
-            GameObject blt = GameObject.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+            GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
         }
 
-        public void BaseWereWolfAttack()
-        {
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies"));
-
-            foreach (Collider2D enemy in hitEnemies)
-            {
-                Debug.Log(enemy.gameObject.name + " hit");
-                enemy.gameObject.GetComponent<Enemy>().ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
-                Debug.Log(enemy.gameObject.name + " health: " + enemy.gameObject.GetComponent<Enemy>().GetHealth());
-            }
-        }
-
-        /*
         public void BaseWereWolfAttack()
         {
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies", "Players"));
@@ -110,7 +96,6 @@ namespace ThePackt
                 }
             }
         }
-        */
 
         public bool CheckIfCanAttack()
         {

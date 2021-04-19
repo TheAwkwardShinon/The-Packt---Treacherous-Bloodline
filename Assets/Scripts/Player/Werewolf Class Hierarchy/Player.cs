@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 namespace ThePackt{
-    public class Player : MonoBehaviour
+    public class Player : Bolt.EntityBehaviour<ICustomPlayerState>
     {
         #region variables
 
@@ -74,7 +74,6 @@ namespace ThePackt{
 
         #region core methods
 
-        /*
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
         {
@@ -88,7 +87,6 @@ namespace ThePackt{
             //state.OnBaseHumanAttack = _attackState.BaseHumanAttack;
             //state.OnBaseWereWolfAttack = _attackState.BaseWereWolfAttack;
         }
-        */
 
         /* initialize every "common" possible state in the fsm */
         private void Awake(){
@@ -116,7 +114,6 @@ namespace ThePackt{
             _stateMachine.Initialize(_idleState);
         }
 
-        /*
         // executed at every frame as Update(), but called only on the owner's computer
         public override void SimulateOwner()
         {
@@ -124,15 +121,7 @@ namespace ThePackt{
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
         }
-        */
-
-        public virtual void Update()
-        {
-            // at every frame set the current velocity and update the current state
-            _currentVelocity = _rb.velocity;
-            _stateMachine._currentState.LogicUpdate();
-        }
-
+        
 
         //COMMENT TO TEST IN NETWORK
         /*
@@ -204,13 +193,10 @@ namespace ThePackt{
         #endregion
 
         #region stats modification
-
-        /*
         public void ApplyDamage(float damage)
         {
             state.Health -= damage;
         }
-        */
 
         private void Die()
         {
@@ -220,7 +206,6 @@ namespace ThePackt{
 
         #region callbacks
 
-        /*
         //called when state.PlayerHealth is modified -> we update the local health and do checks on it
         private void HealthCallback()
         {
@@ -231,7 +216,6 @@ namespace ThePackt{
                 Die();
             }
         }
-        */
 
         #endregion
 

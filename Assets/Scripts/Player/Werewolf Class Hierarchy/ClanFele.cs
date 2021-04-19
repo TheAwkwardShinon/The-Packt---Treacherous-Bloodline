@@ -18,16 +18,9 @@ namespace ThePackt{
             
         }
 
-        /*
         public override void SimulateOwner()
         {
             
-        }
-        */
-
-        public override void Update()
-        {
-
         }
 
         #region setter
