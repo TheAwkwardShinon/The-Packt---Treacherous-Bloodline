@@ -68,8 +68,6 @@ namespace ThePackt{
         #region methods
         private void Awake(){
             points = 0;
-            maxLifePoints = 100f;
-            currentLifePoints = maxLifePoints;
         }
 
         #endregion

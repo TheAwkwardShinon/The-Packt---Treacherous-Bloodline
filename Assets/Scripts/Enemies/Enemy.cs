@@ -2,54 +2,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace ThePackt
 {
-    #region variables
-    [SerializeField] protected float _health;
-    #endregion
-
-    #region methods
-
-    // Start is called before the first frame update
-    private void Start()
+    public class Enemy : MonoBehaviour
     {
-        
-    }
+        #region variables
+        [SerializeField] protected float _health;
+        #endregion
 
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
-    
-    public void ApplyDamage(float damage)
-    {
-        _health -= damage;
+        #region methods
 
-        if (_health <= 0)
+        // Start is called before the first frame update
+        private void Start()
         {
-            Die(); 
+
         }
-    }
 
-    private void Die()
-    {
-        Destroy(gameObject);
-    }
+        // Update is called once per frame
+        private void Update()
+        {
 
-    #endregion
+        }
 
-    #region getter
-    public float GetHealth()
-    {
-        return _health;
-    }
-    #endregion
+        public void ApplyDamage(float damage)
+        {
+            _health -= damage;
 
-    #region setter
-    public void SetHealth(float value)
-    {
-        _health = value;
+            if (_health <= 0)
+            {
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            Destroy(gameObject);
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Bullet bullet;
+            if (LayerMask.LayerToName(collision.gameObject.layer) == "Bullets")
+            {
+                bullet = collision.GetComponent<Bullet>();
+                if (bullet != null)
+                { 
+                    ApplyDamage(bullet.GetAttackPower());
+                    bullet.Die();
+                }
+            }
+        }
+
+        #endregion
+
+        #region getter
+        public float GetHealth()
+        {
+            return _health;
+        }
+        #endregion
+
+        #region setter
+        public void SetHealth(float value)
+        {
+            _health = value;
+        }
+        #endregion
     }
-    #endregion
 }

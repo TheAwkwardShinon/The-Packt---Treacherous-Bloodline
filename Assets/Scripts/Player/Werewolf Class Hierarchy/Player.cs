@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace ThePackt{
     public class Player : Bolt.EntityBehaviour<ICustomPlayerState>
@@ -22,6 +23,9 @@ namespace ThePackt{
 
         #endregion
 
+        #region UI
+        private GameObject healthText; 
+        #endregion
 
         #region velocity
         public Vector2 _currentVelocity { get; private set; }
@@ -31,7 +35,7 @@ namespace ThePackt{
         #endregion
 
         #region flags
-        protected bool _isHuman = false;
+        protected bool _isHuman = true;
         protected bool weakActive = false;
         protected bool mediumActive = false;
         protected bool attackModifier = false;
@@ -66,6 +70,10 @@ namespace ThePackt{
 
         #endregion
 
+        #region other
+
+        #endregion
+
         #endregion
 
 
@@ -81,11 +89,14 @@ namespace ThePackt{
             state.SetTransforms(state.Transform, transform);
             //state.SetTransforms(state.AttackDirection, _attackPoint.transform);
 
-            state.Health = _playerData.currentLifePoints;
-            state.AddCallback("Health", HealthCallback);
+            _playerData.currentLifePoints = _playerData.maxLifePoints;
+            if (entity.IsOwner)
+            {
+                state.Health = _playerData.currentLifePoints;
+                state.AddCallback("Health", HealthCallback);
+            }
 
-            //state.OnBaseHumanAttack = _attackState.BaseHumanAttack;
-            //state.OnBaseWereWolfAttack = _attackState.BaseWereWolfAttack;
+            healthText = GameObject.Find("HealthText");
         }
 
         /* initialize every "common" possible state in the fsm */
@@ -120,8 +131,12 @@ namespace ThePackt{
             // at every frame set the current velocity and update the current state
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
+
+            if (entity.IsOwner)
+            {
+                healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
+            }
         }
-        
 
         //COMMENT TO TEST IN NETWORK
         /*
@@ -134,6 +149,8 @@ namespace ThePackt{
         */
 
         private void OnDrawGizmos() {
+            //Handles.Label(transform.position + new Vector3(-0.5f, 1f, 0), "Health: " + _playerData.currentLifePoints);
+            
             _col = GetComponent<BoxCollider2D>();
             Gizmos.color = Color.red;
             Vector2 temp = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
@@ -195,28 +212,73 @@ namespace ThePackt{
         #region stats modification
         public void ApplyDamage(float damage)
         {
-            state.Health -= damage;
+            Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
+            if (entity.IsOwner)
+            {
+                Debug.Log("[HEALTH] damage: " + damage);
+                state.Health -= damage;
+                Debug.Log("[HEALTH] damage applied. New state.Health: " + state.Health);
+            }
         }
 
         private void Die()
         {
             BoltNetwork.Destroy(gameObject);
+            healthText.GetComponent<Text>().text = "0";
         }
         #endregion
 
         #region callbacks
 
-        //called when state.PlayerHealth is modified -> we update the local health and do checks on it
+        //called when state.Health is modified -> we update the local health and do checks on it
         private void HealthCallback()
         {
-            Debug.Log("health: " + _playerData.currentLifePoints);
-            _playerData.currentLifePoints = state.Health; 
-            if (_playerData.currentLifePoints <= 0)
+            _playerData.currentLifePoints = state.Health;
+            Debug.Log("[HEALTH] callback. New currentLifePoints: " + _playerData.currentLifePoints);
+
+            if (entity.IsOwner && _playerData.currentLifePoints <= 0)
             {
+                Debug.Log("[HEALTH] dead");
                 Die();
             }
         }
 
+        /*
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Bullet bullet;
+            bool isLocalPlayer;
+            bool isLocalBullet;
+            if (LayerMask.LayerToName(collision.gameObject.layer) == "Bullets")
+            {
+                bullet = collision.GetComponent<Bullet>();
+                if (bullet != null)
+                {
+                    isLocalBullet = bullet.entity.IsOwner;
+                    isLocalPlayer = entity.IsOwner;
+                    Debug.Log("player is owner: " + isLocalPlayer);
+                    Debug.Log("bullet is owner: " + isLocalBullet);
+
+                    //If the player and the bullet have different owners a damage must be applied.
+                    //When two player fight and neither of them is the owner, both the bullet and hit player will be false,
+                    //so the bullet will not be destroyed or the damage applied -> which is wrong.
+                    //Anyway there is a machine in which the owner is the hit player and that machine
+                    //will identify that bullet and player have different owners and the damage will be applied,
+                    //health will be synchronized and the bullet destroyed for every player (thanks to BoltNetwork.Destroy)
+                    if (isLocalPlayer != isLocalBullet)
+                    {
+                        Debug.Log("[HEALTH] hit by bullet");
+
+                        if (entity.IsOwner)
+                        {
+                            ApplyDamage(bullet.GetAttackPower());
+                            bullet.Die();
+                        }
+                    }
+                }
+            }
+        }
+        */
         #endregion
 
         #region check methods
@@ -321,6 +383,7 @@ namespace ThePackt{
         public void SetWeakActive(bool value){
             weakActive = value;
         }
+
         #endregion
 
 

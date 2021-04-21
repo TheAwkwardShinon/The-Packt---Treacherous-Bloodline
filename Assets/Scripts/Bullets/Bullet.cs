@@ -9,8 +9,9 @@ namespace ThePackt
         #region variables
         [SerializeField] protected float _speed;
         [SerializeField] protected float _range;
+        [SerializeField] protected float _attackPower;
+        [SerializeField] protected int _playerNetworkId;
         private Rigidbody2D _rb;
-        private float _attackPower;
         private Vector2 _startPos;
         #endregion
 
@@ -38,6 +39,7 @@ namespace ThePackt
             }
         }
 
+  
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Enemy enemy;
@@ -70,8 +72,15 @@ namespace ThePackt
                     //health will be synchronized and the bullet destroyed for every player (thanks to BoltNetwork.Destroy)
                     if (isLocalPlayer != isLocalBullet)
                     {
-                        Debug.Log("hit other player health: " + collision.gameObject.name);
-                        player.ApplyDamage(_attackPower);
+                        Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
+
+                        Debug.Log("[HEALTH] other network id: " + player.entity.NetworkId.GetHashCode());
+                        Debug.Log("[HEALTH] my player network id: " + _playerNetworkId);
+
+                        var evnt = AttackHitEvent.Create();
+                        evnt.Damage = _attackPower;
+                        evnt.EntityID = player.entity.NetworkId.GetHashCode();
+                        evnt.Send();
                     }
                 }
             }
@@ -81,6 +90,20 @@ namespace ThePackt
             {
                 BoltNetwork.Destroy(gameObject);
             }
+            
+            /*
+            // Destroy bullet on impact with ground or walls 
+            if (LayerMask.LayerToName(collision.gameObject.layer) == "Ground" || LayerMask.LayerToName(collision.gameObject.layer) == "Wall")
+            {
+                BoltNetwork.Destroy(gameObject);
+            }
+            */
+        }
+ 
+
+        public void Die()
+        {
+            BoltNetwork.Destroy(gameObject);
         }
 
         #endregion
@@ -109,6 +132,11 @@ namespace ThePackt
         public void SetAttackPower(float value)
         {
             _attackPower = value;
+        }
+
+        public void SetPlayerNetworkId(int value)
+        {
+            _playerNetworkId = value;
         }
 
         #endregion

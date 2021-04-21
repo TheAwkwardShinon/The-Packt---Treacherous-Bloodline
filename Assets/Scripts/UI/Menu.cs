@@ -26,6 +26,12 @@ public class Menu : GlobalEventListener
         BoltLauncher.StartClient();
     }
 
+    // called from shutsown button
+    public void Shutdown()
+    {
+        BoltLauncher.Shutdown();
+    }
+
     public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
     {
         // look through all photon sessions and join one using bolt matchmaking

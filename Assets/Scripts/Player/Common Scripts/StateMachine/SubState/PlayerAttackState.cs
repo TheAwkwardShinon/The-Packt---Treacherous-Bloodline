@@ -59,6 +59,7 @@ namespace ThePackt
         {
             GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
+            blt.GetComponent<Bullet>().SetPlayerNetworkId(_player.entity.NetworkId.GetHashCode());
         }
 
         public void BaseWereWolfAttack()
@@ -89,8 +90,16 @@ namespace ThePackt
                     {
                         if (hitPlayer.entity.IsOwner != _player.entity.IsOwner)
                         {
-                            Debug.Log("hit other player health is owner: " + collision.gameObject.name);
-                            hitPlayer.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                            Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
+
+                            Debug.Log("[HEALTH] other network id: " + hitPlayer.entity.NetworkId.GetHashCode());
+                            Debug.Log("[HEALTH] my network id: " + _player.entity.NetworkId.GetHashCode());
+
+                            var evnt = AttackHitEvent.Create();
+                            evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                            evnt.EntityID = hitPlayer.entity.NetworkId.GetHashCode();
+                            evnt.Send();
+                            // _player.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
                         }
                     }
                 }
