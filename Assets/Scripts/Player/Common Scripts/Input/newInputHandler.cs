@@ -137,11 +137,11 @@ namespace ThePackt{
 
         public void OnAttackInput(InputAction.CallbackContext context)
         {
-            Debug.Log("base attack");
+            Debug.Log("base attack input");
 
             if (context.started)
             {
-                if (CheckSetAttackDirection())
+                if (!player.GetIsHuman() || CheckSetAttackDirection())
                 {
                     _attackInputs[Constants.BASE] = true;
                     _attackInputsStop[Constants.BASE] = false;

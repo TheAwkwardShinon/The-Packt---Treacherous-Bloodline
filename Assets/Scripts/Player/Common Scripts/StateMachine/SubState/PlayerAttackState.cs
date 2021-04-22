@@ -59,13 +59,13 @@ namespace ThePackt
         {
             GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
-            blt.GetComponent<Bullet>().SetPlayerNetworkId(_player.entity.NetworkId.GetHashCode());
+            //blt.GetComponent<Bullet>().SetPlayerNetworkId(_player.entity.NetworkId);
         }
 
         public void BaseWereWolfAttack()
         {
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies", "Players"));
-            Debug.Log("werewolf attack is owner ");
+
             foreach (Collider2D collision in hitEnemies)
             {
                 Debug.Log(collision.gameObject.name + " hit");
@@ -77,8 +77,20 @@ namespace ThePackt
                     enemy = collision.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
-                        Debug.Log(collision.gameObject.name + " health: " + enemy.GetHealth());
+                        EnemyAttackHitEvent evnt;
+                        if (BoltNetwork.IsServer)
+                        {
+                            Debug.Log("[NETWORKLOG] server hit enemy");
+                            enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                        }
+                        else
+                        {
+                            Debug.Log("[NETWORKLOG] from client to server");
+                            evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
+                            evnt.HitNetworkId = enemy.entity.NetworkId;
+                            evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                            evnt.Send();
+                        } 
                     }
                 }
                 else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
@@ -92,14 +104,27 @@ namespace ThePackt
                         {
                             Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
 
+                            /*
                             Debug.Log("[HEALTH] other network id: " + hitPlayer.entity.NetworkId.GetHashCode());
                             Debug.Log("[HEALTH] my network id: " + _player.entity.NetworkId.GetHashCode());
+                            */
 
-                            var evnt = AttackHitEvent.Create();
+                            PlayerAttackHitEvent evnt;
+                            if (BoltNetwork.IsServer)
+                            {
+                                Debug.Log("[NETWORKLOG] from server to connection: " + hitPlayer.getConnectionID());
+                                evnt = PlayerAttackHitEvent.Create(hitPlayer.entity.Source);
+                            }
+                            else
+                            {
+                                Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + hitPlayer.getConnectionID());
+                                evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
+                                evnt.HitConnectionID = (int) hitPlayer.getConnectionID();
+                            }
+
+                            //evnt.HitNetworkID = player.entity.NetworkId;
                             evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
-                            evnt.EntityID = hitPlayer.entity.NetworkId.GetHashCode();
                             evnt.Send();
-                            // _player.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
                         }
                     }
                 }

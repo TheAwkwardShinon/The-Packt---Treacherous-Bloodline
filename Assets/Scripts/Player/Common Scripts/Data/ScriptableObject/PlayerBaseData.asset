@@ -30,6 +30,7 @@ MonoBehaviour:
   crouchColliderHeight: 0.8
   standColliderHeight: 1.092805
   ceilingHeight: 0.1
+  damageMultiplier: 0
   powerBaseWerewolf: 10
   rangeBaseWerewolf: 0.35
   powerBaseHuman: 10
@@ -48,3 +49,7 @@ MonoBehaviour:
   ceilingCheckRadius: 0.3
   groundCheckRadius: 0.1
   wallCheckDistance: 0.5
+  points: 0
+  experienceMultiplier: 0
+  maxLifePoints: 100
+  currentLifePoints: 100

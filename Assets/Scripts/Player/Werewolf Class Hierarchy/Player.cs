@@ -156,6 +156,7 @@ namespace ThePackt{
             Vector2 temp = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
 
             Gizmos.DrawCube(new Vector3(temp.x,temp.y,0),new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f));
+            Gizmos.DrawSphere(_attackPoint.position, _playerData.rangeBaseWerewolf);
         }
 
         #endregion
@@ -215,9 +216,7 @@ namespace ThePackt{
             Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
             if (entity.IsOwner)
             {
-                Debug.Log("[HEALTH] damage: " + damage);
                 state.Health -= damage;
-                Debug.Log("[HEALTH] damage applied. New state.Health: " + state.Health);
             }
         }
 
@@ -353,6 +352,11 @@ namespace ThePackt{
         public bool GetIsHuman()
         {
             return _isHuman;
+        }
+
+        public uint getConnectionID()
+        {
+            return entity.Source.ConnectionId;
         }
 
         #endregion

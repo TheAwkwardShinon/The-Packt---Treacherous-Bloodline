@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Bolt;
 
 namespace ThePackt
 {
@@ -10,7 +11,7 @@ namespace ThePackt
         [SerializeField] protected float _speed;
         [SerializeField] protected float _range;
         [SerializeField] protected float _attackPower;
-        [SerializeField] protected int _playerNetworkId;
+        // private NetworkId _playerNetworkId;
         private Rigidbody2D _rb;
         private Vector2 _startPos;
         #endregion
@@ -45,13 +46,26 @@ namespace ThePackt
             Enemy enemy;
             Player player;
             bool isLocalPlayer = false;
-            bool isLocalBullet = false;
+            bool isLocalBullet = true;
             if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
             {
                 enemy = collision.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.ApplyDamage(_attackPower);
+                    EnemyAttackHitEvent evnt;
+                    if (BoltNetwork.IsServer)
+                    {
+                        Debug.Log("[NETWORKLOG] server hit enemy");
+                        enemy.ApplyDamage(_attackPower);
+                    }
+                    else
+                    {
+                        Debug.Log("[NETWORKLOG] from client to server");
+                        evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
+                        evnt.HitNetworkId = enemy.entity.NetworkId;
+                        evnt.Damage = _attackPower;
+                        evnt.Send();
+                    }
                 }
             }
             else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
@@ -74,12 +88,26 @@ namespace ThePackt
                     {
                         Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
 
+                        /*
                         Debug.Log("[HEALTH] other network id: " + player.entity.NetworkId.GetHashCode());
                         Debug.Log("[HEALTH] my player network id: " + _playerNetworkId);
+                        */
 
-                        var evnt = AttackHitEvent.Create();
+                        PlayerAttackHitEvent evnt;
+                        if (BoltNetwork.IsServer)
+                        {
+                            Debug.Log("[NETWORKLOG] from server to connection: " + player.getConnectionID());
+                            evnt = PlayerAttackHitEvent.Create(player.entity.Source);
+                        }
+                        else
+                        {
+                            Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + player.getConnectionID());
+                            evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
+                            evnt.HitConnectionID = (int) player.getConnectionID();
+                        }
+
+                        //evnt.HitNetworkID = player.entity.NetworkId;
                         evnt.Damage = _attackPower;
-                        evnt.EntityID = player.entity.NetworkId.GetHashCode();
                         evnt.Send();
                     }
                 }
@@ -90,7 +118,7 @@ namespace ThePackt
             {
                 BoltNetwork.Destroy(gameObject);
             }
-            
+
             /*
             // Destroy bullet on impact with ground or walls 
             if (LayerMask.LayerToName(collision.gameObject.layer) == "Ground" || LayerMask.LayerToName(collision.gameObject.layer) == "Wall")
@@ -134,10 +162,12 @@ namespace ThePackt
             _attackPower = value;
         }
 
-        public void SetPlayerNetworkId(int value)
+        /*
+        public void SetPlayerNetworkId(NetworkId value)
         {
             _playerNetworkId = value;
         }
+        */
 
         #endregion
     }
