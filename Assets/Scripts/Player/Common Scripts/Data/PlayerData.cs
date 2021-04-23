@@ -62,11 +62,34 @@ namespace ThePackt{
         public float experienceMultiplier = 0f;
         public float maxLifePoints = 100f;
         public float currentLifePoints = 100f;
+        public float transformStateDuration = 10f;
+
+        public float _startTransformationTime;
+
+        #endregion
+
+        #region Sprite
+        [Header("Sprites")]
+
+        [Header("Human")]
+        public Sprite humanFace;
+        public Sprite humanHat;
+        public Sprite humanArms;
+        public Sprite humanFeet;
+        public Sprite humanClothes;
+
+        [Header("wolf")]
+
+        public Sprite wolfFace;
+        public Sprite wolfEars;
+        public Sprite wolfArms;
+        public Sprite wolfFeet;
+        public Sprite wolfBody;
 
         #endregion
 
         #region methods
-        private void Awake(){
+        private void Start(){
             points = 0;
         }
 

@@ -13,6 +13,8 @@ namespace ThePackt{
         private bool _grabInput;
         private bool _dashInput;
 
+        private bool _transformationInput;
+
         //Checks
         private bool _isGrounded;
         private bool _isTouchingWall;
@@ -63,6 +65,7 @@ namespace ThePackt{
             _jumpInputStop = _player._inputHandler._jumpInputStop;
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             _dashInput = _player._inputHandler._dashInput;
+            _transformationInput = _player._inputHandler._transformInput;
             _isGrounded = _player.CheckIfGrounded();
             Debug.Log("[PLAYER IS IN AIR] is grounded: "+_isGrounded);
 
@@ -91,6 +94,10 @@ namespace ThePackt{
             {
                 Debug.Log("[PLAYER IS IN AIR] player can attack and player is pressing left mouse, entering in attack state... ");
                 _stateMachine.ChangeState(_player._attackState);
+            }
+            else if(_transformationInput && _player.GetIsHuman()){
+                 Debug.Log("[PLAYER IS IN AIR] player is human and wants to transform ");
+                 _stateMachine.ChangeState(_player._transformState);
             }
             else
             {

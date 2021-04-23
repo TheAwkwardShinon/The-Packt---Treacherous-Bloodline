@@ -22,6 +22,9 @@ namespace ThePackt{
         public bool _jumpInputStop { get; private set; }
         public bool _dashInput { get; private set; }
         public bool _dashInputStop { get; private set; }
+        public bool _transformInput { get; private set; }
+        public bool _transformInputStop { get; private set; }
+
         public Dictionary<string, bool> _attackInputs { get; private set; }
         public Dictionary<string, bool> _attackInputsStop { get; private set; }
 
@@ -30,6 +33,7 @@ namespace ThePackt{
 
         private float _jumpInputStartTime;
         private float _dashInputStartTime;
+        private float _transformInputStartTime;
         public Dictionary<string, float> _attackInputsStartTime { get; private set; }
 
         private void Start()
@@ -108,6 +112,19 @@ namespace ThePackt{
             }
         }
 
+        public void OnTransformationInput(InputAction.CallbackContext context){
+            if (context.started)
+            {
+                _transformInput = true;
+                _transformInputStop = false;
+                _transformInputStartTime = Time.time;
+            }
+
+            if (context.canceled)
+            {
+                _transformInputStop = true;
+            }
+        }
         
         public void OnDashInput(InputAction.CallbackContext context)
         {
@@ -163,7 +180,7 @@ namespace ThePackt{
 
             if (playerInputComponent.currentControlScheme == "Keyboard")
             {
-                //da togliere quando funzionerà input sul mouse
+                //da togliere quando funzionerï¿½ input sul mouse
                 Vector2 mousePos = cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
 
                 Vector2 attPointPos = attPoint.transform.position;
@@ -222,7 +239,7 @@ namespace ThePackt{
 
             _attackDirectionInput = context.ReadValue<Vector2>();
 
-            //da aggiungere quando funzionerà input sul mouse
+            //da aggiungere quando funzionerï¿½ input sul mouse
             /*
             if (playerInputComponent.currentControlScheme == "Keyboard")
             {
@@ -236,6 +253,8 @@ namespace ThePackt{
         public void UseJumpInput() => _jumpInput = false;
 
         public void UseDashInput() => _dashInput = false;
+
+        public void UseTransformInput() => _transformInput = false;
 
         public void UseBaseAttackInput() => _attackInputs["base"] = false;
 

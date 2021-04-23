@@ -20,6 +20,8 @@ namespace ThePackt{
         private bool _dashInput;
         private bool _attackInput;
 
+        private bool _transformInput;
+
         public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
@@ -59,6 +61,7 @@ namespace ThePackt{
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;
             _dashInput = _player._inputHandler._dashInput;
+            _transformInput = _player._inputHandler._transformInput;
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
 
             _isTouchingCeiling = _player.CheckForCeiling();
@@ -83,6 +86,10 @@ namespace ThePackt{
             {
                 Debug.Log("[GROUNDED STATE] player can attack and player is pressing left mouse, entering in attack state... ");
                 _stateMachine.ChangeState(_player._attackState);
+            }
+            else if(_transformInput && _player.GetIsHuman()){
+                 Debug.Log("[GROUNDED STTE] player is human and wants to transform ");
+                 _stateMachine.ChangeState(_player._transformState);
             }
         }
 

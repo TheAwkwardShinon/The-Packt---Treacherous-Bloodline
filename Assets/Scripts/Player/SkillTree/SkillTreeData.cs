@@ -20,7 +20,7 @@ namespace ThePackt{
         #region methods
 
         /* very important at the beginning to put the root of the tree on the unlocable list */
-        public void Awake(){
+        public void Start(){
             _unlockableAbility.Add(_rootAbility);
         }
 

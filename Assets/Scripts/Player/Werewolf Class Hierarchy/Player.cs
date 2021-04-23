@@ -68,6 +68,10 @@ namespace ThePackt{
 
         public PlayerAttackState _attackState {get; private set;}
 
+        public PlayerTransformationState _transformState {get; private set;}
+        public PlayerDetransformationState _detransformationState {get; private set;}
+
+
         #endregion
 
         #region other
@@ -94,6 +98,7 @@ namespace ThePackt{
             {
                 state.Health = _playerData.currentLifePoints;
                 state.AddCallback("Health", HealthCallback);
+                
             }
 
             healthText = GameObject.Find("HealthText");
@@ -112,6 +117,8 @@ namespace ThePackt{
             _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
             _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
             _attackState = new PlayerAttackState(this,_stateMachine, _playerData, "attack");
+            _transformState = new PlayerTransformationState(this,_stateMachine, _playerData, "transformation");
+            _detransformationState = new PlayerDetransformationState(this,_stateMachine, _playerData, "transformation");
         }
 
 

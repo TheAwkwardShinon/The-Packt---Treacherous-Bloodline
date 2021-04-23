@@ -39,7 +39,9 @@ namespace ThePackt{
 
          public virtual void LogicUpdate()
         {
-
+            if(!_player.GetIsHuman())
+                if(Time.time > _player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration)
+                    _player._stateMachine.ChangeState(_player._detransformationState);
         }
 
         public virtual void PhysicsUpdate()

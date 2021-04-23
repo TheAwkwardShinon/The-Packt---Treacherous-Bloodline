@@ -65,6 +65,14 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""transformation"",
+                    ""type"": ""Button"",
+                    ""id"": ""7f11a834-a531-48ab-8184-1bdc249fce35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -298,6 +306,28 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""action"": ""AttackDirection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5642f36-779c-4a9e-9416-d36dfca15b89"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""transformation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""595f0228-7fe8-4b8c-bf2c-ee6610893714"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""transformation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -335,6 +365,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         m_Gameplay_DashDirection = m_Gameplay.FindAction("DashDirection", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_AttackDirection = m_Gameplay.FindAction("AttackDirection", throwIfNotFound: true);
+        m_Gameplay_transformation = m_Gameplay.FindAction("transformation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -390,6 +421,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_DashDirection;
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_AttackDirection;
+    private readonly InputAction m_Gameplay_transformation;
     public struct GameplayActions
     {
         private @PlayerInputClass m_Wrapper;
@@ -400,6 +432,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         public InputAction @DashDirection => m_Wrapper.m_Gameplay_DashDirection;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @AttackDirection => m_Wrapper.m_Gameplay_AttackDirection;
+        public InputAction @transformation => m_Wrapper.m_Gameplay_transformation;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -427,6 +460,9 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 @AttackDirection.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttackDirection;
                 @AttackDirection.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttackDirection;
                 @AttackDirection.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttackDirection;
+                @transformation.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTransformation;
+                @transformation.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTransformation;
+                @transformation.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTransformation;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -449,6 +485,9 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 @AttackDirection.started += instance.OnAttackDirection;
                 @AttackDirection.performed += instance.OnAttackDirection;
                 @AttackDirection.canceled += instance.OnAttackDirection;
+                @transformation.started += instance.OnTransformation;
+                @transformation.performed += instance.OnTransformation;
+                @transformation.canceled += instance.OnTransformation;
             }
         }
     }
@@ -479,5 +518,6 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         void OnDashDirection(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnAttackDirection(InputAction.CallbackContext context);
+        void OnTransformation(InputAction.CallbackContext context);
     }
 }
