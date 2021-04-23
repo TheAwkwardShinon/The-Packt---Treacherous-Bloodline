@@ -4,34 +4,28 @@ using UnityEngine;
 
 namespace ThePackt
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Bolt.EntityBehaviour<ICustomEnemyState>
     {
         #region variables
         [SerializeField] protected float _health;
         #endregion
 
         #region methods
-
-        // Start is called before the first frame update
-        private void Start()
+        public override void Attached()
         {
+            // synchronize the bolt player state transform with the player gameobject transform
+            state.SetTransforms(state.Transform, transform);
+            //state.SetTransforms(state.AttackDirection, _attackPoint.transform);
 
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-
+            state.Health = _health;
+            state.AddCallback("Health", HealthCallback);
         }
 
         public void ApplyDamage(float damage)
         {
-            _health -= damage;
+            Debug.Log("[ENEMY] apply damage: " + entity.IsOwner);
 
-            if (_health <= 0)
-            {
-                Die();
-            }
+            state.Health -= damage;
         }
 
         private void Die()
@@ -39,6 +33,20 @@ namespace ThePackt
             Destroy(gameObject);
         }
 
+        //called when state.Health is modified -> we update the local health and do checks on it
+        private void HealthCallback()
+        {
+            _health = state.Health;
+            Debug.Log("[ENEMY] health callback. New _health: " + _health);
+
+            if (_health <= 0)
+            {
+                Debug.Log("[ENEMY] dead");
+                Die();
+            }
+        }
+
+        /*
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Bullet bullet;
@@ -52,6 +60,7 @@ namespace ThePackt
                 }
             }
         }
+        */
 
         #endregion
 
@@ -66,6 +75,10 @@ namespace ThePackt
         public void SetHealth(float value)
         {
             _health = value;
+        }
+        public uint getConnectionID()
+        {
+            return entity.Source.ConnectionId;
         }
         #endregion
     }
