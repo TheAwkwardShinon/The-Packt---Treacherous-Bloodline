@@ -4995,6 +4995,28 @@
       "Name": "DisconnectEvent",
       "Guid": "c92df836-0891-4363-adf1-55584c36ee96",
       "Groups": []
+    },
+    {
+      "$type": "Bolt.Compiler.EventDefinition, bolt.compiler",
+      "Properties": [
+        {
+          "Name": "AvailableFactions",
+          "Enabled": true,
+          "Expanded": true,
+          "ReplicationMode": 1,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeString, bolt.compiler",
+            "MaxLength": 1
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyEventSettings, bolt.compiler"
+          }
+        }
+      ],
+      "Name": "RequestAvailableFactions",
+      "Guid": "088e3161-ce4e-4681-a1fd-8070845b1521",
+      "Groups": []
     }
   ],
   "ActiveGroup": "Everything"

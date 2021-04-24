@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2339384145131405215
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.1761036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649999087641368569, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_Name
+      value: Chara_Moonsighters Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649999087641368569, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_TagString
+      value: moonsighter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_Color.g
+      value: 0.72873056
+      objectReference: {fileID: 0}
+    - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383178181007465345, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383178181007465345, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193314174912258235, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: _prefabId
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}

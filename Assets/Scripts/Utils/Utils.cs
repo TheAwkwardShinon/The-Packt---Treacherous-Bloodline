@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 
 namespace ThePackt
 {
     public class Utils
     {
+        #region methods
         public static uint GetServerID()
         {
             if (BoltNetwork.IsClient)
@@ -53,5 +54,15 @@ namespace ThePackt
 
             return null;
         }
+        #endregion
+
+        #region inner classes
+        [Serializable]
+        public class PrefabAssociation
+        {
+            public string name;
+            public GameObject prefab;
+        }
+        #endregion
     }
 }
