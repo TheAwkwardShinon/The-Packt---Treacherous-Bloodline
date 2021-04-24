@@ -330,6 +330,74 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UserInterface"",
+            ""id"": ""945adec4-4049-4d9f-9c0f-d93db80562af"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchTabLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac7e6f17-ae0e-4fba-9593-fd2d52e1d1a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SwitchTabRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff26be66-8a30-4504-b1b5-de1f52cdc6b3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""859d710f-c8f2-49c0-9b9a-c8d6afe5719f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SwitchTabLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44c5a91b-a3ef-4fe8-b6bd-9a17ffe083aa"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchTabLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc97da9e-f6d8-4316-941f-4319f20eb991"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SwitchTabRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2169d25-9ac9-421e-a51b-534bcdc34ddc"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""SwitchTabRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -366,6 +434,10 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_AttackDirection = m_Gameplay.FindAction("AttackDirection", throwIfNotFound: true);
         m_Gameplay_transformation = m_Gameplay.FindAction("transformation", throwIfNotFound: true);
+        // UserInterface
+        m_UserInterface = asset.FindActionMap("UserInterface", throwIfNotFound: true);
+        m_UserInterface_SwitchTabLeft = m_UserInterface.FindAction("SwitchTabLeft", throwIfNotFound: true);
+        m_UserInterface_SwitchTabRight = m_UserInterface.FindAction("SwitchTabRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -492,6 +564,47 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // UserInterface
+    private readonly InputActionMap m_UserInterface;
+    private IUserInterfaceActions m_UserInterfaceActionsCallbackInterface;
+    private readonly InputAction m_UserInterface_SwitchTabLeft;
+    private readonly InputAction m_UserInterface_SwitchTabRight;
+    public struct UserInterfaceActions
+    {
+        private @PlayerInputClass m_Wrapper;
+        public UserInterfaceActions(@PlayerInputClass wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchTabLeft => m_Wrapper.m_UserInterface_SwitchTabLeft;
+        public InputAction @SwitchTabRight => m_Wrapper.m_UserInterface_SwitchTabRight;
+        public InputActionMap Get() { return m_Wrapper.m_UserInterface; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UserInterfaceActions set) { return set.Get(); }
+        public void SetCallbacks(IUserInterfaceActions instance)
+        {
+            if (m_Wrapper.m_UserInterfaceActionsCallbackInterface != null)
+            {
+                @SwitchTabLeft.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabLeft;
+                @SwitchTabLeft.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabLeft;
+                @SwitchTabLeft.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabLeft;
+                @SwitchTabRight.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabRight;
+                @SwitchTabRight.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabRight;
+                @SwitchTabRight.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabRight;
+            }
+            m_Wrapper.m_UserInterfaceActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @SwitchTabLeft.started += instance.OnSwitchTabLeft;
+                @SwitchTabLeft.performed += instance.OnSwitchTabLeft;
+                @SwitchTabLeft.canceled += instance.OnSwitchTabLeft;
+                @SwitchTabRight.started += instance.OnSwitchTabRight;
+                @SwitchTabRight.performed += instance.OnSwitchTabRight;
+                @SwitchTabRight.canceled += instance.OnSwitchTabRight;
+            }
+        }
+    }
+    public UserInterfaceActions @UserInterface => new UserInterfaceActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -519,5 +632,10 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnAttackDirection(InputAction.CallbackContext context);
         void OnTransformation(InputAction.CallbackContext context);
+    }
+    public interface IUserInterfaceActions
+    {
+        void OnSwitchTabLeft(InputAction.CallbackContext context);
+        void OnSwitchTabRight(InputAction.CallbackContext context);
     }
 }
