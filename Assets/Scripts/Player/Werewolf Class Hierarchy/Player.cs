@@ -91,7 +91,6 @@ namespace ThePackt{
         {
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.Transform, transform);
-            //state.SetTransforms(state.AttackDirection, _attackPoint.transform);
 
             _playerData.currentLifePoints = _playerData.maxLifePoints;
             if (entity.IsOwner)
@@ -144,16 +143,6 @@ namespace ThePackt{
                 healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
         }
-
-        //COMMENT TO TEST IN NETWORK
-        /*
-        public virtual void Update()
-        {
-            // at every frame set the current velocity and update the current state
-            _currentVelocity = _rb.velocity;
-            _stateMachine._currentState.LogicUpdate();
-        }
-        */
 
         private void OnDrawGizmos() {
             //Handles.Label(transform.position + new Vector3(-0.5f, 1f, 0), "Health: " + _playerData.currentLifePoints);
@@ -249,42 +238,6 @@ namespace ThePackt{
             }
         }
 
-        /*
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            Bullet bullet;
-            bool isLocalPlayer;
-            bool isLocalBullet;
-            if (LayerMask.LayerToName(collision.gameObject.layer) == "Bullets")
-            {
-                bullet = collision.GetComponent<Bullet>();
-                if (bullet != null)
-                {
-                    isLocalBullet = bullet.entity.IsOwner;
-                    isLocalPlayer = entity.IsOwner;
-                    Debug.Log("player is owner: " + isLocalPlayer);
-                    Debug.Log("bullet is owner: " + isLocalBullet);
-
-                    //If the player and the bullet have different owners a damage must be applied.
-                    //When two player fight and neither of them is the owner, both the bullet and hit player will be false,
-                    //so the bullet will not be destroyed or the damage applied -> which is wrong.
-                    //Anyway there is a machine in which the owner is the hit player and that machine
-                    //will identify that bullet and player have different owners and the damage will be applied,
-                    //health will be synchronized and the bullet destroyed for every player (thanks to BoltNetwork.Destroy)
-                    if (isLocalPlayer != isLocalBullet)
-                    {
-                        Debug.Log("[HEALTH] hit by bullet");
-
-                        if (entity.IsOwner)
-                        {
-                            ApplyDamage(bullet.GetAttackPower());
-                            bullet.Die();
-                        }
-                    }
-                }
-            }
-        }
-        */
         #endregion
 
         #region check methods

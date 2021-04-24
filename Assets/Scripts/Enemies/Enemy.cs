@@ -46,22 +46,6 @@ namespace ThePackt
             }
         }
 
-        /*
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            Bullet bullet;
-            if (LayerMask.LayerToName(collision.gameObject.layer) == "Bullets")
-            {
-                bullet = collision.GetComponent<Bullet>();
-                if (bullet != null)
-                { 
-                    ApplyDamage(bullet.GetAttackPower());
-                    bullet.Die();
-                }
-            }
-        }
-        */
-
         #endregion
 
         #region getter

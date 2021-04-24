@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Bolt;
 
 namespace ThePackt
@@ -41,17 +42,16 @@ namespace ThePackt
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("[NETWORKLOG] server received hit event");
-                if (evnt.HitConnectionID == getID())
+                if (evnt.RaisedBy.ConnectionId == Utils.GetServerID())
                 {
                     Debug.Log("[NETWORKLOG] server was hit, applying damage");
                     _player.ApplyDamage(evnt.Damage);
                 }
                 else
                 {
-                    BoltConnection connection = findConnection(evnt.HitConnectionID);
-                    Debug.Log("[NETWORKLOG] server redirect to: " + connection);
+                    Debug.Log("[NETWORKLOG] server redirect to: " + evnt.RaisedBy.ConnectionId);
 
-                    var newEvnt = PlayerAttackHitEvent.Create(connection);
+                    var newEvnt = PlayerAttackHitEvent.Create(evnt.RaisedBy);
                     newEvnt.Damage = evnt.Damage;
                     evnt.Send();
                 }
@@ -61,16 +61,6 @@ namespace ThePackt
                 Debug.Log("[NETWORKLOG] client was hit, applying damage");
                 _player.ApplyDamage(evnt.Damage);
             }
-
-            /*
-            Debug.Log("[HEALTH] my network id recieved: " + evnt.HitNetworkID);
-            Debug.Log("[HEALTH] my network id owner: " + _player.entity.NetworkId);
-
-            if (evnt.HitNetworkID == _player.entity.NetworkId)
-            {
-                _player.ApplyDamage(evnt.Damage);
-            }
-            */
         }
 
         public override void OnEvent(EnemyAttackHitEvent evnt)
@@ -90,34 +80,14 @@ namespace ThePackt
             }
         }
 
-        private uint getID()
+        public override void OnEvent(DisconnectEvent evnt)
         {
-            if (BoltNetwork.IsClient)
+            if (BoltNetwork.IsServer)
             {
-                //my Id
-                return BoltNetwork.Server.ConnectionId;
-            }
-            else
-            {
-                //Id of first client
-                foreach (BoltConnection client in BoltNetwork.Clients)
-                    return client.ConnectionId;
-            }
+                Debug.Log("[NETWORKLOG] server received disconnect event");
 
-            return 1000;
-        }
-
-        private BoltConnection findConnection(int id)
-        {
-            foreach (BoltConnection client in BoltNetwork.Clients)
-            {
-                if (client.ConnectionId == id)
-                {
-                    return client;
-                }
+                evnt.RaisedBy.Disconnect();
             }
-
-            return null;
         }
     }
 }

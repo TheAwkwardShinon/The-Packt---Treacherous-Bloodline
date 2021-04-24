@@ -59,7 +59,6 @@ namespace ThePackt
         {
             GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
-            //blt.GetComponent<Bullet>().SetPlayerNetworkId(_player.entity.NetworkId);
         }
 
         public void BaseWereWolfAttack()
@@ -70,63 +69,74 @@ namespace ThePackt
             {
                 Debug.Log(collision.gameObject.name + " hit");
 
-                Enemy enemy;
-                Player hitPlayer;
                 if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
                 {
-                    enemy = collision.GetComponent<Enemy>();
-                    if (enemy != null)
-                    {
-                        EnemyAttackHitEvent evnt;
-                        if (BoltNetwork.IsServer)
-                        {
-                            Debug.Log("[NETWORKLOG] server hit enemy");
-                            enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
-                        }
-                        else
-                        {
-                            Debug.Log("[NETWORKLOG] from client to server");
-                            evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
-                            evnt.HitNetworkId = enemy.entity.NetworkId;
-                            evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
-                            evnt.Send();
-                        } 
-                    }
+                    EnemyHitReaction(collision);
                 }
                 else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
                 {
-                    hitPlayer = collision.GetComponent<Player>();
-                    Debug.Log("player hit is owner: " + hitPlayer.entity.IsOwner);
-                    Debug.Log("player attacker is owner: " + _player.entity.IsOwner);
-                    if (hitPlayer != null)
+                    PlayerHitReaction(collision);
+                }
+            }
+        }
+
+        // react to the hit of an enemy applying damage to that enemy
+        private void EnemyHitReaction(Collider2D collision)
+        {
+            Enemy enemy;
+            enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                EnemyAttackHitEvent evnt;
+
+                // if we are on the server, directly apply the damage to the enemy
+                // otherwise we sent an event to the server
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[NETWORKLOG] server hit enemy");
+                    enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                }
+                else
+                {
+                    Debug.Log("[NETWORKLOG] from client to server");
+                    evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
+                    evnt.HitNetworkId = enemy.entity.NetworkId;
+                    evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                    evnt.Send();
+                }
+            }
+        }
+
+        // react to the hit of a player applying damage to that player. returns if the player is the owner
+        private void PlayerHitReaction(Collider2D collision)
+        {
+            Player hitPlayer = collision.GetComponent<Player>();
+            Debug.Log("player hit is owner: " + hitPlayer.entity.IsOwner);
+            Debug.Log("player attacker is owner: " + _player.entity.IsOwner);
+
+            if (hitPlayer != null)
+            {
+                if (hitPlayer.entity.IsOwner != _player.entity.IsOwner)
+                {
+                    Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
+
+                    PlayerAttackHitEvent evnt;
+
+                    // if we are on the server, send the hit event to the connection of the player that was hit
+                    // otherwise we sent it to the server with the connection id of the player that was hit
+                    if (BoltNetwork.IsServer)
                     {
-                        if (hitPlayer.entity.IsOwner != _player.entity.IsOwner)
-                        {
-                            Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
-
-                            /*
-                            Debug.Log("[HEALTH] other network id: " + hitPlayer.entity.NetworkId.GetHashCode());
-                            Debug.Log("[HEALTH] my network id: " + _player.entity.NetworkId.GetHashCode());
-                            */
-
-                            PlayerAttackHitEvent evnt;
-                            if (BoltNetwork.IsServer)
-                            {
-                                Debug.Log("[NETWORKLOG] from server to connection: " + hitPlayer.getConnectionID());
-                                evnt = PlayerAttackHitEvent.Create(hitPlayer.entity.Source);
-                            }
-                            else
-                            {
-                                Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + hitPlayer.getConnectionID());
-                                evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
-                                evnt.HitConnectionID = (int) hitPlayer.getConnectionID();
-                            }
-
-                            //evnt.HitNetworkID = player.entity.NetworkId;
-                            evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
-                            evnt.Send();
-                        }
+                        Debug.Log("[NETWORKLOG] from server to connection: " + hitPlayer.getConnectionID());
+                        evnt = PlayerAttackHitEvent.Create(hitPlayer.entity.Source);
                     }
+                    else
+                    {
+                        Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + hitPlayer.getConnectionID());
+                        evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
+                    }
+
+                    evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                    evnt.Send();
                 }
             }
         }

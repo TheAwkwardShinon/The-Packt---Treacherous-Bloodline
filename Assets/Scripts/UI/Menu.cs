@@ -11,12 +11,15 @@ public class Menu : GlobalEventListener
     // called from host button
     public void StartServer()
     {
+        BoltConfig config = BoltRuntimeSettings.instance.GetConfigCopy();
+        config.serverConnectionLimit = 5;
+
         BoltLauncher.StartServer();
     }
 
     public override void BoltStartDone()
     {
-        // creates a session startin with the specified scene
+        // creates a session starting with the specified scene
         BoltMatchmaking.CreateSession(sessionID: "test", sceneToLoad: "NetworkTestScene");
     }
 
