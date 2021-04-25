@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterSprite: {fileID: 0}
   _personal: {fileID: 21300000, guid: 3e8ca4de99dcb634b803de072d69f55f, type: 3}
-  _stat3_a: {fileID: 0}
-  _weakActive: {fileID: 0}
-  _passive1: {fileID: 0}
-  _stat3_b: {fileID: 0}
-  _stat2_a: {fileID: 0}
-  _stat2_b: {fileID: 0}
-  _midActive: {fileID: 0}
-  _passive2: {fileID: 0}
-  _stat3_c: {fileID: 0}
-  _passive3: {fileID: 0}
-  _stat1: {fileID: 0}
-  _activeAttack: {fileID: 0}
-  _ultimate: {fileID: 0}
+  _stat3_a: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
+  _weakActive: {fileID: 21300000, guid: 2455fcb0222bdf64cb4786dca3f0b4a8, type: 3}
+  _passive1: {fileID: 21300000, guid: 8e1b0eadd55a227438a5966bccb2b203, type: 3}
+  _stat3_b: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
+  _stat2_a: {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  _stat2_b: {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  _midActive: {fileID: 21300000, guid: dac989bcc4830ef4d867a8f372ba6b75, type: 3}
+  _passive2: {fileID: 21300000, guid: 6ab6af3f0a06ea747803802d3cec091a, type: 3}
+  _stat3_c: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
+  _passive3: {fileID: 21300000, guid: ce07fe95a3feca74b9545a2780296ccf, type: 3}
+  _stat1: {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
+  _activeAttack: {fileID: 21300000, guid: 20edcaa23cfff8d41ab9057b8de1d70a, type: 3}
+  _ultimate: {fileID: 21300000, guid: 642df502be8c75b49b3f691de3e9bbd5, type: 3}
   _lore: 
   _ClassName: 
   _descriptionAbility1: 
