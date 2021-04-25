@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538c13dae6eb0bc4b80efee3996b9670, type: 3}
+  m_Name: Soldier
+  m_EditorClassIdentifier: 
+  _characterSprite: {fileID: 0}
+  _personal: {fileID: 21300000, guid: 964b9aafd9b6080418c084d82425f79a, type: 3}
+  _stat3_a: {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  _weakActive: {fileID: 21300000, guid: 0fbe03e00a327b144ab947d7bb6951aa, type: 3}
+  _passive1: {fileID: 21300000, guid: aed5c470ed7a37f41889d7ffc7d0beac, type: 3}
+  _stat3_b: {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  _stat2_a: {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
+  _stat2_b: {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
+  _midActive: {fileID: 21300000, guid: de469e7b05b263642b6bd86424ae0a4b, type: 3}
+  _passive2: {fileID: 21300000, guid: 8e14dbc3d2b51e346a593d345445b181, type: 3}
+  _stat3_c: {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  _passive3: {fileID: 21300000, guid: 903ba6f4035b8da4e9c358a6293633a8, type: 3}
+  _stat1: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
+  _activeAttack: {fileID: 21300000, guid: ec59e1bfe1ae4ab4999d7d94cd0699d7, type: 3}
+  _ultimate: {fileID: 21300000, guid: 84d49ff68b1139b45ab92c1ac183a958, type: 3}
+  _lore: 
+  _ClassName: 
+  _descriptionAbility1: 
+  _descriptionAbility2: 
+  _descriptionAbility3: 
+  _descriptionAbility4: 
+  _descriptionAbility5: 
+  _descriptionAbility6: 
+  _descriptionAbility7: 
+  _descriptionAbility8: 
+  _descriptionAbility9: 
+  _descriptionAbility10: 
+  _descriptionAbility11: 
+  _descriptionAbility12: 
+  _descriptionAbility13: 
+  _descriptionAbility14: 

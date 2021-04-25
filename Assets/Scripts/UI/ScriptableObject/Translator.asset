@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538c13dae6eb0bc4b80efee3996b9670, type: 3}
+  m_Name: Translator
+  m_EditorClassIdentifier: 
+  _characterSprite: {fileID: 0}
+  _personal: {fileID: 21300000, guid: 8b5e7a7d922761b499b893914455d831, type: 3}
+  _stat3_a: {fileID: 0}
+  _weakActive: {fileID: 0}
+  _passive1: {fileID: 0}
+  _stat3_b: {fileID: 0}
+  _stat2_a: {fileID: 0}
+  _stat2_b: {fileID: 0}
+  _midActive: {fileID: 0}
+  _passive2: {fileID: 0}
+  _stat3_c: {fileID: 0}
+  _passive3: {fileID: 0}
+  _stat1: {fileID: 0}
+  _activeAttack: {fileID: 0}
+  _ultimate: {fileID: 0}
+  _lore: 
+  _ClassName: 
+  _descriptionAbility1: 
+  _descriptionAbility2: 
+  _descriptionAbility3: 
+  _descriptionAbility4: 
+  _descriptionAbility5: 
+  _descriptionAbility6: 
+  _descriptionAbility7: 
+  _descriptionAbility8: 
+  _descriptionAbility9: 
+  _descriptionAbility10: 
+  _descriptionAbility11: 
+  _descriptionAbility12: 
+  _descriptionAbility13: 
+  _descriptionAbility14: 
