@@ -105,7 +105,6 @@ namespace ThePackt{
                 _jumpInput = true;
                 _jumpInputStop = false;
                 _jumpInputStartTime = Time.time;
-                Debug.Log("aaaaaa jump input");
             }
 
             if (context.canceled)

@@ -55,8 +55,6 @@ namespace ThePackt
                 var evnt = RequestAvailableFactions.Create(BoltNetwork.Server);
                 evnt.Send();
 
-                //BoltNetwork.Instantiate(playerPrefabs[0].prefab, playerSpawnPos, Quaternion.identity);
-
                 Debug.Log("[SPAWNPLAYER] request available factions sent at: " + BoltNetwork.Server.ConnectionId);
             }
 

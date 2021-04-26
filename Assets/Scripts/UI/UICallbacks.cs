@@ -9,8 +9,6 @@ namespace ThePackt {
         public GameObject p;
         public void Disconnect()
         {
-            //BoltNetwork.Instantiate(p, Vector3.zero, Quaternion.identity);
-
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("[NETWORKLOG] server disconnecting");
