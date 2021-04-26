@@ -12,34 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538c13dae6eb0bc4b80efee3996b9670, type: 3}
   m_Name: Translator
   m_EditorClassIdentifier: 
-  _characterSprite: {fileID: 0}
-  _personal: {fileID: 21300000, guid: 8b5e7a7d922761b499b893914455d831, type: 3}
-  _stat3_a: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
-  _weakActive: {fileID: 21300000, guid: 2455fcb0222bdf64cb4786dca3f0b4a8, type: 3}
-  _passive1: {fileID: 21300000, guid: aec7c999d7f759a44a206babcf8beca3, type: 3}
-  _stat3_b: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
-  _stat2_a: {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
-  _stat2_b: {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
-  _midActive: {fileID: 21300000, guid: a997d4bb22aa7f047b7f03cc63d15514, type: 3}
-  _passive2: {fileID: 21300000, guid: e811d081ce099d84e9b581c84dcc1e07, type: 3}
-  _stat3_c: {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
-  _passive3: {fileID: 21300000, guid: 55d8693ed821e384a8f0b424064dae3c, type: 3}
-  _stat1: {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
-  _activeAttack: {fileID: 21300000, guid: ec59e1bfe1ae4ab4999d7d94cd0699d7, type: 3}
-  _ultimate: {fileID: 21300000, guid: 2246660941b89354c8d1e28bda3ee1f7, type: 3}
-  _lore: 
-  _ClassName: 
-  _descriptionAbility1: 
-  _descriptionAbility2: 
-  _descriptionAbility3: 
-  _descriptionAbility4: 
-  _descriptionAbility5: 
-  _descriptionAbility6: 
-  _descriptionAbility7: 
-  _descriptionAbility8: 
-  _descriptionAbility9: 
-  _descriptionAbility10: 
-  _descriptionAbility11: 
-  _descriptionAbility12: 
-  _descriptionAbility13: 
-  _descriptionAbility14: 
+  personalAbility: {fileID: 21300000, guid: 8b5e7a7d922761b499b893914455d831, type: 3}
+  classData: {fileID: 11400000, guid: 74bf2e224bce7ed47950cf3fceebddb6, type: 2}
+  lore: 
+  ClassName: Herin - Translator
+  personalAbilityName: Deep Understanding
+  personalAbilityDescription: 

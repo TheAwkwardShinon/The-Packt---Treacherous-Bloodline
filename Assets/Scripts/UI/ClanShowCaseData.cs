@@ -7,8 +7,11 @@ namespace ThePackt{
     public class ClanShowCaseData : ScriptableObject
     {
         public  List<Sprite> _abilitisSprite;
-        [TextArea] public List<string> _abilitiesDescription;
-        public List<int> _abilitiesCost;
+        [TextArea] public List<string> abilitiesDescription;
+        public List<int> abilitiesCost;
+        public List<string> abilitiesName;
+        public Sprite clanLogo;
+        public Sprite characterSprite;
 
 
     }

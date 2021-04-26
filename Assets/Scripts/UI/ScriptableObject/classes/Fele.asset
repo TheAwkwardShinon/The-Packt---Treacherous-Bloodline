@@ -12,6 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10e7a2e13b67b9419f43883fdacee99, type: 3}
   m_Name: Fele
   m_EditorClassIdentifier: 
-  _abilitisSprite: []
-  _abilitiesDescription: []
-  _abilitiesCost: 
+  _abilitisSprite:
+  - {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  - {fileID: 21300000, guid: 0fbe03e00a327b144ab947d7bb6951aa, type: 3}
+  - {fileID: 21300000, guid: aed5c470ed7a37f41889d7ffc7d0beac, type: 3}
+  - {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
+  - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
+  - {fileID: 21300000, guid: de469e7b05b263642b6bd86424ae0a4b, type: 3}
+  - {fileID: 21300000, guid: 8e14dbc3d2b51e346a593d345445b181, type: 3}
+  - {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
+  - {fileID: 21300000, guid: 903ba6f4035b8da4e9c358a6293633a8, type: 3}
+  - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
+  - {fileID: 21300000, guid: ec59e1bfe1ae4ab4999d7d94cd0699d7, type: 3}
+  - {fileID: 21300000, guid: 84d49ff68b1139b45ab92c1ac183a958, type: 3}
+  abilitiesDescription: []
+  abilitiesCost: 
+  abilitiesName:
+  - Damage Power Up
+  - Defiance
+  - Touch The Moon
+  - Damage Power Up
+  - Hp Power Up
+  - Hp Power Up
+  - Unbroken
+  - Quick
+  - Damage Power Up
+  - Unshackled
+  - Speed Power Up
+  - Reach
+  - Feral Frenzy
+  clanLogo: {fileID: 21300000, guid: f6a7072559806784d8f91176e04167d0, type: 3}
+  characterSprite: {fileID: 21300012, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}

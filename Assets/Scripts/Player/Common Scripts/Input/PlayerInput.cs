@@ -350,6 +350,22 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""NavigateCharactersLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ef686ef-a4b3-4303-b06a-222751345e08"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""NavigateCharactersRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""a27d9d2d-afce-4ed8-abd9-3a110888a370"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -396,6 +412,50 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""action"": ""SwitchTabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d330cad9-9435-4b9d-87cd-cb26b50c18c3"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""NavigateCharactersLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fae51978-be00-43b6-9df9-51e7f5f3f0ce"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""NavigateCharactersLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ddcf8cd-1f27-4ab0-9864-03cdc9a2f764"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""NavigateCharactersRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9fd32ed4-eb93-4b02-9113-3a545ee216fa"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""NavigateCharactersRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -438,6 +498,8 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         m_UserInterface = asset.FindActionMap("UserInterface", throwIfNotFound: true);
         m_UserInterface_SwitchTabLeft = m_UserInterface.FindAction("SwitchTabLeft", throwIfNotFound: true);
         m_UserInterface_SwitchTabRight = m_UserInterface.FindAction("SwitchTabRight", throwIfNotFound: true);
+        m_UserInterface_NavigateCharactersLeft = m_UserInterface.FindAction("NavigateCharactersLeft", throwIfNotFound: true);
+        m_UserInterface_NavigateCharactersRight = m_UserInterface.FindAction("NavigateCharactersRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -570,12 +632,16 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
     private IUserInterfaceActions m_UserInterfaceActionsCallbackInterface;
     private readonly InputAction m_UserInterface_SwitchTabLeft;
     private readonly InputAction m_UserInterface_SwitchTabRight;
+    private readonly InputAction m_UserInterface_NavigateCharactersLeft;
+    private readonly InputAction m_UserInterface_NavigateCharactersRight;
     public struct UserInterfaceActions
     {
         private @PlayerInputClass m_Wrapper;
         public UserInterfaceActions(@PlayerInputClass wrapper) { m_Wrapper = wrapper; }
         public InputAction @SwitchTabLeft => m_Wrapper.m_UserInterface_SwitchTabLeft;
         public InputAction @SwitchTabRight => m_Wrapper.m_UserInterface_SwitchTabRight;
+        public InputAction @NavigateCharactersLeft => m_Wrapper.m_UserInterface_NavigateCharactersLeft;
+        public InputAction @NavigateCharactersRight => m_Wrapper.m_UserInterface_NavigateCharactersRight;
         public InputActionMap Get() { return m_Wrapper.m_UserInterface; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -591,6 +657,12 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 @SwitchTabRight.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabRight;
                 @SwitchTabRight.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabRight;
                 @SwitchTabRight.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnSwitchTabRight;
+                @NavigateCharactersLeft.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersLeft;
+                @NavigateCharactersLeft.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersLeft;
+                @NavigateCharactersLeft.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersLeft;
+                @NavigateCharactersRight.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersRight;
+                @NavigateCharactersRight.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersRight;
+                @NavigateCharactersRight.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersRight;
             }
             m_Wrapper.m_UserInterfaceActionsCallbackInterface = instance;
             if (instance != null)
@@ -601,6 +673,12 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 @SwitchTabRight.started += instance.OnSwitchTabRight;
                 @SwitchTabRight.performed += instance.OnSwitchTabRight;
                 @SwitchTabRight.canceled += instance.OnSwitchTabRight;
+                @NavigateCharactersLeft.started += instance.OnNavigateCharactersLeft;
+                @NavigateCharactersLeft.performed += instance.OnNavigateCharactersLeft;
+                @NavigateCharactersLeft.canceled += instance.OnNavigateCharactersLeft;
+                @NavigateCharactersRight.started += instance.OnNavigateCharactersRight;
+                @NavigateCharactersRight.performed += instance.OnNavigateCharactersRight;
+                @NavigateCharactersRight.canceled += instance.OnNavigateCharactersRight;
             }
         }
     }
@@ -637,5 +715,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
     {
         void OnSwitchTabLeft(InputAction.CallbackContext context);
         void OnSwitchTabRight(InputAction.CallbackContext context);
+        void OnNavigateCharactersLeft(InputAction.CallbackContext context);
+        void OnNavigateCharactersRight(InputAction.CallbackContext context);
     }
 }
