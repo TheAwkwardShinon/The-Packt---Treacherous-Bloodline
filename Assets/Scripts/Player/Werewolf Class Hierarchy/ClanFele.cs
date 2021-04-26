@@ -13,7 +13,8 @@ namespace ThePackt{
         #endregion
 
         #region methods
-        public  override void Start()
+   
+        public  override void Attached()
         {
             
         }

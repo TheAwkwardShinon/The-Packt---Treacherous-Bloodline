@@ -28,16 +28,14 @@ namespace ThePackt
 
                 if (_player.GetIsHuman())
                 {
-                    Debug.Log("[ATTACK STATE] entered (base human) ciaone");
-                    //_player.state.BaseHumanAttack();
+                    Debug.Log("[ATTACK STATE] entered (base human)");
                     BaseHumanAttack();
                     _isAbilityDone = true;
-                    Debug.Log("[ATTACK STATE] ability done (base human) ciaone");
+                    Debug.Log("[ATTACK STATE] ability done (base human)");
                 }
                 else
                 {
                     Debug.Log("[ATTACK STATE] entered (base werewolf)");
-                    //_player.state.BaseWereWolfAttack();
                     BaseWereWolfAttack();
                     _isAbilityDone = true;
                     Debug.Log("[ATTACK STATE] ability done (base werewolf)");

@@ -15,7 +15,6 @@ namespace ThePackt
         {
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.Transform, transform);
-            //state.SetTransforms(state.AttackDirection, _attackPoint.transform);
 
             state.Health = _health;
             state.AddCallback("Health", HealthCallback);

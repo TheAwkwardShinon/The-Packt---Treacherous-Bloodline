@@ -24,7 +24,11 @@ namespace ThePackt{
         #endregion
 
         #region UI
-        private GameObject healthText; 
+        private GameObject healthText;
+        private Slider healthSlider;
+        [SerializeField] protected GameObject healthBar;
+        [SerializeField] protected Image healthImage;
+        [SerializeField] protected Gradient healthGradient;
         #endregion
 
         #region velocity
@@ -85,25 +89,53 @@ namespace ThePackt{
         #region methods
 
         #region core methods
+        public override void Initialized()
+        {
+            _stateMachine = new PlayerStateMachine();
+            _idleState = new PlayerIdleState(this, _stateMachine, _playerData, "Idle");
+            _moveState = new PlayerMoveState(this, _stateMachine, _playerData, "Move");
+            _jumpState = new PlayerJumpState(this, _stateMachine, _playerData, "InAir");
+            _inAirState = new PlayerInAirState(this, _stateMachine, _playerData, "InAir");
+            _crouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, _playerData, "CrouchIdle");
+            _crouchMoveState = new PlayerCrouchMoveState(this, _stateMachine, _playerData, "CrouchMove");
+            _landState = new PlayerLandState(this, _stateMachine, _playerData, "Land");
+            _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
+            _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
+            _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "attack");
+            _transformState = new PlayerTransformationState(this, _stateMachine, _playerData, "transformation");
+            _detransformationState = new PlayerDetransformationState(this, _stateMachine, _playerData, "transformation");
+        }
 
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
         {
-            // synchronize the bolt player state transform with the player gameobject transform
-            state.SetTransforms(state.Transform, transform);
+            _rb = gameObject.GetComponent<Rigidbody2D>();
+            _col = gameObject.GetComponent<BoxCollider2D>();
+            _anim = GetComponent<Animator>();
+            _inputHandler = GetComponent<newInputHandler>();
+            _facingDirection = -1;
+            _stateMachine.Initialize(_idleState);
 
             _playerData.currentLifePoints = _playerData.maxLifePoints;
             if (entity.IsOwner)
             {
                 state.Health = _playerData.currentLifePoints;
                 state.AddCallback("Health", HealthCallback);
-                
             }
 
+            healthSlider = healthBar.GetComponent<Slider>();
+            healthImage.color = healthGradient.Evaluate(1f);
+            healthSlider.maxValue = _playerData.maxLifePoints;
+
             healthText = GameObject.Find("HealthText");
+
+            // synchronize the bolt player state transform with the player gameobject transform
+            state.SetTransforms(state.Transform, transform);
         }
 
+        
         /* initialize every "common" possible state in the fsm */
+        /*
         private void Awake(){
             _stateMachine = new PlayerStateMachine();
             _idleState = new PlayerIdleState(this,_stateMachine,_playerData,"Idle");
@@ -119,9 +151,11 @@ namespace ThePackt{
             _transformState = new PlayerTransformationState(this,_stateMachine, _playerData, "transformation");
             _detransformationState = new PlayerDetransformationState(this,_stateMachine, _playerData, "transformation");
         }
+        */
 
 
         /* get core components and initialize the fsm */
+        /*
         public virtual void Start(){
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
@@ -130,10 +164,13 @@ namespace ThePackt{
             _facingDirection = -1;
             _stateMachine.Initialize(_idleState);
         }
+        */
 
         // executed at every frame as Update(), but called only on the owner's computer
         public override void SimulateOwner()
         {
+            Debug.Log("aaaaaa simulate owner");
+
             // at every frame set the current velocity and update the current state
             _currentVelocity = _rb.velocity;
             _stateMachine._currentState.LogicUpdate();
@@ -142,6 +179,10 @@ namespace ThePackt{
             {
                 healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
+
+            
+            healthSlider.value = _playerData.currentLifePoints;
+            healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
         }
 
         private void OnDrawGizmos() {

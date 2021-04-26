@@ -67,6 +67,9 @@ namespace ThePackt{
             _isTouchingCeiling = _player.CheckForCeiling();
             _isGrounded = _player.CheckIfGrounded();
 
+            
+            Debug.Log("aaaaa " + _attackInput + " " + _player._attackState.CheckIfCanAttack());
+            Debug.Log("aaaaaa jump input " + _jumpInput + " " + _player._jumpState.CanJump() + " " + _isGrounded + " " + !_isTouchingCeiling);
 
             if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling)
             {
