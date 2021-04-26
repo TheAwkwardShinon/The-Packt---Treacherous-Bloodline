@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a86dcd095e585441af59d702afaf7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: 8365742d0ddd9ae438b3accddf43c576, type: 2}
+  _playerData: {fileID: 11400000, guid: beb93cc185c7cda40811eb704afa411d, type: 2}
   _wallCheck: {fileID: 953346282940131532}
   _ledgeCheck: {fileID: 4841296775081750245}
   _ceilingCheck: {fileID: 3806655669083619216}
@@ -912,6 +912,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7f11a834-a531-48ab-8184-1bdc249fce35
     m_ActionName: Gameplay/transformation[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ac7e6f17-ae0e-4fba-9593-fd2d52e1d1a8
+    m_ActionName: UserInterface/SwitchTabLeft[/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ff26be66-8a30-4504-b1b5-de1f52cdc6b3
+    m_ActionName: UserInterface/SwitchTabRight[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay

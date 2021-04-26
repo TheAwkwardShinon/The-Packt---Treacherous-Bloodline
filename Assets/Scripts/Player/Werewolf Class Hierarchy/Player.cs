@@ -134,14 +134,14 @@ namespace ThePackt{
             if (entity.IsOwner)
             {
                 state.Health = _playerData.currentLifePoints;
-                state.AddCallback("Health", HealthCallback);
+                healthText = GameObject.Find("HealthText");
             }
+
+            state.AddCallback("Health", HealthCallback);
 
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
             healthSlider.maxValue = _playerData.maxLifePoints;
-
-            healthText = GameObject.Find("HealthText");
 
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.Transform, transform);
@@ -163,7 +163,8 @@ namespace ThePackt{
                 healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
 
-            
+            Debug.Log("[HEALTH] currentLifePoints: " + _playerData.currentLifePoints);
+
             healthSlider.value = _playerData.currentLifePoints;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
         }
@@ -253,7 +254,11 @@ namespace ThePackt{
         private void HealthCallback()
         {
             _playerData.currentLifePoints = state.Health;
-            Debug.Log("[HEALTH] callback. New currentLifePoints: " + _playerData.currentLifePoints);
+            Debug.Log("[HEALTH] callback. Owner: " + entity.IsOwner + " New currentLifePoints: " + _playerData.currentLifePoints);
+            //Debug.Log("[HEALTH] callback. Slider of " + healthSlider.gameObject.transform.parent.gameObject.transform.parent.gameObject.name);
+
+            healthSlider.value = _playerData.currentLifePoints;
+            healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
 
             if (entity.IsOwner && _playerData.currentLifePoints <= 0)
             {
@@ -306,6 +311,8 @@ namespace ThePackt{
         {
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
+            healthBar.transform.Rotate(0.0f, -180.0f, 0.0f);
+
         }
 
         #endregion
