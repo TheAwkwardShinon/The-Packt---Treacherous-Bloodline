@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 namespace ThePackt {
     public class UICallbacks : MonoBehaviour
     {
+        public GameObject p;
         public void Disconnect()
         {
             if (BoltNetwork.IsServer)

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +12,8 @@ namespace ThePackt{
         #region core
         
         public newInputHandler _inputHandler { get; private set; }
-
+        private PlayerInput _playerInput;
+ 
         [Header("Core Data Fields")]
         [SerializeField] protected PlayerData _playerData;
         [SerializeField] private Transform _wallCheck;
@@ -24,7 +25,11 @@ namespace ThePackt{
         #endregion
 
         #region UI
-        private GameObject healthText; 
+        private GameObject healthText;
+        private Slider healthSlider;
+        [SerializeField] protected GameObject healthBar;
+        [SerializeField] protected Image healthImage;
+        [SerializeField] protected Gradient healthGradient;
         #endregion
 
         #region velocity
@@ -86,28 +91,12 @@ namespace ThePackt{
 
         #region core methods
 
-        // executed when the player prefab is instatiated (quite as Start())
-        public override void Attached()
-        {
-            // synchronize the bolt player state transform with the player gameobject transform
-            state.SetTransforms(state.Transform, transform);
-
-            _playerData.currentLifePoints = _playerData.maxLifePoints;
-            if (entity.IsOwner)
-            {
-                state.Health = _playerData.currentLifePoints;
-                state.AddCallback("Health", HealthCallback);
-                
-            }
-
-            healthText = GameObject.Find("HealthText");
-        }
-
         /* initialize every "common" possible state in the fsm */
-        private void Awake(){
+        public override void Initialized()
+        {
             _stateMachine = new PlayerStateMachine();
-            _idleState = new PlayerIdleState(this,_stateMachine,_playerData,"Idle");
-            _moveState = new PlayerMoveState(this,_stateMachine,_playerData,"Move");
+            _idleState = new PlayerIdleState(this, _stateMachine, _playerData, "Idle");
+            _moveState = new PlayerMoveState(this, _stateMachine, _playerData, "Move");
             _jumpState = new PlayerJumpState(this, _stateMachine, _playerData, "InAir");
             _inAirState = new PlayerInAirState(this, _stateMachine, _playerData, "InAir");
             _crouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, _playerData, "CrouchIdle");
@@ -115,33 +104,69 @@ namespace ThePackt{
             _landState = new PlayerLandState(this, _stateMachine, _playerData, "Land");
             _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
             _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
-            _attackState = new PlayerAttackState(this,_stateMachine, _playerData, "attack");
-            _transformState = new PlayerTransformationState(this,_stateMachine, _playerData, "transformation");
-            _detransformationState = new PlayerDetransformationState(this,_stateMachine, _playerData, "transformation");
+            _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "attack");
+            _transformState = new PlayerTransformationState(this, _stateMachine, _playerData, "transformation");
+            _detransformationState = new PlayerDetransformationState(this, _stateMachine, _playerData, "transformation");
         }
 
-
-        /* get core components and initialize the fsm */
-        public virtual void Start(){
+        // executed when the player prefab is instatiated (quite as Start())
+        public override void Attached()
+        {
+            //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
+            _playerInput = GetComponent<PlayerInput>();
             _anim = GetComponent<Animator>();
-            _inputHandler = GetComponent<newInputHandler>();
             _facingDirection = -1;
             _stateMachine.Initialize(_idleState);
+
+            //disable input handling if the player is not the owner
+            if (!entity.IsOwner)
+            {
+                _playerInput.enabled = false;
+            }
+            else
+            {
+                _inputHandler = GetComponent<newInputHandler>();
+            }
+
+            _playerData.currentLifePoints = _playerData.maxLifePoints;
+            if (entity.IsOwner)
+            {
+                state.Health = _playerData.currentLifePoints;
+                healthText = GameObject.Find("HealthText");
+            }
+
+            state.AddCallback("Health", HealthCallback);
+
+            healthSlider = healthBar.GetComponent<Slider>();
+            healthImage.color = healthGradient.Evaluate(1f);
+            healthSlider.maxValue = _playerData.maxLifePoints;
+
+            // synchronize the bolt player state transform with the player gameobject transform
+            state.SetTransforms(state.Transform, transform);
         }
 
         // executed at every frame as Update(), but called only on the owner's computer
         public override void SimulateOwner()
         {
+
             // at every frame set the current velocity and update the current state
             _currentVelocity = _rb.velocity;
-            _stateMachine._currentState.LogicUpdate();
+            if (_inputHandler != null)
+            {
+                _stateMachine._currentState.LogicUpdate();
+            }
 
             if (entity.IsOwner)
             {
                 healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
+
+            Debug.Log("[HEALTH] currentLifePoints: " + _playerData.currentLifePoints);
+
+            healthSlider.value = _playerData.currentLifePoints;
+            healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
         }
 
         private void OnDrawGizmos() {
@@ -229,7 +254,11 @@ namespace ThePackt{
         private void HealthCallback()
         {
             _playerData.currentLifePoints = state.Health;
-            Debug.Log("[HEALTH] callback. New currentLifePoints: " + _playerData.currentLifePoints);
+            Debug.Log("[HEALTH] callback. Owner: " + entity.IsOwner + " New currentLifePoints: " + _playerData.currentLifePoints);
+            //Debug.Log("[HEALTH] callback. Slider of " + healthSlider.gameObject.transform.parent.gameObject.transform.parent.gameObject.name);
+
+            healthSlider.value = _playerData.currentLifePoints;
+            healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
 
             if (entity.IsOwner && _playerData.currentLifePoints <= 0)
             {
@@ -282,6 +311,8 @@ namespace ThePackt{
         {
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
+            healthBar.transform.Rotate(0.0f, -180.0f, 0.0f);
+
         }
 
         #endregion

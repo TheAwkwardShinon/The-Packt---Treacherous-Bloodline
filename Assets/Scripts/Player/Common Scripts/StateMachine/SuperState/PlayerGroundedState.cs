@@ -67,7 +67,6 @@ namespace ThePackt{
             _isTouchingCeiling = _player.CheckForCeiling();
             _isGrounded = _player.CheckIfGrounded();
 
-
             if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling)
             {
                 Debug.Log("[GROUNDED STATE] player pushing to jump, player is grounded -> "+_isGrounded+" and can jump so passing to jump state...");

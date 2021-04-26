@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace ThePackt
@@ -8,6 +8,10 @@ namespace ThePackt
     {
         #region variables
         [SerializeField] protected float _health;
+        [SerializeField] protected GameObject healthBar;
+        [SerializeField] protected Image healthImage;
+        [SerializeField] protected Gradient healthGradient;
+        private Slider healthSlider;
         #endregion
 
         #region methods
@@ -15,17 +19,27 @@ namespace ThePackt
         {
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.Transform, transform);
-            //state.SetTransforms(state.AttackDirection, _attackPoint.transform);
 
-            state.Health = _health;
+            if (BoltNetwork.IsServer)
+            {
+                state.Health = _health;
+            }
+
             state.AddCallback("Health", HealthCallback);
+
+            healthSlider = healthBar.GetComponent<Slider>();
+            healthImage.color = healthGradient.Evaluate(1f);
+            healthSlider.maxValue = _health;
         }
 
         public void ApplyDamage(float damage)
         {
             Debug.Log("[ENEMY] apply damage: " + entity.IsOwner);
 
-            state.Health -= damage;
+            if (BoltNetwork.IsServer)
+            {
+                state.Health -= damage;
+            }
         }
 
         private void Die()
@@ -38,6 +52,9 @@ namespace ThePackt
         {
             _health = state.Health;
             Debug.Log("[ENEMY] health callback. New _health: " + _health);
+
+            healthSlider.value = _health;
+            healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
 
             if (_health <= 0)
             {

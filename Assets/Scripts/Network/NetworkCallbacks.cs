@@ -77,7 +77,10 @@ namespace ThePackt
                 }
 
                 //if the spawned entity is a player remove it from the available ones
-                _availableFactions.Remove(entity.tag);
+                if (_availableFactions != null)
+                {
+                    _availableFactions.Remove(entity.tag);
+                }
 
                 Debug.Log("[SPAWNPLAYER] attached available: " + GetAvailableFactionString());
             }
@@ -89,7 +92,10 @@ namespace ThePackt
             if (plyr != null)
             {
                 //if the destroyed entity is a player add it to the available ones
-                _availableFactions.Add(entity.tag);
+                if(_availableFactions != null)
+                {
+                    _availableFactions.Add(entity.tag);
+                }
 
                 Debug.Log("[SPAWNPLAYER] detatched available: " + GetAvailableFactionString());
             }
@@ -264,9 +270,12 @@ namespace ThePackt
         private string GetAvailableFactionString()
         {
             string s = "";
-            foreach (string f in _availableFactions)
+            if (_availableFactions != null)
             {
-                s += ", " + f;
+                foreach (string f in _availableFactions)
+                {
+                    s += ", " + f;
+                }
             }
 
             return s;

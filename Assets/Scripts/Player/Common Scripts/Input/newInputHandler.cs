@@ -99,6 +99,7 @@ namespace ThePackt{
         public void OnJumpInput(InputAction.CallbackContext context)
         {
             Debug.Log("input jump");
+ 
             if (context.started)
             {
                 _jumpInput = true;
@@ -163,6 +164,7 @@ namespace ThePackt{
                     _attackInputs[Constants.BASE] = true;
                     _attackInputsStop[Constants.BASE] = false;
                     _attackInputsStartTime[Constants.BASE] = Time.time;
+                    Debug.Log("aaaaaa base attack input");
                 }
             }
             else if (context.canceled)
