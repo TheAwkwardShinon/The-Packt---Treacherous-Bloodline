@@ -105,8 +105,10 @@ namespace ThePackt{
                 _player.CheckIfShouldFlip(_xInput);
                 _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
 
-                _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
-                _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+                //_player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
+                //_player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+                _player.state.yVelocity = _player._currentVelocity.y;
+                _player.state.xVelocity = Mathf.Abs(_player._currentVelocity.x);
             }
 
         }

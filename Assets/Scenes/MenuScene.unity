@@ -4889,6 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95aa6a8fbd012504abc61feea4a50535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: NetworkTestScene
 --- !u!1 &1079017170
 GameObject:
   m_ObjectHideFlags: 0

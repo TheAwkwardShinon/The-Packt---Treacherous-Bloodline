@@ -147,6 +147,8 @@ namespace ThePackt{
 
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.Transform, transform);
+
+            state.SetAnimator(_anim);
         }
 
         // executed at every frame as Update(), but called only on the owner's computer

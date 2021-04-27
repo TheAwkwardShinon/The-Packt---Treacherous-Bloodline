@@ -27,14 +27,19 @@ namespace ThePackt{
 
         public virtual void Enter(){
             Checks();
-            _player._anim.SetBool(_aniamtionName,true);
+
+            SetAnimatorBools(true);
+            //_player._anim.SetBool(_aniamtionName,true);
+
             _startTime = Time.time;
             _isAnimationFinished = false;
             _isExitingState = false;
         }
 
         public virtual void Exit(){
-            _player._anim.SetBool(_aniamtionName,false);
+
+            SetAnimatorBools(false);
+            //_player._anim.SetBool(_aniamtionName,false);
         }
 
          public virtual void LogicUpdate()
@@ -58,8 +63,48 @@ namespace ThePackt{
         public virtual void Checks(){
 
         }
+
+        protected void SetAnimatorBools(bool value)
+        {
+            switch (_aniamtionName)
+            {
+                case "Idle":
+                    _player.state.Idle = value;
+                    break;
+                case "Move":
+                    _player.state.Move = value;
+                    break;
+                case "InAir":
+                    _player.state.InAir = value;
+                    break;
+                case "CrouchIdle":
+                    _player.state.CrouchIdle = value;
+                    break;
+                case "CrouchMove":
+                    _player.state.CrouchMove = value;
+                    break;
+                case "Land":
+                    _player.state.Land = value;
+                    break;
+                case "WallSlide":
+                    _player.state.WallSlide = value;
+                    break;
+                case "Dash":
+                    _player.state.Dash = value;
+                    break;
+                case "attack":
+                    _player.state.attack = value;
+                    break;
+                case "transformation":
+                    _player.state.transformation = value;
+                    break;
+                case "detrasformation":
+                    _player.state.detrasformation = value;
+                    break;
+            }
+        }
         
-         public virtual void AnimationTrigger() { }
+        public virtual void AnimationTrigger() { }
 
         public virtual void AnimationFinishTrigger() => _isAnimationFinished = true;
     }
