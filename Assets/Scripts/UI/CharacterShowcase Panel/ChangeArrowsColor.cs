@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,20 @@ namespace ThePackt{
     public class ChangeArrowsColor : MonoBehaviour
     {
         [SerializeField] private Button _button;
+        [SerializeField] private Button _buttonArrow;
         [SerializeField] private EventSystem _eventSystem;
 
         private bool _selected = false;
 
         private void Update(){
-            if(_eventSystem.currentSelectedGameObject.Equals(_button.gameObject) && !_selected){
+
+            if((_eventSystem.currentSelectedGameObject.Equals(_button.gameObject) ||
+             _eventSystem.currentSelectedGameObject.Equals(_buttonArrow.gameObject))&& !_selected){
                 this.GetComponent<Image>().color = Color.red;
                 _selected = true;
             }
-            else if(!_eventSystem.currentSelectedGameObject.Equals(_button.gameObject) && _selected){
+            else if(!(_eventSystem.currentSelectedGameObject.Equals(_button.gameObject) ||
+             _eventSystem.currentSelectedGameObject.Equals(_buttonArrow.gameObject)) && _selected){
                 _selected = false;
                 this.GetComponent<Image>().color = Color.white;
             }

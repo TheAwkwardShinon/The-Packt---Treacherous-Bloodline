@@ -14,6 +14,8 @@ namespace ThePackt{
         private Color _tabIdle = new Color(255,255,255,255);
         private Color _tabHover = Color.red;
 
+        [SerializeField] private GameObject _tooltip;
+
         private PlayerInput inputSystem;
 
         public void Subscribe(tabButton button){
@@ -27,6 +29,8 @@ namespace ThePackt{
             ResetTabs();
             button.background.color = _tabActive;
             int index = button.transform.GetSiblingIndex();
+            Debug.Log("sibilig index = "+index);
+            Debug.Log("set active -> "+objectsToSwap[index].gameObject.name);
             for(int i=0;i< objectsToSwap.Count;i++){
                 if(i == index){
                     
@@ -36,6 +40,7 @@ namespace ThePackt{
                     objectsToSwap[i].SetActive(false);
                 }
             }
+            _tooltip.SetActive(false);
         }
 
         public void OnTabExit(tabButton button){
@@ -91,8 +96,10 @@ namespace ThePackt{
         }
 
         private void Update(){
-            if(_selectedTab == null && tabButtons.Count > 0)
+            if(_selectedTab == null && tabButtons.Count > 0){
+                Debug.Log("i am about to select the tab: "+tabButtons[0].gameObject.name);
                 OnTabSelected(tabButtons[0]);
+            }
             if(inputSystem.currentControlScheme.Equals("Gamepad"))
                 Debug.Log("gamepad detected");
             else if(inputSystem.currentControlScheme.Equals("Keyboard"))

@@ -13,6 +13,8 @@ namespace ThePackt{
 
         public Image background;
 
+        [SerializeField] private GameObject _tooltip;
+
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -22,12 +24,16 @@ namespace ThePackt{
         public void OnPointerEnter(PointerEventData eventData)
         {
             tabGroup.OnTabEnter(this);
+            _tooltip.SetActive(false);
+
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             tabGroup.OnTabExit(this);
+            _tooltip.SetActive(false);
         }
+
 
         private void Start()
         {

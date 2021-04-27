@@ -35,37 +35,40 @@ namespace ThePackt{
 
         #endregion
 
-    
+        public void getCharLeft(){
+            _currentIndex = _currentIndex - 1 < 0 ? _characters.Count - 1 : _currentIndex - 1;
+            characterSelection();
+        }
+
+        public void getCharRight(){
+            _currentIndex = _currentIndex + 1 == _characters.Count ? 0 : _currentIndex + 1;
+            characterSelection();
+        }
 
         /* todo on button click */
         public void click(){
-            Debug.Log("ho cliccato il bottone : _clicked = "+_clicked);
             if(!_clicked){
-                Debug.Log("blocco la navigazionee setto clicked a true");
                 Navigation nav = new Navigation();
                 nav.mode = Navigation.Mode.None;
                 button.navigation = nav;
                 _clicked = true;
            }
             else{
-                Debug.Log("sblocco la navigazione e setto clicked a false");
                 _clicked = false;
                 button.navigation = _standardNav;
             }
         }
 
         private void characterSelection(){
-            Debug.Log("sto cambiando personaggio. Nuovo indice = "+_currentIndex);
             _personalAbilityName.text = _characters[_currentIndex].personalAbilityName;
             _abilitiesImage[0].sprite = _characters[_currentIndex].personalAbility;
             _className.text = _characters[_currentIndex].ClassName;
             _characterSprite.sprite = _characters[_currentIndex].classData.characterSprite;
             _logo.sprite = _characters[_currentIndex].classData.clanLogo;
             /*to add description and other things */
-            for(int i=1; i<_characters[_currentIndex].classData._abilitisSprite.Count;i++){ 
-                _abilitiesImage[i].sprite = _characters[_currentIndex].classData._abilitisSprite[i];
+            for(int i=1; i<=_characters[_currentIndex].classData._abilitisSprite.Count;i++){ 
+                _abilitiesImage[i].sprite = _characters[_currentIndex].classData._abilitisSprite[i-1];
             }/* aggiungere varie descrizioni */
-            Debug.Log("finito correttamente(?)");
         }
 
 
@@ -85,10 +88,8 @@ namespace ThePackt{
         public void OnChangeCharacterLeft(InputAction.CallbackContext context){
              if (context.started)
             {
-                Debug.Log("sono dentro a sx");
                if(_clicked){
                 _currentIndex = _currentIndex - 1 < 0 ? _characters.Count - 1 : _currentIndex - 1;
-                Debug.Log("il bottone è cliccato e sto modificando l'indice: "+_currentIndex + "la grandezza è : "+_characters.Count);
                 characterSelection();
                }
             }
@@ -104,11 +105,20 @@ namespace ThePackt{
 
         private void Update()
         {
-            /*if(!eventSystem.currentSelectedGameObject.Equals(button)){
+
+            if(!eventSystem.currentSelectedGameObject.Equals(button.gameObject)){
                 button.navigation = _standardNav;
                 _clicked = false;
-            }*/
+            }
                 
+        }
+
+        public int GetIndex(){
+            return _currentIndex;
+        }
+
+        public  List<CharacterShowCaseData> GetcharacterList(){
+            return _characters;
         }
     }
 }
