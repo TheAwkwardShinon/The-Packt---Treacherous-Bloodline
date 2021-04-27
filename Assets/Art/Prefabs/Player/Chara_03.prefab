@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a86dcd095e585441af59d702afaf7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: beb93cc185c7cda40811eb704afa411d, type: 2}
+  _playerBaseData: {fileID: 11400000, guid: beb93cc185c7cda40811eb704afa411d, type: 2}
   _wallCheck: {fileID: 953346282940131532}
   _ledgeCheck: {fileID: 4841296775081750245}
   _ceilingCheck: {fileID: 3806655669083619216}
@@ -920,6 +920,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ff26be66-8a30-4504-b1b5-de1f52cdc6b3
     m_ActionName: UserInterface/SwitchTabRight[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7ef686ef-a4b3-4303-b06a-222751345e08
+    m_ActionName: UserInterface/NavigateCharactersLeft[/Keyboard/a,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a27d9d2d-afce-4ed8-abd9-3a110888a370
+    m_ActionName: UserInterface/NavigateCharactersRight[/Keyboard/d,/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay

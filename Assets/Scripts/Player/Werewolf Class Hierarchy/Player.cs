@@ -13,9 +13,10 @@ namespace ThePackt{
         
         public newInputHandler _inputHandler { get; private set; }
         private PlayerInput _playerInput;
+        private PlayerData _playerData;
  
         [Header("Core Data Fields")]
-        [SerializeField] protected PlayerData _playerData;
+        [SerializeField] protected PlayerData _playerBaseData;
         [SerializeField] private Transform _wallCheck;
         [SerializeField] private Transform _ledgeCheck;
         [SerializeField] private Transform _ceilingCheck;
@@ -94,6 +95,7 @@ namespace ThePackt{
         /* initialize every "common" possible state in the fsm */
         public override void Initialized()
         {
+            _playerData = Instantiate(_playerBaseData);
             _stateMachine = new PlayerStateMachine();
             _idleState = new PlayerIdleState(this, _stateMachine, _playerData, "Idle");
             _moveState = new PlayerMoveState(this, _stateMachine, _playerData, "Move");
@@ -167,6 +169,14 @@ namespace ThePackt{
 
             healthSlider.value = _playerData.currentLifePoints;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
+        }
+
+        private void Update()
+        {
+            if (!entity.IsOwner)
+            {
+                healthBar.transform.rotation= Quaternion.identity;
+            }
         }
 
         private void OnDrawGizmos() {
@@ -311,8 +321,8 @@ namespace ThePackt{
         {
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
-            healthBar.transform.Rotate(0.0f, -180.0f, 0.0f);
-
+            //healthBar.transform.Rotate(0.0f, -180.0f, 0.0f);
+            healthBar.transform.rotation = Quaternion.identity;
         }
 
         #endregion
