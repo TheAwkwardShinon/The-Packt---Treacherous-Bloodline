@@ -51,8 +51,10 @@ namespace ThePackt{
             base.LogicUpdate();
 
             Debug.Log("[DASH STATE] performing dash");
-            _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
-            _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+            //_player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
+            //_player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+            _player.state.yVelocity = _player._currentVelocity.y;
+            _player.state.xVelocity = Mathf.Abs(_player._currentVelocity.x);
             _dashDirection = Vector2.right * _player._facingDirection;
             _dashDirection.Normalize();
             _player.CheckIfShouldFlip(Mathf.RoundToInt(_dashDirection.x));

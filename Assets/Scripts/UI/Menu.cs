@@ -8,6 +8,8 @@ using UdpKit;
 
 public class Menu : GlobalEventListener
 {
+    [SerializeField] private string map;
+
     // called from host button
     public void StartServer()
     {
@@ -19,8 +21,19 @@ public class Menu : GlobalEventListener
 
     public override void BoltStartDone()
     {
-        // creates a session starting with the specified scene
-        BoltMatchmaking.CreateSession(sessionID: "test", sceneToLoad: "NetworkTestScene");
+        var id = Guid.NewGuid().ToString().Split('-')[0];
+        var matchName = string.Format("{0} - {1}", id, map);
+
+        BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+
+        /*
+        int sessions = BoltNetwork.SessionList.Count;
+        Debug.Log("NUMBER OF SESSIONS: " + sessions);
+        if (sessions <= 3)
+        {
+            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+        }
+        */
     }
 
     // called from client button
@@ -38,7 +51,7 @@ public class Menu : GlobalEventListener
     public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
     {
         // look through all photon sessions and join one using bolt matchmaking
-        foreach(var session in sessionList)
+        foreach (var session in sessionList)
         {
             UdpSession photonSession = session.Value as UdpSession;
 

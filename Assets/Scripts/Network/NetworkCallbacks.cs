@@ -247,7 +247,15 @@ namespace ThePackt
             {
                 if (assoc.name == _playerToSpawnName && _availableFactions.Contains(assoc.name))
                 {
-                    BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
+                    try
+                    {
+                        BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
+                    }
+                    catch (Exception e)
+                    {
+
+                        Debug.Log("EXCEPTION: " + e.ToString());
+                    }
                     spawned = true;
                     break;
                 }
