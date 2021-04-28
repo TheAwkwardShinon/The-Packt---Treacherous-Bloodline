@@ -63,6 +63,13 @@ namespace ThePackt
             public string name;
             public GameObject prefab;
         }
+
+        [Serializable]
+        public class VectorAssociation
+        {
+            public string name;
+            public Vector3 position;
+        }
         #endregion
     }
 }

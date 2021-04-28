@@ -6,15 +6,18 @@ using Bolt;
 
 namespace ThePackt
 {
-    public class NetworkCallbacks : GlobalEventListener
+    public class LobbyNetworkCallbacks : GlobalEventListener
     {
+        [SerializeField] private string map;
+        [SerializeField] private CharacterSelectionData _selectedData;
         public Utils.PrefabAssociation[] playerPrefabs;
         public Vector2 playerSpawnPos;
-        public Utils.PrefabAssociation[] enemyPrefabs;
-        public Vector2 enemySpawnPos;
         private Player _player;
         private string _playerToSpawnName;
         private List<string> _availableFactions;
+        private int _playerNumber;
+        public int _minPlayerNumber;
+        public float gameStartSeconds;
 
         #region callbacks
 
@@ -34,10 +37,12 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, Bolt.IProtocolToken token)
         {
+
             if (BoltNetwork.IsServer)
             {
-                //if this is the server set all characters as available and spawn the selected one
+                _playerNumber = 0;
 
+                //if this is the server set all characters as available and spawn the selected one
                 _availableFactions = new List<string>();
                 foreach (Utils.PrefabAssociation assoc in playerPrefabs)
                 {
@@ -51,17 +56,10 @@ namespace ThePackt
             else
             {
                 //if this is a client, request to the server the list of available characters
-
                 var evnt = RequestAvailableFactions.Create(BoltNetwork.Server);
                 evnt.Send();
 
                 Debug.Log("[SPAWNPLAYER] request available factions sent at: " + BoltNetwork.Server.ConnectionId);
-            }
-
-            //only the server spawns enemies for everyone
-            if (BoltNetwork.IsServer)
-            {
-                BoltNetwork.Instantiate(enemyPrefabs[0].prefab, enemySpawnPos, Quaternion.identity);
             }
         }
 
@@ -83,7 +81,23 @@ namespace ThePackt
                 }
 
                 Debug.Log("[SPAWNPLAYER] attached available: " + GetAvailableFactionString());
+
+                if (BoltNetwork.IsServer)
+                {
+                    _playerNumber++;
+                    if (_playerNumber == _minPlayerNumber)
+                    {
+                        StartCoroutine("StartGame");
+                    }
+                }
             }
+        }
+
+        IEnumerator StartGame()
+        {
+            yield return new WaitForSeconds(gameStartSeconds);
+
+            BoltNetwork.LoadScene(map);
         }
 
         public override void EntityDetached(BoltEntity entity)
@@ -98,6 +112,11 @@ namespace ThePackt
                 }
 
                 Debug.Log("[SPAWNPLAYER] detatched available: " + GetAvailableFactionString());
+
+                if (BoltNetwork.IsServer)
+                {
+                    _playerNumber--;
+                }
             }
         }
 
@@ -230,16 +249,8 @@ namespace ThePackt
 
         private void SpawnPlayer()
         {
-            //ceuin as default for now, but with the UI menù -> spawn prefab based on the choice, if it is already present
-            //select one free random
-            if (BoltNetwork.IsServer)
-            {
-                _playerToSpawnName = Constants.CEUIN;
-            }
-            else
-            {
-                _playerToSpawnName = Constants.CEUIN;
-            }
+            _playerToSpawnName = _selectedData.GetCharacterSelected();
+            Debug.Log("[SPAWNPLAYER] choice: " + _playerToSpawnName);
 
             //instantiate the selected player in the given position
             bool spawned = false;
@@ -247,15 +258,7 @@ namespace ThePackt
             {
                 if (assoc.name == _playerToSpawnName && _availableFactions.Contains(assoc.name))
                 {
-                    try
-                    {
-                        BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
-                    }
-                    catch (Exception e)
-                    {
-
-                        Debug.Log("EXCEPTION: " + e.ToString());
-                    }
+                    BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
                     spawned = true;
                     break;
                 }

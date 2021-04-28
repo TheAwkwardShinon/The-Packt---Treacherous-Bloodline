@@ -14,7 +14,7 @@ namespace ThePackt{
         public newInputHandler _inputHandler { get; private set; }
         private PlayerInput _playerInput;
         private PlayerData _playerData;
- 
+
         [Header("Core Data Fields")]
         [SerializeField] protected PlayerData _playerBaseData;
         [SerializeField] private Transform _wallCheck;
@@ -28,9 +28,12 @@ namespace ThePackt{
         #region UI
         private GameObject healthText;
         private Slider healthSlider;
+        [SerializeField] protected Canvas canvas;
+        [SerializeField] protected Text nicknameText;
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
+        [SerializeField] protected CharacterSelectionData _selectedData;
         #endregion
 
         #region velocity
@@ -136,6 +139,7 @@ namespace ThePackt{
             if (entity.IsOwner)
             {
                 state.Health = _playerData.currentLifePoints;
+                nicknameText.text = _selectedData.GetNickname();
                 healthText = GameObject.Find("HealthText");
             }
 
@@ -162,7 +166,7 @@ namespace ThePackt{
                 _stateMachine._currentState.LogicUpdate();
             }
 
-            if (entity.IsOwner)
+            if (entity.IsOwner && healthText != null)
             {
                 healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
@@ -177,7 +181,7 @@ namespace ThePackt{
         {
             if (!entity.IsOwner)
             {
-                healthBar.transform.rotation= Quaternion.identity;
+                canvas.transform.rotation = Quaternion.identity;
             }
         }
 
@@ -323,7 +327,7 @@ namespace ThePackt{
         {
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
-            healthBar.transform.rotation = Quaternion.identity;
+            canvas.transform.rotation = Quaternion.identity;
         }
 
         #endregion

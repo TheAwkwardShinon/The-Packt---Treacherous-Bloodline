@@ -6,10 +6,8 @@ using Bolt;
 using Bolt.Matchmaking;
 using UdpKit;
 
-
-
 namespace ThePackt{
-    public class Menu : GlobalEventListener
+    public class PlayMenuCallbacks : GlobalEventListener
     {
         #region variables
         [SerializeField] private string map;
@@ -17,15 +15,8 @@ namespace ThePackt{
         [SerializeField] private GameObject _tooltip;
         private string _class;
         private string _nickname;
+        [SerializeField] private string lobby;
         #endregion
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///
-        ///
-        /// _selectedData contiene il nome della classe scelta ed il nickname del player generato automaticamente
-        /// nel formato "player-"+random 0 - 9999.
-        /// GetNickname() -> nome player
-        /// GetCharacterSelected() -> ottieni la stringa col nome della classe
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         #region methods
 
@@ -51,18 +42,18 @@ namespace ThePackt{
         {
             
             var id = Guid.NewGuid().ToString().Split('-')[0];
-            var matchName = string.Format("{0} - {1}", id, map);
-            
-            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+            var matchName = string.Format("{0} - {1}", id, lobby);
+
+            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: lobby);
 
             /*
-            int sessions = BoltNetwork.SessionList.Count;
-            Debug.Log("NUMBER OF SESSIONS: " + sessions);
-            if (sessions <= 3)
-            {
-                BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
-            }
-            */
+           int sessions = BoltNetwork.SessionList.Count;
+           Debug.Log("NUMBER OF SESSIONS: " + sessions);
+           if (sessions <= 3)
+           {
+               BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+           }
+           */
         }
 
         // called from client button

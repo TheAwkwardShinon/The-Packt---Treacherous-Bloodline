@@ -1529,27 +1529,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 660737705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce6211d01e553b4bba681be029a18cf, type: 3}
+  m_Script: {fileID: 11500000, guid: e4899862c1e84b84484aa8e594afd062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefabs:
-  - name: ceuin
-    prefab: {fileID: 998444177422248050, guid: 90801a24fa82f91419ff20557fe3cb3d, type: 3}
-  - name: ayatana
-    prefab: {fileID: 3993863969129787489, guid: 80bd73a64563d164690eab6b8b2551e4, type: 3}
-  - name: fele
-    prefab: {fileID: 7620144684999207642, guid: a44c30dcc4d9e854b9161ec71238aa6d, type: 3}
-  - name: herin
-    prefab: {fileID: 4168594205953138547, guid: 292711a92fc5df04084ba1e20a9d4fb7, type: 3}
-  - name: moonsighters
-    prefab: {fileID: 7935339521843521638, guid: 7fe46c8c8204b114d8f703be5b982ccf, type: 3}
-  - name: naturia
-    prefab: {fileID: 1614372350790525731, guid: cc762e852b8899449b400c714bb728e7, type: 3}
-  playerSpawnPos: {x: -7, y: 0}
   enemyPrefabs:
-  - name: 
+  - name: base
     prefab: {fileID: 3755408236902585520, guid: fe6c4c0654c55a1418849ccdca3ddcf4, type: 3}
   enemySpawnPos: {x: -3, y: 0}
+  playersSpawnPositions:
+  - name: ceuin
+    position: {x: -8, y: 0, z: 0}
+  - name: ayatana
+    position: {x: -7, y: 0, z: 0}
+  - name: naturia
+    position: {x: -6, y: 0, z: 0}
+  - name: herin
+    position: {x: -5, y: 0, z: 0}
+  - name: moonsighters
+    position: {x: -4, y: 0, z: 0}
+  - name: fele
+    position: {x: 0, y: 0, z: 0}
+  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
 --- !u!4 &660737707
 Transform:
   m_ObjectHideFlags: 0
@@ -2266,7 +2266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 256ae118fcf92074c93d860ff31008da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p: {fileID: 3993863969129787489, guid: 80bd73a64563d164690eab6b8b2551e4, type: 3}
 --- !u!1 &919548958
 GameObject:
   m_ObjectHideFlags: 0
