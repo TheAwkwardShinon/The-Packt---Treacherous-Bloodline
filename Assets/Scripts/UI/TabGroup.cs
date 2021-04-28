@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace ThePackt{
     public class TabGroup : MonoBehaviour
@@ -18,6 +20,10 @@ namespace ThePackt{
 
         private PlayerInput inputSystem;
 
+        [SerializeField] private EventSystem _eventSystem;
+
+        [SerializeField] private List<Button> _firstSelectedOnTab;
+
         public void Subscribe(tabButton button){
             if(tabButtons == null)
                 tabButtons = new List<tabButton>();
@@ -29,18 +35,19 @@ namespace ThePackt{
             ResetTabs();
             button.background.color = _tabActive;
             int index = button.transform.GetSiblingIndex();
-            Debug.Log("sibilig index = "+index);
-            Debug.Log("set active -> "+objectsToSwap[index].gameObject.name);
             for(int i=0;i< objectsToSwap.Count;i++){
                 if(i == index){
                     
                     objectsToSwap[i].SetActive(true);
+                    _eventSystem.SetSelectedGameObject(_firstSelectedOnTab[i].gameObject);
                 }
                 else{
                     objectsToSwap[i].SetActive(false);
                 }
             }
             _tooltip.SetActive(false);
+          
+            
         }
 
         public void OnTabExit(tabButton button){

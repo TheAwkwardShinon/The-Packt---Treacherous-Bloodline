@@ -6,59 +6,77 @@ using Bolt;
 using Bolt.Matchmaking;
 using UdpKit;
 
-public class Menu : GlobalEventListener
-{
-    [SerializeField] private string map;
 
-    // called from host button
-    public void StartServer()
+
+namespace ThePackt{
+    public class Menu : GlobalEventListener
     {
-        BoltConfig config = BoltRuntimeSettings.instance.GetConfigCopy();
-        config.serverConnectionLimit = 5;
+        #region variables
+        [SerializeField] private string map;
+        [SerializeField] private CharacterSelectionData _selectedData;
+        #endregion
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///
+        ///
+        /// _selectedData contiene il nome della classe scelta ed il nickname del player generato automaticamente
+        /// nel formato "player-"+random 0 - 9999.
+        /// GetNickname() -> nome player
+        /// GetCharacterSelected() -> ottieni la stringa col nome della classe
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        BoltLauncher.StartServer();
-    }
+        #region methods
 
-    public override void BoltStartDone()
-    {
-        var id = Guid.NewGuid().ToString().Split('-')[0];
-        var matchName = string.Format("{0} - {1}", id, map);
-
-        BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
-
-        /*
-        int sessions = BoltNetwork.SessionList.Count;
-        Debug.Log("NUMBER OF SESSIONS: " + sessions);
-        if (sessions <= 3)
+        // called from host button
+        public void StartServer()
         {
-            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+            BoltConfig config = BoltRuntimeSettings.instance.GetConfigCopy();
+            config.serverConnectionLimit = 5;
+
+            BoltLauncher.StartServer();
         }
-        */
-    }
 
-    // called from client button
-    public void StartClient()
-    {
-        BoltLauncher.StartClient();
-    }
-
-    // called from shutsown button
-    public void Shutdown()
-    {
-        BoltLauncher.Shutdown();
-    }
-
-    public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
-    {
-        // look through all photon sessions and join one using bolt matchmaking
-        foreach (var session in sessionList)
+        public override void BoltStartDone()
         {
-            UdpSession photonSession = session.Value as UdpSession;
+            var id = Guid.NewGuid().ToString().Split('-')[0];
+            var matchName = string.Format("{0} - {1}", id, map);
 
-            if(photonSession.Source == UdpSessionSource.Photon)
+            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+
+            /*
+            int sessions = BoltNetwork.SessionList.Count;
+            Debug.Log("NUMBER OF SESSIONS: " + sessions);
+            if (sessions <= 3)
             {
-                BoltMatchmaking.JoinSession(photonSession);
+                BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+            }
+            */
+        }
+
+        // called from client button
+        public void StartClient()
+        {
+            BoltLauncher.StartClient();
+        }
+
+        // called from shutsown button
+        public void Shutdown()
+        {
+            BoltLauncher.Shutdown();
+        }
+
+        public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
+        {
+            // look through all photon sessions and join one using bolt matchmaking
+            foreach (var session in sessionList)
+            {
+                UdpSession photonSession = session.Value as UdpSession;
+
+                if(photonSession.Source == UdpSessionSource.Photon)
+                {
+                    BoltMatchmaking.JoinSession(photonSession);
+                }
             }
         }
+        #endregion
     }
 }
