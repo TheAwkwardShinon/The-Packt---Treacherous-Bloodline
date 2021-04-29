@@ -14,6 +14,9 @@ namespace ThePackt{
         #region variables
         [SerializeField] private string map;
         [SerializeField] private CharacterSelectionData _selectedData;
+        [SerializeField] private GameObject _tooltip;
+        private string _class;
+        private string _nickname;
         #endregion
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         ///
@@ -29,6 +32,15 @@ namespace ThePackt{
         // called from host button
         public void StartServer()
         {
+            if(_selectedData.GetCharacterSelected().Equals("none")){
+                _tooltip.SetActive(true);
+                return;
+            }
+            else{
+                _class = _selectedData.GetCharacterSelected();
+                _nickname = _selectedData.GetNickname();
+                _selectedData.Reset();
+            }
             BoltConfig config = BoltRuntimeSettings.instance.GetConfigCopy();
             config.serverConnectionLimit = 5;
 
@@ -37,9 +49,10 @@ namespace ThePackt{
 
         public override void BoltStartDone()
         {
+            
             var id = Guid.NewGuid().ToString().Split('-')[0];
             var matchName = string.Format("{0} - {1}", id, map);
-
+            
             BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
 
             /*
@@ -55,6 +68,16 @@ namespace ThePackt{
         // called from client button
         public void StartClient()
         {
+            Debug.Log("selected character = "+ _selectedData.GetCharacterSelected());
+            if(_selectedData.GetCharacterSelected().Equals("none")){
+                _tooltip.SetActive(true);
+                return;
+            }
+            else{
+                _class = _selectedData.GetCharacterSelected();
+                _nickname = _selectedData.GetNickname();
+                _selectedData.Reset();
+            }
             BoltLauncher.StartClient();
         }
 

@@ -7,8 +7,8 @@ namespace ThePackt{
     [CreateAssetMenu(fileName = "newCharacterData", menuName = "Data/Character Data/Selection Data")]
     public class CharacterSelectionData : ScriptableObject
     {
-        private string _characterSelected;
-        private string _playerNickname;
+        private string _characterSelected = "none";
+        private string _playerNickname = "none";
 
         public string GetCharacterSelected(){
             return _characterSelected;
@@ -24,6 +24,12 @@ namespace ThePackt{
 
         public void SetCharacterSelected(string character){
             _characterSelected = character;
+        }
+
+
+        public void Reset(){
+            _characterSelected = "none";
+            _playerNickname = "none";
         }
     }
 }
