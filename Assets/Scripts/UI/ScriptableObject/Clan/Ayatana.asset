@@ -26,7 +26,26 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
   - {fileID: 21300000, guid: 79ef5815527440044af235979ce873fd, type: 3}
   - {fileID: 21300000, guid: 203d4a615c2c6a94a8d82d91b2aaab4c, type: 3}
-  abilitiesDescription: []
+  abilitiesDescription:
+  - Obtain +15% Hp.
+  - Quickly, change the results before anyone sees them! Change reward of a won challenge.
+  - Your life in the streets has taught you a thing or two. Using an object has a
+    20% chance to give you a copy of the same object for free.
+  - Obtain +15% Hp.
+  - Obtain +15% of Speed.
+  - Obtain +15% of Speed.
+  - You are used to make it work with whatever you can find. The next use of your
+    special ability doesn't trigger its cooldown.
+  - "Their memory just\u2026 isn\u2019t as sharp as yours. All the challenges and
+    fountains are revealed on your map."
+  - Obtain +15% Hp.
+  - "\u201CI am here. I am there. Where am I?\u201D. You're camouflaged when crouched.
+    Crouch attacks deal 150% dmg but end the camouflage."
+  - Obtain +15% of Damage.
+  - urprise them. Your next basic attack stuns the target.
+  - You use your artistic skills to conceal your presence. You become completely
+    invisible for 30 seconds. Your proximity chat range is increased and you have
+    150% dmg during this period of time.
   abilitiesCost: 
   abilitiesName:
   - Hp Power Up
