@@ -37,11 +37,10 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, Bolt.IProtocolToken token)
         {
+            _playerNumber = 0;
 
             if (BoltNetwork.IsServer)
             {
-                _playerNumber = 0;
-
                 //if this is the server set all characters as available and spawn the selected one
                 _availableFactions = new List<string>();
                 foreach (Utils.PrefabAssociation assoc in playerPrefabs)
@@ -71,7 +70,8 @@ namespace ThePackt
                 //if the spawned entity is a player and this is the owner, store the player info in the _player variable
                 if (entity.IsOwner)
                 {
-                    _player = entity.GetComponent<Player>();
+                    _player = plyr;
+                    _selectedData.SetPlayerScript(_player);
                 }
 
                 //if the spawned entity is a player remove it from the available ones
@@ -97,6 +97,8 @@ namespace ThePackt
         {
             yield return new WaitForSeconds(gameStartSeconds);
 
+            //enable black screen here
+
             BoltNetwork.LoadScene(map);
         }
 
@@ -120,6 +122,8 @@ namespace ThePackt
             }
         }
 
+        //pvp is disabled in the lobby
+        /*
         public override void OnEvent(PlayerAttackHitEvent evnt)
         {
             Debug.Log("[HEALTH] attack hit with damage: " + evnt.Damage);
@@ -154,6 +158,7 @@ namespace ThePackt
                 _player.ApplyDamage(evnt.Damage);
             }
         }
+        */
 
         public override void OnEvent(EnemyAttackHitEvent evnt)
         {
@@ -238,6 +243,8 @@ namespace ThePackt
             {
                 if (_availableFactions.Contains(assoc.name))
                 {
+                    _selectedData.SetNickname("Player-" + UnityEngine.Random.Range(1, 9999));
+                    _selectedData.SetCharacterSelected(assoc.name);
                     BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
                     spawned = true;
                     break;

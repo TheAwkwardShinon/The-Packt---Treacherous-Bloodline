@@ -38,6 +38,8 @@ namespace ThePackt
             {
                 if (ent.IsOwner)
                 {
+                    _player = _selectedData.GetPlayerScript();
+
                     foreach (Utils.VectorAssociation assoc in playersSpawnPositions)
                     {
                         if (assoc.name == _selectedData.GetCharacterSelected())
@@ -53,19 +55,12 @@ namespace ThePackt
             {
                 BoltNetwork.Instantiate(enemyPrefabs[0].prefab, enemySpawnPos, Quaternion.identity);
             }
+
+            //disable black screen here
         }
 
         public override void EntityAttached(BoltEntity entity)
         {
-            Player plyr = entity.GetComponent<Player>();
-            if (plyr != null)
-            {
-                //if the spawned entity is a player and this is the owner, store the player info in the _player variable
-                if (entity.IsOwner)
-                {
-                    _player = entity.GetComponent<Player>();
-                }
-            }
         }
 
         public override void EntityDetached(BoltEntity entity)

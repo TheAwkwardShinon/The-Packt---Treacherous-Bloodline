@@ -139,11 +139,13 @@ namespace ThePackt{
             if (entity.IsOwner)
             {
                 state.Health = _playerData.currentLifePoints;
-                nicknameText.text = _selectedData.GetNickname();
+                state.Nickname = _selectedData.GetNickname();
+
                 healthText = GameObject.Find("HealthText");
             }
 
             state.AddCallback("Health", HealthCallback);
+            state.AddCallback("Nickname", NicknameCallback);
 
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
@@ -170,8 +172,6 @@ namespace ThePackt{
             {
                 healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
-
-            Debug.Log("[HEALTH] currentLifePoints: " + _playerData.currentLifePoints);
 
             healthSlider.value = _playerData.currentLifePoints;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
@@ -283,6 +283,11 @@ namespace ThePackt{
             }
         }
 
+        private void NicknameCallback()
+        {
+            nicknameText.text = state.Nickname;
+            Debug.Log("[NICKNAME] callback: " + nicknameText.text);
+        }
         #endregion
 
         #region check methods

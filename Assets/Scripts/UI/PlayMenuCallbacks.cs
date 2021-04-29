@@ -10,7 +10,6 @@ namespace ThePackt{
     public class PlayMenuCallbacks : GlobalEventListener
     {
         #region variables
-        [SerializeField] private string map;
         [SerializeField] private CharacterSelectionData _selectedData;
         [SerializeField] private GameObject _tooltip;
         private string _class;

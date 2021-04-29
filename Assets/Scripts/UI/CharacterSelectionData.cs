@@ -9,6 +9,7 @@ namespace ThePackt{
     {
         private string _characterSelected = "none";
         private string _playerNickname = "none";
+        private Player _playerScript = null;
 
         public string GetCharacterSelected(){
             return _characterSelected;
@@ -26,10 +27,21 @@ namespace ThePackt{
             _characterSelected = character;
         }
 
+        public Player GetPlayerScript()
+        {
+            return _playerScript;
+        }
+
+        public void SetPlayerScript(Player value)
+        {
+            _playerScript = value;
+        }
+
 
         public void Reset(){
             _characterSelected = "none";
             _playerNickname = "none";
+            _playerScript = null;
         }
     }
 }
