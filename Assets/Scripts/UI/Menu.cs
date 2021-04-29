@@ -5,8 +5,8 @@ using System;
 using Bolt;
 using Bolt.Matchmaking;
 using UdpKit;
-
-
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace ThePackt{
     public class Menu : GlobalEventListener
@@ -15,6 +15,8 @@ namespace ThePackt{
         [SerializeField] private string map;
         [SerializeField] private CharacterSelectionData _selectedData;
         [SerializeField] private GameObject _tooltip;
+
+        [SerializeField] private EventSystem _eventSystem;
         private string _class;
         private string _nickname;
         #endregion
@@ -34,12 +36,13 @@ namespace ThePackt{
         {
             if(_selectedData.GetCharacterSelected().Equals("none")){
                 _tooltip.SetActive(true);
+                ChangeSelectedElement(_tooltip.GetComponentInChildren<Button>().gameObject);
                 return;
             }
             else{
                 _class = _selectedData.GetCharacterSelected();
                 _nickname = _selectedData.GetNickname();
-                _selectedData.Reset();
+                //_selectedData.Reset();
             }
             BoltConfig config = BoltRuntimeSettings.instance.GetConfigCopy();
             config.serverConnectionLimit = 5;
@@ -71,12 +74,13 @@ namespace ThePackt{
             Debug.Log("selected character = "+ _selectedData.GetCharacterSelected());
             if(_selectedData.GetCharacterSelected().Equals("none")){
                 _tooltip.SetActive(true);
+                ChangeSelectedElement(_tooltip.GetComponentInChildren<Button>().gameObject);
                 return;
             }
             else{
                 _class = _selectedData.GetCharacterSelected();
                 _nickname = _selectedData.GetNickname();
-                _selectedData.Reset();
+                //_selectedData.Reset();
             }
             BoltLauncher.StartClient();
         }
@@ -99,6 +103,11 @@ namespace ThePackt{
                     BoltMatchmaking.JoinSession(photonSession);
                 }
             }
+        }
+
+
+        public void ChangeSelectedElement(GameObject go){
+            _eventSystem.SetSelectedGameObject(go);
         }
         #endregion
     }
