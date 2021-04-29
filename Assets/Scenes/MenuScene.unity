@@ -7455,10 +7455,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95aa6a8fbd012504abc61feea4a50535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: NetworkTestScene
   _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   _tooltip: {fileID: 334481838}
   _eventSystem: {fileID: 895784725}
+  lobby: LobbyScene
 --- !u!1 &1066689848
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 using Bolt;
@@ -20,6 +20,7 @@ namespace ThePackt{
         private string _class;
         private string _nickname;
         [SerializeField] private string lobby;
+
         #endregion
 
         #region methods
@@ -78,7 +79,7 @@ namespace ThePackt{
             BoltLauncher.StartClient();
         }
 
-        // called from shutsown button
+        // called from shutdown button
         public void Shutdown()
         {
             BoltLauncher.Shutdown();

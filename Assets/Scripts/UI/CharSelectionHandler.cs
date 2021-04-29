@@ -7,7 +7,11 @@ namespace ThePackt{
     public class CharSelectionHandler : MonoBehaviour
     {
         [SerializeField] private  CharacterSelectionData _charSelectdata;
-        
+
+        void OnEnable()
+        {
+            _charSelectdata.Reset();
+        }
 
         public void CharacterSetUp(int _index){
             _charSelectdata.SetNickname("Player-"+Random.Range(1,9999));

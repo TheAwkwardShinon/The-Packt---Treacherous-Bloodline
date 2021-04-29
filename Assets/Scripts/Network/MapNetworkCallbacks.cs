@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UdpKit;
 using UnityEngine;
 using System;
 using Bolt;
@@ -66,6 +66,22 @@ namespace ThePackt
         public override void EntityDetached(BoltEntity entity)
         {
         }
+
+        /*
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
+        {
+            Debug.Log("DISCONNECTREASON: " + disconnectReason);
+
+            _selectedData.Reset();
+        }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            Debug.Log("DISCONNECT: " + connection.ConnectionId);
+
+            _selectedData.Reset();
+        }
+        */
 
         public override void OnEvent(PlayerAttackHitEvent evnt)
         {

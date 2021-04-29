@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Bolt;
+using UdpKit;
 
 namespace ThePackt
 {
@@ -121,6 +122,22 @@ namespace ThePackt
                 }
             }
         }
+
+        /*
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
+        {
+            Debug.Log("DISCONNECT REASON: " + disconnectReason);
+
+            _selectedData.Reset();
+        }
+
+        public override void Disconnected(BoltConnection connection)
+        {
+            Debug.Log("DISCONNECT: " + connection.ConnectionId);
+
+            _selectedData.Reset();
+        }
+        */
 
         //pvp is disabled in the lobby
         /*
@@ -258,7 +275,7 @@ namespace ThePackt
         {
             _playerToSpawnName = _selectedData.GetCharacterSelected();
             Debug.Log("[SPAWNPLAYER] choice: " + _playerToSpawnName);
-
+            
             //instantiate the selected player in the given position
             bool spawned = false;
             foreach (Utils.PrefabAssociation assoc in playerPrefabs)
