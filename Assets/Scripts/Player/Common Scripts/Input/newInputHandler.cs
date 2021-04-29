@@ -10,7 +10,6 @@ namespace ThePackt{
         private PlayerInput playerInputComponent;
         // private PlayerInputClass playerInputObject;
         private Player player;
-        private Camera cam;
 
         public Vector2 _rawMovementInput { get; private set; }
         public Vector2 _raw_dashDirectionInput { get; private set; }
@@ -49,8 +48,6 @@ namespace ThePackt{
 
             //int count = Enum.GetValues(typeof(CombatInputs)).Length;
             //_attackInputs = new bool[count];
-
-            cam = Camera.main;
         }
 
         private void Update()
@@ -147,7 +144,7 @@ namespace ThePackt{
 
             if(playerInputComponent.currentControlScheme == "Keyboard")
             {
-                _raw_dashDirectionInput = cam.ScreenToWorldPoint((Vector3)_raw_dashDirectionInput) - transform.position;
+                _raw_dashDirectionInput = Camera.main.ScreenToWorldPoint((Vector3)_raw_dashDirectionInput) - transform.position;
             }
 
             _dashDirectionInput = Vector2Int.RoundToInt(_raw_dashDirectionInput.normalized);
@@ -183,7 +180,7 @@ namespace ThePackt{
             if (playerInputComponent.currentControlScheme == "Keyboard")
             {
                 //da togliere quando funzioner� input sul mouse
-                Vector2 mousePos = cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
+                Vector2 mousePos = Camera.main.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z));
 
                 Vector2 attPointPos = attPoint.transform.position;
                 if (attPointPos.x < mousePos.x)
