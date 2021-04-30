@@ -90,6 +90,9 @@ namespace ThePackt
                     {
                         StartCoroutine("StartGame");
                     }
+
+                    Debug.Log("TIMER server: " + BoltNetwork.ServerTime);
+                    Debug.Log("TIMER client: " + BoltNetwork.Time);
                 }
             }
         }

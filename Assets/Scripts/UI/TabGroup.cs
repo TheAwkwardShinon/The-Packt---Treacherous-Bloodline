@@ -107,10 +107,11 @@ namespace ThePackt{
                 Debug.Log("i am about to select the tab: "+tabButtons[0].gameObject.name);
                 OnTabSelected(tabButtons[0]);
             }
-            if(inputSystem.currentControlScheme.Equals("Gamepad"))
+            if (inputSystem.currentControlScheme.Equals("Gamepad"))
                 Debug.Log("gamepad detected");
-            else if(inputSystem.currentControlScheme.Equals("Keyboard"))
-                Debug.Log("keyboard detected");
+            else if (inputSystem.currentControlScheme.Equals("Keyboard"))
+                //Debug.Log("keyboard detected")
+                ;
         }
 
  

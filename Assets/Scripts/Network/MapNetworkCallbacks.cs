@@ -15,7 +15,7 @@ namespace ThePackt
         private Player _player;
 
         #region callbacks
-        
+
         /*
         public override void SceneLoadLocalBegin(string scene, IProtocolToken token)
         {
@@ -34,6 +34,9 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
+            TimerManager timerManager = gameObject.GetComponent<TimerManager>();
+            BoltNetwork.Attach(gameObject);
+
             foreach (BoltEntity ent in BoltNetwork.Entities)
             {
                 if (ent.IsOwner)
@@ -57,6 +60,11 @@ namespace ThePackt
             }
 
             //disable black screen here
+
+            if (BoltNetwork.IsServer)
+            {
+                gameObject.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
+            }
         }
 
         public override void EntityAttached(BoltEntity entity)

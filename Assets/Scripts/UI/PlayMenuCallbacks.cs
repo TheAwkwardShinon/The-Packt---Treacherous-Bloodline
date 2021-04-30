@@ -20,7 +20,6 @@ namespace ThePackt{
         private string _class;
         private string _nickname;
         [SerializeField] private string lobby;
-
         #endregion
 
         #region methods

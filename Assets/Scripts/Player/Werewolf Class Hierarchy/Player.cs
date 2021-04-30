@@ -26,7 +26,6 @@ namespace ThePackt{
         #endregion
 
         #region UI
-        private GameObject healthText;
         private Slider healthSlider;
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected Text nicknameText;
@@ -140,8 +139,6 @@ namespace ThePackt{
             {
                 state.Health = _playerData.currentLifePoints;
                 state.Nickname = _selectedData.GetNickname();
-
-                healthText = GameObject.Find("HealthText");
             }
 
             state.AddCallback("Health", HealthCallback);
@@ -166,11 +163,6 @@ namespace ThePackt{
             if (_inputHandler != null)
             {
                 _stateMachine._currentState.LogicUpdate();
-            }
-
-            if (entity.IsOwner && healthText != null)
-            {
-                healthText.GetComponent<Text>().text = _playerData.currentLifePoints.ToString();
             }
 
             healthSlider.value = _playerData.currentLifePoints;
@@ -260,7 +252,6 @@ namespace ThePackt{
         private void Die()
         {
             BoltNetwork.Destroy(gameObject);
-            healthText.GetComponent<Text>().text = "0";
         }
         #endregion
 
