@@ -12,6 +12,7 @@ namespace ThePackt
         public Vector2 enemySpawnPos;
         public Utils.VectorAssociation[] playersSpawnPositions;
         [SerializeField] private CharacterSelectionData _selectedData;
+        [SerializeField] private GameObject _timeManagerPrefab;
         private Player _player;
 
         #region callbacks
@@ -34,9 +35,6 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
-            TimerManager timerManager = gameObject.GetComponent<TimerManager>();
-            BoltNetwork.Attach(gameObject);
-
             foreach (BoltEntity ent in BoltNetwork.Entities)
             {
                 if (ent.IsOwner)
@@ -63,33 +61,10 @@ namespace ThePackt
 
             if (BoltNetwork.IsServer)
             {
-                gameObject.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
+                BoltEntity timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
+                timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
             }
         }
-
-        public override void EntityAttached(BoltEntity entity)
-        {
-        }
-
-        public override void EntityDetached(BoltEntity entity)
-        {
-        }
-
-        /*
-        public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
-        {
-            Debug.Log("DISCONNECTREASON: " + disconnectReason);
-
-            _selectedData.Reset();
-        }
-
-        public override void Disconnected(BoltConnection connection)
-        {
-            Debug.Log("DISCONNECT: " + connection.ConnectionId);
-
-            _selectedData.Reset();
-        }
-        */
 
         public override void OnEvent(PlayerAttackHitEvent evnt)
         {

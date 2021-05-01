@@ -126,22 +126,6 @@ namespace ThePackt
             }
         }
 
-        /*
-        public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
-        {
-            Debug.Log("DISCONNECT REASON: " + disconnectReason);
-
-            _selectedData.Reset();
-        }
-
-        public override void Disconnected(BoltConnection connection)
-        {
-            Debug.Log("DISCONNECT: " + connection.ConnectionId);
-
-            _selectedData.Reset();
-        }
-        */
-
         //pvp is disabled in the lobby
         /*
         public override void OnEvent(PlayerAttackHitEvent evnt)

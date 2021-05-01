@@ -6,21 +6,23 @@ namespace ThePackt
 {
     public class TimerManager : Bolt.EntityBehaviour<INetworkManagerState>
     {
-        float startTime;
+        #region variables
+        float startTime; //start time of the timer
         string timeString;
-        public float timerDuration; //in seconds
-        public float gameDuration; //in seconds
-        private string gameDurationString;
+        public float timerDuration; //duration of warm-up + game in seconds
+        public float gameDuration; //duration of game in seconds
         private bool gameStarting;
         private bool gameStarted;
         private bool gameEnded;
-        [SerializeField] private Text timerText;
+        private Text timerText;
+        #endregion
 
+        #region methods
         public override void Attached()
         {
             state.AddCallback("StartTime", StartTimeCallback);
 
-            gameDurationString = ConvertToString(gameDuration);
+            timerText = GameObject.Find("TimerText").GetComponent<Text>();
             gameStarting = false;
             gameStarted = false;
             gameEnded = false;
@@ -34,6 +36,7 @@ namespace ThePackt
                 float time = 0;
                 if (gameStarted)
                 {
+                    //if the game has already started, the timer begins from the gameDuration and goes gradually to zero 
                     time = timerDuration - elapsedTime;
                     timeString = ConvertToString(time);
                     timerText.text = timeString;
@@ -41,7 +44,10 @@ namespace ThePackt
 
                 if (!gameStarted)
                 {
+                    //if the game is not started yet, the timer begins from the difference between the gameDuration
+                    //and the timerDuration and goes gradually to zero
                     time = timerDuration - gameDuration - elapsedTime;
+
                     if (time >= 0) {
                         timeString = ConvertToString(time);
                     }
@@ -54,12 +60,16 @@ namespace ThePackt
                     timerText.text = timeString;
                 }
 
+                //when the game is not started nor is starting and the timer goes to zero it means that the warm-up time is over
+                //so the game pass to the starting state
                 if (!gameStarted && !gameStarting && timeString == "00:00")
                 {
                     Debug.Log("[TIMER] game starting");
                     gameStarting = true;
                 }
 
+                //when the game is starting and the timer is no more zero it means that the game timer is actually ready
+                //to start, so the game state pass to the started state
                 if (gameStarting && timeString != "00:00")
                 {
                     Debug.Log("[TIMER] game started");
@@ -67,6 +77,7 @@ namespace ThePackt
                     gameStarting = false;
                 }
 
+                //when the game has already started and the timer is zero or less it means that the game is over
                 if (gameStarted && time <= 0)
                 {
                     Debug.Log("[TIMER] game ended");
@@ -98,16 +109,7 @@ namespace ThePackt
             return minutesString + ":" + secondsString;
         }
 
-        private void StartTimeCallback()
-        {
-            startTime = state.StartTime;
-
-            Debug.Log("[TIMER] callback: " + startTime);
-
-            //insert timer modification notifications here
-        }
-
-        //adds time in seconds
+        //adds time in seconds (modifies the start time). Only the server can do it
         public void addTime(float time)
         {
             if (BoltNetwork.IsServer)
@@ -116,7 +118,7 @@ namespace ThePackt
             }
         }
 
-        //subtracts time in seconds
+        //subtracts time in seconds (modifies the start time). Only the server can do it
         public void subTime(float time)
         {
             Debug.Log("caia 3" + BoltNetwork.IsServer);
@@ -127,6 +129,22 @@ namespace ThePackt
             }
         }
 
+        #region callbacks
+        private void StartTimeCallback()
+        {
+            startTime = state.StartTime;
+
+            Debug.Log("[TIMER] callback: " + startTime);
+
+            //insert timer modification notifications here as this is called on clients too
+        }
+        #endregion
+
+        #endregion
+
+        #region setter
+
+        //sets start time in seconds. Only the server can do it
         public void SetStartTime(float time)
         {
             if (BoltNetwork.IsServer)
@@ -134,6 +152,7 @@ namespace ThePackt
                 state.StartTime = time;
             }
         }
+        #endregion
 
     }
 }

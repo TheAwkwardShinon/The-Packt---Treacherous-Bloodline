@@ -6,15 +6,22 @@ using UnityEngine.SceneManagement;
 namespace ThePackt {
     public class UICallbacks : MonoBehaviour
     {
-        public GameObject timer;
+        public BoltEntity timer;
 
         public void Disconnect()
         {
             Debug.Log("caia 1" + BoltNetwork.IsServer);
             if (BoltNetwork.IsServer)
             {
-                Debug.Log("caia 2" + timer.GetComponent<TimerManager>() == null);
-                timer.GetComponent<TimerManager>().subTime(30);
+                foreach(BoltEntity e in BoltNetwork.Entities)
+                {
+                    if(e.GetComponent<TimerManager>() != null)
+                    {
+                        timer = e;
+                        Debug.Log("caia 2" + timer.GetComponent<TimerManager>() == null);
+                        timer.GetComponent<TimerManager>().addTime(30);
+                    }
+                }
             }
 
             /*
