@@ -366,6 +366,14 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Deselect"",
+                    ""type"": ""Button"",
+                    ""id"": ""93ab2182-9ccd-4790-a9e9-a3c8d72d5ed9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -437,6 +445,17 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""419d459e-da2d-497a-84c4-536d40536826"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NavigateCharactersLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7ddcf8cd-1f27-4ab0-9864-03cdc9a2f764"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
@@ -454,6 +473,28 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""NavigateCharactersRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d274cdb-8cf9-4339-b7d7-74e65d4fcb62"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""NavigateCharactersRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e132b678-c2e1-40a8-8efd-3c450a721b49"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Deselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -500,6 +541,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         m_UserInterface_SwitchTabRight = m_UserInterface.FindAction("SwitchTabRight", throwIfNotFound: true);
         m_UserInterface_NavigateCharactersLeft = m_UserInterface.FindAction("NavigateCharactersLeft", throwIfNotFound: true);
         m_UserInterface_NavigateCharactersRight = m_UserInterface.FindAction("NavigateCharactersRight", throwIfNotFound: true);
+        m_UserInterface_Deselect = m_UserInterface.FindAction("Deselect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -634,6 +676,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
     private readonly InputAction m_UserInterface_SwitchTabRight;
     private readonly InputAction m_UserInterface_NavigateCharactersLeft;
     private readonly InputAction m_UserInterface_NavigateCharactersRight;
+    private readonly InputAction m_UserInterface_Deselect;
     public struct UserInterfaceActions
     {
         private @PlayerInputClass m_Wrapper;
@@ -642,6 +685,7 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         public InputAction @SwitchTabRight => m_Wrapper.m_UserInterface_SwitchTabRight;
         public InputAction @NavigateCharactersLeft => m_Wrapper.m_UserInterface_NavigateCharactersLeft;
         public InputAction @NavigateCharactersRight => m_Wrapper.m_UserInterface_NavigateCharactersRight;
+        public InputAction @Deselect => m_Wrapper.m_UserInterface_Deselect;
         public InputActionMap Get() { return m_Wrapper.m_UserInterface; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -663,6 +707,9 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 @NavigateCharactersRight.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersRight;
                 @NavigateCharactersRight.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersRight;
                 @NavigateCharactersRight.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnNavigateCharactersRight;
+                @Deselect.started -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnDeselect;
+                @Deselect.performed -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnDeselect;
+                @Deselect.canceled -= m_Wrapper.m_UserInterfaceActionsCallbackInterface.OnDeselect;
             }
             m_Wrapper.m_UserInterfaceActionsCallbackInterface = instance;
             if (instance != null)
@@ -679,6 +726,9 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
                 @NavigateCharactersRight.started += instance.OnNavigateCharactersRight;
                 @NavigateCharactersRight.performed += instance.OnNavigateCharactersRight;
                 @NavigateCharactersRight.canceled += instance.OnNavigateCharactersRight;
+                @Deselect.started += instance.OnDeselect;
+                @Deselect.performed += instance.OnDeselect;
+                @Deselect.canceled += instance.OnDeselect;
             }
         }
     }
@@ -717,5 +767,6 @@ public class @PlayerInputClass : IInputActionCollection, IDisposable
         void OnSwitchTabRight(InputAction.CallbackContext context);
         void OnNavigateCharactersLeft(InputAction.CallbackContext context);
         void OnNavigateCharactersRight(InputAction.CallbackContext context);
+        void OnDeselect(InputAction.CallbackContext context);
     }
 }

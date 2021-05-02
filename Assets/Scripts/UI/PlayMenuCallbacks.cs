@@ -7,7 +7,7 @@ using Bolt.Matchmaking;
 using UdpKit;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem;
 
 namespace ThePackt{
     public class PlayMenuCallbacks : GlobalEventListener
@@ -17,6 +17,7 @@ namespace ThePackt{
         [SerializeField] private GameObject _tooltip;
 
         [SerializeField] private EventSystem _eventSystem;
+        [SerializeField] private LogoOnCharSelection _logoHandler;
         private string _class;
         private string _nickname;
         [SerializeField] private string lobby;
@@ -27,7 +28,7 @@ namespace ThePackt{
         // called from host button
         public void StartServer()
         {
-            if(_selectedData.GetCharacterSelected().Equals("none")){
+            if(_selectedData.GetCharacterSelected().Equals("none") || !_logoHandler.isSomethingActive()){
                 _tooltip.SetActive(true);
                 ChangeSelectedElement(_tooltip.GetComponentInChildren<Button>().gameObject);
                 return;
@@ -50,7 +51,8 @@ namespace ThePackt{
             var matchName = string.Format("{0} - {1}", id, lobby);
 
             BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: lobby);
-
+            int sessions = BoltNetwork.SessionList.Count;
+            Debug.Log("NUMBER OF SESSIONS: " + sessions);
             /*
            int sessions = BoltNetwork.SessionList.Count;
            Debug.Log("NUMBER OF SESSIONS: " + sessions);
@@ -65,7 +67,7 @@ namespace ThePackt{
         public void StartClient()
         {
             Debug.Log("selected character = "+ _selectedData.GetCharacterSelected());
-            if(_selectedData.GetCharacterSelected().Equals("none")){
+            if(_selectedData.GetCharacterSelected().Equals("none") || !_logoHandler.isSomethingActive()){
                 _tooltip.SetActive(true);
                 ChangeSelectedElement(_tooltip.GetComponentInChildren<Button>().gameObject);
                 return;
@@ -73,15 +75,23 @@ namespace ThePackt{
             else{
                 _class = _selectedData.GetCharacterSelected();
                 _nickname = _selectedData.GetNickname();
-                //_selectedData.Reset();
+                
             }
+            //Debug.Log("sessions : "+)
             BoltLauncher.StartClient();
         }
 
         // called from shutsown button
         public void Shutdown()
         {
-            BoltLauncher.Shutdown();
+            try{
+                BoltLauncher.Shutdown();
+            }catch(BoltException e){
+                Debug.Log("tried to shutdown but: "+e);
+                Debug.Log("-> i assume you clicked \"cancel\" before clicking \"join\" or \"host\" so... you want to deselect teh character right?");
+            }
+            _logoHandler.Reset();
+            _selectedData.Reset();
         }
 
         public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
@@ -97,6 +107,8 @@ namespace ThePackt{
                 }
             }
         }
+
+       
 
 
         public void ChangeSelectedElement(GameObject go){

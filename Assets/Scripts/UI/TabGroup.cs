@@ -67,35 +67,22 @@ namespace ThePackt{
             }
         }
 
-        public void OnChangeTabInputLeft(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                if(_selectedTab.transform.GetSiblingIndex() > 0){
+        
+        public void ChangeTabLeft(){
+             if(_selectedTab.transform.GetSiblingIndex() > 0){
                     OnTabSelected(tabButtons[tabButtons.IndexOf(_selectedTab)-1]);
-                }
-                else{
-                    OnTabSelected(tabButtons[tabButtons.Count-1]);
-                }
             }
-            else if(context.canceled){
-
+            else{
+                OnTabSelected(tabButtons[tabButtons.Count-1]);
             }
         }
 
-        public void OnChangeTabInputRight(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                if(_selectedTab.transform.GetSiblingIndex() < tabButtons.Count - 1){
+        public void ChangeTabRight(){
+            if(_selectedTab.transform.GetSiblingIndex() < tabButtons.Count - 1){
                     OnTabSelected(tabButtons[tabButtons.IndexOf(_selectedTab)+1]);
-                }
-                else{
-                    OnTabSelected(tabButtons[0]);
-                }
             }
-            else if(context.canceled){
-
+            else{
+                OnTabSelected(tabButtons[0]);
             }
         }
         private void Start(){
@@ -104,16 +91,19 @@ namespace ThePackt{
 
         private void Update(){
             if(_selectedTab == null && tabButtons.Count > 0){
-                Debug.Log("i am about to select the tab: "+tabButtons[0].gameObject.name);
                 OnTabSelected(tabButtons[0]);
             }
-            if(inputSystem.currentControlScheme.Equals("Gamepad"))
-                Debug.Log("gamepad detected");
-            else if(inputSystem.currentControlScheme.Equals("Keyboard"))
-                Debug.Log("keyboard detected");
+           
         }
 
  
+        #region getters
+
+        public tabButton GetCurrentTab(){
+            return _selectedTab;
+        }
+
+        #endregion
 
     }
 }

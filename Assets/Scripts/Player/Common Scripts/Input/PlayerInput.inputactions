@@ -353,6 +353,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Deselect",
+                    "type": "Button",
+                    "id": "93ab2182-9ccd-4790-a9e9-a3c8d72d5ed9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -424,6 +432,17 @@
                 },
                 {
                     "name": "",
+                    "id": "419d459e-da2d-497a-84c4-536d40536826",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "NavigateCharactersLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7ddcf8cd-1f27-4ab0-9864-03cdc9a2f764",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -441,6 +460,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "NavigateCharactersRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d274cdb-8cf9-4339-b7d7-74e65d4fcb62",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "NavigateCharactersRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e132b678-c2e1-40a8-8efd-3c450a721b49",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Deselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

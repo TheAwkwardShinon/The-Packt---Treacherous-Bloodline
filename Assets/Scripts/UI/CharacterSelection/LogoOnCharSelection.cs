@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace ThePackt{
@@ -16,6 +17,21 @@ namespace ThePackt{
                 else _images[i].gameObject.SetActive(false);
             }
         }
+
+        public void Reset(){
+            foreach(Image i in _images)
+                i.gameObject.SetActive(false);
+        }
+
+        public bool isSomethingActive(){
+            foreach(Image i in _images)
+                if(i.IsActive())
+                    return true;
+            return false;
+        }
+        
+        
+
         
     }
 }

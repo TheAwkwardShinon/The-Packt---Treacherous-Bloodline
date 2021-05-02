@@ -37,12 +37,12 @@ namespace ThePackt{
 
         public void getCharLeft(){
             _currentIndex = _currentIndex - 1 < 0 ? _characters.Count - 1 : _currentIndex - 1;
-            characterSelection();
+            CharacterSelection();
         }
 
         public void getCharRight(){
             _currentIndex = _currentIndex + 1 == _characters.Count ? 0 : _currentIndex + 1;
-            characterSelection();
+            CharacterSelection();
         }
 
         /* todo on button click */
@@ -59,7 +59,7 @@ namespace ThePackt{
             }
         }
 
-        private void characterSelection(){
+        private void CharacterSelection(){
             _personalAbilityName.text = _characters[_currentIndex].personalAbilityName;
             _abilitiesImage[0].sprite = _characters[_currentIndex].personalAbility;
             _className.text = _characters[_currentIndex].ClassName;
@@ -71,35 +71,18 @@ namespace ThePackt{
             }/* aggiungere varie descrizioni */
         }
 
+        public void CharacterSelectionRight(){
+            _currentIndex = _currentIndex + 1 == _characters.Count ? 0 : _currentIndex + 1;
+             CharacterSelection();
+        } 
 
-        public void OnChangeCharacterRight(InputAction.CallbackContext context){
-            if (context.started)
-            {
-               if(_clicked){
-                _currentIndex = _currentIndex + 1 == _characters.Count ? 0 : _currentIndex + 1;
-                characterSelection();
-               }
-            }
-            else if (context.canceled)
-            {
-            }
-        }
-
-        public void OnChangeCharacterLeft(InputAction.CallbackContext context){
-             if (context.started)
-            {
-               if(_clicked){
-                _currentIndex = _currentIndex - 1 < 0 ? _characters.Count - 1 : _currentIndex - 1;
-                characterSelection();
-               }
-            }
-            else if (context.canceled)
-            {
-            }
+        public void CharacterSelectionLeft(){
+            _currentIndex = _currentIndex - 1 < 0 ? _characters.Count - 1 : _currentIndex - 1;
+            CharacterSelection();
         }
 
         private void Start(){
-            characterSelection();
+            CharacterSelection();
             _standardNav = button.navigation;
         }
 
@@ -119,6 +102,10 @@ namespace ThePackt{
 
         public  List<CharacterShowCaseData> GetcharacterList(){
             return _characters;
+        }
+
+        public bool GetClicked(){
+            return _clicked;
         }
     }
 }
