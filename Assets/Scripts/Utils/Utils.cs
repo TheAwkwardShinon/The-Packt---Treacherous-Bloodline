@@ -6,22 +6,6 @@ namespace ThePackt
     public class Utils
     {
         #region methods
-        public static uint GetServerID()
-        {
-            if (BoltNetwork.IsClient)
-            {
-                //my Id
-                return BoltNetwork.Server.ConnectionId;
-            }
-            else
-            {
-                //Id of first client
-                foreach (BoltConnection client in BoltNetwork.Clients)
-                    return client.ConnectionId;
-            }
-
-            return 1000;
-        }
 
         public static BoltConnection GetServerConnection()
         {
@@ -42,7 +26,22 @@ namespace ThePackt
             return null;
         }
 
-        public static BoltConnection findConnection(int id)
+        public static bool IsServerConnection(int id)
+        {
+            foreach (BoltConnection client in BoltNetwork.Clients)
+            {
+                Debug.Log("[NETWORKLOG] client id " + client.ConnectionId);
+                if (client.ConnectionId == id)
+                {
+                    Debug.Log("[NETWORKLOG] not server ");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static BoltConnection FindConnection(int id)
         {
             foreach (BoltConnection client in BoltNetwork.Clients)
             {

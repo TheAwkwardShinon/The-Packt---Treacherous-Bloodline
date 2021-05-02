@@ -76,20 +76,25 @@ namespace ThePackt
 
                 //if received by the server
                 //if the server itself was hit apply damage to its player
-                if (evnt.RaisedBy.ConnectionId == Utils.GetServerID())
+                Debug.Log("[NETWORKLOG] " + evnt.HitConnection + " was hit");
+                if (Utils.IsServerConnection((int) evnt.HitConnection))
                 {
                     Debug.Log("[NETWORKLOG] server was hit, applying damage");
                     _player.ApplyDamage(evnt.Damage);
                 }
                 else
                 {
-                    Debug.Log("[NETWORKLOG] server redirect to: " + evnt.RaisedBy.ConnectionId);
-
                     //otherwise redirect the event to the client that was hit
 
-                    var newEvnt = PlayerAttackHitEvent.Create(evnt.RaisedBy);
-                    newEvnt.Damage = evnt.Damage;
-                    evnt.Send();
+                    BoltConnection hitConnection = Utils.FindConnection(evnt.HitConnection);
+                    if(hitConnection != null)
+                    {
+                        Debug.Log("[NETWORKLOG] server redirect to: " + hitConnection.ConnectionId);
+
+                        var newEvnt = PlayerAttackHitEvent.Create(hitConnection);
+                        newEvnt.Damage = evnt.Damage;
+                        evnt.Send();
+                    }
                 }
             }
             else

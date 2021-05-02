@@ -123,15 +123,16 @@ namespace ThePackt
                     // otherwise we sent it to the server with the connection id of the player that was hit
                     if (BoltNetwork.IsServer)
                     {
-                        Debug.Log("[NETWORKLOG] from server to connection: " + player.getConnectionID());
+                        Debug.Log("[NETWORKLOG] from server to connection: " + player.entity.Source.ConnectionId);
                         evnt = PlayerAttackHitEvent.Create(player.entity.Source);
                     }
                     else
                     {
-                        Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + player.getConnectionID());
+                        Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + player.entity.Source.ConnectionId);
                         evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
                     }
 
+                    evnt.HitConnection = (int) player.entity.Source.ConnectionId;
                     evnt.Damage = _attackPower;
                     evnt.Send();
                 }
