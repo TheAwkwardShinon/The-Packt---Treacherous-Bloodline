@@ -75,4 +75,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerDuration: 1210
   gameDuration: 1200
-  timerText: {fileID: 0}

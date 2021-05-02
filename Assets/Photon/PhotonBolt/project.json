@@ -4409,6 +4409,7 @@
             "$type": "Bolt.Compiler.PropertyTypeTransform, bolt.compiler",
             "PositionSelection": 14,
             "RotationSelection": 14,
+            "ExtrapolationVelocityMode": 2,
             "PositionCompression": [
               {
                 "MinValue": -1024,
