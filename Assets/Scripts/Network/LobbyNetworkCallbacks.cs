@@ -126,6 +126,11 @@ namespace ThePackt
             }
         }
 
+        public override void Connected(BoltConnection connection)
+        {
+            Debug.Log("[CONNECTIONLOG] connection: " + connection.ConnectionId);
+        }
+
         //pvp is disabled in the lobby
         /*
         public override void OnEvent(PlayerAttackHitEvent evnt)
