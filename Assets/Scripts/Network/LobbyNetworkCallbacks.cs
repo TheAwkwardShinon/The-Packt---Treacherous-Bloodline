@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Bolt;
+using UdpKit;
 
 namespace ThePackt
 {
@@ -89,6 +90,9 @@ namespace ThePackt
                     {
                         StartCoroutine("StartGame");
                     }
+
+                    Debug.Log("TIMER server: " + BoltNetwork.ServerTime);
+                    Debug.Log("TIMER client: " + BoltNetwork.Time);
                 }
             }
         }
@@ -258,7 +262,7 @@ namespace ThePackt
         {
             _playerToSpawnName = _selectedData.GetCharacterSelected();
             Debug.Log("[SPAWNPLAYER] choice: " + _playerToSpawnName);
-
+            
             //instantiate the selected player in the given position
             bool spawned = false;
             foreach (Utils.PrefabAssociation assoc in playerPrefabs)

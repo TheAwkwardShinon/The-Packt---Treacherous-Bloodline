@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UdpKit;
 using UnityEngine;
 using System;
 using Bolt;
@@ -12,10 +12,11 @@ namespace ThePackt
         public Vector2 enemySpawnPos;
         public Utils.VectorAssociation[] playersSpawnPositions;
         [SerializeField] private CharacterSelectionData _selectedData;
+        [SerializeField] private GameObject _timeManagerPrefab;
         private Player _player;
 
         #region callbacks
-        
+
         /*
         public override void SceneLoadLocalBegin(string scene, IProtocolToken token)
         {
@@ -57,14 +58,12 @@ namespace ThePackt
             }
 
             //disable black screen here
-        }
 
-        public override void EntityAttached(BoltEntity entity)
-        {
-        }
-
-        public override void EntityDetached(BoltEntity entity)
-        {
+            if (BoltNetwork.IsServer)
+            {
+                BoltEntity timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
+                timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
+            }
         }
 
         public override void OnEvent(PlayerAttackHitEvent evnt)

@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 using Bolt;
@@ -81,7 +81,7 @@ namespace ThePackt{
             BoltLauncher.StartClient();
         }
 
-        // called from shutsown button
+        // called from shutdown button
         public void Shutdown()
         {
             try{
