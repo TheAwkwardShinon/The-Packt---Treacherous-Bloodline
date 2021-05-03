@@ -1040,7 +1040,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce6211d01e553b4bba681be029a18cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: NetworkTestScene
   _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   playerPrefabs:
   - name: ceuin
@@ -1056,7 +1055,7 @@ MonoBehaviour:
   - name: naturia
     prefab: {fileID: 1614372350790525731, guid: cc762e852b8899449b400c714bb728e7, type: 3}
   playerSpawnPos: {x: 0, y: 0}
-  _minPlayerNumber: 2
+  _minPlayerNumber: 3
   gameStartSeconds: 2
 --- !u!4 &232117935
 Transform:

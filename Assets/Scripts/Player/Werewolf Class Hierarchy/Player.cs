@@ -116,6 +116,11 @@ namespace ThePackt{
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
         {
+            if(entity.IsOwner)
+                Debug.Log("[NETWORKLOG] my network id: " + entity.NetworkId);
+            else
+                Debug.Log("[NETWORKLOG] other network id: " + entity.NetworkId);
+
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();

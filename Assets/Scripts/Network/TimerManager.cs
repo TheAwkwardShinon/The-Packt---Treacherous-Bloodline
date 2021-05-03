@@ -12,8 +12,8 @@ namespace ThePackt
         public float timerDuration; //duration of warm-up + game in seconds
         public float gameDuration; //duration of game in seconds
         private bool gameStarting;
-        private bool gameStarted;
-        private bool gameEnded;
+        public bool gameStarted { get; private set; }
+        public bool gameEnded { get; private set; }
         private Text timerText;
         #endregion
 

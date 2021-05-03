@@ -113,7 +113,7 @@ namespace ThePackt
                 //Anyway there is a machine in which the owner is the hit player and that machine
                 //will identify that bullet and player have different owners and the damage will be applied,
                 //health will be synchronized and the bullet destroyed for every player (thanks to BoltNetwork.Destroy)
-                if (isLocalPlayer != isLocalBullet)
+                if (isLocalPlayer != isLocalBullet && isLocalBullet)
                 {
                     Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
 
@@ -123,16 +123,17 @@ namespace ThePackt
                     // otherwise we sent it to the server with the connection id of the player that was hit
                     if (BoltNetwork.IsServer)
                     {
+                        Debug.Log("[NETWORKLOG] server hit " + player.entity.NetworkId);
                         Debug.Log("[NETWORKLOG] from server to connection: " + player.entity.Source.ConnectionId);
                         evnt = PlayerAttackHitEvent.Create(player.entity.Source);
                     }
                     else
                     {
-                        Debug.Log("[NETWORKLOG] from client to server. must redirect to: " + player.entity.Source.ConnectionId);
+                        Debug.Log("[NETWORKLOG] from client to server. must redirect to the connection of: " + player.entity.NetworkId);
                         evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
                     }
 
-                    evnt.HitConnection = (int) player.entity.Source.ConnectionId;
+                    evnt.HitNetworkId = player.entity.NetworkId;
                     evnt.Damage = _attackPower;
                     evnt.Send();
                 }

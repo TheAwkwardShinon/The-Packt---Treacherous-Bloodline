@@ -6,7 +6,7 @@ using Bolt;
 
 namespace ThePackt
 {
-    public class MapNetworkCallbacks : GlobalEventListener
+    public class MapNetworkCallbacks : NetworkCallbacks
     {
         public Utils.PrefabAssociation[] enemyPrefabs;
         public Vector2 enemySpawnPos;
@@ -66,6 +66,13 @@ namespace ThePackt
             }
         }
 
+        public override void ConnectRequest(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            Debug.Log("[CONNECTIONLOG] connect request");
+
+            BoltNetwork.Refuse(endpoint);
+        }
+
         public override void OnEvent(PlayerAttackHitEvent evnt)
         {
             Debug.Log("[HEALTH] attack hit with damage: " + evnt.Damage);
@@ -76,33 +83,38 @@ namespace ThePackt
 
                 //if received by the server
                 //if the server itself was hit apply damage to its player
-                Debug.Log("[NETWORKLOG] " + evnt.HitConnection + " was hit");
-                if (Utils.IsServerConnection((int) evnt.HitConnection))
+                Debug.Log("[NETWORKLOG] " + evnt.HitNetworkId + " was hit");
+                BoltEntity hitEntity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                if(hitEntity != null)
                 {
-                    Debug.Log("[NETWORKLOG] server was hit, applying damage");
-                    _player.ApplyDamage(evnt.Damage);
-                }
-                else
-                {
-                    //otherwise redirect the event to the client that was hit
-
-                    BoltConnection hitConnection = Utils.FindConnection(evnt.HitConnection);
-                    if(hitConnection != null)
+                    if (hitEntity.IsOwner)
                     {
-                        Debug.Log("[NETWORKLOG] server redirect to: " + hitConnection.ConnectionId);
+                        Debug.Log("[NETWORKLOG] server was hit, applying damage");
+                        _player.ApplyDamage(evnt.Damage);
+                    }
+                    else
+                    {
+                        //otherwise redirect the event to the client that was hit
 
-                        var newEvnt = PlayerAttackHitEvent.Create(hitConnection);
+                        Debug.Log("[NETWORKLOG] server redirect to connection: " + hitEntity.Source.ConnectionId);
+
+                        var newEvnt = PlayerAttackHitEvent.Create(hitEntity.Source);
+                        newEvnt.HitNetworkId = evnt.HitNetworkId;
                         newEvnt.Damage = evnt.Damage;
-                        evnt.Send();
+                        newEvnt.Send();
                     }
                 }
             }
             else
             {
                 //if received by the client, apply damage to the player of which the client is owner
+                Debug.Log("[NETWORKLOG] client was hit. my: " + _player.entity.NetworkId + "  other: " + evnt.HitNetworkId);
 
-                Debug.Log("[NETWORKLOG] client was hit, applying damage");
-                _player.ApplyDamage(evnt.Damage);
+                if (_player.entity.NetworkId.Equals(evnt.HitNetworkId))
+                {
+                    Debug.Log("[NETWORKLOG] client was hit, applying damage");
+                    _player.ApplyDamage(evnt.Damage);
+                }
             }
         }
 
@@ -121,17 +133,6 @@ namespace ThePackt
                 {
                     enemy.ApplyDamage(evnt.Damage);
                 }
-            }
-        }
-
-        public override void OnEvent(DisconnectEvent evnt)
-        {
-            //if received by the server disconnect the sender
-            if (BoltNetwork.IsServer)
-            {
-                Debug.Log("[NETWORKLOG] server received disconnect event");
-
-                evnt.RaisedBy.Disconnect();
             }
         }
 

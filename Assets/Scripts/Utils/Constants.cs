@@ -17,5 +17,11 @@ namespace ThePackt
         public const string FELE = "fele";
         public const string AYATANA = "ayatana";
         #endregion 
+
+        #region scenes
+        public const string LOBBY = "LobbyScene";
+        public const string MAP = "NetworkTestScene";
+        public const string MENU = "MenuScene";
+        #endregion 
     }
 }
