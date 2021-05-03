@@ -7,9 +7,8 @@ using UdpKit;
 
 namespace ThePackt
 {
-    public class LobbyNetworkCallbacks : GlobalEventListener
+    public class LobbyNetworkCallbacks : NetworkCallbacks
     {
-        [SerializeField] private string map;
         [SerializeField] private CharacterSelectionData _selectedData;
         public Utils.PrefabAssociation[] playerPrefabs;
         public Vector2 playerSpawnPos;
@@ -103,7 +102,7 @@ namespace ThePackt
 
             //enable black screen here
 
-            BoltNetwork.LoadScene(map);
+            BoltNetwork.LoadScene(Constants.MAP);
         }
 
         public override void EntityDetached(BoltEntity entity)
@@ -126,15 +125,11 @@ namespace ThePackt
             }
         }
 
-        public override void OnEvent(DisconnectEvent evnt)
+        public override void ConnectRequest(UdpEndPoint endpoint, IProtocolToken token)
         {
-            //if received by the server disconnect the sender
-            if (BoltNetwork.IsServer)
-            {
-                Debug.Log("[NETWORKLOG] server received disconnect event");
-
-                evnt.RaisedBy.Disconnect();
-            }
+            Debug.Log("[CONNECTIONLOG] connect request");
+       
+            BoltNetwork.Accept(endpoint);
         }
 
         public override void OnEvent(RequestAvailableFactions evnt)

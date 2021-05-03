@@ -7,7 +7,7 @@ using Bolt.Matchmaking;
 using UdpKit;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace ThePackt{
     public class PlayMenuCallbacks : GlobalEventListener
@@ -18,9 +18,17 @@ namespace ThePackt{
 
         [SerializeField] private EventSystem _eventSystem;
         [SerializeField] private LogoOnCharSelection _logoHandler;
+        [SerializeField] private int _maxConnectionTentatives;
+        [SerializeField] private uint _sessionSearchTimeout; //in seconds
         private string _class;
         private string _nickname;
-        [SerializeField] private string lobby;
+        private Map<Guid, UdpSession> _sessionList;
+        private HashSet<Guid> _triedSessions;
+        private int _connectionTentatives;
+        private bool _firstConnection;
+        private uint _timeFromLastSessionUpdate; //in seconds
+
+        private bool _tryingToConnect;
         #endregion
 
         #region methods
@@ -38,8 +46,6 @@ namespace ThePackt{
                 _nickname = _selectedData.GetNickname();
                 //_selectedData.Reset();
             }
-            BoltConfig config = BoltRuntimeSettings.instance.GetConfigCopy();
-            config.serverConnectionLimit = 5;
 
             BoltLauncher.StartServer();
         }
@@ -48,12 +54,11 @@ namespace ThePackt{
         {
             
             var id = Guid.NewGuid().ToString().Split('-')[0];
-            var matchName = string.Format("{0} - {1}", id, lobby);
+            var matchName = string.Format("{0} - {1}", id, Constants.LOBBY);
 
-            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: lobby);
-            int sessions = BoltNetwork.SessionList.Count;
-            Debug.Log("NUMBER OF SESSIONS: " + sessions);
-            /*
+            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: Constants.LOBBY);
+
+           /*
            int sessions = BoltNetwork.SessionList.Count;
            Debug.Log("NUMBER OF SESSIONS: " + sessions);
            if (sessions <= 3)
@@ -78,7 +83,14 @@ namespace ThePackt{
                 
             }
             //Debug.Log("sessions : "+)
+
+            _tryingToConnect = false;
+            _triedSessions = new HashSet<Guid>();
+            _connectionTentatives = 0;
+            _timeFromLastSessionUpdate = 0;
+            _firstConnection = true;
             BoltLauncher.StartClient();
+            StartCoroutine("WaitForTimeout");
         }
 
         // called from shutdown button
@@ -88,7 +100,7 @@ namespace ThePackt{
                 BoltLauncher.Shutdown();
             }catch(BoltException e){
                 Debug.Log("tried to shutdown but: "+e);
-                Debug.Log("-> i assume you clicked \"cancel\" before clicking \"join\" or \"host\" so... you want to deselect teh character right?");
+                Debug.Log("-> i assume you clicked \"cancel\" before clicking \"join\" or \"host\" so... you want to deselect the character right?");
             }
             _logoHandler.Reset();
             _selectedData.Reset();
@@ -96,19 +108,156 @@ namespace ThePackt{
 
         public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
         {
-            // look through all photon sessions and join one using bolt matchmaking
-            foreach (var session in sessionList)
-            {
-                UdpSession photonSession = session.Value as UdpSession;
+            Debug.Log("[CONNECTIONLOG] session list updated");
 
-                if(photonSession.Source == UdpSessionSource.Photon)
-                {
-                    BoltMatchmaking.JoinSession(photonSession);
-                }
+            _timeFromLastSessionUpdate = 0;
+            _sessionList = sessionList;
+
+            // if this is the first connection try look through all photon sessions and join one using bolt matchmaking
+            if(_firstConnection)
+            {
+                _tryingToConnect = true;
+                SearchAndJoinSession();
+                _firstConnection = false;
+            }
+            else if(!_tryingToConnect)
+            {
+                _tryingToConnect = true;
+                SearchAndJoinSessionRetry();
             }
         }
 
-       
+        public override void ConnectRefused(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            Debug.Log("[CONNECTIONLOG] connection refused");
+            Debug.Log("[CONNECTIONLOG] retrying after connection refused");
+
+            _connectionTentatives++;
+            SearchAndJoinSessionRetry();
+        }
+
+        public override void ConnectFailed(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            Debug.Log("[CONNECTIONLOG] connection failed");
+            Debug.Log("[CONNECTIONLOG] retrying after connection failed");
+
+            _connectionTentatives++;
+            SearchAndJoinSessionRetry();
+        }
+
+        private void SearchAndJoinSession()
+        {
+            if(_sessionList.Count > 0)
+            {
+                foreach (var session in _sessionList)
+                {
+                    UdpSession photonSession = session.Value as UdpSession;
+
+                    if (photonSession.Source == UdpSessionSource.Photon && !_triedSessions.Contains(session.Key))
+                    {
+                        BoltMatchmaking.JoinSession(photonSession, null);
+                        _triedSessions.Add(session.Key);
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("[CONNECTIONLOG] no sessions");
+
+                //TODO advice the user to create his own session
+            }
+        }
+
+        private void SearchAndJoinSessionRetry()
+        {
+            if (_sessionList.Count > 0)
+            {
+                if (_connectionTentatives >= _maxConnectionTentatives)
+                {
+                    Debug.Log("[CONNECTIONLOG] max tentatives reached");
+
+                    //TODO advice the user to create his own session
+                }
+
+                //get the ids of all the sessions
+                HashSet<Guid> sessions = new HashSet<Guid>();
+                foreach (var session in _sessionList)
+                {
+                    sessions.Add(session.Key);
+                }
+
+                //find the sessions that have not already been tried
+                HashSet<Guid> toTrySessions = sessions;
+                toTrySessions.ExceptWith(_triedSessions);
+                if (toTrySessions.Count == 0)
+                {
+                    Debug.Log("[CONNECTIONLOG] all sessions already tried");
+                    _tryingToConnect = false;
+                    //BoltLauncher.Shutdown();
+
+                    //TODO advice the user to create his own session
+                }
+                else
+                {
+                    //if not all sessions have already tried, try one of the remaining ones
+                    foreach (Guid sessionGuid in toTrySessions)
+                    {
+                        UdpSession photonSession = _sessionList.Find(sessionGuid) as UdpSession;
+
+                        if (photonSession.Source == UdpSessionSource.Photon)
+                        {
+                            BoltMatchmaking.JoinSession(photonSession, null);
+                            _triedSessions.Add(sessionGuid);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("[CONNECTIONLOG] no sessions");
+
+                //TODO advice the user to create his own session
+            }
+        }
+
+        IEnumerator WaitForTimeout()
+        {
+            yield return new WaitForSeconds(1);
+            _timeFromLastSessionUpdate++;
+
+            if(_timeFromLastSessionUpdate == _sessionSearchTimeout)
+            {
+                Debug.Log("[CONNECTIONLOG] session search timeout");
+
+                //TODO advice the user to create his own session
+
+                _timeFromLastSessionUpdate = 0;
+
+                if (_sessionList == null)
+                {
+                    Debug.Log("[CONNECTIONLOG] no sessions");
+                }
+                else if (_tryingToConnect)
+                {
+                    Debug.Log("[CONNECTIONLOG] still trying to connect");
+                }
+                else
+                {
+                    Debug.Log("[CONNECTIONLOG] all sessions already tried");
+
+                    /*
+                    Debug.Log("[CONNECTIONLOG] retrying after timeout");
+                    _tryingToConnect = true;
+                    SearchAndJoinSessionRetry();
+                    */
+                }
+            }
+
+            if (!BoltNetwork.IsConnected)
+            {
+                StartCoroutine("WaitForTimeout");
+            }
+        }
 
 
         public void ChangeSelectedElement(GameObject go){

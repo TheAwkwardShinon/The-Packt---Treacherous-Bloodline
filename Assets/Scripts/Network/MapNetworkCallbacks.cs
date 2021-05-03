@@ -6,7 +6,7 @@ using Bolt;
 
 namespace ThePackt
 {
-    public class MapNetworkCallbacks : GlobalEventListener
+    public class MapNetworkCallbacks : NetworkCallbacks
     {
         public Utils.PrefabAssociation[] enemyPrefabs;
         public Vector2 enemySpawnPos;
@@ -64,6 +64,13 @@ namespace ThePackt
                 BoltEntity timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
                 timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
             }
+        }
+
+        public override void ConnectRequest(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            Debug.Log("[CONNECTIONLOG] connect request");
+
+            BoltNetwork.Refuse(endpoint);
         }
 
         public override void OnEvent(PlayerAttackHitEvent evnt)
@@ -124,17 +131,6 @@ namespace ThePackt
                 {
                     enemy.ApplyDamage(evnt.Damage);
                 }
-            }
-        }
-
-        public override void OnEvent(DisconnectEvent evnt)
-        {
-            //if received by the server disconnect the sender
-            if (BoltNetwork.IsServer)
-            {
-                Debug.Log("[NETWORKLOG] server received disconnect event");
-
-                evnt.RaisedBy.Disconnect();
             }
         }
 

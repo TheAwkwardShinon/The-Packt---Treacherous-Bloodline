@@ -38,8 +38,6 @@ namespace ThePackt {
 
                 var evnt = DisconnectEvent.Create(Utils.GetServerConnection());
                 evnt.Send();
-
-                SceneManager.LoadScene("MenuScene");
             }
             
         }

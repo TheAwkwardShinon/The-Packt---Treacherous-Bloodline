@@ -9053,7 +9053,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Cross
+  m_Text: Button South
 --- !u!222 &1055864343
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10838,7 +10838,8 @@ MonoBehaviour:
   _tooltip: {fileID: 334481838}
   _eventSystem: {fileID: 895784725}
   _logoHandler: {fileID: 1481698303}
-  lobby: LobbyScene
+  _maxConnectionTentatives: 1
+  _sessionSearchTimeout: 2
 --- !u!1 &1265647865
 GameObject:
   m_ObjectHideFlags: 0
