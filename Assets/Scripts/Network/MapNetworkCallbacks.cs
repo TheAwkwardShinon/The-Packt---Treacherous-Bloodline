@@ -76,22 +76,22 @@ namespace ThePackt
 
                 //if received by the server
                 //if the server itself was hit apply damage to its player
-                Debug.Log("[NETWORKLOG] " + evnt.HitConnection + " was hit");
-                if (Utils.IsServerConnection((int) evnt.HitConnection))
+                Debug.Log("[NETWORKLOG] " + evnt.HitNetworkId + " was hit");
+                BoltEntity hitEntity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                if(hitEntity != null)
                 {
-                    Debug.Log("[NETWORKLOG] server was hit, applying damage");
-                    _player.ApplyDamage(evnt.Damage);
-                }
-                else
-                {
-                    //otherwise redirect the event to the client that was hit
-
-                    BoltConnection hitConnection = Utils.FindConnection(evnt.HitConnection);
-                    if(hitConnection != null)
+                    if (hitEntity.IsOwner)
                     {
-                        Debug.Log("[NETWORKLOG] server redirect to: " + hitConnection.ConnectionId);
+                        Debug.Log("[NETWORKLOG] server was hit, applying damage");
+                        _player.ApplyDamage(evnt.Damage);
+                    }
+                    else
+                    {
+                        //otherwise redirect the event to the client that was hit
 
-                        var newEvnt = PlayerAttackHitEvent.Create(hitConnection);
+                        Debug.Log("[NETWORKLOG] server redirect to connection: " + hitEntity.Source);
+
+                        var newEvnt = PlayerAttackHitEvent.Create(hitEntity.Source);
                         newEvnt.Damage = evnt.Damage;
                         evnt.Send();
                     }
@@ -101,8 +101,11 @@ namespace ThePackt
             {
                 //if received by the client, apply damage to the player of which the client is owner
 
-                Debug.Log("[NETWORKLOG] client was hit, applying damage");
-                _player.ApplyDamage(evnt.Damage);
+                if(_player.entity.NetworkId == evnt.HitNetworkId)
+                {
+                    Debug.Log("[NETWORKLOG] client was hit, applying damage");
+                    _player.ApplyDamage(evnt.Damage);
+                }
             }
         }
 
