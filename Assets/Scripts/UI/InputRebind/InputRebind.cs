@@ -1,25 +1,15 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Events;
-using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UI;
+using System;
+using UnityEngine.Events;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
-////TODO: localization support
-
-////TODO: deal with composites that have parts bound in different control schemes
-
-namespace UnityEngine.InputSystem.Samples.RebindUI
-{
-    /// <summary>
-    /// A reusable component with a self-contained UI for rebinding a single action.
-    /// </summary>
-    public class RebindActionUI : MonoBehaviour
+namespace ThePackt{
+    public class InputRebind : MonoBehaviour
     {
-        /// <summary>
-        /// Reference to the action that is to be rebound.
-        /// </summary>
-        public InputActionReference actionReference
+         public InputActionReference actionReference
         {
             get => m_Action;
             set
@@ -29,12 +19,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 UpdateBindingDisplay();
             }
         }
-
-        /// <summary>
-        /// ID (in string form) of the binding that is to be rebound on the action.
-        /// </summary>
-        /// <seealso cref="InputBinding.id"/>
-        public string bindingId
+         public string bindingId
         {
             get => m_BindingId;
             set
@@ -148,11 +133,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 return m_RebindStopEvent;
             }
         }
-
-        /// <summary>
-        /// When an interactive rebind is in progress, this is the rebind operation controller.
-        /// Otherwise, it is <c>null</c>.
-        /// </summary>
         public InputActionRebindingExtensions.RebindingOperation ongoingRebind => m_RebindOperation;
 
         /// <summary>
@@ -263,12 +243,15 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_RebindOperation?.Dispose();
                 m_RebindOperation = null;
             }
+            //Disable the action before use
+            action.Disable();
 
             // Configure the rebind.
             m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
                 .OnCancel(
                     operation =>
                     {
+                        action.Enable();
                         m_RebindStopEvent?.Invoke(this, operation);
                         m_RebindOverlay?.SetActive(false);
                         UpdateBindingDisplay();
@@ -277,6 +260,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 .OnComplete(
                     operation =>
                     {
+                        action.Enable();
                         m_RebindOverlay?.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
                         UpdateBindingDisplay();
@@ -321,7 +305,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         protected void OnEnable()
         {
             if (s_RebindActionUIs == null)
-                s_RebindActionUIs = new List<RebindActionUI>();
+                s_RebindActionUIs = new List<InputRebind>();
             s_RebindActionUIs.Add(this);
             if (s_RebindActionUIs.Count == 1)
                 InputSystem.onActionChange += OnActionChange;
@@ -411,7 +395,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         private InputActionRebindingExtensions.RebindingOperation m_RebindOperation;
 
-        private static List<RebindActionUI> s_RebindActionUIs;
+        private static List<InputRebind> s_RebindActionUIs;
 
         // We want the label for the action name to update in edit mode, too, so
         // we kick that off from here.
@@ -424,6 +408,11 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         #endif
 
+        private void Satrt(){
+            UpdateActionLabel();
+            UpdateBindingDisplay();
+        }
+
         private void UpdateActionLabel()
         {
             if (m_ActionLabel != null)
@@ -434,13 +423,14 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         }
 
         [Serializable]
-        public class UpdateBindingUIEvent : UnityEvent<RebindActionUI, string, string, string>
+        public class UpdateBindingUIEvent : UnityEvent<InputRebind, string, string, string>
         {
         }
 
         [Serializable]
-        public class InteractiveRebindEvent : UnityEvent<RebindActionUI, InputActionRebindingExtensions.RebindingOperation>
+        public class InteractiveRebindEvent : UnityEvent<InputRebind, InputActionRebindingExtensions.RebindingOperation>
         {
         }
+
     }
 }

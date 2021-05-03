@@ -778,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: b6cd15bf0c2ed9a44908792b8cfd5047, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: ed2cfee5f7cc81546b7730caa47822b0, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -817,7 +817,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 5dedd23b-7384-4188-b629-4cb62f3dc4a0
+    m_ActionId: 5fd61f40-db65-4f88-9ada-abc8302fddbd
     m_ActionName: Gameplay/Movement[/DualShock4GamepadHID/leftStick,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
@@ -833,8 +833,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: e5857c16-a468-4e3f-a020-5a7ae792bdcf
-    m_ActionName: Gameplay/Jump[/Keyboard/w,/DualShock4GamepadHID/buttonSouth]
+    m_ActionId: 471f258e-92c7-4722-a893-0e6434a84c3d
+    m_ActionName: Gameplay/Jump[/DualShock4GamepadHID/buttonSouth,/Keyboard/w]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3384684059551268301}
@@ -849,24 +849,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: b05c04fd-12f2-42fb-8c0d-6eec2ba746e7
-    m_ActionName: Gameplay/Dash[/Keyboard/space,/DualShock4GamepadHID/buttonWest]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3384684059551268301}
-        m_TargetAssemblyTypeName: ThePackt.newInputHandler, Assembly-CSharp
-        m_MethodName: OnDashDirectionInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2411180e-e80d-412c-a082-c1264806b0a0
-    m_ActionName: Gameplay/DashDirection[/DualShock4GamepadHID/leftStick,/Keyboard/a]
+    m_ActionId: 813cc997-5c2d-4303-9bbd-1912cebf09a8
+    m_ActionName: Gameplay/Dash[/DualShock4GamepadHID/buttonWest,/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3384684059551268301}
@@ -881,8 +865,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 4d3bd9c2-8474-4b9e-aad2-15f8c50ae0b8
-    m_ActionName: Gameplay/Attack[/Mouse/leftButton]
+    m_ActionId: da27eed0-90be-434d-b2c2-b4f40878032d
+    m_ActionName: Gameplay/Attack[/DualShock4GamepadHID/rightShoulder,/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3384684059551268301}
@@ -897,8 +881,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 2c042df0-2533-4a3e-9185-2b952010d318
-    m_ActionName: Gameplay/AttackDirection
+    m_ActionId: 786e0295-6fd6-48e2-92db-98992e21b7c5
+    m_ActionName: Gameplay/AttackDirection[/DualShock4GamepadHID/rightStick,/Mouse/position]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3384684059551268301}
@@ -913,24 +897,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 7f11a834-a531-48ab-8184-1bdc249fce35
-    m_ActionName: Gameplay/transformation[/Keyboard/q]
+    m_ActionId: 77d306c3-d23d-4f8a-98c3-67a67c89d397
+    m_ActionName: Gameplay/Transformation[/DualShock4GamepadHID/buttonNorth,/Keyboard/q]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ac7e6f17-ae0e-4fba-9593-fd2d52e1d1a8
-    m_ActionName: UserInterface/SwitchTabLeft[/Keyboard/q]
+    m_ActionId: 9a370519-8f1e-4e26-9dde-8d256c1a6f7a
+    m_ActionName: UserInterface/SwitchTabLeft[/DualShock4GamepadHID/leftShoulder,/Keyboard/q]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ff26be66-8a30-4504-b1b5-de1f52cdc6b3
-    m_ActionName: UserInterface/SwitchTabRight[/Keyboard/e]
+    m_ActionId: 452063da-3d5f-4213-9a8e-d820ee755b04
+    m_ActionName: UserInterface/SwitchTabRight[/DualShock4GamepadHID/rightShoulder,/Keyboard/e]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 7ef686ef-a4b3-4303-b06a-222751345e08
-    m_ActionName: UserInterface/NavigateCharactersLeft[/Keyboard/a,/Keyboard/leftArrow]
+    m_ActionId: deea0cde-ce9a-4da9-babf-4c551c25cf09
+    m_ActionName: UserInterface/NavigateCharactersLeft[/DualShock4GamepadHID/dpad/left,/Keyboard/a]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a27d9d2d-afce-4ed8-abd9-3a110888a370
-    m_ActionName: UserInterface/NavigateCharactersRight[/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionId: 2ad87735-8c31-400b-b0fe-9f5eefe5aa80
+    m_ActionName: UserInterface/NavigateCharactersRight[/DualShock4GamepadHID/dpad/right,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 79de1627-cb62-466c-8359-21c9be3a2682
+    m_ActionName: UserInterface/Deselect[/DualShock4GamepadHID/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
