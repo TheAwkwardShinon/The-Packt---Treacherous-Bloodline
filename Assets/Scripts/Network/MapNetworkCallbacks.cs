@@ -96,19 +96,21 @@ namespace ThePackt
                     {
                         //otherwise redirect the event to the client that was hit
 
-                        Debug.Log("[NETWORKLOG] server redirect to connection: " + hitEntity.Source);
+                        Debug.Log("[NETWORKLOG] server redirect to connection: " + hitEntity.Source.ConnectionId);
 
                         var newEvnt = PlayerAttackHitEvent.Create(hitEntity.Source);
+                        newEvnt.HitNetworkId = evnt.HitNetworkId;
                         newEvnt.Damage = evnt.Damage;
-                        evnt.Send();
+                        newEvnt.Send();
                     }
                 }
             }
             else
             {
                 //if received by the client, apply damage to the player of which the client is owner
+                Debug.Log("[NETWORKLOG] client was hit. my: " + _player.entity.NetworkId + "  other: " + evnt.HitNetworkId);
 
-                if(_player.entity.NetworkId == evnt.HitNetworkId)
+                if (_player.entity.NetworkId.Equals(evnt.HitNetworkId))
                 {
                     Debug.Log("[NETWORKLOG] client was hit, applying damage");
                     _player.ApplyDamage(evnt.Damage);

@@ -10838,8 +10838,8 @@ MonoBehaviour:
   _tooltip: {fileID: 334481838}
   _eventSystem: {fileID: 895784725}
   _logoHandler: {fileID: 1481698303}
-  _maxConnectionTentatives: 1
-  _sessionSearchTimeout: 2
+  _maxConnectionTentatives: 3
+  _sessionSearchTimeout: 10
 --- !u!1 &1265647865
 GameObject:
   m_ObjectHideFlags: 0

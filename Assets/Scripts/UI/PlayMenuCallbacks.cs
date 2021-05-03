@@ -29,6 +29,7 @@ namespace ThePackt{
         private uint _timeFromLastSessionUpdate; //in seconds
 
         private bool _tryingToConnect;
+        private bool _canceled;
         #endregion
 
         #region methods
@@ -84,6 +85,7 @@ namespace ThePackt{
             }
             //Debug.Log("sessions : "+)
 
+            _canceled = false;
             _tryingToConnect = false;
             _triedSessions = new HashSet<Guid>();
             _connectionTentatives = 0;
@@ -104,11 +106,13 @@ namespace ThePackt{
             }
             _logoHandler.Reset();
             _selectedData.Reset();
+
+            _canceled = true;
         }
 
         public override void SessionListUpdated(Map<Guid, UdpSession> sessionList)
         {
-            Debug.Log("[CONNECTIONLOG] session list updated");
+            Debug.Log("[CONNECTIONLOG] session list updated: " + sessionList.Count);
 
             _timeFromLastSessionUpdate = 0;
             _sessionList = sessionList;
@@ -157,6 +161,7 @@ namespace ThePackt{
                     {
                         BoltMatchmaking.JoinSession(photonSession, null);
                         _triedSessions.Add(session.Key);
+                        break;
                     }
                 }
             }
@@ -180,21 +185,21 @@ namespace ThePackt{
                 }
 
                 //get the ids of all the sessions
-                HashSet<Guid> sessions = new HashSet<Guid>();
+                HashSet<Guid> toTrySessions = new HashSet<Guid>();
                 foreach (var session in _sessionList)
                 {
-                    sessions.Add(session.Key);
+                    toTrySessions.Add(session.Key);
                 }
 
                 //find the sessions that have not already been tried
-                HashSet<Guid> toTrySessions = sessions;
                 toTrySessions.ExceptWith(_triedSessions);
+                Debug.Log("[CONNECTIONLOG] tried: " + _triedSessions.Count);
+                Debug.Log("[CONNECTIONLOG] to try: " + toTrySessions.Count);
                 if (toTrySessions.Count == 0)
                 {
                     Debug.Log("[CONNECTIONLOG] all sessions already tried");
                     _tryingToConnect = false;
-                    //BoltLauncher.Shutdown();
-
+               
                     //TODO advice the user to create his own session
                 }
                 else
@@ -203,11 +208,12 @@ namespace ThePackt{
                     foreach (Guid sessionGuid in toTrySessions)
                     {
                         UdpSession photonSession = _sessionList.Find(sessionGuid) as UdpSession;
-
+                      
                         if (photonSession.Source == UdpSessionSource.Photon)
                         {
                             BoltMatchmaking.JoinSession(photonSession, null);
                             _triedSessions.Add(sessionGuid);
+                            break;
                         }
                     }
                 }
@@ -215,6 +221,7 @@ namespace ThePackt{
             else
             {
                 Debug.Log("[CONNECTIONLOG] no sessions");
+                _tryingToConnect = false;
 
                 //TODO advice the user to create his own session
             }
@@ -253,7 +260,7 @@ namespace ThePackt{
                 }
             }
 
-            if (!BoltNetwork.IsConnected)
+            if (!BoltNetwork.IsConnected && !_canceled)
             {
                 StartCoroutine("WaitForTimeout");
             }
