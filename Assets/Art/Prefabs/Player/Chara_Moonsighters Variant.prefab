@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5649999087641368569, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_TagString
-      value: moonsighter
+      value: moonsighters
       objectReference: {fileID: 0}
     - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.b
