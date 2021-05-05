@@ -63,10 +63,16 @@ namespace ThePackt{
                 float newY = selectedPositionY - scrollRectTransform.rect.height;
                 contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x, newY);
             }
-            // If the selected position is above the current upper bound of the scroll view we scroll up.
             else if (Mathf.Abs(selectedRectTransform.anchoredPosition.y) < scrollViewMinY) {
-                contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x, Mathf.Abs(selectedRectTransform.anchoredPosition.y));
+                Debug.Log("yep");
+                contentPanel.anchoredPosition =
+                    new Vector2(contentPanel.anchoredPosition.x, Mathf.Abs(selectedRectTransform.anchoredPosition.y)
+                    - (selectedRectTransform.rect.height / 2));
             }
+            // If the selected position is above the current upper bound of the scroll view we scroll up.
+            /*else if (Mathf.Abs(selectedRectTransform.anchoredPosition.y) < scrollViewMinY) {
+                contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x, Mathf.Abs(selectedRectTransform.anchoredPosition.y));
+            }*/
     
             lastSelected = selected;
         }

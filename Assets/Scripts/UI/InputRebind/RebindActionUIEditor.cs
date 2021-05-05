@@ -61,6 +61,7 @@ namespace ThePackt
 
             // UI section.
             EditorGUILayout.Space();
+            EditorGUILayout.LabelField("PlayerInput");
             EditorGUILayout.LabelField(m_UILabel, Styles.boldLabel);
             using (new EditorGUI.IndentLevelScope())
             {
