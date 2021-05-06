@@ -16,6 +16,17 @@ namespace ThePackt{
         [SerializeField] private CharacterSelectionData _selectedData;
         [SerializeField] private GameObject _tooltip;
 
+        #region searching tooltip
+        [SerializeField] private GameObject _searchingTooltip;
+        [SerializeField] private Text _searchingTooltipErrorText;
+        [SerializeField] private Text _searchingTooltipFindText;
+
+        [SerializeField] private Button _searchingTooltipCancelButton;
+        [SerializeField] private Button _searchingTooltipGotItTButton;
+        private string _searchingTooltipErrorMessage;
+
+        #endregion
+
         [SerializeField] private EventSystem _eventSystem;
         [SerializeField] private LogoOnCharSelection _logoHandler;
         [SerializeField] private int _maxConnectionTentatives;
@@ -30,6 +41,8 @@ namespace ThePackt{
 
         private bool _tryingToConnect;
         private bool _canceled;
+
+        
         #endregion
 
         #region methods
@@ -84,6 +97,9 @@ namespace ThePackt{
                 
             }
             //Debug.Log("sessions : "+)
+            _searchingTooltipFindText.text = "Looking For A Game...";
+            _searchingTooltip.SetActive(true);
+             ChangeSelectedElement(_searchingTooltipCancelButton.gameObject);
 
             _canceled = false;
             _tryingToConnect = false;
@@ -159,6 +175,7 @@ namespace ThePackt{
 
                     if (photonSession.Source == UdpSessionSource.Photon && !_triedSessions.Contains(session.Key))
                     {
+                        _searchingTooltipFindText.text = "Game Found...";
                         BoltMatchmaking.JoinSession(photonSession, null);
                         _triedSessions.Add(session.Key);
                         break;
@@ -168,7 +185,14 @@ namespace ThePackt{
             else
             {
                 Debug.Log("[CONNECTIONLOG] no sessions");
+                _searchingTooltipErrorMessage ="There aren't sessions, please host a new one";
+                _searchingTooltipFindText.gameObject.SetActive(false);
+                _searchingTooltipCancelButton.gameObject.SetActive(false);
+                _searchingTooltipGotItTButton.gameObject.SetActive(true);
+                ChangeSelectedElement(_searchingTooltipGotItTButton.gameObject);
 
+                _searchingTooltipErrorText.text = _searchingTooltipErrorMessage;
+                _searchingTooltipErrorText.gameObject.SetActive(true);
                 //TODO advice the user to create his own session
             }
         }
@@ -180,7 +204,14 @@ namespace ThePackt{
                 if (_connectionTentatives >= _maxConnectionTentatives)
                 {
                     Debug.Log("[CONNECTIONLOG] max tentatives reached");
-
+                    _searchingTooltipErrorMessage ="max tentatives reached, please host a new game";
+                    _searchingTooltipFindText.gameObject.SetActive(false);
+                    _searchingTooltipCancelButton.gameObject.SetActive(false);
+                    _searchingTooltipGotItTButton.gameObject.SetActive(true);
+                    ChangeSelectedElement(_searchingTooltipGotItTButton.gameObject);
+                    _searchingTooltipErrorText.text = _searchingTooltipErrorMessage;
+                    _searchingTooltipErrorText.gameObject.SetActive(true);
+                    return;
                     //TODO advice the user to create his own session
                 }
 
@@ -199,6 +230,14 @@ namespace ThePackt{
                 {
                     Debug.Log("[CONNECTIONLOG] all sessions already tried");
                     _tryingToConnect = false;
+                    _searchingTooltipErrorMessage ="all active sessions tried withut success, please host a new one";
+                    _searchingTooltipFindText.gameObject.SetActive(false);
+                    _searchingTooltipCancelButton.gameObject.SetActive(false);
+                    _searchingTooltipGotItTButton.gameObject.SetActive(true);
+                    ChangeSelectedElement(_searchingTooltipGotItTButton.gameObject);
+                    _searchingTooltipErrorText.text = _searchingTooltipErrorMessage;
+                    _searchingTooltipErrorText.gameObject.SetActive(true);
+                    return;
                
                     //TODO advice the user to create his own session
                 }
@@ -222,7 +261,14 @@ namespace ThePackt{
             {
                 Debug.Log("[CONNECTIONLOG] no sessions");
                 _tryingToConnect = false;
-
+                _searchingTooltipErrorMessage ="There aren't sessions, please host a new one";
+                _searchingTooltipFindText.gameObject.SetActive(false);
+                _searchingTooltipCancelButton.gameObject.SetActive(false);
+                _searchingTooltipGotItTButton.gameObject.SetActive(true);
+                ChangeSelectedElement(_searchingTooltipGotItTButton.gameObject);
+                _searchingTooltipErrorText.text = _searchingTooltipErrorMessage;
+                _searchingTooltipErrorText.gameObject.SetActive(true);
+                return;
                 //TODO advice the user to create his own session
             }
         }
@@ -243,6 +289,13 @@ namespace ThePackt{
                 if (_sessionList == null)
                 {
                     Debug.Log("[CONNECTIONLOG] no sessions");
+                    _searchingTooltipErrorMessage ="There aren't sessions, please host a new one";
+                    _searchingTooltipFindText.gameObject.SetActive(false);
+                    _searchingTooltipCancelButton.gameObject.SetActive(false);
+                    _searchingTooltipGotItTButton.gameObject.SetActive(true);
+                    ChangeSelectedElement(_searchingTooltipGotItTButton.gameObject);
+                    _searchingTooltipErrorText.text = _searchingTooltipErrorMessage;
+                    _searchingTooltipErrorText.gameObject.SetActive(true);
                 }
                 else if (_tryingToConnect)
                 {
@@ -251,7 +304,13 @@ namespace ThePackt{
                 else
                 {
                     Debug.Log("[CONNECTIONLOG] all sessions already tried");
-
+                    _searchingTooltipErrorMessage ="all active sessions tried withut success, please host a new one";
+                    _searchingTooltipFindText.gameObject.SetActive(false);
+                    _searchingTooltipCancelButton.gameObject.SetActive(false);
+                    _searchingTooltipGotItTButton.gameObject.SetActive(true);
+                    ChangeSelectedElement(_searchingTooltipGotItTButton.gameObject);
+                    _searchingTooltipErrorText.text = _searchingTooltipErrorMessage;
+                    _searchingTooltipErrorText.gameObject.SetActive(true);
                     /*
                     Debug.Log("[CONNECTIONLOG] retrying after timeout");
                     _tryingToConnect = true;

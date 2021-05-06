@@ -30,6 +30,7 @@ namespace ThePackt{
         [SerializeField] private List<Text> _abilitiesDescription; //TODO change this to a single text (tooltip)
         [SerializeField] private Image _logo;
         [SerializeField] private List<CharacterShowCaseData> _characters;
+        [SerializeField] private AudioSource _audioSource;
 
         private int _currentIndex = 0;
 
@@ -73,11 +74,13 @@ namespace ThePackt{
 
         public void CharacterSelectionRight(){
             _currentIndex = _currentIndex + 1 == _characters.Count ? 0 : _currentIndex + 1;
+            _audioSource.Play();
              CharacterSelection();
         } 
 
         public void CharacterSelectionLeft(){
             _currentIndex = _currentIndex - 1 < 0 ? _characters.Count - 1 : _currentIndex - 1;
+            _audioSource.Play();
             CharacterSelection();
         }
 
