@@ -19,7 +19,9 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
+            Debug.Log("detransformatiooooooon  ishuman = "+_player.GetIsHuman());
             _player.SetIsHuman(true);
+            Debug.Log("detransformatiooooooon post ishuman = "+_player.GetIsHuman());
         }
 
         public override void Exit()

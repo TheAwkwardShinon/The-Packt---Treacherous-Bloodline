@@ -113,9 +113,11 @@ namespace ThePackt{
         public void OnTransformationInput(InputAction.CallbackContext context){
             if (context.started)
             {
-                _transformInput = true;
-                _transformInputStop = false;
-                _transformInputStartTime = Time.time;
+                if(player.GetIsHuman()){
+                    _transformInput = true;
+                    _transformInputStop = false;
+                    _transformInputStartTime = Time.time;
+                }
             }
 
             if (context.canceled)

@@ -19,6 +19,7 @@ namespace ThePackt{
         {
             base.Enter();
             _player.SetIsHuman(false);
+            _player._inputHandler.UseTransformInput();
 
         }
 
@@ -29,6 +30,7 @@ namespace ThePackt{
 
         public override void LogicUpdate()
         {
+            Debug.Log("[TRANSFORMATION STATE] trasforming...");
             base.LogicUpdate();
             _player.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfEars;
             _player.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfFace;

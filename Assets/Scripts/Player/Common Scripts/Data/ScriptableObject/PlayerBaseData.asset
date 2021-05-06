@@ -53,7 +53,7 @@ MonoBehaviour:
   experienceMultiplier: 0
   maxLifePoints: 100
   currentLifePoints: 100
-  transformStateDuration: 10
+  transformStateDuration: 30
   _startTransformationTime: 0
   humanFace: {fileID: 21300118, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
   humanHat: {fileID: 21300032, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
