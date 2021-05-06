@@ -2,24 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace ThePackt{
     public class VerticalTabGroup : MonoBehaviour
     {
         #region variables
-        [SerializeField] private List<tabButton> tabButtons;
         [SerializeField] private List<GameObject> objectsToSwap;
-        private tabButton _selectedTab;
+        public List<tabVerticalButton> tabButtons;
+        private tabVerticalButton _selectedTab;
+        
         [SerializeField] private EventSystem _eventSystem;
-        private int index = 0;
 
         #endregion
 
         #region methods
 
 
-        public void OnTabSelected(tabButton button){
+        public void Subscribe(tabVerticalButton button){
+            if(tabButtons == null)
+                tabButtons = new List<tabVerticalButton>();
+            tabButtons.Add(button);
+        }
+
+        public void OnTabSelected(tabVerticalButton button){
             _selectedTab = button;
+
             int index = button.transform.GetSiblingIndex();
             for(int i=0;i< objectsToSwap.Count;i++){
                 if(i == index){
@@ -29,16 +37,16 @@ namespace ThePackt{
                 else{
                     objectsToSwap[i].SetActive(false);
                 }
-            } 
+            }
         }
 
         private void Update(){
-            if((index = tabButtons.IndexOf(_eventSystem.currentSelectedGameObject.GetComponent<tabButton>()))!= -1)
-                OnTabSelected(_eventSystem.currentSelectedGameObject.GetComponent<tabButton>());
+            if(_selectedTab == null && tabButtons.Count > 0){
+                OnTabSelected(tabButtons[0]);
+            }
+           
         }
-
         #endregion
-
 
     }
 }

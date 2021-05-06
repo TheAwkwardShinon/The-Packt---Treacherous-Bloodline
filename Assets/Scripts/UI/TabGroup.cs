@@ -24,6 +24,8 @@ namespace ThePackt{
 
         [SerializeField] private List<Button> _firstSelectedOnTab;
 
+        [SerializeField] private AudioSource _switchtabAudio;
+
         public void Subscribe(tabButton button){
             if(tabButtons == null)
                 tabButtons = new List<tabButton>();
@@ -32,6 +34,7 @@ namespace ThePackt{
 
         public void OnTabSelected(tabButton button){
             _selectedTab = button;
+            _switchtabAudio.Play();
             ResetTabs();
             button.background.color = _tabActive;
             int index = button.transform.GetSiblingIndex();

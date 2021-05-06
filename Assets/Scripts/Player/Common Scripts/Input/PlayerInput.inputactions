@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput 1",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "Gameplay",
@@ -377,6 +377,11 @@
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }
