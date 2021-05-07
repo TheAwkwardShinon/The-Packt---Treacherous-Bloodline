@@ -16,7 +16,9 @@ namespace ThePackt
         void Start()
         {
             _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
-            
+            _mRtcEngine.SetLogFile("C:\\Users\\feder\\AppData\\Local\\Agora\\The Packt - Treacherous Bloodline");
+
+
             _mRtcEngine.EnableSoundPositionIndication(true);
 
             _mRtcEngine.OnJoinChannelSuccess += (string channelName, uint uid, int elapsed) => {

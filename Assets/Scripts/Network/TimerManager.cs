@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThePackt
 {
-    public class TimerManager : Bolt.EntityBehaviour<INetworkManagerState>
+    public class TimerManager : Bolt.EntityBehaviour<ITimerManagerState>
     {
         #region variables
         float startTime; //start time of the timer

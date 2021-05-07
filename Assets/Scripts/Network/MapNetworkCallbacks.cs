@@ -37,7 +37,7 @@ namespace ThePackt
         {
             foreach (BoltEntity ent in BoltNetwork.Entities)
             {
-                if (ent.IsOwner)
+                if (ent.IsOwner && ent.gameObject.GetComponent<Player>() != null)
                 {
                     _player = _selectedData.GetPlayerScript();
 
@@ -45,7 +45,7 @@ namespace ThePackt
                     {
                         if (assoc.name == _selectedData.GetCharacterSelected())
                         {
-                            ent.gameObject.transform.position = assoc.position;
+                            ent.gameObject.GetComponent<Rigidbody2D>().MovePosition(assoc.position);
                         }
                     }
                 }

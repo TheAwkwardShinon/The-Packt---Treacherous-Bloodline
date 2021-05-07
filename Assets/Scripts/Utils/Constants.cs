@@ -23,5 +23,12 @@ namespace ThePackt
         public const string MAP = "NetworkTestScene";
         public const string MENU = "MenuScene";
         #endregion 
+
+        #region quests
+        public const string COMPLETED = "completed";
+        public const string FAILED = "failed";
+        public const string STARTED = "started";
+        public const string READY = "ready";
+        #endregion 
     }
 }
