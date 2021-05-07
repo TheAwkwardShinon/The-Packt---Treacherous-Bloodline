@@ -54,9 +54,6 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
-            Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
-            Debug.Log("attack input state " + _attackInput);
-
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;

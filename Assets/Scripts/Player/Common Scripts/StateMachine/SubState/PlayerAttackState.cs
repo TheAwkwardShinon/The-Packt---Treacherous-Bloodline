@@ -8,7 +8,11 @@ namespace ThePackt
     public class PlayerAttackState : PlayerAbilityState
     {
         #region variables
-        public bool CanAttack { get; private set; }
+        public bool CanAttackHuman { get; private set; }
+        public bool CanAttackWerewolf { get; private set; }
+        private float _lastHumanAttackTime;
+        private float _lastWerewolfAttackTime;
+        private bool firstAttack = true;
 
         #endregion
 
@@ -26,20 +30,27 @@ namespace ThePackt
             {
                 _player._inputHandler.UseBaseAttackInput();
 
+                if (firstAttack)
+                {
+                    firstAttack = false;
+                }
+
                 if (_player.GetIsHuman())
                 {
                     Debug.Log("[ATTACK STATE] entered (base human)");
                     BaseHumanAttack();
-                    _isAbilityDone = true;
                     Debug.Log("[ATTACK STATE] ability done (base human)");
+                    _lastHumanAttackTime = Time.time;
                 }
                 else
                 {
                     Debug.Log("[ATTACK STATE] entered (base werewolf)");
                     BaseWereWolfAttack();
-                    _isAbilityDone = true;
                     Debug.Log("[ATTACK STATE] ability done (base werewolf)");
+                    _lastWerewolfAttackTime = Time.time;
                 }
+
+                _isAbilityDone = true;
             }
         }
 
@@ -144,11 +155,18 @@ namespace ThePackt
 
         public bool CheckIfCanAttack()
         {
-            //da impostare in base ai vari cooldown
-            return true;
+            return _player.GetIsHuman() ? CheckIfCanAttackHuman() : CheckIfCanAttackWerewolf();
         }
 
-        public void ResetCanAttack() => CanAttack = true;
+        public bool CheckIfCanAttackHuman()
+        {
+            return firstAttack || Time.time >= _lastHumanAttackTime + _player.GetPlayerData().baseHumanCooldown;
+        }
+
+        public bool CheckIfCanAttackWerewolf()
+        {
+            return firstAttack || Time.time >= _lastWerewolfAttackTime + _player.GetPlayerData().baseWerewolfCooldown;
+        }
 
         #endregion
     }
