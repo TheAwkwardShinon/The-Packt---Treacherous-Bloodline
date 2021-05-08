@@ -140,6 +140,7 @@ namespace ThePackt{
             else
             {
                 _inputHandler = GetComponent<newInputHandler>();
+                Camera.main.GetComponent<CameraFollow>().SetFollowTransform(transform);
             }
 
             _playerData.currentLifePoints = _playerData.maxLifePoints;

@@ -45,6 +45,7 @@ namespace ThePackt
                         if (assoc.name == _selectedData.GetCharacterSelected())
                         {
                             ent.gameObject.transform.position = assoc.position;
+                            Camera.main.GetComponent<CameraFollow>().SetFollowTransform(ent.gameObject.transform);
                         }
                     }
                 }

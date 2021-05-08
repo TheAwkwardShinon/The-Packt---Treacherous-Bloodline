@@ -1342,6 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4899862c1e84b84484aa8e594afd062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   enemyPrefabs:
   - name: base
     prefab: {fileID: 3755408236902585520, guid: fe6c4c0654c55a1418849ccdca3ddcf4, type: 3}
@@ -1359,7 +1360,6 @@ MonoBehaviour:
     position: {x: -4, y: 0, z: 0}
   - name: fele
     position: {x: 0, y: 0, z: 0}
-  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   _timeManagerPrefab: {fileID: 8079289482650668179, guid: da2ff5b9b865e91408486249936367e3, type: 3}
 --- !u!4 &660737707
 Transform:
@@ -3642,6 +3642,7 @@ GameObject:
   - component: {fileID: 1915659263}
   - component: {fileID: 1915659261}
   - component: {fileID: 1915659262}
+  - component: {fileID: 1915659264}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3714,6 +3715,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1915659264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915659260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f79081dc522d47b336a91d86de2cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _yOffset: 2
 --- !u!1 &1936086461
 GameObject:
   m_ObjectHideFlags: 0

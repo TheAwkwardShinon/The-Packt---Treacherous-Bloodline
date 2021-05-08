@@ -24,7 +24,7 @@ namespace ThePackt
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
         {
-            //put black screen here
+            //put black screen here and remove it when the menu scene has loaded
 
             registerDoneCallback(() =>
             {
