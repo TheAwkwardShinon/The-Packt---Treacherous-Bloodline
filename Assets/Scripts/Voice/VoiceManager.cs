@@ -15,8 +15,12 @@ namespace ThePackt
         // Start is called before the first frame update
         void Start()
         {
+            /*
+            Debug.Log("[VOICE] engine creating");
             _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
-            _mRtcEngine.SetLogFile("C:\\Users\\feder\\AppData\\Local\\Agora\\The Packt - Treacherous Bloodline");
+            IRtcEngine.Destroy();
+            _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
+            //_mRtcEngine.SetLogFile("C:\\Users\\feder\\AppData\\Local\\Agora\\The Packt - Treacherous Bloodline");
 
 
             _mRtcEngine.EnableSoundPositionIndication(true);
@@ -37,6 +41,7 @@ namespace ThePackt
             };
 
             _mRtcEngine.JoinChannel(channelName, "", 0);
+            */
         }
 
         // Update is called once per frame

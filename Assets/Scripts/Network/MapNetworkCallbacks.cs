@@ -45,7 +45,7 @@ namespace ThePackt
                     {
                         if (assoc.name == _selectedData.GetCharacterSelected())
                         {
-                            ent.gameObject.GetComponent<Rigidbody2D>().MovePosition(assoc.position);
+                            ent.gameObject.transform.position = assoc.position;
                         }
                     }
                 }
