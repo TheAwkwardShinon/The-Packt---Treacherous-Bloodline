@@ -11,7 +11,6 @@ namespace ThePackt
         public Utils.PrefabAssociation[] enemyPrefabs;
         public Vector2 enemySpawnPos;
         public Utils.VectorAssociation[] playersSpawnPositions;
-        [SerializeField] private CharacterSelectionData _selectedData;
         [SerializeField] private GameObject _timeManagerPrefab;
         private Player _player;
 

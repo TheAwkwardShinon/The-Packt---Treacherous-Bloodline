@@ -10,10 +10,9 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 namespace ThePackt{
-    public class PlayMenuCallbacks : GlobalEventListener
+    public class PlayMenuCallbacks : NetworkCallbacks
     {
         #region variables
-        [SerializeField] private CharacterSelectionData _selectedData;
         [SerializeField] private GameObject _tooltip;
 
         #region searching tooltip

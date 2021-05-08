@@ -9,7 +9,6 @@ namespace ThePackt
 {
     public class LobbyNetworkCallbacks : NetworkCallbacks
     {
-        [SerializeField] private CharacterSelectionData _selectedData;
         public Utils.PrefabAssociation[] playerPrefabs;
         public Vector2 playerSpawnPos;
         private Player _player;
