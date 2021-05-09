@@ -45,6 +45,8 @@ namespace ThePackt{
         public float powerBaseWerewolf = 10f;
         public float rangeBaseWerewolf = 0.35f;
         public float powerBaseHuman = 10f;
+        public float baseHumanCooldown = 0.5f;
+        public float baseWerewolfCooldown = 0.5f;
 
         [Header("Layer masks")]
         public LayerMask whatIsGround;

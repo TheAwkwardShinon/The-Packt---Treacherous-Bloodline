@@ -29,8 +29,6 @@ namespace ThePackt {
                 Debug.Log("[NETWORKLOG] server disconnecting");
 
                 BoltNetwork.Shutdown();
-
-                SceneManager.LoadScene("MenuScene");
             }
             else
             {

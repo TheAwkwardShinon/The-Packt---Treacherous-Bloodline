@@ -16,8 +16,13 @@ namespace ThePackt
         void Start()
         {
             /*
+            Debug.Log("[VOICE] engine creating");
             _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
-            
+            IRtcEngine.Destroy();
+            _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
+            //_mRtcEngine.SetLogFile("C:\\Users\\feder\\AppData\\Local\\Agora\\The Packt - Treacherous Bloodline");
+
+
             _mRtcEngine.EnableSoundPositionIndication(true);
 
             _mRtcEngine.OnJoinChannelSuccess += (string channelName, uint uid, int elapsed) => {
@@ -35,7 +40,8 @@ namespace ThePackt
                 Debug.Log(userJoinedMessage);
             };
 
-            _mRtcEngine.JoinChannel(channelName, "", 0);*/
+            _mRtcEngine.JoinChannel(channelName, "", 0);
+            */
         }
 
         // Update is called once per frame

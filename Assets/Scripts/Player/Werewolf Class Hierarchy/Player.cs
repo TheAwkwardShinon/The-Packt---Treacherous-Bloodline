@@ -47,6 +47,7 @@ namespace ThePackt{
         protected bool weakActive = false;
         protected bool mediumActive = false;
         protected bool attackModifier = false;
+        protected bool hasActiveQuest = false;
 
         protected bool passive1 = false;
         protected bool passive2 = false;
@@ -83,7 +84,9 @@ namespace ThePackt{
         #endregion
 
         #region other
-
+        protected Quest _activeQuest;
+        protected float _spendableExp = 0;
+        protected float _spendableTime = 0;
         #endregion
 
         #endregion
@@ -137,6 +140,7 @@ namespace ThePackt{
             else
             {
                 _inputHandler = GetComponent<newInputHandler>();
+                Camera.main.GetComponent<CameraFollow>().SetFollowTransform(transform);
             }
 
             _playerData.currentLifePoints = _playerData.maxLifePoints;
@@ -254,9 +258,20 @@ namespace ThePackt{
             }
         }
 
+        public void ObtainRewards(float exp, float time)
+        {
+            Debug.Log("[QUEST] rewards obtained. Exp: " + exp + ", Time: " + time);
+            _spendableTime += time;
+            _spendableExp += exp;
+
+            _activeQuest = null;
+            hasActiveQuest = false;
+        }
+
         private void Die()
         {
             BoltNetwork.Destroy(gameObject);
+            AbandonQuest();
         }
         #endregion
 
@@ -338,6 +353,43 @@ namespace ThePackt{
             }
         }
 
+        #endregion
+
+        #region others
+
+        private void AcceptQuest(Quest quest)
+        {
+            if (!hasActiveQuest)
+            {
+                Debug.Log("[QUEST] player accepted the quest " + quest._title);
+                quest.Accept();
+            }
+        }
+
+        public void JoinQuest(Quest quest)
+        {
+            if (!hasActiveQuest && entity.IsOwner)
+            {
+                _activeQuest = quest;
+                hasActiveQuest = true;
+                quest.LocalPartecipate(this);
+
+                Debug.Log("[QUEST] player joined the quest " + quest._title);
+            }
+        }
+
+        private void AbandonQuest()
+        {
+            if (hasActiveQuest)
+            {
+                _activeQuest.Abandon(entity);
+                _activeQuest = null;
+                hasActiveQuest = false;
+
+                Debug.Log("[QUEST] player abandoned the quest " + _activeQuest._title);
+            }
+        }
+
         /* method that flips the player */
         private void Flip()
         {
@@ -345,7 +397,6 @@ namespace ThePackt{
             transform.Rotate(0.0f, 180.0f, 0.0f);
             canvas.transform.rotation = Quaternion.identity;
         }
-
         #endregion
 
 

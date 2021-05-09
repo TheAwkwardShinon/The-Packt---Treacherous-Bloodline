@@ -163,7 +163,6 @@ namespace ThePackt{
                     _attackInputs[Constants.BASE] = true;
                     _attackInputsStop[Constants.BASE] = false;
                     _attackInputsStartTime[Constants.BASE] = Time.time;
-                    Debug.Log("aaaaaa base attack input");
                 }
             }
             else if (context.canceled)
@@ -240,7 +239,7 @@ namespace ThePackt{
 
             _attackDirectionInput = context.ReadValue<Vector2>();
 
-            //da aggiungere quando funzioner� input sul mouse
+            //da aggiungere quando funzionerà input sul mouse
             /*
             if (playerInputComponent.currentControlScheme == "Keyboard")
             {

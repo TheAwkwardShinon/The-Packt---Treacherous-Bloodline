@@ -34,6 +34,8 @@ MonoBehaviour:
   powerBaseWerewolf: 10
   rangeBaseWerewolf: 0.35
   powerBaseHuman: 10
+  baseHumanCooldown: 0.5
+  baseWerewolfCooldown: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

@@ -10,6 +10,7 @@ namespace ThePackt{
         private string _characterSelected = "none";
         private string _playerNickname = "none";
         private Player _playerScript = null;
+        private string _disconnectReason = null;
 
         public string GetCharacterSelected(){
             return _characterSelected;
@@ -17,6 +18,16 @@ namespace ThePackt{
 
         public string GetNickname(){
             return _playerNickname;
+        }
+
+        public string GetDisconnectReason()
+        {
+            return _disconnectReason;
+        }
+
+        public Player GetPlayerScript()
+        {
+            return _playerScript;
         }
 
         public void SetNickname(string name){
@@ -27,14 +38,14 @@ namespace ThePackt{
             _characterSelected = character;
         }
 
-        public Player GetPlayerScript()
-        {
-            return _playerScript;
-        }
-
         public void SetPlayerScript(Player value)
         {
             _playerScript = value;
+        }
+
+        public void SetDisconnectReason(string value)
+        {
+            _disconnectReason = value;
         }
 
 
@@ -42,6 +53,7 @@ namespace ThePackt{
             _characterSelected = "none";
             _playerNickname = "none";
             _playerScript = null;
+            _disconnectReason = null;
         }
     }
 }
