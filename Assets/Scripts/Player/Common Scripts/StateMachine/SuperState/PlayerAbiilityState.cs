@@ -9,6 +9,7 @@ namespace ThePackt{
 
         private bool _isGrounded;
 
+
         public PlayerAbilityState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
         {
         }
@@ -38,12 +39,19 @@ namespace ThePackt{
             
             if (_isAbilityDone)
             {
-                if (_isGrounded && _player._currentVelocity.y < 0.01f)
+               /* if(_detransformationInput && !_player.GetIsHuman()){
+                  Debug.LogError("[ABILITY STATE] --> detransform ");
+                  _stateMachine.ChangeState(_player._detransformationState);
+                  
+                }
+                else */if (_isGrounded && _player._currentVelocity.y < 0.01f)
                 {
+                     Debug.LogError("[ABILITY STATE] ----> IDLE");
                     _stateMachine.ChangeState(_player._idleState);
                 }
                 else
                 {
+                    Debug.LogError("[ABILITY STATE] ----> InAir");
                     _stateMachine.ChangeState(_player._inAirState);
                 }
             }

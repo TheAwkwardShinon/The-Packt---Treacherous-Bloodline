@@ -44,27 +44,26 @@ namespace ThePackt{
             {
                 _player.SetVelocityY(_player._currentVelocity.y * _player.GetPlayerData().dashEndYMultiplier);
             }
+
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            Debug.Log("[DASH STATE] performing dash");
+//
+           // Debug.Log("[DASH STATE] performing dash");
             //_player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
             //_player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
             _player.state.yVelocity = _player._currentVelocity.y;
-            _player.state.xVelocity = Mathf.Abs(_player._currentVelocity.x);
+            //_player.state.xVelocity = Mathf.Abs(_player._currentVelocity.x);
             _dashDirection = Vector2.right * _player._facingDirection;
             _dashDirection.Normalize();
             _player.CheckIfShouldFlip(Mathf.RoundToInt(_dashDirection.x));
-            _player.SetRigidBodyDrag(_player.GetPlayerData().drag);
             _player.SetVelocity(_player.GetPlayerData().dashVelocity, _dashDirection);
             if (Time.time >= _startTime + _player.GetPlayerData().dashTime)
             {
-                Debug.Log("[DASH STATE] ability done");
-                _player.SetRigidBodyDrag(0f);
                 _isAbilityDone = true;
+                _player.SetVelocity(0f, _dashDirection);
                 _lastDashTime = Time.time;
             }
            

@@ -17,6 +17,8 @@ namespace ThePackt{
 
         protected bool _isExitingState;
 
+        protected bool _detransformationInput = false;
+
         
         public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName){
             _player = player;
@@ -44,17 +46,12 @@ namespace ThePackt{
 
          public virtual void LogicUpdate()
         {
-            if(!_player.GetIsHuman())
-                if(Time.time > _player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration){
-                    Debug.Log("time = "+Time.time+" startTime + transformduration = "+
-                        _player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration);
-                    _player._stateMachine.ChangeState(_player._detransformationState);
-                }
+            Checks();
         }
 
         public virtual void PhysicsUpdate()
         {
-            Checks();
+            
         }
 
 
@@ -64,7 +61,16 @@ namespace ThePackt{
 
        
         public virtual void Checks(){
-
+           /*Debug.LogWarning("detarnsformation input = "+_detransformationInput +"is human = "+_player.GetIsHuman()+"time = "+Time.time+" startTime + transformduration = "+
+                        (_player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration)+ " startime = "+_player.GetPlayerData()._startTransformationTime);*/
+            if(!_player.GetIsHuman()){
+                if(Time.time > _player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration){
+                    //Debug.LogError("time = "+Time.time+" startTime + transformduration = "+
+                        //_player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration+ " startime = "+_player.GetPlayerData()._startTransformationTime);
+                    //_player._stateMachine.ChangeState(_player._detransformationState);
+                    _detransformationInput = true;
+                }
+            }
         }
 
         protected void SetAnimatorBools(bool value)

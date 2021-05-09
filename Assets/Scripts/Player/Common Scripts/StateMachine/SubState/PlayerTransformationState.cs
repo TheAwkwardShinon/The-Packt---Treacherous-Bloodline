@@ -18,28 +18,31 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            _player.SetIsHuman(false);
+            Debug.LogError("TRANSFORMATION : ABILITY START");
+          
             _player._inputHandler.UseTransformInput();
 
-        }
-
-        public override void Exit()
-        {
-            base.Exit();
-        }
-
-        public override void LogicUpdate()
-        {
-            Debug.Log("[TRANSFORMATION STATE] trasforming...");
-            base.LogicUpdate();
             _player.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfEars;
             _player.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfFace;
             _player.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfBody;
             _player.transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfArms;
             _player.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfArms;
 
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            
+            Debug.LogError("TRANSFORMATION : ABILITY DONE");
+        }
+
+        public override void LogicUpdate()
+        {
+            base.LogicUpdate();
+           
+
             if(Time.time > _startTime + _transformationTime){
-                _player.GetPlayerData()._startTransformationTime = Time.time;
                 _isAbilityDone = true;
             }
 

@@ -68,7 +68,7 @@
                 },
                 {
                     "name": "WASD",
-                    "id": "a7251688-11ae-42b4-ad1b-8248d40c581d",
+                    "id": "95bab8db-78f0-4ed4-9a72-9c1ee7b261f6",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -78,8 +78,19 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "down",
+                    "id": "81c041b8-05d0-41ec-808f-6526b1381395",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "left",
-                    "id": "e75d7b66-087a-4107-8632-e78c30fee5e1",
+                    "id": "b1cf5651-66f4-434b-b50b-36277b9fcddd",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -90,7 +101,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "422431cd-69ba-43b9-ac94-77993443e4bc",
+                    "id": "3452d1c1-db97-4085-a6a7-9a2971099310",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",

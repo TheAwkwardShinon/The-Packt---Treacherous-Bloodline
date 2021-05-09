@@ -18,11 +18,17 @@ namespace ThePackt{
             base.Enter();
             _player._inputHandler.UseJumpInput();
             _player.SetVelocityY(_player.GetPlayerData().jumpVelocity);
-            _isAbilityDone = true;
             Debug.Log("[JUMP STATE] entered + number of jump left before perform this: "+amountOfJumpsLeft);
             amountOfJumpsLeft--;
             Debug.Log("[JUMP STATE] numebr of jump left after this jump = "+ amountOfJumpsLeft);
             _player._inAirState.SetIsJumping();
+            _isAbilityDone = true;
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            _player._jumpState.ResetAmountOfJumpsLeft();
         }
 
         public override void LogicUpdate()

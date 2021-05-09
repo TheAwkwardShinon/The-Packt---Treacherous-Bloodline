@@ -12,13 +12,10 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
-            if (!_isExitingState)
-            {
+
                 _player.SetVelocityY(_player.GetPlayerData().wallSlideVelocity);
-                if(_player.CheckIfGrounded())
+                if(_player.CheckIfGrounded() || _player.CheckIfGroundedOnEnemy() || _player.CheckIfGroundOnOtherPlayer()) 
                     _stateMachine.ChangeState(_player._idleState);
-                
-            }
         
         }
         public override void PhysicsUpdate()

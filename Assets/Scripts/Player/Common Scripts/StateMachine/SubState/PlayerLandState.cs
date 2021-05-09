@@ -22,8 +22,6 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            Debug.Log("[LAND STATE] wait to understand what state will be, idle or move?");
-            
                 if (_xInput != 0)
                 {
                     Debug.Log("[LAND STATE] changing to move state...");

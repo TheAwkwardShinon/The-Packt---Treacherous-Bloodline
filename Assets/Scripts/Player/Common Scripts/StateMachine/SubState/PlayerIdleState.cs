@@ -36,11 +36,11 @@ namespace ThePackt{
         }
 
         public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-
-        if (!_isExitingState)
         {
+            base.LogicUpdate();
+
+            //Debug.LogWarning("[IDLE STATE] WAIT TO CHANGE STATE.....");
+
             if (_xInput != 0)
             {
                 _stateMachine.ChangeState(_player._moveState);
@@ -48,9 +48,8 @@ namespace ThePackt{
             else if (_yInput == -1)
             {
                 _stateMachine.ChangeState(_player._crouchIdleState);
-            }
-        }       
-        
-    }
+            }   
+
+        }
     }
 }

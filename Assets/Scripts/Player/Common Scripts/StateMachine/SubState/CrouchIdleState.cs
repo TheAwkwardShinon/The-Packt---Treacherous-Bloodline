@@ -52,7 +52,6 @@ namespace ThePackt{
                 }
                 else if(_yInput != -1 && !_isTouchingCeiling)
                 {
-                    Debug.Log("yinput = "+_yInput);
                     _stateMachine.ChangeState(_player._idleState);
                 }
             } 

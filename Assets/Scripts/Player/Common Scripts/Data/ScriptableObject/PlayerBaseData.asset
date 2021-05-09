@@ -17,12 +17,12 @@ MonoBehaviour:
   amountOfJumps: 1
   coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.5
-  wallSlideVelocity: 3
+  wallSlideVelocity: -3
   dashCooldown: 0.5
   maxHoldTime: 1
   holdTimeScale: 0.25
   dashTime: 0.2
-  dashVelocity: 12
+  dashVelocity: 20
   drag: 5
   dashEndYMultiplier: 0.15
   distBetweenAfterImages: 0.5
@@ -46,6 +46,12 @@ MonoBehaviour:
   whatIsLedge:
     serializedVersion: 2
     m_Bits: 0
+  WhatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  WhatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   ceilingCheckRadius: 0.3
   groundCheckRadius: 0.1
   wallCheckDistance: 0.5
@@ -53,7 +59,7 @@ MonoBehaviour:
   experienceMultiplier: 0
   maxLifePoints: 100
   currentLifePoints: 100
-  transformStateDuration: 30
+  transformStateDuration: 10
   _startTransformationTime: 0
   humanFace: {fileID: 21300118, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
   humanHat: {fileID: 21300032, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}

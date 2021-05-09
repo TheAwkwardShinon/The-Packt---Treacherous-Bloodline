@@ -40,8 +40,6 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("[GROUNDED STATE] numero salti resettato a 1");
-            _player._jumpState.ResetAmountOfJumpsLeft();
             _player._dashState.ResetCanDash(); //todo usless line
         }
 
@@ -54,8 +52,8 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
-            Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
-            Debug.Log("attack input state " + _attackInput);
+           // Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
+            //Debug.Log("attack input state " + _attackInput);
 
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
@@ -67,27 +65,35 @@ namespace ThePackt{
             _isTouchingCeiling = _player.CheckForCeiling();
             _isGrounded = _player.CheckIfGrounded();
 
-            if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling)
+            if(_detransformationInput && !_player.GetIsHuman()){
+                Debug.LogError("[GROUNDED STATE] -->  detransformation");
+                _player.SetIsHuman(true);
+                _detransformationInput = false;
+                 _stateMachine.ChangeState(_player._detransformationState);
+            }
+            else if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling)
             {
-                Debug.Log("[GROUNDED STATE] player pushing to jump, player is grounded -> "+_isGrounded+" and can jump so passing to jump state...");
+                Debug.LogError("[GROUNDED STATE] -->  jump");
                 _stateMachine.ChangeState(_player._jumpState);
             }else if (!_isGrounded)
             {
-                Debug.Log("[GROUNDED STATE] dunno wht, but the player is no more on the ground. changing state to on air ... ");
+                Debug.LogError("[GROUNDED STATE] -->  inAir");
                 _stateMachine.ChangeState(_player._inAirState);
             }
             else if (_dashInput && _player._dashState.CheckIfCanDash())
             {
-                Debug.Log("[GROUNDED STATE] palyer is pushing space so he is wanna dash. changing to dash state...");
+                Debug.LogError("[GROUNDED STATE] -->  dash");
                 _stateMachine.ChangeState(_player._dashState);
             }
             else if (_attackInput && _player._attackState.CheckIfCanAttack())
             {
-                Debug.Log("[GROUNDED STATE] player can attack and player is pressing left mouse, entering in attack state... ");
+                Debug.LogError("[GROUNDED STATE] -->  attack");
                 _stateMachine.ChangeState(_player._attackState);
             }
             else if(_transformInput && _player.GetIsHuman()){
-                 Debug.Log("[GROUNDED STTE] player is human and wants to transform ");
+                Debug.LogError("[GROUNDED STATE] -->  transform");
+                _player.GetPlayerData()._startTransformationTime = Time.time;
+                _player.SetIsHuman(false);
                  _stateMachine.ChangeState(_player._transformState);
             }
         }

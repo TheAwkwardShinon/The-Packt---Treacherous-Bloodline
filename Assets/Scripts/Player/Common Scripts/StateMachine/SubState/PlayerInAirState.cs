@@ -36,7 +36,6 @@ namespace ThePackt{
         public override void Checks()
         {
             base.Checks();
-            Debug.Log("[PLAYER IS IN AIR] IN CHECKS(), CHECKING IS GROUNDED");
             _isGrounded = _player.CheckIfGrounded();
             _isTouchingWall = _player.CheckIfTouchingWall();
             
@@ -67,18 +66,24 @@ namespace ThePackt{
             _dashInput = _player._inputHandler._dashInput;
             _transformationInput = _player._inputHandler._transformInput;
             _isGrounded = _player.CheckIfGrounded();
-            Debug.Log("[PLAYER IS IN AIR] is grounded: "+_isGrounded);
+           
 
             CheckJumpMultiplier();
-
-            if (_isGrounded && _player._currentVelocity.y < 0.01f)
+            if(_detransformationInput && !_player.GetIsHuman()){
+                 Debug.LogErrorFormat("[IN AIR STATE] ----> detransform");
+                 _player.SetIsHuman(true);
+                 _detransformationInput = false;
+                 _stateMachine.ChangeState(_player._detransformationState);
+            }
+            else if (_isGrounded && _player._currentVelocity.y < 0.01f)
             {        
-                Debug.Log("[PLAYER IS IN AIR] seems that is grounded: "+_isGrounded + " so changing state to Land state...");    
+                 Debug.LogErrorFormat("[IN AIR STATE] ----> land");
+                 _player._jumpState.ResetAmountOfJumpsLeft();
                 _stateMachine.ChangeState(_player._landState);
             }
-            else if(_jumpInput && _player._jumpState.CanJump())
+            else if(_jumpInput && _player._jumpState.CanJump() && _isGrounded)
             {
-                Debug.Log("[PLAYER IS IN AIR] player can jump, entering in jump state... ");
+                 Debug.LogErrorFormat("[IN AIR STATE] ----> jump");
                 _stateMachine.ChangeState(_player._jumpState); //if more jump can be done
             }
             else if(_isTouchingWall && _xInput == _player._facingDirection && _player._currentVelocity.y <= 0)
@@ -87,21 +92,23 @@ namespace ThePackt{
             }
             else if(_dashInput && _player._dashState.CheckIfCanDash())
             {
-                Debug.Log("[PLAYER IS IN AIR] player can dash and player is pressing pace, entering in dash state... ");
+                 Debug.LogErrorFormat("[IN AIR STATE] ----> dash");
                 _stateMachine.ChangeState(_player._dashState);
             }
             else if (_attackInput && _player._attackState.CheckIfCanAttack())
             {
-                Debug.Log("[PLAYER IS IN AIR] player can attack and player is pressing left mouse, entering in attack state... ");
+                 Debug.LogErrorFormat("[IN AIR STATE] ----> attack");
                 _stateMachine.ChangeState(_player._attackState);
             }
             else if(_transformationInput && _player.GetIsHuman()){
-                 Debug.Log("[PLAYER IS IN AIR] player is human and wants to transform ");
+                 Debug.LogErrorFormat("[IN AIR STATE] ----> transformation");
+                 _player.GetPlayerData()._startTransformationTime = Time.time;
+                 _player.SetIsHuman(false);
                  _stateMachine.ChangeState(_player._transformState);
             }
             else
             {
-                Debug.Log("[PLAYER IS IN AIR] no input from palyer, just falling, waiting to land");
+                //Debug.Log("[PLAYER IS IN AIR] no input from palyer, just falling, waiting to land");
                 _player.CheckIfShouldFlip(_xInput);
                 _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
 

@@ -115,12 +115,12 @@ namespace ThePackt{
 
         // executed when the player prefab is instatiated (quite as Start())
         public override void Attached()
-        {
+        {/*
             if(entity.IsOwner)
-                Debug.Log("[NETWORKLOG] my network id: " + entity.NetworkId);
+               Debug.Log("[NETWORKLOG] my network id: " + entity.NetworkId);
             else
                 Debug.Log("[NETWORKLOG] other network id: " + entity.NetworkId);
-
+*/
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
@@ -247,7 +247,7 @@ namespace ThePackt{
         #region stats modification
         public void ApplyDamage(float damage)
         {
-            Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
+            //Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
             if (entity.IsOwner)
             {
                 state.Health -= damage;
@@ -266,7 +266,7 @@ namespace ThePackt{
         private void HealthCallback()
         {
             _playerData.currentLifePoints = state.Health;
-            Debug.Log("[HEALTH] callback. Owner: " + entity.IsOwner + " New currentLifePoints: " + _playerData.currentLifePoints);
+            //Debug.Log("[HEALTH] callback. Owner: " + entity.IsOwner + " New currentLifePoints: " + _playerData.currentLifePoints);
             //Debug.Log("[HEALTH] callback. Slider of " + healthSlider.gameObject.transform.parent.gameObject.transform.parent.gameObject.name);
 
             healthSlider.value = _playerData.currentLifePoints;
@@ -274,7 +274,7 @@ namespace ThePackt{
 
             if (entity.IsOwner && _playerData.currentLifePoints <= 0)
             {
-                Debug.Log("[HEALTH] dead");
+                //Debug.Log("[HEALTH] dead");
                 Die();
             }
         }
@@ -282,7 +282,7 @@ namespace ThePackt{
         private void NicknameCallback()
         {
             nicknameText.text = state.Nickname;
-            Debug.Log("[NICKNAME] callback: " + nicknameText.text);
+            //Debug.Log("[NICKNAME] callback: " + nicknameText.text);
         }
         #endregion
 
@@ -300,6 +300,21 @@ namespace ThePackt{
         {   
             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
             return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
+        }
+
+        public bool CheckIfGroundOnOtherPlayer(){
+            _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
+            Collider2D col = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, 
+                _playerData.WhatIsPlayer);
+            if(col.gameObject != gameObject)
+                return true;
+            else return false;
+        }
+
+        public bool CheckIfGroundedOnEnemy(){
+             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
+              return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, 
+                _playerData.WhatIsEnemy);
         }
 
         /* method that returns true if the player is touching a wall (in the direction that he's facing), false instead */

@@ -52,6 +52,9 @@ namespace ThePackt{
         public LayerMask whatIsWall;
         public LayerMask whatIsLedge;
 
+        public LayerMask WhatIsPlayer;
+        public LayerMask WhatIsEnemy;
+
         public float ceilingCheckRadius = 0.3f;
         public float groundCheckRadius = 0.3f;
         public float wallCheckDistance = 0.5f;

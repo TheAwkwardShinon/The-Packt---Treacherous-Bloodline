@@ -15,6 +15,7 @@ namespace ThePackt
         // Start is called before the first frame update
         void Start()
         {
+            /*
             _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
             
             _mRtcEngine.EnableSoundPositionIndication(true);
@@ -34,7 +35,7 @@ namespace ThePackt
                 Debug.Log(userJoinedMessage);
             };
 
-            _mRtcEngine.JoinChannel(channelName, "", 0);
+            _mRtcEngine.JoinChannel(channelName, "", 0);*/
         }
 
         // Update is called once per frame
