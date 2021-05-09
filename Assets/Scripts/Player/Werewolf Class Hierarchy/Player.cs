@@ -372,24 +372,27 @@ namespace ThePackt{
             {
                 _activeQuest = quest;
                 hasActiveQuest = true;
-                quest.LocalPartecipate(this);
+                quest.LocalPartecipate();
 
                 Debug.Log("[QUEST] player joined the quest " + quest._title);
+
+                //TODO show quest UI
             }
         }
 
-        private void AbandonQuest()
+        public void AbandonQuest()
         {
             if (hasActiveQuest)
             {
-                _activeQuest.Abandon(entity);
                 _activeQuest = null;
                 hasActiveQuest = false;
 
                 Debug.Log("[QUEST] player abandoned the quest " + _activeQuest._title);
+
+                //TODO remove quest UI
             }
         }
-
+  
         /* method that flips the player */
         private void Flip()
         {

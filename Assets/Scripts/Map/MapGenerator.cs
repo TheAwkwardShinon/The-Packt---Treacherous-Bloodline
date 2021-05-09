@@ -29,9 +29,9 @@ public class MapGenerator : MonoBehaviour
                 nRooms--;
 
                 BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
-
-                BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
             }
+
+            BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
         }
         
     }

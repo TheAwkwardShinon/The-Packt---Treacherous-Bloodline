@@ -5651,6 +5651,40 @@
       "Name": "QuestAbandonedEvent",
       "Guid": "143fe21a-ba54-4809-a7be-091d6cc23807",
       "Groups": []
+    },
+    {
+      "$type": "Bolt.Compiler.EventDefinition, bolt.compiler",
+      "Properties": [
+        {
+          "Name": "QuestNetworkID",
+          "Enabled": true,
+          "Expanded": true,
+          "ReplicationMode": 1,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeNetworkId, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyEventSettings, bolt.compiler"
+          }
+        },
+        {
+          "Name": "JoiningPlayerNetworkID",
+          "Enabled": true,
+          "Expanded": true,
+          "ReplicationMode": 1,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeNetworkId, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyEventSettings, bolt.compiler"
+          }
+        }
+      ],
+      "Name": "QuestJoinedEvent",
+      "Guid": "bf0d01be-a584-4148-8e9a-2a3850de5e87",
+      "Groups": []
     }
   ],
   "ActiveGroup": "Everything"
