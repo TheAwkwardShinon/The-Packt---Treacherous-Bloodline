@@ -153,7 +153,7 @@ MonoBehaviour:
   _expReward: 15
   _timeReward: 0
   _cooldown: 0
-  _enemyPrefab: {fileID: 3755408236902585520, guid: fe6c4c0654c55a1418849ccdca3ddcf4, type: 3}
+  _enemyPrefab: {fileID: 5888237620715083050, guid: a6453d217b676eb48ad6f2d358785abe, type: 3}
   _spawnPoint: {fileID: 5978001639705057578}
 --- !u!114 &3487519965577382656
 MonoBehaviour:
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 30725c77-0e18-4f3e-a73d-0750082dea8b
-  _prefabId: 17
+  _prefabId: 18
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

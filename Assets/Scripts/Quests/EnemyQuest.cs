@@ -12,14 +12,13 @@ namespace ThePackt
         #region methods
         private void Awake()
         {
+            _selectedData = CharacterSelectionData.Instance;
+
             _completeCondition = IsEnemyDead;
 
             _startAction = SpawnEnemy;
 
-
             _localPlayer = _selectedData.GetPlayerScript();
-
-            _selectedData = CharacterSelectionData.Instance;
 
             _startAction();
         }
