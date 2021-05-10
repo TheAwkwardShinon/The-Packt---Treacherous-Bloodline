@@ -5,14 +5,16 @@ namespace ThePackt
 {
     public class EnemyQuest : Quest
     {
-        [SerializeField] protected CharacterSelectionData _selectedData;
+        protected CharacterSelectionData _selectedData;
 
         #region methods
-        private void Start()
+        private void Awake()
         {
             _completeCondition = IsEnemyDead;
 
             _localPlayer = _selectedData.GetPlayerScript();
+
+            _selectedData = CharacterSelectionData.Instance;
         }
 
         protected bool IsEnemyDead()

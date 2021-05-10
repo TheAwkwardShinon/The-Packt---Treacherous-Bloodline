@@ -6,10 +6,11 @@ using UnityEngine;
 namespace ThePackt{
     public class CharSelectionHandler : MonoBehaviour
     {
-        [SerializeField] private  CharacterSelectionData _charSelectdata;
+        private  CharacterSelectionData _charSelectdata;
 
         void OnEnable()
         {
+            _charSelectdata = CharacterSelectionData.Instance;
             _charSelectdata.Reset();
         }
 

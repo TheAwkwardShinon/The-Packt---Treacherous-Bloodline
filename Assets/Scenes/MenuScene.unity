@@ -6203,7 +6203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Square
+  m_Text: Button West
 --- !u!222 &370210473
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7599,7 +7599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: R1
+  m_Text: Right Shoulder
 --- !u!222 &471395963
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16499,7 +16499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Cross
+  m_Text: Button South
 --- !u!222 &1055864343
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19866,7 +19866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95aa6a8fbd012504abc61feea4a50535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   _tooltip: {fileID: 334481838}
   _searchingTooltip: {fileID: 1954859061}
   _searchingTooltipErrorText: {fileID: 463207528}
@@ -20499,7 +20498,6 @@ MonoBehaviour:
   _loreTab: {fileID: 1353314186}
   _playTab: {fileID: 410992613}
   _showcaseManager: {fileID: 591826264}
-  _playerInformationData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   _logoSelectionHandler: {fileID: 1481698303}
   _eventsystem: {fileID: 895784725}
 --- !u!1 &1292660444
@@ -22315,7 +22313,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Triangle
+  m_Text: Button North
 --- !u!222 &1411375334
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23488,7 +23486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3eb859d95b6024098670fccf830104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _charSelectdata: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
 --- !u!114 &1481698303
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ThePackt{
     [CreateAssetMenu(fileName = "newCharacterData", menuName = "Data/Character Data/Selection Data")]
-    public class CharacterSelectionData : ScriptableObject
+    public class CharacterSelectionData : SingletonScriptableObject<CharacterSelectionData>
     {
         private string _characterSelected = "none";
         private string _playerNickname = "none";
