@@ -15,7 +15,7 @@ namespace ThePackt
         #region methods
 
         #region callbacks
-
+        
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
             _player = _selectedData.GetPlayerScript();
@@ -32,29 +32,39 @@ namespace ThePackt
                 //find and start the quest
                 BoltEntity questEntity = BoltNetwork.FindEntity(evnt.QuestNetworkID);
                 Quest quest = questEntity.GetComponent<Quest>();
-                quest.SetQuestState(Constants.STARTED);
 
-                //get the players in the room
-                List<BoltEntity> players = quest.GetPlayersInRoom();
-
-                QuestAcceptedEvent newEvnt;
-                foreach (BoltEntity e in players)
+                if(quest.GetQuestState() == Constants.READY)
                 {
-                    if (e.IsOwner)
+                    quest.SetQuestState(Constants.STARTED);
+
+                    //TODO special effect
+
+                    /*
+                    //get the players in the room
+                    List<BoltEntity> players = quest.GetPlayersInRoom();
+
+                    QuestAcceptedEvent newEvnt;
+                    foreach (BoltEntity e in players)
                     {
-                        Debug.Log("[QUEST] server joins quest");
-                        _player.JoinQuest(quest);
+                        if (e.IsOwner)
+                        {
+                            Debug.Log("[QUEST] server joins quest");
+                            _player.JoinQuest(quest);
+                        }
+                        else
+                        {
+                            Debug.Log("[QUEST] client " + e.NetworkId + " partecipate. Sending event");
+                            newEvnt = QuestAcceptedEvent.Create(e.Source);
+                            newEvnt.Quest = questEntity;
+                            newEvnt.PartecipantNetworkID = e.NetworkId;
+                            newEvnt.Send();
+                        }
                     }
-                    else
-                    {
-                        Debug.Log("[QUEST] client " + e.NetworkId + " partecipate. Sending event");
-                        newEvnt = QuestAcceptedEvent.Create(e.Source);
-                        newEvnt.Quest = questEntity;
-                        newEvnt.PartecipantNetworkID = e.NetworkId;
-                        newEvnt.Send();
-                    }
+                    */
                 }
             }
+
+            /*
             else
             {
                 Debug.Log("[QUEST] client recieved accepted event");
@@ -64,6 +74,7 @@ namespace ThePackt
                     _player.JoinQuest(evnt.Quest.GetComponent<Quest>());
                 }
             }
+            */
         }
 
         public override void OnEvent(QuestAbandonedEvent evnt)
@@ -79,13 +90,38 @@ namespace ThePackt
 
                 BoltEntity abandoningPlayer = BoltNetwork.FindEntity(evnt.AbandoningPlayerNetworkID);
 
-                quest.RemovePlayer(abandoningPlayer);
-
-                if(quest.GetPlayers().Count == 0)
+                if(quest.GetQuestState() == Constants.STARTED)
                 {
-                    Debug.Log("[QUEST] no more partecipating players. quest " + quest._title + " failed");
+                    quest.RemovePlayer(abandoningPlayer);
 
-                    quest.SetQuestState(Constants.FAILED);
+                    if (quest.GetPlayers().Count == 0)
+                    {
+                        Debug.Log("[QUEST] no more partecipating players. quest " + quest._title + " failed");
+
+                        //timer and visual effect that indicates that the quest is failing???
+
+                        quest.SetQuestState(Constants.FAILED);
+                    }
+                }
+            }
+        }
+
+        public override void OnEvent(QuestJoinedEvent evnt)
+        {
+            Debug.Log("[QUEST] joined event received");
+
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[QUEST] server received joined event. joining player: " + evnt.JoiningPlayerNetworkID);
+
+                BoltEntity questEntity = BoltNetwork.FindEntity(evnt.QuestNetworkID);
+                Quest quest = questEntity.GetComponent<Quest>();
+
+                BoltEntity joiningPlayer = BoltNetwork.FindEntity(evnt.JoiningPlayerNetworkID);
+
+                if (quest.GetQuestState() == Constants.STARTED)
+                {
+                    quest.AddPlayer(joiningPlayer);
                 }
             }
         }

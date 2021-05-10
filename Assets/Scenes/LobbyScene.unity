@@ -1055,7 +1055,7 @@ MonoBehaviour:
   - name: naturia
     prefab: {fileID: 1614372350790525731, guid: cc762e852b8899449b400c714bb728e7, type: 3}
   playerSpawnPos: {x: 0, y: 0}
-  _minPlayerNumber: 2
+  _minPlayerNumber: 1
   gameStartSeconds: 2
 --- !u!4 &232117935
 Transform:

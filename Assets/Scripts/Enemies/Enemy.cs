@@ -15,6 +15,7 @@ namespace ThePackt
         #endregion
 
         #region methods
+
         public override void Attached()
         {
             // synchronize the bolt player state transform with the player gameobject transform

@@ -58,7 +58,7 @@ namespace ThePackt
                 }
 
                 // Does not destroy bullets on impact with other bullets or the local player
-                if (!(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets") && isLocalPlayer != isLocalBullet)
+                if (!(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets") && isLocalPlayer != isLocalBullet && !(LayerMask.LayerToName(collision.gameObject.layer) == "Room"))
                 {
                     BoltNetwork.Destroy(gameObject);
                 }
