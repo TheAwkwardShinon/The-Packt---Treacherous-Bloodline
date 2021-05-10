@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ThePackt{
     public class CharSelectionHandler : MonoBehaviour
     {
-        private  CharacterSelectionData _charSelectdata;
+        private CharacterSelectionData _charSelectdata;
 
         void OnEnable()
         {

@@ -20498,6 +20498,7 @@ MonoBehaviour:
   _loreTab: {fileID: 1353314186}
   _playTab: {fileID: 410992613}
   _showcaseManager: {fileID: 591826264}
+  _playerInformationData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   _logoSelectionHandler: {fileID: 1481698303}
   _eventsystem: {fileID: 895784725}
 --- !u!1 &1292660444
@@ -23486,6 +23487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa3eb859d95b6024098670fccf830104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _charSelectdata: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
 --- !u!114 &1481698303
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using Bolt;
 namespace ThePackt
 {
     public delegate bool CompleteCondition();
+    public delegate void StartAction();
 
     public class Quest : Bolt.EntityBehaviour<IQuestState>
     {
@@ -35,9 +36,10 @@ namespace ThePackt
         protected List<BoltEntity> _playersPartecipating;
 
         protected CompleteCondition _completeCondition;
+        protected StartAction _startAction;
         #endregion
 
-        
+
         #region methods
         // Start is called before the first frame update
         public override void Attached()
