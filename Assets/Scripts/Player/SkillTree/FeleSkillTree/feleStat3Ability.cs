@@ -10,7 +10,7 @@ namespace ThePackt{
         public override void GainAbility(Player player)
         {
             base.GainAbility(player);
-            player.GetPlayerData().damageMultiplier = 0.15f; //multiply the damage by 15%
+            player.GetPlayerData().damageMultiplier += 0.15f; //multiply the damage by 15%
         }
     }
 }

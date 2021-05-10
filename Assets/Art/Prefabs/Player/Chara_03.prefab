@@ -919,6 +919,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 79de1627-cb62-466c-8359-21c9be3a2682
     m_ActionName: UserInterface/Deselect[/DualShock4GamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 075e3bd1-09fd-4012-8756-5a44cd15b039
+    m_ActionName: UserInterface/Navigation[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/dpad]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 64da7bf4-52d2-41e8-8c11-61a8553eb081
+    m_ActionName: UserInterface/Click[/DualShock4GamepadHID/buttonSouth,/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay

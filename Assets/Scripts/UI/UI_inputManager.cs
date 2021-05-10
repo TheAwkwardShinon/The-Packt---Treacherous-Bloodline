@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -23,6 +25,8 @@ namespace ThePackt{
     [SerializeField] private CharacterSelectionData _playerInformationData;
 
     [SerializeField] private LogoOnCharSelection _logoSelectionHandler;
+
+    [SerializeField] private EventSystem _eventsystem;
 
     //[SerializeField] private Button 
 
@@ -90,6 +94,62 @@ namespace ThePackt{
             if (context.started)
             {
                 _tabgroup.ChangeTabRight();
+            }
+            else if(context.canceled){
+
+            }
+        }
+
+        public void OnNavigateThroughUI(InputAction.CallbackContext context){
+             if (context.started)
+            {   
+                try{
+                    Vector2 _rawMovementInput = context.ReadValue<Vector2>();
+                    int _normInputX = Mathf.RoundToInt(_rawMovementInput.x);
+                    int _normInputY = Mathf.RoundToInt(_rawMovementInput.y);
+                    Debug.Log("[ON NAVIGATION EVENT] INPUT X = "+_normInputX+" INPUT Y = "+_normInputY);
+                    if(_normInputX > 0 && _normInputY == 0){
+                        Debug.Log("[ON NAVIGATION EVENT] GOING RIGHT");
+                        if(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnRight.gameObject != null){
+                            _eventsystem.SetSelectedGameObject(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnRight.gameObject);
+                            Debug.Log("[ON NAVIGATION EVENT] NEW ELEMENT SELECTED = "+_eventsystem.currentSelectedGameObject);
+                        }
+                    }
+                    else if(_normInputX < 0 && _normInputY == 0){
+                        Debug.Log("[ON NAVIGATION EVENT] GOING LEFT");
+                        if(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnLeft.gameObject != null){
+                            _eventsystem.SetSelectedGameObject(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnLeft.gameObject);
+                            Debug.Log("[ON NAVIGATION EVENT] NEW ELEMENT SELECTED = "+_eventsystem.currentSelectedGameObject);
+                        }
+                    }
+                    else if(_normInputX == 0 && _normInputY > 0){
+                        Debug.Log("[ON NAVIGATION EVENT] GOING UP");
+                        if(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnUp.gameObject != null){
+                            _eventsystem.SetSelectedGameObject(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnUp.gameObject);
+                            Debug.Log("[ON NAVIGATION EVENT] NEW ELEMENT SELECTED = "+_eventsystem.currentSelectedGameObject);
+                        }
+                    }
+                    else if(_normInputX == 0 && _normInputY < 0){
+                        Debug.Log("[ON NAVIGATION EVENT] GOING DOWN");
+                        if(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnDown.gameObject != null){
+                            _eventsystem.SetSelectedGameObject(_eventsystem.currentSelectedGameObject.GetComponent<Button>().navigation.selectOnDown.gameObject);
+                            Debug.Log("[ON NAVIGATION EVENT] NEW ELEMENT SELECTED = "+_eventsystem.currentSelectedGameObject);
+                        }
+                    }
+                    
+                }catch(NullReferenceException e){
+                    return;
+                }
+            }
+            else if(context.canceled){
+
+            }
+        }
+
+        public void OnClickSelection(InputAction.CallbackContext context){
+            if (context.started)
+            {
+                _eventsystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
             }
             else if(context.canceled){
 

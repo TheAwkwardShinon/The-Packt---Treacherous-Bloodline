@@ -19,6 +19,8 @@ namespace ThePackt{
 
         protected bool _detransformationInput = false;
 
+        protected bool _downed = false;
+
         
         public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName){
             _player = player;
@@ -112,7 +114,14 @@ namespace ThePackt{
                     break;
             }
         }
+
+        public void SetDowned(bool value){
+            _downed = value;
+        }
         
+        public bool isDowned(){
+            return _downed;
+        }
         public virtual void AnimationTrigger() { }
 
         public virtual void AnimationFinishTrigger() => _isAnimationFinished = true;

@@ -37,7 +37,12 @@ namespace ThePackt{
         public float crouchMovementVelocity = 5f;
         public float crouchColliderHeight = 0.8f;
         public float standColliderHeight = 1.6f;
+        public float standColliderWidth = 0.8f;
         public float ceilingHeight = 0.5f;
+
+        [Header("Down States")]
+        public float downColliderHeight = 0.4f;
+        public float downColliderWidth = 1.3f;
 
         [Header("Attack State")]
 

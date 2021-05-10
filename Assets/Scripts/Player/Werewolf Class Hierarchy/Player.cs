@@ -80,6 +80,9 @@ namespace ThePackt{
         public PlayerTransformationState _transformState {get; private set;}
         public PlayerDetransformationState _detransformationState {get; private set;}
 
+        public PlayerDownState _downState {get; private set;}
+        public PlayerDownMoveState _downMoveState {get; private set;}
+
 
         #endregion
 
@@ -114,6 +117,8 @@ namespace ThePackt{
             _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "attack");
             _transformState = new PlayerTransformationState(this, _stateMachine, _playerData, "transformation");
             _detransformationState = new PlayerDetransformationState(this, _stateMachine, _playerData, "transformation");
+            _downMoveState = new PlayerDownMoveState(this, _stateMachine, _playerData, "DownMove");
+            _downState = new PlayerDownState(this, _stateMachine, _playerData, "Down");
         }
 
         // executed when the player prefab is instatiated (quite as Start())
@@ -188,13 +193,13 @@ namespace ThePackt{
 
         private void OnDrawGizmos() {
             //Handles.Label(transform.position + new Vector3(-0.5f, 1f, 0), "Health: " + _playerData.currentLifePoints);
-            
+           /* 
             _col = GetComponent<BoxCollider2D>();
             Gizmos.color = Color.red;
             Vector2 temp = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
 
             Gizmos.DrawCube(new Vector3(temp.x,temp.y,0),new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f));
-            Gizmos.DrawSphere(_attackPoint.position, _playerData.rangeBaseWerewolf);
+            Gizmos.DrawSphere(_attackPoint.position, _playerData.rangeBaseWerewolf);*/
         }
 
         #endregion
@@ -289,8 +294,9 @@ namespace ThePackt{
 
             if (entity.IsOwner && _playerData.currentLifePoints <= 0)
             {
-                //Debug.Log("[HEALTH] dead");
-                Die();
+                if(_stateMachine._currentState.isDowned())
+                    Die();
+                else _stateMachine._currentState.SetDowned(true);
             }
         }
 
@@ -447,6 +453,18 @@ namespace ThePackt{
             _col.size = _workspace;
             _col.offset = center;
         }
+
+          public void SetColliderWidth(float width)
+        {
+            Vector2 center = _col.offset;
+            _workspace.Set(_col.size.y, width);
+
+            center.x += (width - _col.size.x) / 2;
+
+            _col.size = _workspace;
+            _col.offset = center;
+        }
+        
 
         public void SetIsHuman(bool value)
         {

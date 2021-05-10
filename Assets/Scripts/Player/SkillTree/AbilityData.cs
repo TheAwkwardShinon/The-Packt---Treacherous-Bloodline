@@ -11,20 +11,26 @@ namespace ThePackt{
     public class AbilityData : ScriptableObject
     {
     #region variables
+    public ClanShowCaseData data;
+    public int index;
     public string abilityName;
-    [TextArea] public string description;
-
-    public string className;
-
-    public Sprite _icon;
-
+    public string description;
+    public  string className = "Fele";
+    public Sprite icon;
     public int abilityCost;
-
     public List<AbilityData> _unlockableAbilities;
 
     #endregion
 
     #region methods
+
+    private void start(){
+        abilityName = data.abilitiesName[index];
+        description = data.abilitiesDescription[index];
+        icon = data._abilitisSprite[index];
+        abilityCost = data.abilitiesCost[index];
+    }
+
     public virtual void GainAbility(Player player){
         
     }

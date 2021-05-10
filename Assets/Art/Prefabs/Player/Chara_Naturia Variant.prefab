@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: _playerData
       value: 
       objectReference: {fileID: 11400000, guid: beb93cc185c7cda40811eb704afa411d, type: 2}
+    - target: {fileID: 1080764205480871369, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_RootOrder
       value: 0
