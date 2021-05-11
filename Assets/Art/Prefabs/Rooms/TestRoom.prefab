@@ -121,6 +121,8 @@ MonoBehaviour:
   _description: Defeat the enemy!
   _expReward: 15
   _timeReward: 0
+  _cooldown: 0
+  _selectedData: {fileID: 0}
 --- !u!114 &3487519965577382656
 MonoBehaviour:
   m_ObjectHideFlags: 0

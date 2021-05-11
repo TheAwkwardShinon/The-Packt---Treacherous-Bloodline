@@ -83,6 +83,8 @@ namespace ThePackt{
         public PlayerDownState _downState {get; private set;}
         public PlayerDownMoveState _downMoveState {get; private set;}
 
+        public PlayerInteractState _interactState {get; private set;}
+
 
         #endregion
 
@@ -100,7 +102,9 @@ namespace ThePackt{
 
         #region core methods
 
-        /* initialize every "common" possible state in the fsm */
+        ///<summary>
+        ///initialize every "common" possible state in the fsm
+        ///</summary>
         public override void Initialized()
         {
             _playerData = Instantiate(_playerBaseData);
@@ -119,16 +123,18 @@ namespace ThePackt{
             _detransformationState = new PlayerDetransformationState(this, _stateMachine, _playerData, "transformation");
             _downMoveState = new PlayerDownMoveState(this, _stateMachine, _playerData, "DownMove");
             _downState = new PlayerDownState(this, _stateMachine, _playerData, "Down");
+            _interactState = new PlayerInteractState(this, _stateMachine, _playerData, "Interact");
         }
 
-        // executed when the player prefab is instatiated (quite as Start())
+        ///<summary>
+        /// executed when the player prefab is instatiated (quite as Start())
+        /// </summary>
         public override void Attached()
-        {/*
+        {
             if(entity.IsOwner)
                Debug.Log("[NETWORKLOG] my network id: " + entity.NetworkId);
             else
                 Debug.Log("[NETWORKLOG] other network id: " + entity.NetworkId);
-*/
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
@@ -168,7 +174,9 @@ namespace ThePackt{
             state.SetAnimator(_anim);
         }
 
-        // executed at every frame as Update(), but called only on the owner's computer
+        ///<summary>
+        ///executed at every frame as Update(), but called only on the owner's computer
+        ///</summary>
         public override void SimulateOwner()
         {
 
@@ -191,34 +199,27 @@ namespace ThePackt{
             }
         }
 
-        private void OnDrawGizmos() {
-            //Handles.Label(transform.position + new Vector3(-0.5f, 1f, 0), "Health: " + _playerData.currentLifePoints);
-           /* 
-            _col = GetComponent<BoxCollider2D>();
-            Gizmos.color = Color.red;
-            Vector2 temp = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
-
-            Gizmos.DrawCube(new Vector3(temp.x,temp.y,0),new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f));
-            Gizmos.DrawSphere(_attackPoint.position, _playerData.rangeBaseWerewolf);*/
-        }
-
         #endregion
 
         #region velocity modificator
 
-
+            
         /* A velocity in Unity is units per second. 
         The units are often thought of as metres but could be millimetres or light years.
         Unity velocity also has the speed in X, Y, and Z defining the direction.*/
 
-        /* set the velocity to zero */
+        ///<summary>
+        ///set the velocity to zero
+        ///</summary>
         public void SetVelocityZero()
         {
             _rb.velocity = Vector2.zero;
             _currentVelocity = Vector2.zero;
         }
 
-        /* set the velocity considering the speed, the direction (left or right) and the angle on the x axis */
+        ///<summary>
+        ///set the velocity considering the speed, the direction (left or right) and the angle on the x axis
+        ///</summary>
         public void SetVelocity(float velocity, Vector2 angle, int direction)
         {
             angle.Normalize();
@@ -227,7 +228,9 @@ namespace ThePackt{
             _currentVelocity = _workspace;
         }
 
-        /* set the velocity considering the speed and the direction (left or right) */
+        ///<summary>
+        ///set the velocity considering the speed and the direction (left or right)
+        ///</summary>
         public void SetVelocity(float velocity, Vector2 direction)
         {
             _workspace = direction * velocity;
@@ -235,7 +238,9 @@ namespace ThePackt{
             _currentVelocity = _workspace;
         }
 
-        /* set the velocity only in the x axis */
+        ///<summary>
+        ///set the velocity only in the x axis
+        ///</summary>
         public void SetVelocityX(float velocity)
         {
             _workspace.Set(velocity, _currentVelocity.y);
@@ -243,7 +248,9 @@ namespace ThePackt{
             _currentVelocity = _workspace;
         }
 
-        /* set the velocity only in the y axis */
+        ///<summary>
+        ///set the velocity only in the y axis
+        ///</summary>
         public void SetVelocityY(float velocity)
         {
             _workspace.Set(_currentVelocity.x, velocity);
@@ -254,6 +261,10 @@ namespace ThePackt{
         #endregion
 
         #region stats modification
+
+        ///<summary>
+        /// subtracts the player's health component by "damage" input field
+        ///</summary>
         public void ApplyDamage(float damage)
         {
             //Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
@@ -263,6 +274,9 @@ namespace ThePackt{
             }
         }
 
+        ///<summary>
+        /// add experience and spendable time to the player
+        ///</summary>
         public void ObtainRewards(float exp, float time)
         {
             Debug.Log("[QUEST] rewards obtained. Exp: " + exp + ", Time: " + time);
@@ -273,6 +287,11 @@ namespace ThePackt{
             hasActiveQuest = false;
         }
 
+        ///TODO change in deathState.
+
+        ///<summary>
+        /// changes the state to death state
+        ///</summary>
         private void Die()
         {
             BoltNetwork.Destroy(gameObject);
@@ -282,7 +301,9 @@ namespace ThePackt{
 
         #region callbacks
 
-        //called when state.Health is modified -> we update the local health and do checks on it
+        ///<summary>
+        /// Callback called when state.Health is modified -> we update the local health and do checks on it
+        ///</summary>
         private void HealthCallback()
         {
             _playerData.currentLifePoints = state.Health;
@@ -300,6 +321,9 @@ namespace ThePackt{
             }
         }
 
+        ///<summary>
+        /// callback that set  the nickname component
+        ///</summary>
         private void NicknameCallback()
         {
             nicknameText.text = state.Nickname;
@@ -309,20 +333,27 @@ namespace ThePackt{
 
         #region check methods
 
-        /* method that returns true if the player is touching a ceiling with his head, false instead */
+        ///<summary>
+        ///method that returns true if the player is touching a ceiling with his head, false instead
+        ///</summary>
         public bool CheckForCeiling()
         {
             _workspace = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
             return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f), 0f, _playerData.whatIsCeiling);
         }
 
-        /* method that returns true if the player is grounded, false instead */
+        ///<summary>
+        ///method that returns true if the player is grounded, false instead
+        ///<summary>
          public bool CheckIfGrounded()
         {   
             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
             return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
         }
 
+        ///<summary>
+        /// method that returns true if the player is on other players, false instead
+        ///</summary>
         public bool CheckIfGroundOnOtherPlayer(){
             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
             Collider2D col = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, 
@@ -332,25 +363,34 @@ namespace ThePackt{
             else return false;
         }
 
+        ///<summary>
+        /// method that returns true if the player is on an enemy, false instead
+        ///</summary>
         public bool CheckIfGroundedOnEnemy(){
              _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
               return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, 
                 _playerData.WhatIsEnemy);
         }
 
-        /* method that returns true if the player is touching a wall (in the direction that he's facing), false instead */
+        ///<summary>
+        ///method that returns true if the player is touching a wall (in the direction that he's facing), false instead
+        ///</summary>
         public bool CheckIfTouchingWall()
         {
             return Physics2D.Raycast(_wallCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsWall);
         }
 
-        /* method that returns true if the player is very close to a ledge (and he is heading to it), false instead */
+        ///<summary>
+        ///method that returns true if the player is very close to a ledge (and he is heading to it), false instead
+        ///</summary>
         public bool CheckIfTouchingLedge()
         {
             return Physics2D.Raycast(_ledgeCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsLedge);
         }
 
-        /* method that flip the player if he's moving in the opposite direction that he's facing */
+        ///<summary>
+        ///method that flip the player if he's moving in the opposite direction that he's facing 
+        ///</summary>
          public void CheckIfShouldFlip(int xInput)
         {
             if(xInput != 0 && xInput != _facingDirection)
@@ -363,6 +403,9 @@ namespace ThePackt{
 
         #region others
 
+        ///<summary>
+        /// if player has not an active quest, the methods trigger the quest to be initialized and ready
+        ///</summary>
         private void AcceptQuest(Quest quest)
         {
             if (!hasActiveQuest)
@@ -372,6 +415,9 @@ namespace ThePackt{
             }
         }
 
+        ///<summary>
+        ///TODO add summary
+        ///</summary>
         public void JoinQuest(Quest quest)
         {
             if (!hasActiveQuest && entity.IsOwner)
@@ -386,6 +432,9 @@ namespace ThePackt{
             }
         }
 
+        ///<summary>
+        ///TODO add summary
+        ///</summary>
         public void AbandonQuest()
         {
             if (hasActiveQuest)
@@ -399,7 +448,9 @@ namespace ThePackt{
             }
         }
   
-        /* method that flips the player */
+        ///<summary>
+        ///method that flips the player
+        ///</summary>
         private void Flip()
         {
             _facingDirection *= -1;
@@ -428,9 +479,16 @@ namespace ThePackt{
             return _bullet;
         }
 
+        ///<summary>
+        ///method that return the basic player data scriptable object, in which are contained a lot of base data
+        ///<summary>
         public PlayerData GetPlayerData(){
             return _playerData;
         }
+
+        ///<summary>
+        ///method that returns true if the player is in a human state, false instead
+        ///<summary>
         public bool GetIsHuman()
         {
             return _isHuman;
@@ -445,7 +503,9 @@ namespace ThePackt{
 
         #region setter
 
-        /* method that sets the height of the collider, useful in the crouch states */
+        ///<summary>
+        ///method that sets the height of the collider, useful in the crouch states
+        ///</summary>
         public void SetColliderHeight(float height)
         {
             Vector2 center = _col.offset;
@@ -457,7 +517,10 @@ namespace ThePackt{
             _col.offset = center;
         }
 
-          public void SetColliderWidth(float width)
+        ///<summary>
+        ///method that sets the width of the collider, useful in the down states
+        ///</summary>
+        public void SetColliderWidth(float width)
         {
             Vector2 center = _col.offset;
             _workspace.Set(_col.size.y, width);
@@ -468,27 +531,19 @@ namespace ThePackt{
             _col.offset = center;
         }
         
-
+        ///<summary>
+        ///set the variable isHuman to a value, this method should be used in transformation and detransformation states
+        ///</summary>
         public void SetIsHuman(bool value)
         {
             _isHuman = value;
         }
-        public void SetRigidBodyDrag(float drag){
-            _rb.drag = drag;
-
-        }
-
         public void SetWeakActive(bool value){
             weakActive = value;
         }
 
         #endregion
 
-
-
-
         #endregion
-
-
     }
 }

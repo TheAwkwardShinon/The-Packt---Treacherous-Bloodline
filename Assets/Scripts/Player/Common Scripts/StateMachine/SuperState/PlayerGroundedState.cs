@@ -22,6 +22,8 @@ namespace ThePackt{
 
         private bool _transformInput;
 
+        private bool _interactInput;
+
         protected bool _isStand = true;
 
         public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -63,6 +65,9 @@ namespace ThePackt{
             _dashInput = _player._inputHandler._dashInput;
             _transformInput = _player._inputHandler._transformInput;
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
+            _interactInput = _player._inputHandler._interactInput;
+            if(_interactInput)
+                Debug.Log("[GROUNDED STATE] intract input received");
 
             _isTouchingCeiling = _player.CheckForCeiling();
             _isGrounded = _player.CheckIfGrounded();
@@ -103,6 +108,10 @@ namespace ThePackt{
                     _player.GetPlayerData()._startTransformationTime = Time.time;
                     _player.SetIsHuman(false);
                     _stateMachine.ChangeState(_player._transformState);
+                }
+                else if(_interactInput && _player._interactState.CheckIfCanInteract()){
+                    Debug.LogError("[GROUNDED STATE] -->  interact");
+                    _stateMachine.ChangeState(_player._interactState);
                 }
             }
         }

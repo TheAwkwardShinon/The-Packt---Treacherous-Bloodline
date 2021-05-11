@@ -146,16 +146,6 @@ namespace ThePackt{
             }
         }
 
-        public void OnClickSelection(InputAction.CallbackContext context){
-            if (context.started)
-            {
-                _eventsystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
-            }
-            else if(context.canceled){
-
-            }
-        }
-
-    
+        
     }
 }

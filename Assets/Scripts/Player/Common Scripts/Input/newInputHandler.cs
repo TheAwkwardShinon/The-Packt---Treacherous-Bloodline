@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 namespace ThePackt{
     public class newInputHandler : MonoBehaviour
     {
+
+        #region variables
         private PlayerInput playerInputComponent;
         // private PlayerInputClass playerInputObject;
         private Player player;
@@ -24,6 +26,9 @@ namespace ThePackt{
         public bool _transformInput { get; private set; }
         public bool _transformInputStop { get; private set; }
 
+        public bool _interactInput {get; private set;}
+        public bool _interactInputStop {get; private set;}
+
         public Dictionary<string, bool> _attackInputs { get; private set; }
         public Dictionary<string, bool> _attackInputsStop { get; private set; }
 
@@ -33,8 +38,15 @@ namespace ThePackt{
         private float _jumpInputStartTime;
         private float _dashInputStartTime;
         private float _transformInputStartTime;
+        private float _interactInputStartTime;
         public Dictionary<string, float> _attackInputsStartTime { get; private set; }
 
+        #endregion
+
+
+        #region methods
+
+        #region core methods
         private void Start()
         {
             player = GetComponent<Player>();
@@ -56,6 +68,8 @@ namespace ThePackt{
             CheckDashInputHoldTime();
             CheckBaseAttackInputHoldTime();
         }
+
+        #endregion
 
         /*
                 public void OnPrimaryAttackInput(InputAction.CallbackContext context)
@@ -84,6 +98,12 @@ namespace ThePackt{
                     }
                 }
         */
+
+        #region input 
+        
+        ///<summary> 
+        /// Callabck called when input system detect movement input 
+        ///</summary>
         public void OnMoveInput(InputAction.CallbackContext context)
         {
             _rawMovementInput = context.ReadValue<Vector2>();
@@ -92,10 +112,13 @@ namespace ThePackt{
             _normInputY = Mathf.RoundToInt(_rawMovementInput.y);       
             
         }
+        
 
+        ///<summary> 
+        /// Callabck called when input system detect jump input 
+        ///</summary>
         public void OnJumpInput(InputAction.CallbackContext context)
         {
-            Debug.Log("input jump");
  
             if (context.started)
             {
@@ -110,6 +133,28 @@ namespace ThePackt{
             }
         }
 
+         ///<summary> 
+        /// Callabck called when input system detects Interact input 
+        ///</summary>
+        public void OnInteractInput(InputAction.CallbackContext context)
+        {
+            Debug.Log("INPUT SYSTEM] InteractInput Received");
+            if (context.started)
+            {
+                _interactInput = true;
+                _interactInputStop = false;
+                _interactInputStartTime = Time.time;
+            }
+
+            if (context.canceled)
+            {
+                _interactInputStop = true;
+            }
+        }
+        
+        ///<summary> 
+        /// Callabck called when input system detect transformation input 
+        ///</summary>
         public void OnTransformationInput(InputAction.CallbackContext context){
             if (context.started)
             {
@@ -126,6 +171,9 @@ namespace ThePackt{
             }
         }
         
+        ///<summary> 
+        /// Callabck called when input system detect dash input 
+        ///</summary>
         public void OnDashInput(InputAction.CallbackContext context)
         {
             if (context.started)
@@ -140,6 +188,9 @@ namespace ThePackt{
             }
         }
 
+        ///<summary> 
+        /// Callabck called when input system detect dash direction input 
+        ///</summary>
         public void OnDashDirectionInput(InputAction.CallbackContext context)
         {
             _raw_dashDirectionInput = context.ReadValue<Vector2>();
@@ -152,6 +203,9 @@ namespace ThePackt{
             _dashDirectionInput = Vector2Int.RoundToInt(_raw_dashDirectionInput.normalized);
         }
 
+        ///<summary> 
+        /// Callabck called when input system detect attack input 
+        ///</summary>
         public void OnAttackInput(InputAction.CallbackContext context)
         {
             Debug.Log("base attack input");
@@ -171,6 +225,7 @@ namespace ThePackt{
             }
         }
 
+        //TODO ora funziona mouse
         private bool CheckSetAttackDirection()
         {
             Transform attPoint = player.GetAttackPoint();
@@ -250,14 +305,43 @@ namespace ThePackt{
             // Debug.Log("direction (left): " + _attackDirectionInput.x);
         }
 
+        #endregion
+
+
+        #region Setter
+        ///<summary> 
+        /// set the jumpImput variable to false. This variables trigger the player fsm states, is important to reset it.
+        ///</summary>
+
         public void UseJumpInput() => _jumpInput = false;
 
+        ///<summary> 
+        /// set the DashInput variable to false. This variables trigger the player fsm states, is important to reset it.
+        ///</summary>
         public void UseDashInput() => _dashInput = false;
 
+        ///<summary> 
+        /// set the TransformationInput variable to false. This variables trigger the player fsm states, is important to reset it.
+        ///</summary>
         public void UseTransformInput() => _transformInput = false;
 
+        ///<summary> 
+        /// set the InteractInput variable to false. This variables trigger the player fsm states, is important to reset it.
+        ///</summary>
+        public void UseInteractInput() => _interactInput = false;
+
+        ///<summary> 
+        /// set the Imput variable to false. This variables trigger the player fsm states, is important to reset it.
+        ///</summary>
         public void UseBaseAttackInput() => _attackInputs["base"] = false;
 
+        #endregion
+
+        #region checker
+
+        ///<summary> 
+        /// method that check the hold time of a jump (the more you press the more hight you can reach within boundaries)
+        ///</summary>
         private void CheckJumpInputHoldTime()
         {
             if(Time.time >= _jumpInputStartTime + _inputHoldTime)
@@ -266,6 +350,9 @@ namespace ThePackt{
             }
         }
 
+        ///<summary> 
+        ///  method that check the hold time of a dash
+        ///</summary>
         private void CheckDashInputHoldTime()
         {
             if(Time.time >=  _dashInputStartTime + _inputHoldTime)
@@ -284,5 +371,8 @@ namespace ThePackt{
                 }
             }
         }
+        #endregion
+
+        #endregion
     }
 }
