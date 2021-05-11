@@ -22,14 +22,18 @@ namespace ThePackt{
 
     [SerializeField] private CharacterShowcaseManager _showcaseManager;
 
-    [SerializeField] private CharacterSelectionData _playerInformationData;
+    private CharacterSelectionData _playerInformationData;
 
     [SerializeField] private LogoOnCharSelection _logoSelectionHandler;
 
     [SerializeField] private EventSystem _eventsystem;
 
-    //[SerializeField] private Button 
+        //[SerializeField] private Button 
 
+        void OnEnable()
+        {
+            _playerInformationData = CharacterSelectionData.Instance;
+        }
 
         public void OnChangeCharacterRight(InputAction.CallbackContext context){
                 if (context.started)

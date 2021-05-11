@@ -54,7 +54,7 @@ namespace ThePackt
             //only the server spawns enemies for everyone
             if (BoltNetwork.IsServer)
             {
-                BoltNetwork.Instantiate(enemyPrefabs[0].prefab, enemySpawnPos, Quaternion.identity);
+                //BoltNetwork.Instantiate(enemyPrefabs[0].prefab, enemySpawnPos, Quaternion.identity);
             }
 
             //disable black screen here

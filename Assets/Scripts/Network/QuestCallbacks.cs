@@ -8,14 +8,19 @@ namespace ThePackt
     public class QuestCallbacks : GlobalEventListener
     {
         #region variables
-        [SerializeField] private CharacterSelectionData _selectedData;
+        private CharacterSelectionData _selectedData;
         private Player _player;
         #endregion
 
         #region methods
 
+        private void Awake()
+        {
+            _selectedData = CharacterSelectionData.Instance;
+        }
+
         #region callbacks
-        
+
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
             _player = _selectedData.GetPlayerScript();

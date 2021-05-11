@@ -32,7 +32,7 @@ namespace ThePackt{
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
-        [SerializeField] protected CharacterSelectionData _selectedData;
+        protected CharacterSelectionData _selectedData;
         #endregion
 
         #region velocity
@@ -107,6 +107,7 @@ namespace ThePackt{
         ///</summary>
         public override void Initialized()
         {
+            _selectedData = CharacterSelectionData.Instance;
             _playerData = Instantiate(_playerBaseData);
             _stateMachine = new PlayerStateMachine();
             _idleState = new PlayerIdleState(this, _stateMachine, _playerData, "Idle");

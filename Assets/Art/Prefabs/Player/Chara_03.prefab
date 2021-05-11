@@ -1172,7 +1172,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
 --- !u!114 &3384684059551268301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,7 +1377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: b91d6ae1-f195-42e8-97fa-23afd5a060a9
-  _prefabId: 4
+  _prefabId: 7
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

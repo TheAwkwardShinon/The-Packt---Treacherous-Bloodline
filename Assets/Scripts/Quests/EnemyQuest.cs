@@ -5,14 +5,30 @@ namespace ThePackt
 {
     public class EnemyQuest : Quest
     {
-        [SerializeField] protected CharacterSelectionData _selectedData;
+        protected CharacterSelectionData _selectedData;
+        [SerializeField] private GameObject _enemyPrefab;
+        [SerializeField] private Transform _spawnPoint;
 
         #region methods
-        private void Start()
+        private void Awake()
         {
+            _selectedData = CharacterSelectionData.Instance;
+
             _completeCondition = IsEnemyDead;
 
+            _startAction = SpawnEnemy;
+
             _localPlayer = _selectedData.GetPlayerScript();
+
+            _startAction();
+        }
+
+        protected void SpawnEnemy()
+        {
+            if (BoltNetwork.IsServer)
+            {
+                BoltNetwork.Instantiate(_enemyPrefab, _spawnPoint.position, _spawnPoint.rotation);
+            }
         }
 
         protected bool IsEnemyDead()

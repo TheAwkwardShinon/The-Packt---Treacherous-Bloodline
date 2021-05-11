@@ -9,7 +9,12 @@ namespace ThePackt
 {
     public class NetworkCallbacks : GlobalEventListener
     {
-        [SerializeField] protected CharacterSelectionData _selectedData;
+        protected CharacterSelectionData _selectedData;
+
+        private void Awake()
+        {
+            _selectedData = CharacterSelectionData.Instance;
+        }
 
         public override void OnEvent(DisconnectEvent evnt)
         {

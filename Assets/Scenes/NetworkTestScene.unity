@@ -1342,7 +1342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4899862c1e84b84484aa8e594afd062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
   enemyPrefabs:
   - name: base
     prefab: {fileID: 3755408236902585520, guid: fe6c4c0654c55a1418849ccdca3ddcf4, type: 3}
@@ -1387,7 +1386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc00a56aac9b52409f44381628d800b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedData: {fileID: 11400000, guid: 38a08bd5f6b410e4f86d4399566e5a9f, type: 2}
 --- !u!1 &663479289
 GameObject:
   m_ObjectHideFlags: 0
