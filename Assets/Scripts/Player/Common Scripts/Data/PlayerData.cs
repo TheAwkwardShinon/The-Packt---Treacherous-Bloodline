@@ -76,6 +76,8 @@ namespace ThePackt{
 
         public float _startTransformationTime;
 
+        public bool healing = false;
+
         #endregion
 
         #region Sprite

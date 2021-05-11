@@ -1,16 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &2857785801227402531
+--- !u!1001 &1623485140675617916
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 802873433685238971, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
-      propertyPath: _playerData
-      value: 
-      objectReference: {fileID: 11400000, guid: beb93cc185c7cda40811eb704afa411d, type: 2}
+    - target: {fileID: 690350350142763906, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 690350350142763906, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3539249949499421977, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -65,27 +69,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.b
-      value: 0.105882354
+      value: 0.1758125
       objectReference: {fileID: 0}
     - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.g
-      value: 0.105882354
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6085605241855694824, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.r
-      value: 0.7372549
+      value: 0.8773585
       objectReference: {fileID: 0}
     - target: {fileID: 6383178181007465345, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.b
-      value: 0.105882354
+      value: 0.1764706
       objectReference: {fileID: 0}
     - target: {fileID: 6383178181007465345, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.g
-      value: 0.105882354
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6383178181007465345, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: m_Color.r
-      value: 0.7372549
+      value: 0.8784314
       objectReference: {fileID: 0}
     - target: {fileID: 8193314174912258235, guid: cfe42105fa320f5469e04ccb45b1b690, type: 3}
       propertyPath: _prefabId

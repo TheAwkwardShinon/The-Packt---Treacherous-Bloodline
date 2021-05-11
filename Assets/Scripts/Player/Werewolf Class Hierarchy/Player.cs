@@ -32,6 +32,7 @@ namespace ThePackt{
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
+        [SerializeField] public GameObject _interactTooltip;
         protected CharacterSelectionData _selectedData;
         #endregion
 
@@ -374,6 +375,22 @@ namespace ThePackt{
         }
 
         ///<summary>
+        /// method that returns true if the player is near a downed player that needs healing, false instead
+        ///</summary>
+        public bool CheckIfOtherPlayerInRangeMayBeHealed(){
+            Collider2D col = Physics2D.OverlapCircle(transform.position,6f,_playerData.WhatIsPlayer);
+            if(col != null){
+                if(col.gameObject != this.gameObject && 
+                    col.gameObject.GetComponent<Player>()._stateMachine._currentState.isDowned() &&
+                    !col.gameObject.GetComponent<Player>()._playerData.healing){
+                        Debug.LogError("[DEBUG] found a downed player");
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        ///<summary>
         ///method that returns true if the player is touching a wall (in the direction that he's facing), false instead
         ///</summary>
         public bool CheckIfTouchingWall()
@@ -541,6 +558,14 @@ namespace ThePackt{
         }
         public void SetWeakActive(bool value){
             weakActive = value;
+        }
+
+        public void SetMediumActive(bool value){
+            mediumActive = value;
+        }
+
+        public void SetAttackModifierActive(bool value){
+            attackModifier = value;
         }
 
         #endregion

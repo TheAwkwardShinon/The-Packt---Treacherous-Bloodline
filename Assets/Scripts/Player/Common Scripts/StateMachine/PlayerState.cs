@@ -33,6 +33,7 @@ namespace ThePackt{
             Checks();
 
             SetAnimatorBools(true);
+
             //_player._anim.SetBool(_aniamtionName,true);
 
             _startTime = Time.time;
@@ -111,6 +112,15 @@ namespace ThePackt{
                     break;
                 case "detrasformation":
                     _player.state.detrasformation = value;
+                    break;
+                case "Down":
+                    _player.state.Down = value;
+                    break;
+                case "DownMove":
+                    _player.state.DownMove = value;
+                    break;
+                case "Interact":
+                    _player.state.Interact = value;
                     break;
             }
         }

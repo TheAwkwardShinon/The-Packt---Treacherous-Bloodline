@@ -42,6 +42,7 @@ namespace ThePackt{
 
             //TODO if i am healing a player, if ability is not done, mantein him down
             // else trigger is " stand state"
+            
             //if i am dead while i was interacting adn ability was not done, force death state.
 
             if(Time.time > _startTime + _timeToInteract){
@@ -56,6 +57,8 @@ namespace ThePackt{
         }
 
         public bool CheckIfCanInteract(){
+            if(_player.CheckIfOtherPlayerInRangeMayBeHealed())
+                return true;
             return true; //TODO check if can interact with downed player and so heals him, or if is within a quest room
         }
 

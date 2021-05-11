@@ -14,7 +14,7 @@ namespace ThePackt{
 
 
                 _player.SetVelocityY(_player.GetPlayerData().wallSlideVelocity);
-                if(_player.CheckIfGrounded() || _player.CheckIfGroundedOnEnemy() || _player.CheckIfGroundOnOtherPlayer()) 
+                if(_player.CheckIfGrounded() || _player.CheckIfGroundedOnEnemy() || _player.CheckIfGroundOnOtherPlayer() || !_player.CheckIfTouchingWall()) 
                     _stateMachine.ChangeState(_player._idleState);
         
         }
