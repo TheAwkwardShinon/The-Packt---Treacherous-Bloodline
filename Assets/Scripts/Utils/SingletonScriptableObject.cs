@@ -1,23 +1,25 @@
 using System.Linq;
 using UnityEngine;
 
-public abstract class SingletonScriptableObject<T> : ScriptableObject where T : ScriptableObject
-{
-    static T _instance = null;
- 
-    public static T Instance
+namespace ThePackt{
+    public abstract class SingletonScriptableObject<T> : ScriptableObject where T : ScriptableObject
     {
-        get
+        static T _instance = null;
+    
+        public static T Instance
         {
-            if (!_instance)
+            get
             {
-                //_instance = Resources.FindObjectsOfTypeAll<T>().FirstOrDefault();
+                if (!_instance)
+                {
+                    //_instance = Resources.FindObjectsOfTypeAll<T>().FirstOrDefault();
 
-                T[] assets = Resources.LoadAll<T>("");
-                _instance = assets[0];
+                    T[] assets = Resources.LoadAll<T>("");
+                    _instance = assets[0];
+                }
+                    
+                return _instance;
             }
-                
-            return _instance;
         }
     }
 }
