@@ -73,7 +73,7 @@ namespace ThePackt{
             CheckJumpMultiplier();
 
            
-            if(_downed){
+            if(_player._isDowned){
                 Debug.LogError("[IN AIR STATE] -->  DOWN");
                 _stateMachine.ChangeState(_player._downState);
             }

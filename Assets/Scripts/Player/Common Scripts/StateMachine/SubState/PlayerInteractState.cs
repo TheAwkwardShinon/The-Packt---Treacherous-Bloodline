@@ -40,10 +40,25 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
-            //TODO if i am healing a player, if ability is not done, mantein him down
+            ///TODO CHECK INTERACTION TYPE
+
+            /// acceptQuest
+            //TODO if i am healing a player, if ability is not done, resta li per TERRA!!! XDXDXDXDXDXD !111!111
             // else trigger is " stand state"
             
             //if i am dead while i was interacting adn ability was not done, force death state.
+
+            //on enter if target = player
+           /* var evnt = StartHealingEvent.Create(BoltNetwork.Server);
+            evnt.TargetPlayerNetworkID = _player.entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
+            evnt.Send();
+
+           // on exit if target was player
+            var evnt = HealEvent.Create(BoltNetwork.Server);
+            evnt.TargetPlayerNetworkID = _player.entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
+            evnt.Send();*/
+
+
 
             if(Time.time > _startTime + _timeToInteract){
                 //TODO once the animation finished correctly, trigger Quest start/accepted functions

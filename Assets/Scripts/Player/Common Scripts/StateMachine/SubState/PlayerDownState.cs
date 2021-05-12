@@ -37,8 +37,9 @@ namespace ThePackt{
             base.LogicUpdate();
             if(_player.state.Health >= _player.GetPlayerData().maxLifePoints){
                  Debug.LogError("[DOWNED STATE] ---> IDLE");
-                _downed = false;
                 _isStand = true;
+                _player.state.isDowned = false;
+                //
                 //_player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
                 //_player.SetColliderWidth(_player.GetPlayerData().standColliderWidth);
                 _stateMachine.ChangeState(_player._idleState);

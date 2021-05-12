@@ -84,7 +84,7 @@ namespace ThePackt{
 
 
             if(_isStand){
-                if(_downed){
+                if(_player._isDowned){
                      Debug.LogError("[GROUNDED STATE] -->  DOWN");
                     _stateMachine.ChangeState(_player._downState);
                 }
@@ -98,7 +98,7 @@ namespace ThePackt{
                 {
                     Debug.LogError("[GROUNDED STATE] -->  jump");
                     _stateMachine.ChangeState(_player._jumpState);
-                }else if (!_isGrounded && !_downed)
+                }else if (!_isGrounded )
                 {
                     Debug.LogError("[GROUNDED STATE] -->  inAir");
                     _stateMachine.ChangeState(_player._inAirState);

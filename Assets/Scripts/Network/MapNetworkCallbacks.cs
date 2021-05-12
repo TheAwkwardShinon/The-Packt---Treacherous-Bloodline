@@ -135,6 +135,54 @@ namespace ThePackt
                 }
             }
         }
+        
+        public override void OnEvent(StartHealingEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.SetIsBeingHealed(true);
+                }
+                else {
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = StartHealingEvent.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.SetIsBeingHealed(true);
+                }
+            }
+        }
+
+         public override void OnEvent(HealEvent evnt)
+        {
+             if (BoltNetwork.IsServer)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.Heal();
+                }
+                else {
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = HealEvent.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.Heal();
+                }
+            }
+        }
+
+
 
         #endregion
 

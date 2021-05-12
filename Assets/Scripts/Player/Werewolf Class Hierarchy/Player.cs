@@ -45,6 +45,9 @@ namespace ThePackt{
 
         #region flags
         protected bool _isHuman = true;
+
+        public  bool _isDowned {get; private set;} = false;
+        public  bool _isBeingHealed {get; private set;} = false;
         protected bool weakActive = false;
         protected bool mediumActive = false;
         protected bool attackModifier = false;
@@ -165,6 +168,8 @@ namespace ThePackt{
 
             state.AddCallback("Health", HealthCallback);
             state.AddCallback("Nickname", NicknameCallback);
+            state.AddCallback("isDowned", IsDownedCallback);
+            state.AddCallback("isBeingHealed", IsBeingHealedCallback);
 
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
@@ -277,6 +282,16 @@ namespace ThePackt{
         }
 
         ///<summary>
+        /// heal the player by 30% of his mac hp
+        ///</summary>
+        public void Heal(){
+            if(entity.IsOwner){
+                state.Health = _playerData.maxLifePoints * 0.3f;
+                SetIsBeingHealed(false);
+            }
+        }
+
+        ///<summary>
         /// add experience and spendable time to the player
         ///</summary>
         public void ObtainRewards(float exp, float time)
@@ -309,18 +324,27 @@ namespace ThePackt{
         private void HealthCallback()
         {
             _playerData.currentLifePoints = state.Health;
-            //Debug.Log("[HEALTH] callback. Owner: " + entity.IsOwner + " New currentLifePoints: " + _playerData.currentLifePoints);
-            //Debug.Log("[HEALTH] callback. Slider of " + healthSlider.gameObject.transform.parent.gameObject.transform.parent.gameObject.name);
-
             healthSlider.value = _playerData.currentLifePoints;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
 
             if (entity.IsOwner && _playerData.currentLifePoints <= 0)
             {
-                if(_stateMachine._currentState.isDowned())
+                if(_isDowned)
                     Die();
-                else _stateMachine._currentState.SetDowned(true);
+                else{
+                    state.isDowned = true;
+                }
             }
+        }
+
+         private void IsDownedCallback()
+        {
+            _isDowned = state.isDowned;
+        }
+
+        private void IsBeingHealedCallback()
+        {
+            _isBeingHealed = state.isBeingHealed;
         }
 
         ///<summary>
@@ -381,8 +405,8 @@ namespace ThePackt{
             Collider2D col = Physics2D.OverlapCircle(transform.position,6f,_playerData.WhatIsPlayer);
             if(col != null){
                 if(col.gameObject != this.gameObject && 
-                    col.gameObject.GetComponent<Player>()._stateMachine._currentState.isDowned() &&
-                    !col.gameObject.GetComponent<Player>()._playerData.healing){
+                    col.gameObject.GetComponent<Player>()._isDowned &&
+                    !col.gameObject.GetComponent<Player>()._isBeingHealed){
                         Debug.LogError("[DEBUG] found a downed player");
                         return true;
                 }
@@ -567,6 +591,14 @@ namespace ThePackt{
         public void SetAttackModifierActive(bool value){
             attackModifier = value;
         }
+
+        public void SetIsBeingHealed(bool value){
+            if(entity.IsOwner)
+                state.isBeingHealed = value;
+        }
+
+        
+
 
         #endregion
 

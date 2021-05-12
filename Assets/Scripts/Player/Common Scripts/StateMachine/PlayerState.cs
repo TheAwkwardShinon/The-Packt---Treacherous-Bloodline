@@ -19,7 +19,7 @@ namespace ThePackt{
 
         protected bool _detransformationInput = false;
 
-        protected bool _downed = false;
+
 
         
         public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName){
@@ -64,13 +64,9 @@ namespace ThePackt{
 
        
         public virtual void Checks(){
-           /*Debug.LogWarning("detarnsformation input = "+_detransformationInput +"is human = "+_player.GetIsHuman()+"time = "+Time.time+" startTime + transformduration = "+
-                        (_player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration)+ " startime = "+_player.GetPlayerData()._startTransformationTime);*/
+            
             if(!_player.GetIsHuman()){
                 if(Time.time > _player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration){
-                    //Debug.LogError("time = "+Time.time+" startTime + transformduration = "+
-                        //_player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration+ " startime = "+_player.GetPlayerData()._startTransformationTime);
-                    //_player._stateMachine.ChangeState(_player._detransformationState);
                     _detransformationInput = true;
                 }
             }
@@ -125,13 +121,7 @@ namespace ThePackt{
             }
         }
 
-        public void SetDowned(bool value){
-            _downed = value;
-        }
-        
-        public bool isDowned(){
-            return _downed;
-        }
+  
         public virtual void AnimationTrigger() { }
 
         public virtual void AnimationFinishTrigger() => _isAnimationFinished = true;
