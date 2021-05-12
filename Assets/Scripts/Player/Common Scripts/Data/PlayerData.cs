@@ -58,6 +58,7 @@ namespace ThePackt{
         public LayerMask whatIsCeiling;
         public LayerMask whatIsWall;
         public LayerMask whatIsLedge;
+        public LayerMask whatIsRoom;
 
         public LayerMask WhatIsPlayer;
         public LayerMask WhatIsEnemy;

@@ -29,7 +29,10 @@ MonoBehaviour:
   crouchMovementVelocity: 5
   crouchColliderHeight: 0.8
   standColliderHeight: 1.092805
+  standColliderWidth: 0.8
   ceilingHeight: 0.1
+  downColliderHeight: 0.4
+  downColliderWidth: 1.3
   damageMultiplier: 0
   powerBaseWerewolf: 10
   rangeBaseWerewolf: 0.35
@@ -48,6 +51,9 @@ MonoBehaviour:
   whatIsLedge:
     serializedVersion: 2
     m_Bits: 0
+  whatIsRoom:
+    serializedVersion: 2
+    m_Bits: 2048
   WhatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -63,6 +69,7 @@ MonoBehaviour:
   currentLifePoints: 100
   transformStateDuration: 10
   _startTransformationTime: 0
+  healing: 0
   humanFace: {fileID: 21300118, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
   humanHat: {fileID: 21300032, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
   humanArms: {fileID: 21300066, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}

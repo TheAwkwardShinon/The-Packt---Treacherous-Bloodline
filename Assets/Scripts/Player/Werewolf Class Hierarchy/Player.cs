@@ -196,6 +196,7 @@ namespace ThePackt{
 
             healthSlider.value = _playerData.currentLifePoints;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
+            //CheckIfOtherPlayerInRangeMayBeHealed();
         }
 
         private void Update()
@@ -204,6 +205,9 @@ namespace ThePackt{
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
+
+            
+            
         }
 
         #endregion
@@ -402,17 +406,24 @@ namespace ThePackt{
         /// method that returns true if the player is near a downed player that needs healing, false instead
         ///</summary>
         public bool CheckIfOtherPlayerInRangeMayBeHealed(){
-            Collider2D col = Physics2D.OverlapCircle(transform.position,6f,_playerData.WhatIsPlayer);
+            Collider2D col = Physics2D.OverlapCircle(transform.position,12f,_playerData.WhatIsPlayer);
             if(col != null){
                 if(col.gameObject != this.gameObject && 
                     col.gameObject.GetComponent<Player>()._isDowned &&
                     !col.gameObject.GetComponent<Player>()._isBeingHealed){
                         Debug.LogError("[DEBUG] found a downed player");
+                        if(!_interactTooltip.activeSelf){
+                            _interactTooltip.transform.position = new Vector2(col.transform.position.x,col.transform.position.y + 1f);
+                              _interactTooltip.SetActive(true);
+                        }
                         return true;
                 }
             }
+            if(_interactTooltip.activeSelf)
+                _interactTooltip.SetActive(false);
             return false;
         }
+
 
         ///<summary>
         ///method that returns true if the player is touching a wall (in the direction that he's facing), false instead
@@ -448,13 +459,15 @@ namespace ThePackt{
         ///<summary>
         /// if player has not an active quest, the methods trigger the quest to be initialized and ready
         ///</summary>
-        private void AcceptQuest(Quest quest)
+        public void AcceptQuest(Quest quest)
         {
+            Debug.LogError("[QUEST] ACCEPTED");
+            /*
             if (!hasActiveQuest)
             {
                 Debug.Log("[QUEST] player accepted the quest " + quest._title);
                 quest.Accept();
-            }
+            }*/
         }
 
         ///<summary>
@@ -497,6 +510,7 @@ namespace ThePackt{
         {
             _facingDirection *= -1;
             transform.Rotate(0.0f, 180.0f, 0.0f);
+            _interactTooltip.transform.Rotate(0.0f, 180.0f, 0.0f);
             canvas.transform.rotation = Quaternion.identity;
         }
         #endregion

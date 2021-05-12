@@ -8,6 +8,9 @@ namespace ThePackt{
     {
         #region variables
         private float _timeToInteract = 4.018f;
+        private GameObject _interactionTarget;
+
+        private string _interactionType;
         #endregion
 
         #region methods
@@ -24,6 +27,11 @@ namespace ThePackt{
         {
             base.Enter();
             _player._inputHandler.UseInteractInput();
+            if(_interactionType.Equals("player")){
+                var evnt = StartHealingEvent.Create(BoltNetwork.Server);
+                evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
+                evnt.Send();
+            }
         }
 
         public override void Exit()
@@ -40,28 +48,15 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
-            ///TODO CHECK INTERACTION TYPE
-
-            /// acceptQuest
-            //TODO if i am healing a player, if ability is not done, resta li per TERRA!!! XDXDXDXDXDXD !111!111
-            // else trigger is " stand state"
-            
-            //if i am dead while i was interacting adn ability was not done, force death state.
-
-            //on enter if target = player
-           /* var evnt = StartHealingEvent.Create(BoltNetwork.Server);
-            evnt.TargetPlayerNetworkID = _player.entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
-            evnt.Send();
-
-           // on exit if target was player
-            var evnt = HealEvent.Create(BoltNetwork.Server);
-            evnt.TargetPlayerNetworkID = _player.entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
-            evnt.Send();*/
-
-
+            //TODO STOP HEALING VBOLT EVENT ON Interruption
 
             if(Time.time > _startTime + _timeToInteract){
-                //TODO once the animation finished correctly, trigger Quest start/accepted functions
+                if(_interactionType.Equals("player")){
+                    var evnt = HealEvent.Create(BoltNetwork.Server);
+                    evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
+                    evnt.Send();
+                }
+                else _player.AcceptQuest(_interactionTarget.GetComponent<Quest>());
                 _isAbilityDone = true;
             }
         }
@@ -72,12 +67,45 @@ namespace ThePackt{
         }
 
         public bool CheckIfCanInteract(){
-            if(_player.CheckIfOtherPlayerInRangeMayBeHealed())
-                return true;
-            return true; //TODO check if can interact with downed player and so heals him, or if is within a quest room
+           Collider2D[] col = Physics2D.OverlapCircleAll(_player.transform.position,12f, LayerMask.GetMask(
+               LayerMask.LayerToName(_player.GetPlayerData().WhatIsPlayer),LayerMask.LayerToName(_player.GetPlayerData().whatIsRoom)));
+            if(col != null){
+                foreach(Collider2D hit in col){
+                    Debug.LogError("[INTERACT CHECK] hit object layermask is = "+hit.gameObject.layer);
+                    if(hit.gameObject.layer == _player.GetPlayerData().WhatIsPlayer){
+                        Debug.LogError("[INTERACT CHECK] layermask = player ("+_player.GetPlayerData().WhatIsPlayer+")");
+                        if(hit.gameObject != _player.gameObject && hit.gameObject.GetComponent<Player>()._isDowned &&
+                                !hit.gameObject.GetComponent<Player>()._isBeingHealed){
+                            _interactionType = "player";
+                            _interactionTarget = hit.gameObject;
+                            if(!_player._interactTooltip.activeSelf){
+                                _player._interactTooltip.transform.position = new Vector2(hit.transform.position.x,hit.transform.position.y + 2f);
+                                _player._interactTooltip.SetActive(true);
+                            }
+                            return true;   
+                        }
+                        else continue;
+                    }else if(hit.gameObject.layer == _player.GetPlayerData().whatIsRoom){
+                        Debug.LogError("[INTERACT CHECK] layermask = Room("+_player.GetPlayerData().whatIsRoom+")");
+                        //TODO IF THE QUEST IS NOT ALREADY ACCEPTED.
+                        _interactionType = "quest";
+                        _interactionTarget = hit.gameObject;
+                        if(_player._interactTooltip.activeSelf)
+                            _player._interactTooltip.SetActive(false);
+                        return true;
+                    }
+                    else continue;
+                }
+                if(_player._interactTooltip.activeSelf)
+                    _player._interactTooltip.SetActive(false);
+                return false;
+            }
+            else{
+                if(_player._interactTooltip.activeSelf)
+                        _player._interactTooltip.SetActive(false);
+                 return false;
+            }
         }
-
         #endregion
-
     }
 }

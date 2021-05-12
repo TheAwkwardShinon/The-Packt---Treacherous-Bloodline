@@ -42,7 +42,6 @@ namespace ThePackt{
             _isTouchingWall = _player.CheckIfTouchingWall();
             _isTouchingLedge = _player.CheckIfTouchingLedge();
             _isTouchingCeiling = _player.CheckForCeiling();
-            _isNearDownedPlayer = _player.CheckIfOtherPlayerInRangeMayBeHealed();
            
         }
 
@@ -55,16 +54,12 @@ namespace ThePackt{
         public override void Exit()
         {
             base.Exit();
-            _player._interactTooltip.SetActive(false);
+            
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            if(!_player._interactTooltip.activeSelf)
-                if(_isNearDownedPlayer)
-                    _player._interactTooltip.SetActive(true);
 
            // Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
             //Debug.Log("attack input state " + _attackInput);
