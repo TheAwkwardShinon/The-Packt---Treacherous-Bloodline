@@ -12,6 +12,8 @@ namespace ThePackt{
         private Player _playerScript = null;
         private string _disconnectReason = null;
 
+        private int _characterIndex = 0;
+
         public string GetCharacterSelected(){
             return _characterSelected;
         }
@@ -30,8 +32,16 @@ namespace ThePackt{
             return _playerScript;
         }
 
+        public int GetCharacterIndex(){
+            return _characterIndex;
+        }
+
         public void SetNickname(string name){
             _playerNickname = name;
+        }
+
+        public void SetCharacterIndex(int index){
+            _characterIndex = index;
         }
 
         public void SetCharacterSelected(string character){
@@ -52,8 +62,10 @@ namespace ThePackt{
         public void Reset(){
             _characterSelected = "none";
             _playerNickname = "none";
+            _characterIndex = 0;
             _playerScript = null;
             _disconnectReason = null;
+
         }
     }
 }
