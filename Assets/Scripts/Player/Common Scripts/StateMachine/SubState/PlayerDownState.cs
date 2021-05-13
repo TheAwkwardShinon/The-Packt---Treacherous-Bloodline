@@ -35,7 +35,7 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if(_player.state.Health >= _player.GetPlayerData().maxLifePoints){
+            if(_player.state.Health >= _player.GetPlayerData().maxLifePoints * 0.3f){
                  Debug.LogError("[DOWNED STATE] ---> IDLE");
                 _isStand = true;
                 _player.state.isDowned = false;

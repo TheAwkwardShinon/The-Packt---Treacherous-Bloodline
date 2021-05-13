@@ -36,7 +36,7 @@ namespace ThePackt{
             _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
             _player.CheckIfShouldFlip(_xInput);
 
-            if(_player.state.Health >= _player.GetPlayerData().maxLifePoints){
+            if(_player.state.Health >= _player.GetPlayerData().maxLifePoints * 0.3f){
                 Debug.LogError("[DOWNED MOVE STATE] ---> IDLE");
                 _player.state.isDowned = false;
                 _isStand = true;
