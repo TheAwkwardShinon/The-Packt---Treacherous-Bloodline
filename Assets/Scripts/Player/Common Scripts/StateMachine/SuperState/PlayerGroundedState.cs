@@ -61,9 +61,6 @@ namespace ThePackt{
         {
             base.LogicUpdate();
 
-           // Debug.Log("[GROUNDED STATE] is grounded? "+ _isGrounded);
-            //Debug.Log("attack input state " + _attackInput);
-
             _xInput = _player._inputHandler._normInputX;
             _yInput = _player._inputHandler._normInputY;
             _jumpInput = _player._inputHandler._jumpInput;;
@@ -71,8 +68,7 @@ namespace ThePackt{
             _transformInput = _player._inputHandler._transformInput;
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             _interactInput = _player._inputHandler._interactInput;
-            if(_interactInput)
-                Debug.Log("[GROUNDED STATE] intract input received");
+            _player._interactState.CheckIfCanInteract();
 
             _isTouchingCeiling = _player.CheckForCeiling();
             _isGrounded = _player.CheckIfGrounded();

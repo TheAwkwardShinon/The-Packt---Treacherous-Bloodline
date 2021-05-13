@@ -163,25 +163,30 @@ namespace ThePackt
         {
              if (BoltNetwork.IsServer)
             {
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+
+                 if(entity != null)
+                {
+                    if (entity.IsOwner)
+                    {
+                        Debug.Log("[NETWORKLOG] server was hit, applying damage");
+                        _player.Heal();
+                    }
+                    else
+                    {
+                        var newEvnt = HealEvent.Create(entity.Source);
+                        newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                        newEvnt.Send();
+                    }
+                }
+            }else{
                 if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
                 {
                     _player.Heal();
-                }
-                else {
-                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
-                    var newEvnt = HealEvent.Create(entity.Source);
-                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
-                    newEvnt.Send();
-                }
-            }
-            else{
-                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
-                {
-                    _player.Heal();
+                     Debug.Log("[INTERACTION] HEAL CALLBACK CORRECTLY CALLED");
                 }
             }
         }
-
 
 
         #endregion
@@ -195,3 +200,30 @@ namespace ThePackt
         #endregion
     }
 }
+
+
+/* public override void OnEvent(HealEvent evnt)
+        {
+             if (BoltNetwork.IsServer)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    Debug.Log("[INTERACTION] HEAL CALLBACK CORRECTLY CALLED");
+                    _player.Heal();
+                }
+                else {
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = HealEvent.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.Heal();
+                     Debug.Log("[INTERACTION] HEAL CALLBACK CORRECTLY CALLED");
+                }
+            }
+        }
+*/

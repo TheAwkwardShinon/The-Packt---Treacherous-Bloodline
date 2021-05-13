@@ -32,6 +32,7 @@ namespace ThePackt{
                 evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
                 evnt.Send();
             }
+            _player._interactTooltip.SetActive(false);
         }
 
         public override void Exit()
@@ -52,6 +53,7 @@ namespace ThePackt{
 
             if(Time.time > _startTime + _timeToInteract){
                 if(_interactionType.Equals("player")){
+                    Debug.LogError("[INTERACTION STATE] heal event started");
                     var evnt = HealEvent.Create(BoltNetwork.Server);
                     evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
                     evnt.Send();
@@ -67,13 +69,13 @@ namespace ThePackt{
         }
 
         public bool CheckIfCanInteract(){
-           Collider2D[] col = Physics2D.OverlapCircleAll(_player.transform.position,12f, LayerMask.GetMask(
-               LayerMask.LayerToName(_player.GetPlayerData().WhatIsPlayer),LayerMask.LayerToName(_player.GetPlayerData().whatIsRoom)));
+           Collider2D[] col = Physics2D.OverlapCircleAll(_player.transform.position,8f, 
+               _player.GetPlayerData().WhatIsPlayer | _player.GetPlayerData().whatIsRoom);
             if(col != null){
+                
                 foreach(Collider2D hit in col){
-                    Debug.LogError("[INTERACT CHECK] hit object layermask is = "+hit.gameObject.layer);
-                    if(hit.gameObject.layer == _player.GetPlayerData().WhatIsPlayer){
-                        Debug.LogError("[INTERACT CHECK] layermask = player ("+_player.GetPlayerData().WhatIsPlayer+")");
+                   // Debug.LogError("[INTERACT CHECK] hit object layermask is = "+LayerMask.LayerToName(hit.gameObject.layer));
+                    if(LayerMask.LayerToName(hit.gameObject.layer).Equals("Players")){
                         if(hit.gameObject != _player.gameObject && hit.gameObject.GetComponent<Player>()._isDowned &&
                                 !hit.gameObject.GetComponent<Player>()._isBeingHealed){
                             _interactionType = "player";
@@ -85,8 +87,7 @@ namespace ThePackt{
                             return true;   
                         }
                         else continue;
-                    }else if(hit.gameObject.layer == _player.GetPlayerData().whatIsRoom){
-                        Debug.LogError("[INTERACT CHECK] layermask = Room("+_player.GetPlayerData().whatIsRoom+")");
+                    }else if(LayerMask.LayerToName(hit.gameObject.layer).Equals("Room")){
                         //TODO IF THE QUEST IS NOT ALREADY ACCEPTED.
                         _interactionType = "quest";
                         _interactionTarget = hit.gameObject;

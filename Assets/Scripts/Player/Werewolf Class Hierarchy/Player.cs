@@ -290,6 +290,7 @@ namespace ThePackt{
         ///</summary>
         public void Heal(){
             if(entity.IsOwner){
+                Debug.LogError("[HEALED]");
                 state.Health = _playerData.maxLifePoints * 0.3f;
                 SetIsBeingHealed(false);
             }
