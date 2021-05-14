@@ -1017,6 +1017,7 @@ GameObject:
   - component: {fileID: 3384684059551268301}
   - component: {fileID: 1080764205480871369}
   - component: {fileID: 8193314174912258235}
+  - component: {fileID: 7415382496021919984}
   m_Layer: 10
   m_Name: Chara_03
   m_TagString: Player
@@ -1321,11 +1322,35 @@ MonoBehaviour:
     m_ActionId: 77d306c3-d23d-4f8a-98c3-67a67c89d397
     m_ActionName: Gameplay/Transformation[/DualShock4GamepadHID/buttonNorth,/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7415382496021919984}
+        m_TargetAssemblyTypeName: ThePackt.InGamUi_Manager, Assembly-CSharp
+        m_MethodName: OnChangeTabInputLeft
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 9a370519-8f1e-4e26-9dde-8d256c1a6f7a
     m_ActionName: UserInterface/SwitchTabLeft[/DualShock4GamepadHID/leftShoulder,/Keyboard/q]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7415382496021919984}
+        m_TargetAssemblyTypeName: ThePackt.InGamUi_Manager, Assembly-CSharp
+        m_MethodName: OnChangeTabInputRight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 452063da-3d5f-4213-9a8e-d820ee755b04
     m_ActionName: UserInterface/SwitchTabRight[/DualShock4GamepadHID/rightShoulder,/Keyboard/e]
   - m_PersistentCalls:
@@ -1341,7 +1366,19 @@ MonoBehaviour:
     m_ActionId: 79de1627-cb62-466c-8359-21c9be3a2682
     m_ActionName: UserInterface/Deselect[/DualShock4GamepadHID/buttonEast]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7415382496021919984}
+        m_TargetAssemblyTypeName: ThePackt.InGamUi_Manager, Assembly-CSharp
+        m_MethodName: OnNavigateThroughUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 075e3bd1-09fd-4012-8756-5a44cd15b039
     m_ActionName: UserInterface/Navigation[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/dpad]
   - m_PersistentCalls:
@@ -1360,6 +1397,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 720fba43-23aa-47d3-aae2-a360f72d20bb
     m_ActionName: Gameplay/Interact[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3384684059551268301}
+        m_TargetAssemblyTypeName: ThePackt.newInputHandler, Assembly-CSharp
+        m_MethodName: OnActivateUIInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 41051174-f1c7-4c19-8dff-cd1108b9f564
+    m_ActionName: Gameplay/Activate UI[/Keyboard/escape,/Keyboard/tab,/DualShock4GamepadHID/start,/DualShock4GamepadHID/touchpadButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
@@ -1394,6 +1447,18 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 1
   _entityReplicationFilterQueryOption: 1
+--- !u!114 &7415382496021919984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649999087641368569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a704d4b4685ca45bcf9e1d30fb14df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6971262663411687794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,11 +2017,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
---- !u!224 &690350350571956739 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
-  m_PrefabInstance: {fileID: 371322621453155334}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &690350350142763907 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 915266501523230597, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
@@ -1981,6 +2041,11 @@ GameObject:
 --- !u!223 &690350350571956738 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 915266501028632068, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+  m_PrefabInstance: {fileID: 371322621453155334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &690350350571956739 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
   m_PrefabInstance: {fileID: 371322621453155334}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &824149240707662303

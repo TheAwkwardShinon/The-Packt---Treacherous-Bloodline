@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace ThePackt{
@@ -12,6 +13,11 @@ namespace ThePackt{
         private PlayerInput playerInputComponent;
         // private PlayerInputClass playerInputObject;
         private Player player;
+
+        private GameObject _menuInGameUI;
+
+        private tabButton _firstTabSelected;
+        private EventSystem _eventSystem;
 
         public Vector2 _rawMovementInput { get; private set; }
         public Vector2 _raw_dashDirectionInput { get; private set; }
@@ -47,6 +53,10 @@ namespace ThePackt{
         #region methods
 
         #region core methods
+
+        private void OnEnable(){
+            
+        }
         private void Start()
         {
             player = GetComponent<Player>();
@@ -60,6 +70,9 @@ namespace ThePackt{
 
             //int count = Enum.GetValues(typeof(CombatInputs)).Length;
             //_attackInputs = new bool[count];
+            _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
+            Debug.Log(_menuInGameUI.name);
+            _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         }
 
         private void Update()
@@ -67,6 +80,11 @@ namespace ThePackt{
             CheckJumpInputHoldTime();
             CheckDashInputHoldTime();
             CheckBaseAttackInputHoldTime();
+            if(_menuInGameUI == null){
+                _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
+                _firstTabSelected = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetFirstTab();
+                _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            }
         }
 
         #endregion
@@ -218,6 +236,20 @@ namespace ThePackt{
                     _attackInputsStop[Constants.BASE] = false;
                     _attackInputsStartTime[Constants.BASE] = Time.time;
                 }
+            }
+            else if (context.canceled)
+            {
+                _attackInputsStop[Constants.BASE] = true;
+            }
+        }
+
+         public void OnActivateUIInput(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {   
+                player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UserInterface");
+                _menuInGameUI.SetActive(true);
+                _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().OnTabSelected(_firstTabSelected);                
             }
             else if (context.canceled)
             {
