@@ -78,17 +78,12 @@ namespace ThePackt
             {
                 _timerJoin = false;
 
-                Debug.Log("[QUEST] joined quest " + _title + ". timerjoin: " + _timerJoin + "; Time: " + Time.time + "; sum: " + _enteringTime + _autoJoinTime);
-
                 Join(_localPlayer.entity);
             }
 
             if (_timerAbandon && Time.time >= _leavingTime + _autoAbandonTime)
             {
                 _timerAbandon = false;
-
-                Debug.Log("[QUEST] abandoned quest " + _title + ". timerabandon: " + _timerAbandon + "; Time: " + Time.time + "; sum: " + _leavingTime + _autoAbandonTime);
-                //Debug.Log("[QUESTTIMER] reactivation. timerend: " + _timerEnd + "; Time: " + Time.time + "; cooldown: " + _cooldown);
 
                 Abandon(_localPlayer.entity);
             }
