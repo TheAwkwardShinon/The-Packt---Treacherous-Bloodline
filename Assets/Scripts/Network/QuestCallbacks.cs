@@ -36,9 +36,10 @@ namespace ThePackt
 
                 //find and start the quest
                 BoltEntity questEntity = BoltNetwork.FindEntity(evnt.QuestNetworkID);
-                Quest quest = questEntity.GetComponent<Quest>();
+                
+                Quest quest = questEntity.gameObject.GetComponent<Quest>();
 
-                if(quest.GetQuestState() == Constants.READY)
+                if (quest.GetQuestState() == Constants.READY)
                 {
                     quest.SetQuestState(Constants.STARTED);
 
@@ -91,13 +92,20 @@ namespace ThePackt
                 Debug.Log("[QUEST] server received abandoned event. abandoning player: " + evnt.AbandoningPlayerNetworkID);
 
                 BoltEntity questEntity = BoltNetwork.FindEntity(evnt.QuestNetworkID);
-                Quest quest = questEntity.GetComponent<Quest>();
+                Quest quest = questEntity.gameObject.GetComponent<Quest>();
 
                 BoltEntity abandoningPlayer = BoltNetwork.FindEntity(evnt.AbandoningPlayerNetworkID);
 
                 if(quest.GetQuestState() == Constants.STARTED)
                 {
                     quest.RemovePlayer(abandoningPlayer);
+
+                    string s = "";
+                    foreach (BoltEntity e in quest.GetPlayers())
+                    {
+                        s += e.NetworkId + ", ";
+                    }
+                    Debug.Log("[QUEST] partecipating: " + s);
 
                     if (quest.GetPlayers().Count == 0)
                     {
@@ -120,13 +128,20 @@ namespace ThePackt
                 Debug.Log("[QUEST] server received joined event. joining player: " + evnt.JoiningPlayerNetworkID);
 
                 BoltEntity questEntity = BoltNetwork.FindEntity(evnt.QuestNetworkID);
-                Quest quest = questEntity.GetComponent<Quest>();
+                Quest quest = questEntity.gameObject.GetComponent<Quest>();
 
                 BoltEntity joiningPlayer = BoltNetwork.FindEntity(evnt.JoiningPlayerNetworkID);
 
                 if (quest.GetQuestState() == Constants.STARTED)
                 {
                     quest.AddPlayer(joiningPlayer);
+
+                    string s = "";
+                    foreach (BoltEntity e in quest.GetPlayers())
+                    {
+                        s += e.NetworkId + ", ";
+                    }
+                    Debug.Log("[QUEST] partecipating: " + s);
                 }
             }
         }

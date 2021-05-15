@@ -271,17 +271,6 @@
                 },
                 {
                     "name": "",
-                    "id": "698b0d65-f760-4835-9fef-b7329807bb01",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Activate UI",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1a6834b8-ce20-456d-aaf4-3370086ca2df",
                     "path": "<Gamepad>/start",
                     "interactions": "",

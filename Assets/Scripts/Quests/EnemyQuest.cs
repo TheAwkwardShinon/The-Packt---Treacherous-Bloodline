@@ -8,6 +8,7 @@ namespace ThePackt
         protected CharacterSelectionData _selectedData;
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private Transform _spawnPoint;
+        private BoltEntity _spawnedEnemy;
 
         #region methods
         private void Awake()
@@ -18,22 +19,35 @@ namespace ThePackt
 
             _startAction = SpawnEnemy;
 
-            _localPlayer = _selectedData.GetPlayerScript();
+            _failAction = DespawnEnemy;
 
-            _startAction();
+            _localPlayer = _selectedData.GetPlayerScript();
         }
 
         protected void SpawnEnemy()
         {
             if (BoltNetwork.IsServer)
             {
-                BoltNetwork.Instantiate(_enemyPrefab, _spawnPoint.position, _spawnPoint.rotation);
+                _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefab, _spawnPoint.position, _spawnPoint.rotation);
             }
         }
 
         protected bool IsEnemyDead()
         {
-            return true;
+            if(!_spawnedEnemy.IsAttached)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected void DespawnEnemy()
+        {
+            if (_spawnedEnemy.IsAttached)
+            {
+                BoltNetwork.Destroy(_spawnedEnemy);
+            }
         }
         #endregion
     }

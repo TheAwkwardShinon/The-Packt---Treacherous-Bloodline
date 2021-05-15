@@ -205,9 +205,6 @@ namespace ThePackt{
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
-
-            
-            
         }
 
         #endregion
@@ -461,14 +458,12 @@ namespace ThePackt{
         /// if player has not an active quest, the methods trigger the quest to be initialized and ready
         ///</summary>
         public void AcceptQuest(Quest quest)
-        {
-            Debug.LogError("[QUEST] ACCEPTED");
-            /*
+        {   
             if (!hasActiveQuest)
             {
                 Debug.Log("[QUEST] player accepted the quest " + quest._title);
                 quest.Accept();
-            }*/
+            }
         }
 
         ///<summary>
