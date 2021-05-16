@@ -39,6 +39,7 @@ namespace ThePackt
                 if (ent.IsOwner && ent.gameObject.GetComponent<Player>() != null)
                 {
                     _player = _selectedData.GetPlayerScript();
+                    _player.ActivateFogCircle();
 
                     foreach (Utils.VectorAssociation assoc in playersSpawnPositions)
                     {

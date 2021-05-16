@@ -944,7 +944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4814509780407142671}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0, z: 0}
+  m_LocalPosition: {x: 0.02, y: -0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3539249949499421977}
@@ -1054,6 +1054,7 @@ Transform:
   - {fileID: 690350350571956739}
   - {fileID: 619020485657458756}
   - {fileID: 5801603802447404748}
+  - {fileID: 4090932898342883606}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1141,6 +1142,7 @@ MonoBehaviour:
   _ceilingCheck: {fileID: 3806655669083619216}
   _attackPoint: {fileID: 1531968114984286749}
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
+  _fogCircle: {fileID: 7037150400093548404}
   canvas: {fileID: 690350350571956738}
   nicknameText: {fileID: 7065724407605014184}
   healthBar: {fileID: 690350349457209223}
@@ -1552,6 +1554,88 @@ SpriteRenderer:
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.73, y: 0.48}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &7037150400093548404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4090932898342883606}
+  - component: {fileID: 8933251949325971477}
+  m_Layer: 12
+  m_Name: FogOfWarCircle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4090932898342883606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037150400093548404}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 8, y: 8, z: 1.4285713}
+  m_Children: []
+  m_Father: {fileID: 3539249949499421977}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &8933251949325971477
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7037150400093548404}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: bd71160283d0e874aad543f87614c934, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 4.5, y: 4.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2033,6 +2117,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+--- !u!223 &690350350571956738 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 915266501028632068, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+  m_PrefabInstance: {fileID: 371322621453155334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &690350349457209223 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 915266501911415681, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+  m_PrefabInstance: {fileID: 371322621453155334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &690350350571956739 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+  m_PrefabInstance: {fileID: 371322621453155334}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &690350350142763907 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 915266501523230597, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
@@ -2047,21 +2146,6 @@ MonoBehaviour:
 --- !u!224 &690350349457209220 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 915266501911415682, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
-  m_PrefabInstance: {fileID: 371322621453155334}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &690350349457209223 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 915266501911415681, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
-  m_PrefabInstance: {fileID: 371322621453155334}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &690350350571956738 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 915266501028632068, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
-  m_PrefabInstance: {fileID: 371322621453155334}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &690350350571956739 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
   m_PrefabInstance: {fileID: 371322621453155334}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &824149240707662303
@@ -2165,14 +2249,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d35739abc42b94543b851d336c37fcd3, type: 3}
---- !u!1 &5801603802447404744 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6623837057832132375, guid: d35739abc42b94543b851d336c37fcd3, type: 3}
-  m_PrefabInstance: {fileID: 824149240707662303}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5801603802447404748 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6623837057832132371, guid: d35739abc42b94543b851d336c37fcd3, type: 3}
+  m_PrefabInstance: {fileID: 824149240707662303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5801603802447404744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6623837057832132375, guid: d35739abc42b94543b851d336c37fcd3, type: 3}
   m_PrefabInstance: {fileID: 824149240707662303}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2854768760291523955

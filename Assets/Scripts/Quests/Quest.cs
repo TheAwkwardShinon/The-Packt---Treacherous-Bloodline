@@ -7,6 +7,7 @@ namespace ThePackt
 {
     public delegate bool CompleteCondition();
     public delegate void StartAction();
+    public delegate void FailAction();
 
     public class Quest : Bolt.EntityBehaviour<IQuestState>
     {
@@ -21,8 +22,8 @@ namespace ThePackt
 
         protected float _enteringTime;
         protected float _leavingTime;
-        protected float _autoJoinTime = 5.0f;
-        protected float _autoAbandonTime = 5.0f;
+        protected float _autoJoinTime;
+        protected float _autoAbandonTime;
         protected bool _timerJoin;
         protected bool _timerAbandon;
 
@@ -37,6 +38,7 @@ namespace ThePackt
 
         protected CompleteCondition _completeCondition;
         protected StartAction _startAction;
+        protected FailAction _failAction;
         #endregion
 
 
@@ -48,10 +50,17 @@ namespace ThePackt
             _playersInRoom = new List<BoltEntity>();
             _playersPartecipating = new List<BoltEntity>();
 
-            _state = Constants.READY;
+            if (entity.IsOwner)
+            {
+                state.State = Constants.READY;
+            }
 
             _timerJoin = false;
             _timerAbandon = false;
+
+            _cooldown = 15.0f;
+            _autoJoinTime = 5.0f;
+            _autoAbandonTime = 5.0f;
 
             state.AddCallback("State", StateCallback);
         }
@@ -63,22 +72,20 @@ namespace ThePackt
             {
                 s += e.NetworkId + ", ";
             }
-            Debug.Log("[QUESTA] in room: " + s);
+            //Debug.Log("[QUESTA] in room: " + s);
 
-            if(_timerJoin && Time.time >= _enteringTime + _autoJoinTime)
+            if (_timerJoin && Time.time >= _enteringTime + _autoJoinTime)
             {
-                Debug.Log("[QUEST] joined quest " + _title);
+                _timerJoin = false;
 
                 Join(_localPlayer.entity);
-                _timerJoin = false;
             }
 
             if (_timerAbandon && Time.time >= _leavingTime + _autoAbandonTime)
             {
-                Debug.Log("[QUEST] abandoned quest " + _title);
+                _timerAbandon = false;
 
                 Abandon(_localPlayer.entity);
-                _timerAbandon = false;
             }
         }
 
@@ -96,6 +103,7 @@ namespace ThePackt
             }
             else
             {
+                //Debug.Log("[QUESTTIMER] reactivation. timerend: " + _timerEnd + "; Time: " + Time.time + "; cooldown: " + _cooldown);
                 if (_timerEnd && Time.time >= _endTime + _cooldown)
                 {
                     Debug.Log("[QUEST] quest reactivated " + _title);
@@ -114,10 +122,23 @@ namespace ThePackt
             {
                 //send quest start notification to the server passing the bolt network id of the quest
 
-                Debug.Log("[QUEST] accepted event from client to server for quest " + entity.NetworkId);
-                QuestAcceptedEvent evnt = QuestAcceptedEvent.Create(BoltNetwork.Server);
-                evnt.QuestNetworkID = entity.NetworkId;
-                evnt.Send();
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[QUEST] server accepted quest");
+                    SetQuestState(Constants.STARTED);
+                }
+                else{
+
+                    Debug.Log("[QUEST] accepted event from client to server for quest " + entity.NetworkId);
+
+                    QuestAcceptedEvent evnt = QuestAcceptedEvent.Create(BoltNetwork.Server);
+                    evnt.QuestNetworkID = entity.NetworkId;
+                    evnt.Send();
+                }
+            }
+            else
+            {
+                Debug.Log("[QUEST] not ready");
             }
         }
 
@@ -127,7 +148,14 @@ namespace ThePackt
             {
                 Debug.Log("[QUEST] server abandoned the quest " + _title);
 
-                _playersPartecipating.Remove(playerEntity);
+                RemovePlayer(playerEntity);
+
+                string s = "";
+                foreach (BoltEntity e in _playersPartecipating)
+                {
+                    s += e.NetworkId + ", ";
+                }
+                Debug.Log("[QUEST] partecipating: " + s);
 
                 if (_playersPartecipating.Count == 0)
                 {
@@ -158,7 +186,14 @@ namespace ThePackt
             {
                 Debug.Log("[QUEST] server joined the quest " + _title);
 
-                _playersPartecipating.Add(playerEntity);
+                AddPlayer(playerEntity);
+
+                string s = "";
+                foreach (BoltEntity e in _playersPartecipating)
+                {
+                    s += e.NetworkId + ", ";
+                }
+                Debug.Log("[QUEST] partecipating: " + s);
             }
             else
             {
@@ -199,13 +234,13 @@ namespace ThePackt
                     }
                     else
                     {
-                        if (_timerJoin)
+                        if (_timerAbandon)
                         {
                             Debug.Log("[QUEST] stopping timer for leaving local player");
 
                             //TODO hide timer for leaving the quest
 
-                            _timerJoin = false;
+                            _timerAbandon = false;
                         }
                     }
                 }
@@ -228,13 +263,13 @@ namespace ThePackt
                 {
                     if (!_localPlayerPartecipates)
                     {
-                        if (_timerAbandon)
+                        if (_timerJoin)
                         {
                             Debug.Log("[QUEST] stopping timer for joining local player");
 
                             //TODO hide timer for joining the quest
 
-                            _timerAbandon = false;
+                            _timerJoin = false;
                         }
                     }
                     else 
@@ -252,12 +287,18 @@ namespace ThePackt
 
         public void RemovePlayer(BoltEntity plyr)
         {
-            _playersPartecipating.Remove(plyr);
+            if (_playersPartecipating.Contains(plyr))
+            {
+                _playersPartecipating.Remove(plyr);
+            }
         }
 
         public void AddPlayer(BoltEntity plyr)
         {
-            _playersPartecipating.Add(plyr);
+            if (!_playersPartecipating.Contains(plyr))
+            {
+                _playersPartecipating.Add(plyr);
+            }
         }
 
         public bool CheckIfCompleted()
@@ -271,6 +312,11 @@ namespace ThePackt
 
             Debug.Log("[QUEST] " + _state);
 
+            if (BoltNetwork.IsServer && _state == Constants.STARTED)
+            {
+                _startAction();
+            }
+
             if (_state == Constants.STARTED && _playersInRoom.Contains(_localPlayer.entity))
             {
                 _localPlayer.JoinQuest(this);
@@ -282,6 +328,11 @@ namespace ThePackt
 
                 _endTime = Time.time;
                 _timerEnd = true;
+
+                if(_state == Constants.FAILED)
+                {
+                    _failAction();
+                }
             }
 
             if (_state == Constants.COMPLETED && _localPlayerPartecipates)
@@ -300,7 +351,7 @@ namespace ThePackt
 
         public void LocalPartecipate()
         {
-            _localPlayerPartecipates = true;
+            Join(_localPlayer.entity);
         }
         #endregion
 
@@ -312,23 +363,12 @@ namespace ThePackt
 
         public List<BoltEntity> GetPlayersInRoom()
         {
-            /*
-            Collider2D[] playersInRoom = Physics2D.OverlapAreaAll(_roomTopLeftCorner, _roomBottomRightCorner, LayerMask.GetMask("Players"), 0, 0);
-
-            _players = new List<BoltEntity>();
-            Debug.Log("[QUEST] number of players in room: " + playersInRoom.Length);
-            foreach (Collider2D coll in playersInRoom)
-            {
-                _players.Add(coll.gameObject.GetComponent<Player>().entity);
-            }
-            */
-
             return _playersInRoom;
         }
 
         public string GetQuestState()
         {
-            return state.State;
+            return _state;
         }
         #endregion
 

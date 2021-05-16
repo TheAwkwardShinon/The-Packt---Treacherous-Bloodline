@@ -22,6 +22,7 @@ namespace ThePackt{
         [SerializeField] private Transform _ceilingCheck;
         [SerializeField] protected Transform _attackPoint;
         [SerializeField] protected GameObject _bullet;
+        [SerializeField] protected GameObject _fogCircle;
 
         #endregion
 
@@ -205,9 +206,6 @@ namespace ThePackt{
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
-
-            
-            
         }
 
         #endregion
@@ -461,14 +459,12 @@ namespace ThePackt{
         /// if player has not an active quest, the methods trigger the quest to be initialized and ready
         ///</summary>
         public void AcceptQuest(Quest quest)
-        {
-            Debug.LogError("[QUEST] ACCEPTED");
-            /*
+        {   
             if (!hasActiveQuest)
             {
                 Debug.Log("[QUEST] player accepted the quest " + quest._title);
                 quest.Accept();
-            }*/
+            }
         }
 
         ///<summary>
@@ -514,6 +510,11 @@ namespace ThePackt{
             _interactTooltip.transform.Rotate(0.0f, 180.0f, 0.0f);
             canvas.transform.rotation = Quaternion.identity;
         }
+
+        public void ActivateFogCircle()
+        {
+            _fogCircle.SetActive(true);
+        } 
         #endregion
 
 
