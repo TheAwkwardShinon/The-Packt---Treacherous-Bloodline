@@ -6203,7 +6203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Square
+  m_Text: Button West
 --- !u!222 &370210473
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7599,7 +7599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: R1
+  m_Text: Right Shoulder
 --- !u!222 &471395963
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16499,7 +16499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Cross
+  m_Text: Button South
 --- !u!222 &1055864343
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22309,7 +22309,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Triangle
+  m_Text: Button North
 --- !u!222 &1411375334
 CanvasRenderer:
   m_ObjectHideFlags: 0

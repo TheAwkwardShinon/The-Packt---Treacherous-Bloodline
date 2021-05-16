@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UdpKit;
 using UnityEngine;
 using System;
@@ -34,23 +34,31 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
+            List<BoltEntity> players = new List<BoltEntity>();
             foreach (BoltEntity ent in BoltNetwork.Entities)
             {
-                if (ent.IsOwner && ent.gameObject.GetComponent<Player>() != null)
+                if(ent.gameObject.GetComponent<Player>() != null)
                 {
-                    _player = _selectedData.GetPlayerScript();
-                    _player.ActivateFogCircle();
+                    players.Add(ent);
 
-                    foreach (Utils.VectorAssociation assoc in playersSpawnPositions)
+                    if (ent.IsOwner)
                     {
-                        if (assoc.name == _selectedData.GetCharacterSelected())
+                        _player = _selectedData.GetPlayerScript();
+                        _player.ActivateFogCircle();
+
+                        foreach (Utils.VectorAssociation assoc in playersSpawnPositions)
                         {
-                            ent.gameObject.transform.position = assoc.position;
-                            Camera.main.GetComponent<CameraFollow>().SetFollowTransform(ent.gameObject.transform);
+                            if (assoc.name == _selectedData.GetCharacterSelected())
+                            {
+                                ent.gameObject.transform.position = assoc.position;
+                                Camera.main.GetComponent<CameraFollow>().SetFollowTransform(ent.gameObject.transform);
+                            }
                         }
                     }
                 }
             }
+
+            MainQuest.Instance.SetPlayers(players);
 
             //only the server spawns enemies for everyone
             if (BoltNetwork.IsServer)
@@ -136,7 +144,37 @@ namespace ThePackt
                 }
             }
         }
-        
+
+        public override void OnEvent(ObjectiveHitEvent evnt)
+        {
+            Debug.Log("[OBJECTIVE] objective hit with damage: " + evnt.Damage);
+
+            //if received by the server, apply damage to the objective with the network id stored in the event
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[NETWORKLOG] server received objective hit event");
+
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                Objective objective = entity.GetComponent<Objective>();
+                if (objective != null)
+                {
+                    objective.ApplyDamage(evnt.Damage);
+                }
+            }
+        }
+
+        public override void OnEvent(ImpostorEvent evnt)
+        {
+            Debug.Log("[MAIN] received impostor event");
+
+            if (_player.entity.NetworkId.Equals(evnt.ImpostorNetworkID))
+            {
+                Debug.Log("[MAIN] i'm the fucking impostor");
+
+                _player.SetIsImpostor(true);
+            }
+        }
+
         public override void OnEvent(StartHealingEvent evnt)
         {
             if (BoltNetwork.IsServer)

@@ -45,7 +45,7 @@ namespace ThePackt
 
         private void Die()
         {
-            Destroy(gameObject);
+            BoltNetwork.Destroy(gameObject);
         }
 
         //called when state.Health is modified -> we update the local health and do checks on it

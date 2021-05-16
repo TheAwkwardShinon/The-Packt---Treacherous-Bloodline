@@ -171,19 +171,25 @@ namespace ThePackt{
         ///<summary> 
         /// Callabck called when input system detect transformation input 
         ///</summary>
-        public void OnTransformationInput(InputAction.CallbackContext context){
-            if (context.started)
+        public void OnTransformationInput(InputAction.CallbackContext context)
+        {
+            MainQuest mainQuest = MainQuest.Instance;
+            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
             {
-                if(player.GetIsHuman()){
-                    _transformInput = true;
-                    _transformInputStop = false;
-                    _transformInputStartTime = Time.time;
+                if (context.started)
+                {
+                    if (player.GetIsHuman())
+                    {
+                        _transformInput = true;
+                        _transformInputStop = false;
+                        _transformInputStartTime = Time.time;
+                    }
                 }
-            }
 
-            if (context.canceled)
-            {
-                _transformInputStop = true;
+                if (context.canceled)
+                {
+                    _transformInputStop = true;
+                }
             }
         }
         
@@ -224,20 +230,22 @@ namespace ThePackt{
         ///</summary>
         public void OnAttackInput(InputAction.CallbackContext context)
         {
-            Debug.Log("base attack input");
-
-            if (context.started)
+            MainQuest mainQuest = MainQuest.Instance;
+            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
             {
-                if (!player.GetIsHuman() || CheckSetAttackDirection())
+                if (context.started)
                 {
-                    _attackInputs[Constants.BASE] = true;
-                    _attackInputsStop[Constants.BASE] = false;
-                    _attackInputsStartTime[Constants.BASE] = Time.time;
+                    if (!player.GetIsHuman() || CheckSetAttackDirection())
+                    {
+                        _attackInputs[Constants.BASE] = true;
+                        _attackInputsStop[Constants.BASE] = false;
+                        _attackInputsStartTime[Constants.BASE] = Time.time;
+                    }
                 }
-            }
-            else if (context.canceled)
-            {
-                _attackInputsStop[Constants.BASE] = true;
+                else if (context.canceled)
+                {
+                    _attackInputsStop[Constants.BASE] = true;
+                }
             }
         }
 
