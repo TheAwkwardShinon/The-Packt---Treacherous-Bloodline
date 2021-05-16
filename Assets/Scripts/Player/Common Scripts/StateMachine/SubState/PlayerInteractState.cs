@@ -53,7 +53,7 @@ namespace ThePackt{
 
             if(Time.time > _startTime + _timeToInteract){
                 if(_interactionType.Equals("player")){
-                    Debug.LogError("[INTERACTION STATE] heal event started");
+                    Debug.LogWarning("[INTERACTION STATE] heal event started");
                     var evnt = HealEvent.Create(BoltNetwork.Server);
                     evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
                     evnt.Send();

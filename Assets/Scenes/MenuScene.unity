@@ -6203,7 +6203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button West
+  m_Text: Square
 --- !u!222 &370210473
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6730,7 +6730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1288783240}
-  background: {fileID: 0}
+  background: {fileID: 410992615}
   _tooltip: {fileID: 1990934479}
 --- !u!114 &410992618
 MonoBehaviour:
@@ -7599,7 +7599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Right Shoulder
+  m_Text: R1
 --- !u!222 &471395963
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16499,7 +16499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button South
+  m_Text: Cross
 --- !u!222 &1055864343
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17594,7 +17594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1288783240}
-  background: {fileID: 0}
+  background: {fileID: 1099352879}
   _tooltip: {fileID: 1990934479}
 --- !u!114 &1099352882
 MonoBehaviour:
@@ -20426,24 +20426,20 @@ MonoBehaviour:
     m_ActionId: 075e3bd1-09fd-4012-8756-5a44cd15b039
     m_ActionName: UserInterface/Navigation[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1288783243}
-        m_TargetAssemblyTypeName: ThePackt.UI_inputManager, Assembly-CSharp
-        m_MethodName: OnClickSelection
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 64da7bf4-52d2-41e8-8c11-61a8553eb081
-    m_ActionName: UserInterface/Click[/DualShock4GamepadHID/buttonSouth,/Mouse/leftButton]
+      m_Calls: []
+    m_ActionId: 720fba43-23aa-47d3-aae2-a360f72d20bb
+    m_ActionName: Gameplay/Interact[/Keyboard/e,/DualShock4GamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 41051174-f1c7-4c19-8dff-cd1108b9f564
+    m_ActionName: Gameplay/Activate UI[/Keyboard/escape,/DualShock4GamepadHID/start,/DualShock4GamepadHID/touchpadButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 388c1d9d-6253-4802-8520-f93586b4cd82
+    m_ActionName: UserInterface/RemoveInGameUI[/DualShock4GamepadHID/start,/DualShock4GamepadHID/touchpadButton,/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Gamepad
-  m_DefaultActionMap: UserInterface
+  m_DefaultActionMap: 33131b99-5cc1-46ee-8b2d-cb45b402a817
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &1288783242
@@ -21508,7 +21504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1288783240}
-  background: {fileID: 0}
+  background: {fileID: 1353314188}
   _tooltip: {fileID: 1990934479}
 --- !u!114 &1353314191
 MonoBehaviour:
@@ -22313,7 +22309,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button North
+  m_Text: Triangle
 --- !u!222 &1411375334
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25809,7 +25805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabGroup: {fileID: 1288783240}
-  background: {fileID: 0}
+  background: {fileID: 1640485134}
   _tooltip: {fileID: 1990934479}
 --- !u!114 &1640485137
 MonoBehaviour:

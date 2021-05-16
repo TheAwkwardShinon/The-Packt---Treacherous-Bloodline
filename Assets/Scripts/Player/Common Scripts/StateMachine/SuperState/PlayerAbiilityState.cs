@@ -46,12 +46,12 @@ namespace ThePackt{
                 }
                 else */if (_isGrounded && _player._currentVelocity.y < 0.01f)
                 {
-                     Debug.LogError("[ABILITY STATE] ----> IDLE");
+                     Debug.LogWarning("[ABILITY STATE] ----> IDLE");
                     _stateMachine.ChangeState(_player._idleState);
                 }
                 else
                 {
-                    Debug.LogError("[ABILITY STATE] ----> InAir");
+                    Debug.LogWarning("[ABILITY STATE] ----> InAir");
                     _stateMachine.ChangeState(_player._inAirState);
                 }
             }

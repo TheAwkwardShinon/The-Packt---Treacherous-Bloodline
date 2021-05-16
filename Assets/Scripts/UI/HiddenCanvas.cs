@@ -11,6 +11,8 @@ namespace ThePackt{
 
         [SerializeField] private tabButton _firstTab;
 
+        [SerializeField] private TabGroup _tabGroup;
+
         public GameObject GetMenu(){
             return menu;
         }
@@ -21,6 +23,10 @@ namespace ThePackt{
 
         public tabButton GetFirstTab(){
             return _firstTab;
+        }
+
+        public TabGroup GetTabGroup(){
+            return _tabGroup;
         }
 
     }

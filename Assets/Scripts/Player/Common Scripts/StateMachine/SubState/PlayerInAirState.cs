@@ -74,24 +74,24 @@ namespace ThePackt{
 
            
             if(_player._isDowned){
-                Debug.LogError("[IN AIR STATE] -->  DOWN");
+                Debug.LogWarning("[IN AIR STATE] -->  DOWN");
                 _stateMachine.ChangeState(_player._downState);
             }
             else if(_detransformationInput && !_player.GetIsHuman()){
-                Debug.LogErrorFormat("[IN AIR STATE] ----> detransform");
+                Debug.LogWarning("[IN AIR STATE] ----> detransform");
                 _player.SetIsHuman(true);
                 _detransformationInput = false;
                 _stateMachine.ChangeState(_player._detransformationState);
             }
             else if (_isGrounded && _player._currentVelocity.y < 0.01f)
             {        
-                Debug.LogErrorFormat("[IN AIR STATE] ----> land");
+                Debug.LogWarning("[IN AIR STATE] ----> land");
                 _player._jumpState.ResetAmountOfJumpsLeft();
                 _stateMachine.ChangeState(_player._landState);
             }
             else if(_jumpInput && _player._jumpState.CanJump() && _isGrounded)
             {
-                Debug.LogErrorFormat("[IN AIR STATE] ----> jump");
+                Debug.LogWarning("[IN AIR STATE] ----> jump");
                 _stateMachine.ChangeState(_player._jumpState); //if more jump can be done
             }
             else if(_isTouchingWall && _xInput == _player._facingDirection && _player._currentVelocity.y <= 0)
@@ -100,16 +100,16 @@ namespace ThePackt{
             }
             else if(_dashInput && _player._dashState.CheckIfCanDash())
             {
-                Debug.LogErrorFormat("[IN AIR STATE] ----> dash");
+                Debug.LogWarning("[IN AIR STATE] ----> dash");
                 _stateMachine.ChangeState(_player._dashState);
             }
             else if (_attackInput && _player._attackState.CheckIfCanAttack())
             {
-                Debug.LogErrorFormat("[IN AIR STATE] ----> attack");
+                Debug.LogWarning("[IN AIR STATE] ----> attack");
                 _stateMachine.ChangeState(_player._attackState);
             }
             else if(_transformationInput && _player.GetIsHuman()){
-                Debug.LogErrorFormat("[IN AIR STATE] ----> transformation");
+                Debug.LogWarning("[IN AIR STATE] ----> transformation");
                 _player.GetPlayerData()._startTransformationTime = Time.time;
                 _player.SetIsHuman(false);
                 _stateMachine.ChangeState(_player._transformState);
@@ -148,7 +148,6 @@ namespace ThePackt{
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            Debug.Log("[PLAYER IS IN AIR] PHYSICS UPDATE --> CALLING CHECKS");
         }
 
         public void SetIsJumping() => _isJumping = true;

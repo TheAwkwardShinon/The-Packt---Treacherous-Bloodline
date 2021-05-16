@@ -37,7 +37,7 @@ namespace ThePackt{
 
         private void Start()
         {
-            background = GetComponent<Image>();
+            //background = GetComponent<Image>();
             //tabGroup.Subscribe(this);
         }
 

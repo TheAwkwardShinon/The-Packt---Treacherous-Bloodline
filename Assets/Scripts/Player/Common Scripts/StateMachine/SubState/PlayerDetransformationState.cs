@@ -20,7 +20,7 @@ namespace ThePackt{
         {
             base.Enter();
             
-            Debug.LogError("DETRANSFORMATION : ABILITY START");
+            Debug.LogWarning("DETRANSFORMATION : ABILITY START");
             
             _player.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanHat;
             _player.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanFace;
@@ -34,7 +34,7 @@ namespace ThePackt{
         {
             base.Exit();
             
-            Debug.LogError("DETRANSFORMATION : ABILITY DONE");
+            Debug.LogWarning("DETRANSFORMATION : ABILITY DONE");
 
         }
 

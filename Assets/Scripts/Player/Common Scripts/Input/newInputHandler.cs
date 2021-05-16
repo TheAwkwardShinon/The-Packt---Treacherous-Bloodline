@@ -71,7 +71,6 @@ namespace ThePackt{
             //int count = Enum.GetValues(typeof(CombatInputs)).Length;
             //_attackInputs = new bool[count];
             _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
-            Debug.Log(_menuInGameUI.name);
             _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
         }
 
@@ -156,7 +155,6 @@ namespace ThePackt{
         ///</summary>
         public void OnInteractInput(InputAction.CallbackContext context)
         {
-            Debug.Log("INPUT SYSTEM] InteractInput Received");
             if (context.started)
             {
                 _interactInput = true;
@@ -249,7 +247,8 @@ namespace ThePackt{
             {   
                 player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UserInterface");
                 _menuInGameUI.SetActive(true);
-                _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().OnTabSelected(_firstTabSelected);                
+                _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().
+                    OnTabSelected( _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().tabButtons[0]);                
             }
             else if (context.canceled)
             {
@@ -298,8 +297,7 @@ namespace ThePackt{
                     facingLeft = pointedLeft;
                 }
 
-                Debug.Log("pointed left: " + pointedLeft + " -- " + _attackDirectionInput.x);
-                Debug.Log("facing left: " + facingLeft);
+               
 
                 //checks if the player is facing towards the point of the click: the attack is executed only if he does
                 if (_attackDirectionInput == Vector2.zero)
@@ -322,7 +320,6 @@ namespace ThePackt{
 
         public void OnAttackDirectionInput(InputAction.CallbackContext context)
         {
-            Debug.Log("input attack direction");
 
             _attackDirectionInput = context.ReadValue<Vector2>();
 

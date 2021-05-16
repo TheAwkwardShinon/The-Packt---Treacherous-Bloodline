@@ -76,42 +76,42 @@ namespace ThePackt{
 
             if(_isStand){
                 if(_player._isDowned){
-                     Debug.LogError("[GROUNDED STATE] -->  DOWN");
+                     Debug.LogWarning("[GROUNDED STATE] -->  DOWN");
                     _stateMachine.ChangeState(_player._downState);
                 }
                 else if(_detransformationInput && !_player.GetIsHuman() ){
-                    Debug.LogError("[GROUNDED STATE] -->  detransformation");
+                    Debug.LogWarning("[GROUNDED STATE] -->  detransformation");
                     _player.SetIsHuman(true);
                     _detransformationInput = false;
                     _stateMachine.ChangeState(_player._detransformationState);
                 }
                 else if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling )
                 {
-                    Debug.LogError("[GROUNDED STATE] -->  jump");
+                    Debug.LogWarning("[GROUNDED STATE] -->  jump");
                     _stateMachine.ChangeState(_player._jumpState);
                 }else if (!_isGrounded )
                 {
-                    Debug.LogError("[GROUNDED STATE] -->  inAir");
+                    Debug.LogWarning("[GROUNDED STATE] -->  inAir");
                     _stateMachine.ChangeState(_player._inAirState);
                 }
                 else if (_dashInput && _player._dashState.CheckIfCanDash())
                 {
-                    Debug.LogError("[GROUNDED STATE] -->  dash");
+                    Debug.LogWarning("[GROUNDED STATE] -->  dash");
                     _stateMachine.ChangeState(_player._dashState);
                 }
                 else if (_attackInput && _player._attackState.CheckIfCanAttack())
                 {
-                    Debug.LogError("[GROUNDED STATE] -->  attack");
+                    Debug.LogWarning("[GROUNDED STATE] -->  attack");
                     _stateMachine.ChangeState(_player._attackState);
                 }
                 else if(_transformInput && _player.GetIsHuman()){
-                    Debug.LogError("[GROUNDED STATE] -->  transform");
+                    Debug.LogWarning("[GROUNDED STATE] -->  transform");
                     _player.GetPlayerData()._startTransformationTime = Time.time;
                     _player.SetIsHuman(false);
                     _stateMachine.ChangeState(_player._transformState);
                 }
                 else if(_interactInput && _player._interactState.CheckIfCanInteract()){
-                    Debug.LogError("[GROUNDED STATE] -->  interact");
+                    Debug.LogWarning("[GROUNDED STATE] -->  interact");
                     _stateMachine.ChangeState(_player._interactState);
                 }
             }

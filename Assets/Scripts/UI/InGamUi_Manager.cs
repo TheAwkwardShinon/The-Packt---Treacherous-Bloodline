@@ -14,21 +14,26 @@ namespace ThePackt{
         private TabGroup _tabgroup;
         private EventSystem _eventsystem;
 
+        private GameObject _menuInGameUI;
+
         #endregion
 
 
 
         #region methods
 
-        private void Start(){
-            _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu().GetComponent<TabGroup>();
+      private void Start(){
+            _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTabGroup();
             _eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
+
         }
 
         private void Update(){
             if(_tabgroup == null){
-               _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu().GetComponent<TabGroup>();
+               _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTabGroup();
                _eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>(); 
+               _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
             }
         }
         
@@ -53,6 +58,22 @@ namespace ThePackt{
 
             }
         }
+        
+
+         public void OnDisableInGameUI(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
+                _menuInGameUI.SetActive(false);
+            }
+            else if(context.canceled){
+
+            }
+        }
+
+        
+
 
         public void OnNavigateThroughUI(InputAction.CallbackContext context){
              if (context.started)
@@ -99,6 +120,9 @@ namespace ThePackt{
 
             }
         }
+
+
+        
 
         #endregion
     }

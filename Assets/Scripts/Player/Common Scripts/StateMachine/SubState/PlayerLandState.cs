@@ -24,12 +24,12 @@ namespace ThePackt{
             base.LogicUpdate();
                 if (_xInput != 0)
                 {
-                    Debug.Log("[LAND STATE] changing to move state...");
+                    Debug.LogWarning("[LAND STATE] changing to move state...");
                     _stateMachine.ChangeState(_player._moveState);
                 }
                 else
                 {
-                    Debug.Log("[LAND STATE] changing state to idle state...");
+                    Debug.LogWarning("[LAND STATE] changing state to idle state...");
                     _stateMachine.ChangeState(_player._idleState);
                 }
                   

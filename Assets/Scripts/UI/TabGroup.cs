@@ -82,20 +82,24 @@ namespace ThePackt{
 
         public void ChangeTabRight(){
             if(_selectedTab.transform.GetSiblingIndex() < tabButtons.Count - 1){
+                    
                     OnTabSelected(tabButtons[tabButtons.IndexOf(_selectedTab)+1]);
             }
             else{
                 OnTabSelected(tabButtons[0]);
+
             }
         }
         private void Start(){
             inputSystem = GetComponent<PlayerInput>();
         }
 
+      
         private void Update(){
             if(_selectedTab == null && tabButtons.Count > 0){
                 OnTabSelected(tabButtons[0]);
             }
+            
            
         }
 

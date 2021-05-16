@@ -18,7 +18,7 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            Debug.LogError("TRANSFORMATION : ABILITY START");
+            Debug.LogWarning("TRANSFORMATION : ABILITY START");
           
             _player._inputHandler.UseTransformInput();
 
@@ -34,7 +34,7 @@ namespace ThePackt{
         {
             base.Exit();
             
-            Debug.LogError("TRANSFORMATION : ABILITY DONE");
+            Debug.LogWarning("TRANSFORMATION : ABILITY DONE");
         }
 
         public override void LogicUpdate()

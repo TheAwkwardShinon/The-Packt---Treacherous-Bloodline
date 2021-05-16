@@ -1413,6 +1413,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 41051174-f1c7-4c19-8dff-cd1108b9f564
     m_ActionName: Gameplay/Activate UI[/Keyboard/escape,/Keyboard/tab,/DualShock4GamepadHID/start,/DualShock4GamepadHID/touchpadButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7415382496021919984}
+        m_TargetAssemblyTypeName: ThePackt.InGamUi_Manager, Assembly-CSharp
+        m_MethodName: OnDisableInGameUI
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 388c1d9d-6253-4802-8520-f93586b4cd82
+    m_ActionName: UserInterface/RemoveInGameUI[/DualShock4GamepadHID/start,/DualShock4GamepadHID/touchpadButton,/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay

@@ -20,14 +20,14 @@ namespace ThePackt{
         {
             base.Enter();
             _isStand = false;
-            Debug.Log("[DOWNED MOVE STATE] ENTER ---> IS STAND = "+_isStand);
+            Debug.LogWarning("[DOWNED MOVE STATE] ENTER ---> IS STAND = "+_isStand);
 
         }
 
         public override void Exit()
         {
             base.Exit();
-            Debug.Log("[DOWNED MOVE STATE] EXIT ---> IS STAND = "+_isStand);
+            Debug.LogWarning("[DOWNED MOVE STATE] EXIT ---> IS STAND = "+_isStand);
         }
 
         public override void LogicUpdate()
@@ -37,7 +37,7 @@ namespace ThePackt{
             _player.CheckIfShouldFlip(_xInput);
 
             if(_player.state.Health >= _player.GetPlayerData().maxLifePoints * 0.3f){
-                Debug.LogError("[DOWNED MOVE STATE] ---> IDLE");
+                Debug.LogWarning("[DOWNED MOVE STATE] ---> IDLE");
                 _player.state.isDowned = false;
                 _isStand = true;
                 //_player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
@@ -46,7 +46,7 @@ namespace ThePackt{
             } 
             else if(_xInput == 0)
             {
-                Debug.LogError("[DOWNED MOVE STATE] ---> DOWNED");
+                Debug.LogWarning("[DOWNED MOVE STATE] ---> DOWNED");
                 _stateMachine.ChangeState(_player._downState);
             }
         }
