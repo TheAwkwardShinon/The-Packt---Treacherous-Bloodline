@@ -3,6 +3,7 @@ using UdpKit;
 using UnityEngine;
 using System;
 using Bolt;
+using System.Collections;
 
 namespace ThePackt
 {
@@ -12,6 +13,8 @@ namespace ThePackt
         public Vector2 enemySpawnPos;
         public Utils.VectorAssociation[] playersSpawnPositions;
         [SerializeField] private GameObject _timeManagerPrefab;
+        [SerializeField] private Canvas _blackScreenCanvas;
+        [SerializeField] private float _loadingScreenTime;
         private Player _player;
 
         #region callbacks
@@ -58,21 +61,29 @@ namespace ThePackt
                 }
             }
 
-            MainQuest.Instance.SetPlayers(players);
-
-            //only the server spawns enemies for everyone
             if (BoltNetwork.IsServer)
             {
-                //BoltNetwork.Instantiate(enemyPrefabs[0].prefab, enemySpawnPos, Quaternion.identity);
-            }
+                MainQuest.Instance.SetPlayers(players);
 
-            //disable black screen here
-
-            if (BoltNetwork.IsServer)
-            {
                 BoltEntity timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
                 timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
             }
+
+            StartCoroutine("LoadingScreen");
+        }
+
+        IEnumerator LoadingScreen()
+        {
+            yield return new WaitForSeconds(_loadingScreenTime);
+
+            _player.SetEnabledInput(true);
+            _blackScreenCanvas.gameObject.SetActive(false);
+        }
+
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
+        {
+            base.BoltShutdownBegin(registerDoneCallback, disconnectReason);
+            _blackScreenCanvas.gameObject.SetActive(true);
         }
 
         public override void ConnectRequest(UdpEndPoint endpoint, IProtocolToken token)

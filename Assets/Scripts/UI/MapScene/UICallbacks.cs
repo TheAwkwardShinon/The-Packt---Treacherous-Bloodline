@@ -34,7 +34,7 @@ namespace ThePackt {
             {
                 Debug.Log("[NETWORKLOG] client disconnecting");
 
-                var evnt = DisconnectEvent.Create(Utils.GetServerConnection());
+                var evnt = DisconnectEvent.Create(BoltNetwork.Server);
                 evnt.Send();
             }
             

@@ -12,6 +12,7 @@ TagManager:
   - naturia
   - moonsighters
   - debug
+  - loading
   layers:
   - Default
   - TransparentFX

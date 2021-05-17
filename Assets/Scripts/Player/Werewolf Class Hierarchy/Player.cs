@@ -543,6 +543,13 @@ namespace ThePackt{
 
         #endregion
 
+        #region others
+        public void SetEnabledInput(bool value)
+        {
+            _playerInput.enabled = value;
+        }
+
+        #endregion
 
         #region getter
         public Transform GetAttackPoint()

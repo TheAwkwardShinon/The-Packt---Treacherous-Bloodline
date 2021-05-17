@@ -18,6 +18,9 @@ namespace ThePackt
         public int _minPlayerNumber;
         public float gameStartSeconds;
 
+        [SerializeField] private Canvas _blackScreenCanvas;
+        [SerializeField] private float _loadingScreenTime;
+
         #region callbacks
 
         /*
@@ -59,6 +62,17 @@ namespace ThePackt
 
                 Debug.Log("[SPAWNPLAYER] request available factions sent at: " + BoltNetwork.Server.ConnectionId);
             }
+
+            StartCoroutine("LoadingScreen");
+        }
+
+        IEnumerator LoadingScreen()
+        {
+            yield return new WaitForSeconds(_loadingScreenTime);
+
+            _player.SetEnabledInput(true);
+
+            _blackScreenCanvas.gameObject.SetActive(false);
         }
 
         public override void EntityAttached(BoltEntity entity)
@@ -99,7 +113,7 @@ namespace ThePackt
         {
             yield return new WaitForSeconds(gameStartSeconds);
 
-            //enable black screen here
+            _player.SetEnabledInput(false);
 
             BoltNetwork.LoadScene(Constants.MAP);
         }
@@ -122,6 +136,12 @@ namespace ThePackt
                     _playerNumber--;
                 }
             }
+        }
+
+        public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
+        {
+            base.BoltShutdownBegin(registerDoneCallback, disconnectReason);
+            _blackScreenCanvas.gameObject.SetActive(true);
         }
 
         public override void ConnectRequest(UdpEndPoint endpoint, IProtocolToken token)
