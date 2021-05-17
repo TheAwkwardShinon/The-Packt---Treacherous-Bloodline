@@ -8,6 +8,7 @@ namespace ThePackt
     {
         #region variables
         [SerializeField] protected float _health;
+        [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
@@ -31,6 +32,11 @@ namespace ThePackt
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
             healthSlider.maxValue = _health;
+        }
+
+        private void Update()
+        {
+            canvas.transform.rotation = Quaternion.identity;
         }
 
         public void ApplyDamage(float damage)

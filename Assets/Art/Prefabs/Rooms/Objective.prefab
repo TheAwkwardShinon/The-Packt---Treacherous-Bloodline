@@ -162,6 +162,7 @@ MonoBehaviour:
   _integrity: 30
   _enemyPrefab: {fileID: 5888237620715083050, guid: a6453d217b676eb48ad6f2d358785abe, type: 3}
   _spawnPoint: {fileID: 7625073481937879403}
+  canvas: {fileID: 3311955451593632417}
   integrityBar: {fileID: 3311955452492183332}
   integrityImage: {fileID: 3311955452103963424}
   integrityGradient:
@@ -252,6 +253,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBarCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 915266501028632057, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 915266501028632059, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -340,12 +345,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 915266501055043293, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 915266501523230587, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 915266501523230596, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 915266501523230596, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 915266501911415681, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 915266501911415682, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
@@ -369,6 +386,11 @@ PrefabInstance:
 --- !u!224 &3311955451593632416 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+  m_PrefabInstance: {fileID: 2397537773558463653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &3311955451593632417 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 915266501028632068, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
   m_PrefabInstance: {fileID: 2397537773558463653}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3311955452492183332 stripped

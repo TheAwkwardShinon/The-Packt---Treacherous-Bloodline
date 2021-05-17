@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 40
+  canvas: {fileID: 7948411039607155791}
   healthBar: {fileID: 7948411038742688202}
   healthImage: {fileID: 7948411039163938254}
   healthGradient:
@@ -331,6 +332,11 @@ PrefabInstance:
 --- !u!224 &7948411039607155790 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+  m_PrefabInstance: {fileID: 7133072558059141707}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &7948411039607155791 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 915266501028632068, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
   m_PrefabInstance: {fileID: 7133072558059141707}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7948411038742688202 stripped

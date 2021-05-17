@@ -319,7 +319,7 @@ MonoBehaviour:
   _objectivePrefab: {fileID: 7263629113391493904, guid: a76e5ff7d3a3e3342ab7280aae830bd4, type: 3}
   _objectivePositions:
   - {x: -23.24, y: 0.16}
-  - {x: -23.24, y: -2.73}
+  - {x: -23.24, y: -3.3}
   _returnToMenuSeconds: 5
 --- !u!1 &5461048106103581564
 GameObject:

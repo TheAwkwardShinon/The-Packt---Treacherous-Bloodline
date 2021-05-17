@@ -10,6 +10,7 @@ namespace ThePackt
         [SerializeField] private float _integrity;
         [SerializeField] private GameObject _enemyPrefab;
         [SerializeField] private Transform _spawnPoint;
+        [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject integrityBar;
         [SerializeField] protected Image integrityImage;
         [SerializeField] protected Gradient integrityGradient;
@@ -64,6 +65,11 @@ namespace ThePackt
             integritySlider.maxValue = _integrity;
 
             state.AddCallback("Integrity", IntegrityCallback);
+        }
+
+        private void Update()
+        {
+            canvas.transform.rotation = Quaternion.identity;
         }
 
         public void ApplyDamage(float damage)
