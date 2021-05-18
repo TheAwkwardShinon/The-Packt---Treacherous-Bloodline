@@ -45,10 +45,14 @@ namespace ThePackt
                 _objectives = new List<BoltEntity>();
                 state.State = Constants.READY;
 
+                SpawnObjective(_objectivePositions[1]);
+
+                /*
                 foreach(Vector2 pos in _objectivePositions)
                 {
                     SpawnObjective(pos);
                 }
+                */
             }
 
             state.AddCallback("State", StateCallback);

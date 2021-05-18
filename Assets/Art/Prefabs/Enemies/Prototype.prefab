@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5411430021094919406}
   - component: {fileID: 7198855558209135388}
   - component: {fileID: 3596645250542447395}
-  - component: {fileID: 8454680348573072718}
+  - component: {fileID: 3704265085470033388}
   m_Layer: 7
   m_Name: Prototype
   m_TagString: Untagged
@@ -99,7 +99,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -163,7 +163,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 1
   _entityReplicationFilterQueryOption: 1
---- !u!114 &8454680348573072718
+--- !u!114 &3704265085470033388
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5888237620715083050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3574c054b345b0c48961cd688a9fef1c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e37c77baa8dc9b4fb64b51c0b7cf5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 50
@@ -208,6 +208,12 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  _reactionTime: 0.1
+  _movementSpeed: 5
+  _minChangeDirectionTime: 1
+  _maxChangeDirectionTime: 3
+  _minStandStillTime: 0.2
+  _maxStandStillTime: 2
 --- !u!1001 &7133072558059141707
 PrefabInstance:
   m_ObjectHideFlags: 0

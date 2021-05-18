@@ -12,7 +12,8 @@ namespace ThePackt
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
-        private Slider healthSlider;
+        protected Slider healthSlider;
+        protected FSM _fsm;
         #endregion
 
         #region methods
