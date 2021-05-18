@@ -63,7 +63,11 @@ namespace ThePackt
 
             if (BoltNetwork.IsServer)
             {
-                MainQuest.Instance.SetPlayers(players);
+                MainQuest mainQuest = MainQuest.Instance;
+                if (mainQuest)
+                {
+                    mainQuest.SetPlayers(players);
+                }
 
                 BoltEntity timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
                 timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
