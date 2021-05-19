@@ -49,7 +49,7 @@ Shader "Hidden/NewImageEffectShader"
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // fixed4 col = tex2D(_MainTex, i.uv) + tex2D(_SecondaryTex, i.uv);
                 
-                col.a = 0.96f - col.r;
+                col.a = 1.0f - col.r;
                 // col.a = 0.96f - col.r;
 
                 return fixed4(0,0,0,col.a);
