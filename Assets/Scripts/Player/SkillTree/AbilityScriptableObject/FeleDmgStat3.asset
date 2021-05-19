@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333d24a2590514e45a0b8590e12cd695, type: 3}
+  m_Name: FeleDmgStat3
+  m_EditorClassIdentifier: 
+  _unlockableAbilities:
+  - {fileID: 11400000, guid: 3fa9b8a709359f04a95e4edf40ee72ea, type: 2}
+  - {fileID: 11400000, guid: 4c4b9fdc53e8c7b43952f0a4e45b0aea, type: 2}
+  - {fileID: 11400000, guid: 46b11382cd4a39a488fe7063b43ceae8, type: 2}
+  abilityName: Damage Power Up 3
+  animationName: 4
+  colorIndex: 3

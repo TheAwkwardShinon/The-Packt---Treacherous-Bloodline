@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace ThePackt{
     public class newInputHandler : MonoBehaviour
@@ -65,13 +66,11 @@ namespace ThePackt{
             _attackInputsStartTime = new Dictionary<string, float>();
 
             playerInputComponent = GetComponent<PlayerInput>();
-            // playerInputObject = new PlayerInputClass();
-            // playerInputObject.Gameplay.Attack.performed += context => OnAttackInput(context);
-
-            //int count = Enum.GetValues(typeof(CombatInputs)).Length;
-            //_attackInputs = new bool[count];
-            _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
-            _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            
+            if(SceneManager.GetActiveScene().name.Equals("NetworkTestScene")){ //TODO Change scene name here whene scene name changes
+                _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
+                _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+            }
         }
 
         private void Update()
@@ -79,7 +78,7 @@ namespace ThePackt{
             CheckJumpInputHoldTime();
             CheckDashInputHoldTime();
             CheckBaseAttackInputHoldTime();
-            if(_menuInGameUI == null){
+            if(_menuInGameUI == null && _eventSystem == null && SceneManager.GetActiveScene().name.Equals("NetworkTestScene")){
                 _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
                 _firstTabSelected = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetFirstTab();
                 _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
@@ -247,12 +246,11 @@ namespace ThePackt{
             {   
                 player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UserInterface");
                 _menuInGameUI.SetActive(true);
-                _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().
-                    OnTabSelected( _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().tabButtons[0]);                
+                /*_menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().
+                    OnTabSelected( _menuInGameUI.transform.GetChild(0).GetComponent<TabGroup>().tabButtons[0]);    */            
             }
             else if (context.canceled)
             {
-                _attackInputsStop[Constants.BASE] = true;
             }
         }
 

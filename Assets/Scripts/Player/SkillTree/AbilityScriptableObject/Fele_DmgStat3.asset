@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333d24a2590514e45a0b8590e12cd695, type: 3}
   m_Name: Fele_DmgStat3
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
-  index: 0
-  abilityName: Stat3
-  description: + 15% of damage
-  className: Fele
-  icon: {fileID: 0}
-  abilityCost: 0
   _unlockableAbilities:
-  - {fileID: 11400000, guid: 8337a80f4b451e0499b98fe9a5829ddd, type: 2}
-  - {fileID: 11400000, guid: bf442fcbdc61667458c2a61201077da2, type: 2}
+  - {fileID: 11400000, guid: 09491dec621fc1440943000781a41945, type: 2}
+  - {fileID: 11400000, guid: 1ff2aef0cf5e0544fb70887b89d2a6fc, type: 2}
+  abilityName: Damage Power Up
+  animationName: first

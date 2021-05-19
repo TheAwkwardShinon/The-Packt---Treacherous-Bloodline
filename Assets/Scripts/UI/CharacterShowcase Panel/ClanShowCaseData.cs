@@ -13,6 +13,8 @@ namespace ThePackt{
         public Sprite clanLogo;
         public Sprite characterSprite;
 
+        public AbilityData _rootAbility;
+
 
     }
 }

@@ -62,7 +62,6 @@ namespace ThePackt{
         public void Reset(){
             _characterSelected = "none";
             _playerNickname = "none";
-            _characterIndex = 0;
             _playerScript = null;
             _disconnectReason = null;
 

@@ -7,9 +7,9 @@ namespace ThePackt{
     public class ClanFele : Player
     {
         #region variables
-        private bool weakActive = false;
-        private bool mediumActive = false;
-        private bool attackModifier = false;
+
+         public FeleSpecialAttackState _specialAttack {get; private set;}
+        
         #endregion
 
         #region methods
@@ -24,10 +24,11 @@ namespace ThePackt{
             
         }
 
+
+
+
         #region setter
-        public void setWeakActive(bool value){
-            weakActive = value;
-        }
+      
         #endregion
 
         #endregion

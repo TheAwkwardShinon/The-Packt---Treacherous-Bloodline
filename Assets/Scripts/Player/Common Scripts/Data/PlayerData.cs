@@ -10,13 +10,16 @@ namespace ThePackt{
         [Header("Move State")]
         public float movementVelocity = 10f;
 
+        public float movementMultiplierWhenFullLife = 0f;
+
+        public float movementVelocityMultiplier = 0f;
+
         [Header("Jump State")]
         public float jumpVelocity = 15f;
         public int amountOfJumps = 1;
 
 
         [Header("In Air State")]
-        public float coyoteTime = 0.2f;
         public float variableJumpHeightMultiplier = 0.5f;
 
         [Header("Wall Slide State")]
@@ -29,7 +32,6 @@ namespace ThePackt{
         public float holdTimeScale = 0.25f;
         public float dashTime = 0.2f;
         public float dashVelocity = 30f;
-        public float drag = 10f;
         public float dashEndYMultiplier = 0.2f;
         public float distBetweenAfterImages = 0.5f;
 
@@ -52,6 +54,8 @@ namespace ThePackt{
         public float powerBaseHuman = 10f;
         public float baseHumanCooldown = 0.5f;
         public float baseWerewolfCooldown = 0.5f;
+
+        public float healAfterHit = 0f;
 
         [Header("Layer masks")]
         public LayerMask whatIsGround;

@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class feleStat2Ability : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace ThePackt{
 
-    // Update is called once per frame
-    void Update()
+    [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/ability Data/fele/stat2")]
+    public class feleStat2Ability : AbilityData
     {
-        
+        public override void GainAbility(Player player)
+        {
+            base.GainAbility(player);
+            player.GetPlayerData().maxLifePoints += 0.15f * player.GetPlayerData().maxLifePoints; //multiply hp the by 15%
+        }
     }
 }

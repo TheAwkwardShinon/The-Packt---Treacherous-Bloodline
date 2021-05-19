@@ -4,16 +4,25 @@ using UnityEngine;
 
 namespace ThePackt{
 
-    [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/tree Data")]
-
-    public class SkillTreeData : ScriptableObject
+    
+    public class SkillTreeData : MonoBehaviour
     {
         #region variables
         public string className;
 
         private List<AbilityData> _unlockedAbility;
-        public AbilityData _rootAbility; //we handle the path information node by node, basically is the skilltree's navigator
+        private AbilityData _rootAbility; //we handle the path information node by node, basically is the skilltree's navigator
         private  List<AbilityData> _unlockableAbility; //all the skill unlockable
+        public SkilltreeManager _manager;
+        private Player _player;
+
+        [SerializeField] private Animator _anim;
+        [SerializeField] private AudioSource _audio;
+        [SerializeField] private AudioSource _audioDeny;
+        [SerializeField] private ChangeBranchColor _changeBranch;
+
+
+
 
         #endregion
 
@@ -21,7 +30,13 @@ namespace ThePackt{
 
         /* very important at the beginning to put the root of the tree on the unlocable list */
         public void Start(){
+            _rootAbility = _manager.getChardata().classData._rootAbility;
+            _unlockableAbility = new List<AbilityData>();
+            _unlockedAbility = new List<AbilityData>();
             _unlockableAbility.Add(_rootAbility);
+            string temp = _manager.getChardata().ClassName.Split('-')[0].Trim().ToLower();
+            _player = GameObject.FindWithTag(temp).GetComponent<Player>();
+           
         }
 
         /* methods that add all the children of an already bought ability */
@@ -30,21 +45,38 @@ namespace ThePackt{
         }
 
         /* with this method the player gain an ability if he could buy it, then the method manage the skillTree progression */
-        public void BuyAbility(Player player,string name){
+        public void BuyAbility(string name, int cost){
+            //Debug.LogError("[BUY ABILITY] trying to buy: "+name + " at cost: "+cost);
             foreach(AbilityData a in _unlockableAbility){
-                if(a.name.Equals(name)){
-                    if(player.GetPlayerData().points < a.abilityCost)
+                if(a.abilityName.Equals(name)){
+                    if(_player.GetPlayerData().points < cost){
+                        _audioDeny.Play();
+                        Debug.LogError("[BUY ABILITY] can't afford this ability due to its cost");
                         return;
+                    }
                     else{
-                        player.GetPlayerData().points -= a.abilityCost;
-                        _unlockedAbility.Add(a);
-                        _unlockableAbility.Remove(a);
+                        if(a.animationName != null){
+                            _anim.SetTrigger(a.animationName);
+                        }
+                        else{
+                            //Debug.LogError("trigger name wrong");
+                        }
+                
+                        //Debug.LogError("[BUY ABILITY] you got sufficent money to buy it");
+                        _player.GetPlayerData().points -= cost;
                         if(a.HasChildren())
                             AddUnlockableAbility(a._unlockableAbilities);
-                        a.GainAbility(player);
+                        a.GainAbility(_player);
+                         _unlockedAbility.Add(a);
+                        _unlockableAbility.Remove(a);
+                        _audio.Play();
+                        return;
+                        
                     }
                 }
             }
+            _audioDeny.Play();
+            
         }
 
         /* method that just reset the tree */

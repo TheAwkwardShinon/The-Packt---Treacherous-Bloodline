@@ -98,7 +98,7 @@ namespace ThePackt
             if (enemy != null)
             {
                 EnemyAttackHitEvent evnt;
-
+                _player.GetPlayerData().currentLifePoints += _player.GetPlayerData().healAfterHit;
                 // if we are on the server, directly apply the damage to the enemy
                 // otherwise we sent an event to the server
                 if (BoltNetwork.IsServer)
@@ -131,7 +131,7 @@ namespace ThePackt
                     Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
 
                     PlayerAttackHitEvent evnt;
-
+                    _player.GetPlayerData().currentLifePoints += _player.GetPlayerData().healAfterHit;
                     // if we are on the server, send the hit event to the connection of the player that was hit
                     // otherwise we sent it to the server with the connection id of the player that was hit
                     if (BoltNetwork.IsServer)

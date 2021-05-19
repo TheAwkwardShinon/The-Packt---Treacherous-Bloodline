@@ -11,6 +11,7 @@ namespace ThePackt{
         {
             base.GainAbility(player);
             player.GetPlayerData().damageMultiplier += 0.15f; //multiply the damage by 15%
+            Debug.LogError("[BUY ABILITY] ability gained!!!!!");
         }
     }
 }

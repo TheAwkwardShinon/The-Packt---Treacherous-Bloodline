@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class feleStat1Ability : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace ThePackt{
 
-    // Update is called once per frame
-    void Update()
+    [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/ability Data/fele/stat1")]
+    public class feleStat1Ability : AbilityData
     {
-        
+        public override void GainAbility(Player player)
+        {
+            base.GainAbility(player);
+            player.GetPlayerData().movementVelocityMultiplier += 0.15f * player.GetPlayerData().movementVelocity ; //multiply the by 15%
+        }
     }
 }

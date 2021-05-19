@@ -22,6 +22,14 @@ namespace ThePackt{
         [SerializeField] private Transform _ceilingCheck;
         [SerializeField] protected Transform _attackPoint;
         [SerializeField] protected GameObject _bullet;
+        [SerializeField] protected GameObject  _feleBullet;
+        [SerializeField] protected GameObject  _herinBullet;
+        [SerializeField] protected GameObject  _ceuinBullet;
+        [SerializeField] protected GameObject  _ayatanaBullet;
+        [SerializeField] protected GameObject  _naturiaBullet;
+        [SerializeField] protected GameObject  _moonsightersBullet;
+
+
         [SerializeField] protected GameObject _fogCircle;
 
         #endregion

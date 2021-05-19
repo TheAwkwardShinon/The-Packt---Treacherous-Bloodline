@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace ThePackt{
+
+    //this class load teh correct skill tree based on player selection
     public class SkilltreeManager : MonoBehaviour
     {
 
@@ -25,18 +27,23 @@ namespace ThePackt{
 
         private void Awake(){
             _selectedData = CharacterSelectionData.Instance;
-            _index = _selectedData.GetCharacterIndex();
+             _index = _selectedData.GetCharacterIndex();
         }
         private void Start(){
+            
+          
             _personalAbilityName.text = _characters[_index].personalAbilityName;
             _abilitiesImage[0].sprite = _characters[_index].personalAbility;
             _className.text = _characters[_index].ClassName;
             _characterSprite.sprite = _characters[_index].classData.characterSprite;
             _logo.sprite = _characters[_index].classData.clanLogo;
-            /*to add description and other things */
             for(int i=1; i<=_characters[_index].classData._abilitisSprite.Count;i++){ 
                 _abilitiesImage[i].sprite = _characters[_index].classData._abilitisSprite[i-1];
-            }/* aggiungere varie descrizioni */
+            }
+        }
+
+        public CharacterShowCaseData getChardata(){
+            return _characters[_index];
         }
 
         #endregion

@@ -11,28 +11,19 @@ namespace ThePackt{
     public class AbilityData : ScriptableObject
     {
     #region variables
-    public ClanShowCaseData data;
-    public int index;
-    public string abilityName;
-    public string description;
-    public  string className = "Fele";
-    public Sprite icon;
-    public int abilityCost;
+
     public List<AbilityData> _unlockableAbilities;
+    public string abilityName;
+    public string animationName;
+
+    public int colorIndex;
 
     #endregion
 
     #region methods
 
-    private void start(){
-        abilityName = data.abilitiesName[index];
-        description = data.abilitiesDescription[index];
-        icon = data._abilitisSprite[index];
-        abilityCost = data.abilitiesCost[index];
-    }
-
     public virtual void GainAbility(Player player){
-        
+        Debug.LogError("[BUY ABILITY] gaining ability...");
     }
 
     /* method that returns true if the node isn't a leaf */
