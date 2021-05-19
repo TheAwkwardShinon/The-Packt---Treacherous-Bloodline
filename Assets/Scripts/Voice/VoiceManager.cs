@@ -2,6 +2,7 @@ using agora_gaming_rtc;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ThePackt
 {
@@ -9,19 +10,16 @@ namespace ThePackt
     {
         public string agoraAppID;
         public string channelName;
-        private IRtcEngine _mRtcEngine;
+        private IRtcEngine _mRtcEngine = null;
 
-
+        /*
         // Start is called before the first frame update
         void Start()
         {
-            /*
+
             Debug.Log("[VOICE] engine creating");
             _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
-            IRtcEngine.Destroy();
-            _mRtcEngine = IRtcEngine.GetEngine(agoraAppID);
-            //_mRtcEngine.SetLogFile("C:\\Users\\feder\\AppData\\Local\\Agora\\The Packt - Treacherous Bloodline");
-
+            _mRtcEngine.SetLogFile("agora_log.txt");
 
             _mRtcEngine.EnableSoundPositionIndication(true);
 
@@ -41,13 +39,25 @@ namespace ThePackt
             };
 
             _mRtcEngine.JoinChannel(channelName, "", 0);
-            */
+            _mRtcEngine.LeaveChannel();
         }
 
         // Update is called once per frame
         void Update()
         {
-           
+
         }
+
+        void OnApplicationQuit()
+        {
+            Debug.Log("[VOICE] OnApplicationQuit");
+            if (_mRtcEngine != null)
+            {
+                Debug.Log("[VOICE] destroying");
+                IRtcEngine.Destroy();
+            }
+        }
+        */
     }
 }
+

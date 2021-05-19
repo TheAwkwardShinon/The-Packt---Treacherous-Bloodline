@@ -8,10 +8,12 @@ namespace ThePackt
     {
         #region variables
         [SerializeField] protected float _health;
+        [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
-        private Slider healthSlider;
+        protected Slider healthSlider;
+        protected FSM _fsm;
         #endregion
 
         #region methods
@@ -33,6 +35,11 @@ namespace ThePackt
             healthSlider.maxValue = _health;
         }
 
+        private void Update()
+        {
+            canvas.transform.rotation = Quaternion.identity;
+        }
+
         public void ApplyDamage(float damage)
         {
             Debug.Log("[ENEMY] apply damage: " + entity.IsOwner);
@@ -45,7 +52,7 @@ namespace ThePackt
 
         private void Die()
         {
-            Destroy(gameObject);
+            BoltNetwork.Destroy(gameObject);
         }
 
         //called when state.Health is modified -> we update the local health and do checks on it

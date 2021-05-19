@@ -8,6 +8,7 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private List<Vector2> _spawnPoints;
     [SerializeField] private List<GameObject> _roomPrefabs;
     [SerializeField] private GameObject _testRoomPrefab;
+    [SerializeField] private GameObject _mainTestRoomPrefab;
     #endregion
 
     #region methods 
@@ -28,10 +29,11 @@ public class MapGenerator : MonoBehaviour
                 _roomPrefabs.RemoveAt(randomIndex);
                 nRooms--;
 
-                BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
+                //BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
             }
 
-            BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
+            //BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
+            //BoltNetwork.Instantiate(_mainTestRoomPrefab, _mainTestRoomPrefab.transform.position, _mainTestRoomPrefab.transform.rotation);
         }
         
     }

@@ -54,6 +54,7 @@ namespace ThePackt{
 
         #region flags
         protected bool _isHuman = true;
+        protected bool _isImpostor = false;
 
         public  bool _isDowned {get; private set;} = false;
         public  bool _isBeingHealed {get; private set;} = false;
@@ -149,6 +150,13 @@ namespace ThePackt{
                Debug.Log("[NETWORKLOG] my network id: " + entity.NetworkId);
             else
                 Debug.Log("[NETWORKLOG] other network id: " + entity.NetworkId);
+
+            MainQuest mainQuest = MainQuest.Instance;
+            if (BoltNetwork.IsServer && mainQuest != null)
+            {
+                mainQuest.AddPlayer(entity);
+            }
+
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _col = gameObject.GetComponent<BoxCollider2D>();
@@ -216,11 +224,20 @@ namespace ThePackt{
             }
         }
 
+        public override void Detached()
+        {
+            MainQuest mainQuest = MainQuest.Instance;
+            if (BoltNetwork.IsServer && mainQuest != null)
+            {
+                mainQuest.RemovePlayer(entity);
+            }
+        }
+
         #endregion
 
         #region velocity modificator
 
-            
+
         /* A velocity in Unity is units per second. 
         The units are often thought of as metres but could be millimetres or light years.
         Unity velocity also has the speed in X, Y, and Z defining the direction.*/
@@ -348,7 +365,7 @@ namespace ThePackt{
             }
         }
 
-         private void IsDownedCallback()
+        private void IsDownedCallback()
         {
             _isDowned = state.isDowned;
         }
@@ -534,6 +551,13 @@ namespace ThePackt{
 
         #endregion
 
+        #region others
+        public void SetEnabledInput(bool value)
+        {
+            _playerInput.enabled = value;
+        }
+
+        #endregion
 
         #region getter
         public Transform GetAttackPoint()
@@ -604,6 +628,12 @@ namespace ThePackt{
         {
             _isHuman = value;
         }
+
+        public void SetIsImpostor(bool value)
+        {
+            _isImpostor = value;
+        }
+
         public void SetWeakActive(bool value){
             weakActive = value;
         }
@@ -620,9 +650,6 @@ namespace ThePackt{
             if(entity.IsOwner)
                 state.isBeingHealed = value;
         }
-
-        
-
 
         #endregion
 

@@ -44,43 +44,8 @@ namespace ThePackt
                     quest.SetQuestState(Constants.STARTED);
 
                     //TODO special effect
-
-                    /*
-                    //get the players in the room
-                    List<BoltEntity> players = quest.GetPlayersInRoom();
-
-                    QuestAcceptedEvent newEvnt;
-                    foreach (BoltEntity e in players)
-                    {
-                        if (e.IsOwner)
-                        {
-                            Debug.Log("[QUEST] server joins quest");
-                            _player.JoinQuest(quest);
-                        }
-                        else
-                        {
-                            Debug.Log("[QUEST] client " + e.NetworkId + " partecipate. Sending event");
-                            newEvnt = QuestAcceptedEvent.Create(e.Source);
-                            newEvnt.Quest = questEntity;
-                            newEvnt.PartecipantNetworkID = e.NetworkId;
-                            newEvnt.Send();
-                        }
-                    }
-                    */
                 }
             }
-
-            /*
-            else
-            {
-                Debug.Log("[QUEST] client recieved accepted event");
-                if (_player.entity.NetworkId.Equals(evnt.PartecipantNetworkID))
-                {
-                    Debug.Log("[QUEST] client joins quest " + evnt.Quest.NetworkId);
-                    _player.JoinQuest(evnt.Quest.GetComponent<Quest>());
-                }
-            }
-            */
         }
 
         public override void OnEvent(QuestAbandonedEvent evnt)

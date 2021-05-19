@@ -29,8 +29,8 @@ namespace ThePackt
 
         public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
         {
-            //put black screen here and remove it when the menu scene has loaded
-
+            Debug.Log("[NETWORKLOG] Shutdown begin");
+            
             registerDoneCallback(() =>
             {
                 // Will show disconnect reason.

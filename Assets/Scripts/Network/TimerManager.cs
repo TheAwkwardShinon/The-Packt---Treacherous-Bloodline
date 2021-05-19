@@ -75,6 +75,11 @@ namespace ThePackt
                     Debug.Log("[TIMER] game started");
                     gameStarted = true;
                     gameStarting = false;
+
+                    if (BoltNetwork.IsServer)
+                    {
+                        MainQuest.Instance.SetQuestState(Constants.STARTED);
+                    }
                 }
 
                 //when the game has already started and the timer is zero or less it means that the game is over
@@ -83,6 +88,13 @@ namespace ThePackt
                     Debug.Log("[TIMER] game ended");
                     timerText.text = "00:00";
                     gameEnded = true;
+
+                    if (BoltNetwork.IsServer)
+                    {
+                        Debug.Log("[MAIN] no more time. victory for impostor");
+
+                        MainQuest.Instance.SetQuestState(Constants.FAILED);
+                    }
                 }
             }
         }

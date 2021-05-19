@@ -77,11 +77,15 @@ namespace ThePackt
 
             foreach (Collider2D collision in hitEnemies)
             {
-                Debug.Log(collision.gameObject.name + " hit");
+                Debug.Log("[NETWORKLOG] " + collision.gameObject.name + " hit");
 
                 if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
                 {
                     EnemyHitReaction(collision);
+                }
+                else if (LayerMask.LayerToName(collision.gameObject.layer) == "Objectives")
+                {
+                    ObjectiveHitReaction(collision);
                 }
                 else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
                 {
@@ -111,6 +115,32 @@ namespace ThePackt
                     Debug.Log("[NETWORKLOG] from client to server");
                     evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
                     evnt.HitNetworkId = enemy.entity.NetworkId;
+                    evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                    evnt.Send();
+                }
+            }
+        }
+
+        // react to the hit of an objective applying damage to that enemy
+        private void ObjectiveHitReaction(Collider2D collision)
+        {
+            Objective obj = collision.GetComponent<Objective>();
+            if (obj != null)
+            {
+                ObjectiveHitEvent evnt;
+
+                // if we are on the server, directly apply the damage to the objective
+                // otherwise we sent an event to the server
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[NETWORKLOG] server hit objective");
+                    obj.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                }
+                else
+                {
+                    Debug.Log("[NETWORKLOG] from client to server");
+                    evnt = ObjectiveHitEvent.Create(BoltNetwork.Server);
+                    evnt.HitNetworkId = obj.entity.NetworkId;
                     evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
                     evnt.Send();
                 }
