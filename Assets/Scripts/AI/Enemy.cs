@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ThePackt
 {
@@ -12,8 +13,14 @@ namespace ThePackt
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
+        [SerializeField] protected float _attackRange;
+        [SerializeField] protected float _attackPower;
         protected Slider healthSlider;
         protected FSM _fsm;
+
+        protected BoltEntity _lastAttacker;
+        protected Dictionary<BoltEntity,float> _damageMap;
+        protected Quest _room;
         #endregion
 
         #region methods
@@ -26,6 +33,8 @@ namespace ThePackt
             if (BoltNetwork.IsServer)
             {
                 state.Health = _health;
+
+                _damageMap = new Dictionary<BoltEntity, float>();
             }
 
             state.AddCallback("Health", HealthCallback);
@@ -47,6 +56,26 @@ namespace ThePackt
             if (BoltNetwork.IsServer)
             {
                 state.Health -= damage;
+            }
+        }
+
+        public void ApplyDamage(float damage, Player attacker)
+        {
+            Debug.Log("[ENEMY] apply damage: " + entity.IsOwner + ". From attacker: " + attacker.tag);
+
+            if (BoltNetwork.IsServer)
+            {
+                state.Health -= damage;
+                _lastAttacker = attacker.entity;
+
+                if (_damageMap.ContainsKey(attacker.entity))
+                {
+                    _damageMap[attacker.entity] += damage;
+                }
+                else
+                {
+                    _damageMap.Add(attacker.entity, damage);
+                }
             }
         }
 
@@ -85,9 +114,10 @@ namespace ThePackt
         {
             _health = value;
         }
-        public uint getConnectionID()
+
+        public void SetRoom(Quest value)
         {
-            return entity.Source.ConnectionId;
+            _room = value;
         }
         #endregion
     }

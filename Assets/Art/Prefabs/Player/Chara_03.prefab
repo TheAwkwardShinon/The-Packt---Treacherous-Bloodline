@@ -1142,6 +1142,12 @@ MonoBehaviour:
   _ceilingCheck: {fileID: 3806655669083619216}
   _attackPoint: {fileID: 1531968114984286749}
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
+  _feleBullet: {fileID: 0}
+  _herinBullet: {fileID: 0}
+  _ceuinBullet: {fileID: 0}
+  _ayatanaBullet: {fileID: 0}
+  _naturiaBullet: {fileID: 0}
+  _moonsightersBullet: {fileID: 0}
   _fogCircle: {fileID: 7037150400093548404}
   canvas: {fileID: 690350350571956738}
   nicknameText: {fileID: 7065724407605014184}

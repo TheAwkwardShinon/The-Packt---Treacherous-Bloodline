@@ -28,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5888237620715083050}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7948411039607155790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!212 &2464873214656419144
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -208,14 +208,18 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  _attackRange: 1.6
+  _attackPower: 10
   _reactionTime: 0.1
   _movementSpeed: 5
   _jumpVelocity: 3
   _avoidRange: 2
+  _perceptionRange: 4
   _minChangeDirectionTime: 1
   _maxChangeDirectionTime: 3
   _minStandStillTime: 1
   _maxStandStillTime: 2
+  _seekThreshold: 1.3
 --- !u!1001 &7133072558059141707
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ namespace ThePackt
         [SerializeField] protected float _attackPower;
         private Rigidbody2D _rb;
         private Vector2 _startPos;
+        public Player _owner { get; private set; }
         #endregion
 
         #region methods
@@ -35,7 +36,7 @@ namespace ThePackt
         {
             if (Vector2.Distance(transform.position, _startPos) >= _range)
             {
-                Destroy(gameObject);
+                BoltNetwork.Destroy(gameObject);
             }
         }
 
@@ -82,13 +83,14 @@ namespace ThePackt
                 if (BoltNetwork.IsServer)
                 {
                     Debug.Log("[NETWORKLOG] server hit enemy");
-                    enemy.ApplyDamage(_attackPower);
+                    enemy.ApplyDamage(_attackPower, _owner);
                 }
                 else
                 {
                     Debug.Log("[NETWORKLOG] from client to server");
                     evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
                     evnt.HitNetworkId = enemy.entity.NetworkId;
+                    evnt.AttackerNetworkId = _owner.entity.NetworkId;
                     evnt.Damage = _attackPower;
                     evnt.Send();
                 }
@@ -203,6 +205,11 @@ namespace ThePackt
         public void SetAttackPower(float value)
         {
             _attackPower = value;
+        }
+
+        public void SetOwner(Player plyr)
+        {
+            _owner = plyr;
         }
 
         #endregion
