@@ -15,11 +15,14 @@ namespace ThePackt
         [SerializeField] protected Gradient healthGradient;
         [SerializeField] protected float _attackRange;
         [SerializeField] protected float _attackPower;
+        [SerializeField] protected float _attackRate;
+        [SerializeField] protected float _movementSpeed;
         protected Slider healthSlider;
         protected FSM _fsm;
 
         protected BoltEntity _lastAttacker;
         protected Dictionary<BoltEntity,float> _damageMap;
+        protected Dictionary<BoltEntity, float> _hitTimeMap;
         protected Quest _room;
         #endregion
 
@@ -35,6 +38,7 @@ namespace ThePackt
                 state.Health = _health;
 
                 _damageMap = new Dictionary<BoltEntity, float>();
+                _hitTimeMap = new Dictionary<BoltEntity, float>();
             }
 
             state.AddCallback("Health", HealthCallback);
@@ -47,16 +51,6 @@ namespace ThePackt
         private void Update()
         {
             canvas.transform.rotation = Quaternion.identity;
-        }
-
-        public void ApplyDamage(float damage)
-        {
-            Debug.Log("[ENEMY] apply damage: " + entity.IsOwner);
-
-            if (BoltNetwork.IsServer)
-            {
-                state.Health -= damage;
-            }
         }
 
         public void ApplyDamage(float damage, Player attacker)
@@ -97,6 +91,35 @@ namespace ThePackt
             {
                 Debug.Log("[ENEMY] dead");
                 Die();
+            }
+        }
+
+        protected void DealDamage(BoltEntity hitPlayer)
+        {
+            Debug.Log("[BASEENEMY] hit player " + hitPlayer.NetworkId);
+
+            if (hitPlayer.IsOwner)
+            {
+                hitPlayer.GetComponent<Player>().ApplyDamage(_attackPower);
+            }
+            else
+            {
+                var evnt = PlayerAttackHitEvent.Create(hitPlayer.Source);
+                evnt.HitNetworkId = hitPlayer.NetworkId;
+                evnt.Damage = _attackPower;
+                evnt.Send();
+            }
+        }
+
+        protected void SetHitTime(BoltEntity hitEntity)
+        {
+            if (_hitTimeMap.ContainsKey(hitEntity))
+            {
+                _hitTimeMap[hitEntity] = Time.time;
+            }
+            else
+            {
+                _hitTimeMap.Add(hitEntity, Time.time);
             }
         }
 

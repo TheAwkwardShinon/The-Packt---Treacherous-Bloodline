@@ -464,6 +464,10 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  _attackRange: 0
+  _attackPower: 0
+  _attackRate: 0
+  _movementSpeed: 0
 --- !u!114 &674738543523109926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,7 +482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 0ac9ce45-ad23-48d2-9c34-357b0a7e8f42
-  _prefabId: 2
+  _prefabId: 3
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
