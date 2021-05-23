@@ -14,6 +14,7 @@ namespace ThePackt{
         private bool _dashInput;
 
         private bool _transformationInput;
+        private bool _specialAttack;
 
         //Checks
         private bool _isGrounded;
@@ -67,6 +68,7 @@ namespace ThePackt{
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             _dashInput = _player._inputHandler._dashInput;
             _transformationInput = _player._inputHandler._transformInput;
+            _specialAttack = _player._inputHandler._specialAttackInput;
             _isGrounded = _player.CheckIfGrounded();
            
 
@@ -113,6 +115,10 @@ namespace ThePackt{
                 _player.GetPlayerData()._startTransformationTime = Time.time;
                 _player.SetIsHuman(false);
                 _stateMachine.ChangeState(_player._transformState);
+            }
+            else if(_specialAttack && !_player.GetIsHuman() && _player._specialAttack.CheckIfCanAttack()){
+                     Debug.LogWarning("[IN AIR STATE] -->  special");
+                     _stateMachine.ChangeState(_player._specialAttack);
             }
             else
             {

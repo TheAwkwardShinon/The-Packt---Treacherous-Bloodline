@@ -7,7 +7,7 @@ namespace ThePackt{
     public class FeleSpecialAttackState : PlayerAbilityState
     {
 
-        private float _lastWerewolfAttackTime;
+        private float _lastAttackTime;
         private bool firstAttack = true;
 
 
@@ -20,8 +20,8 @@ namespace ThePackt{
         {
             base.Enter();
              if (_player.GetIsHuman()){
-                SpecialAttack();
-                _lastWerewolfAttackTime = Time.time;
+                SpecialAttack(_player.gameObject.tag);
+                _lastAttackTime = Time.time;
              }
                 
                 _isAbilityDone = true;
@@ -42,11 +42,22 @@ namespace ThePackt{
             base.PhysicsUpdate();
         }
 
-        public void SpecialAttack(){
-
+        public void SpecialAttack(string clan){
+            GameObject blt;
+            switch(clan){
+                case "ayatana": break;
+                case "ceuin": break;
+                case "fele": blt = BoltNetwork.Instantiate(_player.GetFeleBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                            break;
+                case "herin": break;
+                case "moonsighter": break;
+                case "naturia": break;
+            }
         }
 
-
-        
+         public bool CheckIfCanAttack()
+         {
+            return firstAttack || Time.time >= _lastAttackTime + _player.GetPlayerData().specialAttackCooldown;
+         }        
     }
 }

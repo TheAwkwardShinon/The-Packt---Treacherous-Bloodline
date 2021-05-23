@@ -11,19 +11,25 @@ namespace ThePackt
         [SerializeField] protected float _speed;
         [SerializeField] protected float _range;
         [SerializeField] protected float _attackPower;
+
+        protected Player _player;
         private Rigidbody2D _rb;
         private Vector2 _startPos;
         #endregion
 
         #region methods
         // executed when the player prefab is instatiated (quite as Start())
+
+        private void Awake(){
+            _player = GetComponent<Player>();
+        }
         public override void Attached()
         {
             state.SetTransforms(state.Transform, transform);
         }
 
         // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
             _rb = gameObject.GetComponent<Rigidbody2D>();
             _rb.velocity = transform.right * _speed;
@@ -31,7 +37,7 @@ namespace ThePackt
         }
 
         // Update is called once per frame
-        void Update()
+        protected virtual void Update()
         {
             if (Vector2.Distance(transform.position, _startPos) >= _range)
             {
@@ -51,10 +57,6 @@ namespace ThePackt
                 {
                     EnemyHitReaction(collision);
                 }
-                else if (LayerMask.LayerToName(collision.gameObject.layer) == "Objectives")
-                {
-                    ObjectiveHitReaction(collision);
-                }
                 else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
                 {
                     isLocalPlayer = PlayerHitReaction(collision);
@@ -70,9 +72,10 @@ namespace ThePackt
         }
 
         // react to the hit of an enemy applying damage to that enemy
-        private void EnemyHitReaction(Collider2D collision)
+        protected virtual void EnemyHitReaction(Collider2D collision)
         {
-            Enemy enemy = collision.GetComponent<Enemy>();
+            Enemy enemy;
+            enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
             {
                 EnemyAttackHitEvent evnt;
@@ -95,34 +98,8 @@ namespace ThePackt
             }
         }
 
-        // react to the hit of an objective applying damage to that enemy
-        private void ObjectiveHitReaction(Collider2D collision)
-        {
-            Objective obj = collision.GetComponent<Objective>();
-            if (obj != null)
-            {
-                ObjectiveHitEvent evnt;
-
-                // if we are on the server, directly apply the damage to the objective
-                // otherwise we sent an event to the server
-                if (BoltNetwork.IsServer)
-                {
-                    Debug.Log("[NETWORKLOG] server hit objective");
-                    obj.ApplyDamage(_attackPower);
-                }
-                else
-                {
-                    Debug.Log("[NETWORKLOG] from client to server");
-                    evnt = ObjectiveHitEvent.Create(BoltNetwork.Server);
-                    evnt.HitNetworkId = obj.entity.NetworkId;
-                    evnt.Damage = _attackPower;
-                    evnt.Send();
-                }
-            }
-        }
-
         // react to the hit of a player applying damage to that player. returns if the player is the owner
-        private bool PlayerHitReaction(Collider2D collision)
+        protected virtual bool PlayerHitReaction(Collider2D collision)
         {
             Player player;
             bool isLocalPlayer = false;
@@ -163,7 +140,9 @@ namespace ThePackt
                     }
 
                     evnt.HitNetworkId = player.entity.NetworkId;
-                    evnt.Damage = _attackPower;
+                    evnt.Damage = _attackPower; //TODO MODIFY WITH MULTIPLIER
+                    if(_player.GetPlayerData().currentLifePoints != _player.GetPlayerData().maxLifePoints)
+                        _player.GetPlayerData().currentLifePoints +=  _player.GetPlayerData().healAfterHit;
                     evnt.Send();
                 }
             }

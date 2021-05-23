@@ -55,6 +55,8 @@ namespace ThePackt{
         public float baseHumanCooldown = 0.5f;
         public float baseWerewolfCooldown = 0.5f;
 
+        public float specialAttackCooldown = 10f;
+
         public float healAfterHit = 0f;
 
         [Header("Layer masks")]
@@ -82,6 +84,13 @@ namespace ThePackt{
         public float _startTransformationTime;
 
         public bool healing = false;
+
+        [Header("debuff")]
+        public bool isSlowed = false;
+        public bool cantJump = false;
+        public bool cantDash = false;
+        public float velocityWhenSlowed = 4f;
+        public float timeOfSlow = 0f;
 
         #endregion
 

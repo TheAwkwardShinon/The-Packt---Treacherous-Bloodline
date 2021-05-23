@@ -58,15 +58,10 @@ namespace ThePackt{
 
         public  bool _isDowned {get; private set;} = false;
         public  bool _isBeingHealed {get; private set;} = false;
-        protected bool weakActive = false;
-        protected bool mediumActive = false;
-        protected bool attackModifier = false;
+
         protected bool hasActiveQuest = false;
 
-        protected bool passive1 = false;
-        protected bool passive2 = false;
 
-        protected bool passive3 = false;
 
         #endregion
 
@@ -98,6 +93,8 @@ namespace ThePackt{
         public PlayerDownMoveState _downMoveState {get; private set;}
 
         public PlayerInteractState _interactState {get; private set;}
+
+        public PlayerSpecialAttackState _specialAttack {get; private set;}
 
 
         #endregion
@@ -139,6 +136,7 @@ namespace ThePackt{
             _downMoveState = new PlayerDownMoveState(this, _stateMachine, _playerData, "DownMove");
             _downState = new PlayerDownState(this, _stateMachine, _playerData, "Down");
             _interactState = new PlayerInteractState(this, _stateMachine, _playerData, "Interact");
+            _specialAttack = new PlayerSpecialAttackState(this, _stateMachine, _playerData, "special");
         }
 
         ///<summary>
@@ -569,6 +567,29 @@ namespace ThePackt{
             return _bullet;
         }
 
+        public GameObject GetFeleBullet(){
+            return _feleBullet;
+        }
+        public GameObject GetAyatanaBullet(){
+            return _ayatanaBullet;
+        }
+
+        public GameObject GetCeuinBullet(){
+            return _ceuinBullet;
+        }
+
+        public GameObject GetHerinBullet(){
+            return _herinBullet;
+        }
+        public GameObject GetNaturiaBullet(){
+            return _naturiaBullet;
+        }
+        public GameObject GetMoonsighterBullet(){
+            return _moonsightersBullet;
+        }
+
+
+
         ///<summary>
         ///method that return the basic player data scriptable object, in which are contained a lot of base data
         ///<summary>
@@ -634,17 +655,6 @@ namespace ThePackt{
             _isImpostor = value;
         }
 
-        public void SetWeakActive(bool value){
-            weakActive = value;
-        }
-
-        public void SetMediumActive(bool value){
-            mediumActive = value;
-        }
-
-        public void SetAttackModifierActive(bool value){
-            attackModifier = value;
-        }
 
         public void SetIsBeingHealed(bool value){
             if(entity.IsOwner)

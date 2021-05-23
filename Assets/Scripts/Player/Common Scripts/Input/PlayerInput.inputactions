@@ -68,6 +68,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "specialAttack",
+                    "type": "Button",
+                    "id": "12de69ec-7be0-4182-9637-7912d1fb09f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -288,6 +296,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Activate UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cbbca3f9-de77-480c-99fa-8de3d9fb3ba7",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "specialAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e033d0fc-c198-4677-98a5-fa648737bf65",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "specialAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -39,6 +39,9 @@ namespace ThePackt{
         public Dictionary<string, bool> _attackInputs { get; private set; }
         public Dictionary<string, bool> _attackInputsStop { get; private set; }
 
+        public bool _specialAttackInput { get; private set; }
+        public bool _specialAttackInputStop { get; private set; }
+
         [SerializeField]
         private float _inputHoldTime = 0.2f;
 
@@ -46,6 +49,8 @@ namespace ThePackt{
         private float _dashInputStartTime;
         private float _transformInputStartTime;
         private float _interactInputStartTime;
+
+        private float _specialAttackInputStartTime;
         public Dictionary<string, float> _attackInputsStartTime { get; private set; }
 
         #endregion
@@ -172,9 +177,9 @@ namespace ThePackt{
         ///</summary>
         public void OnTransformationInput(InputAction.CallbackContext context)
         {
-            MainQuest mainQuest = MainQuest.Instance;
-            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
-            {
+            //MainQuest mainQuest = MainQuest.Instance;
+            //if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
+            //{
                 if (context.started)
                 {
                     if (player.GetIsHuman())
@@ -189,7 +194,7 @@ namespace ThePackt{
                 {
                     _transformInputStop = true;
                 }
-            }
+           // }
         }
         
         ///<summary> 
@@ -230,8 +235,8 @@ namespace ThePackt{
         public void OnAttackInput(InputAction.CallbackContext context)
         {
             MainQuest mainQuest = MainQuest.Instance;
-            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
-            {
+            //if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
+            //{
                 if (context.started)
                 {
                     if (!player.GetIsHuman() || CheckSetAttackDirection())
@@ -245,7 +250,27 @@ namespace ThePackt{
                 {
                     _attackInputsStop[Constants.BASE] = true;
                 }
-            }
+            //}
+        }
+         public void OnSpecialAttackInput(InputAction.CallbackContext context)
+        {
+            //MainQuest mainQuest = MainQuest.Instance;
+            //if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
+            //{
+                if (context.started)
+                {
+                    if (player._specialAttack.CheckIfCanAttack() && CheckSetAttackDirection())
+                    {
+                       _specialAttackInput = true;
+                       _specialAttackInputStop = false;
+                       _specialAttackInputStartTime = Time.time;
+                    }
+                }
+                else if (context.canceled)
+                {
+                    _specialAttackInputStop = true;
+                }
+            //}
         }
 
          public void OnActivateUIInput(InputAction.CallbackContext context)
@@ -364,6 +389,9 @@ namespace ThePackt{
         /// set the InteractInput variable to false. This variables trigger the player fsm states, is important to reset it.
         ///</summary>
         public void UseInteractInput() => _interactInput = false;
+
+        public void UseSpecialAttackInput() => _specialAttackInput = false;
+
 
         ///<summary> 
         /// set the Imput variable to false. This variables trigger the player fsm states, is important to reset it.

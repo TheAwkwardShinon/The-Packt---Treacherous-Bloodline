@@ -55,6 +55,7 @@ namespace ThePackt{
                     _stateMachine.ChangeState(_player._inAirState);
                 }
             }
+           
         }
 
         public override void PhysicsUpdate()

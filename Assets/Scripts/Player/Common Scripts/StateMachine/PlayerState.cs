@@ -118,6 +118,10 @@ namespace ThePackt{
                 case "Interact":
                     _player.state.Interact = value;
                     break;
+                case "special":
+                    Debug.LogError("trying to enter in special aniamtion");
+                    _player.state.special = value;
+                    break;
             }
         }
 

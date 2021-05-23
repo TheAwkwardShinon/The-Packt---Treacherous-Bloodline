@@ -77,15 +77,11 @@ namespace ThePackt
 
             foreach (Collider2D collision in hitEnemies)
             {
-                Debug.Log("[NETWORKLOG] " + collision.gameObject.name + " hit");
+                Debug.Log(collision.gameObject.name + " hit");
 
                 if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
                 {
                     EnemyHitReaction(collision);
-                }
-                else if (LayerMask.LayerToName(collision.gameObject.layer) == "Objectives")
-                {
-                    ObjectiveHitReaction(collision);
                 }
                 else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
                 {
@@ -121,32 +117,6 @@ namespace ThePackt
             }
         }
 
-        // react to the hit of an objective applying damage to that enemy
-        private void ObjectiveHitReaction(Collider2D collision)
-        {
-            Objective obj = collision.GetComponent<Objective>();
-            if (obj != null)
-            {
-                ObjectiveHitEvent evnt;
-
-                // if we are on the server, directly apply the damage to the objective
-                // otherwise we sent an event to the server
-                if (BoltNetwork.IsServer)
-                {
-                    Debug.Log("[NETWORKLOG] server hit objective");
-                    obj.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
-                }
-                else
-                {
-                    Debug.Log("[NETWORKLOG] from client to server");
-                    evnt = ObjectiveHitEvent.Create(BoltNetwork.Server);
-                    evnt.HitNetworkId = obj.entity.NetworkId;
-                    evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
-                    evnt.Send();
-                }
-            }
-        }
-
         // react to the hit of a player applying damage to that player. returns if the player is the owner
         private void PlayerHitReaction(Collider2D collision)
         {
@@ -161,7 +131,7 @@ namespace ThePackt
                     Debug.Log("[HEALTH] hit other player: " + collision.gameObject.name);
 
                     PlayerAttackHitEvent evnt;
-                    _player.GetPlayerData().currentLifePoints += _player.GetPlayerData().healAfterHit;
+
                     // if we are on the server, send the hit event to the connection of the player that was hit
                     // otherwise we sent it to the server with the connection id of the player that was hit
                     if (BoltNetwork.IsServer)

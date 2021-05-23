@@ -28,6 +28,8 @@ namespace ThePackt{
 
         private bool _interactInput;
 
+        private bool _specialAttack;
+
         protected bool _isStand = true;
 
         public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -68,6 +70,7 @@ namespace ThePackt{
             _transformInput = _player._inputHandler._transformInput;
             _attackInput = _player._inputHandler._attackInputs.ContainsValue(true);
             _interactInput = _player._inputHandler._interactInput;
+            _specialAttack = _player._inputHandler._specialAttackInput;
             _player._interactState.CheckIfCanInteract();
 
             _isTouchingCeiling = _player.CheckForCeiling();
@@ -113,6 +116,10 @@ namespace ThePackt{
                 else if(_interactInput && _player._interactState.CheckIfCanInteract()){
                     Debug.LogWarning("[GROUNDED STATE] -->  interact");
                     _stateMachine.ChangeState(_player._interactState);
+                }
+                else if(_specialAttack && !_player.GetIsHuman() && _player._specialAttack.CheckIfCanAttack()){
+                     Debug.LogWarning("[GROUNDED STATE] -->  special");
+                     _stateMachine.ChangeState(_player._specialAttack);
                 }
             }
         }
