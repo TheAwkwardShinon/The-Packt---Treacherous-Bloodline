@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _integrity: 30
-  _enemyPrefab: {fileID: 5888237620715083050, guid: c315e8d4761a09b4eb7a9be4f2378a89, type: 3}
+  _enemyPrefab: {fileID: 5888237620715083050, guid: 4504f80992c45a64b86f82821f581534, type: 3}
   _spawnPoint: {fileID: 7625073481937879403}
   canvas: {fileID: 3311955451593632417}
   integrityBar: {fileID: 3311955452492183332}

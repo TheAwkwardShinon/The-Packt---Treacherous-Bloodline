@@ -17,7 +17,9 @@ namespace ThePackt
         [SerializeField] protected float _attackPower;
         [SerializeField] protected float _attackRate;
         [SerializeField] protected float _movementSpeed;
+        protected int _facingDirection;
         protected Slider healthSlider;
+        //protected Vector3 _canvasPos;
         protected FSM _fsm;
 
         protected BoltEntity _lastAttacker;
@@ -46,11 +48,22 @@ namespace ThePackt
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
             healthSlider.maxValue = _health;
+            //_canvasPos = canvas.transform.localPosition;
         }
 
-        private void Update()
+        public virtual void Update()
         {
+            if (entity.IsOwner)
+            {
+                _facingDirection = 1;
+                if (IsFacingLeft())
+                {
+                    _facingDirection = -1;
+                }
+            }
+
             canvas.transform.rotation = Quaternion.identity;
+            //canvas.transform.localPosition = _canvasPos;
         }
 
         public void ApplyDamage(float damage, Player attacker)
@@ -109,6 +122,16 @@ namespace ThePackt
                 evnt.Damage = _attackPower;
                 evnt.Send();
             }
+        }
+
+        protected bool IsFacingLeft()
+        {
+            if (transform.right.x > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected void SetHitTime(BoltEntity hitEntity)

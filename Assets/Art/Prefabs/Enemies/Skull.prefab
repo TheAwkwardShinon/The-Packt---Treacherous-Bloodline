@@ -177,12 +177,13 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  _attackRange: 0.37
-  _attackPower: 10
+  _attackRange: 0.8
+  _attackPower: 0.5
   _attackRate: 0
   _movementSpeed: 3
-  _minRotation: -90
-  _maxRotation: -180
+  _minRotation: -30
+  _maxRotation: -160
+  _avoidRange: 0.1
 --- !u!50 &5255619727031243904
 Rigidbody2D:
   serializedVersion: 4
@@ -309,15 +310,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915266501911415682, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915266501911415682, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915266501911415682, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915266501911415682, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_AnchoredPosition.y

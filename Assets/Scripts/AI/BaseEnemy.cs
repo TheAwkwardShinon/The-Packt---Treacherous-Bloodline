@@ -68,12 +68,6 @@ namespace ThePackt
 		{
 			base.Attached();
 
-			_facingDirection = 1;
-			if (IsFacingLeft())
-			{
-				_facingDirection = -1;
-			}
-
 			#region wander fsm
 			FSMState wanderIdle = new FSMState();
 			wanderIdle.enterActions.Add(StartIdle);
@@ -574,16 +568,6 @@ namespace ThePackt
 		{
 			_facingDirection *= -1;
 			transform.Rotate(0.0f, 180.0f, 0.0f);
-		}
-
-		protected bool IsFacingLeft()
-		{
-			if (transform.right.x > 0)
-			{
-				return true;
-			}
-
-			return false;
 		}
 
 		protected bool IsInRoomAndAlive(BoltEntity plyr)
