@@ -1143,7 +1143,7 @@ MonoBehaviour:
   _attackPoint: {fileID: 1531968114984286749}
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
   _feleBullet: {fileID: 4269573159081168778, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
-  _herinBullet: {fileID: 0}
+  _herinBullet: {fileID: 5092806663819052801, guid: 42a86315c652aec47a43c9eb11de3453, type: 3}
   _ceuinBullet: {fileID: 0}
   _ayatanaBullet: {fileID: 0}
   _naturiaBullet: {fileID: 0}

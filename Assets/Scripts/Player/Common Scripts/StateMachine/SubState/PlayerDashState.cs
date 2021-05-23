@@ -77,7 +77,7 @@ namespace ThePackt{
         /* method that check if the player can dash */
         public bool CheckIfCanDash()
         {
-            return CanDash && Time.time >= _lastDashTime + _player.GetPlayerData().dashCooldown;
+            return CanDash && Time.time >= _lastDashTime + _player.GetPlayerData().dashCooldown && !_player.GetPlayerData().cantDash;
         }
         
         /*set dash true */

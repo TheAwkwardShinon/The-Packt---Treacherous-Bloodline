@@ -6,17 +6,49 @@ using UnityEngine;
 namespace ThePackt{
     public class Herin_Bullet : PlayerBullet
     {
-        [SerializeField] private float _slowValue;
+        //[SerializeField] private float _slowValue;
         [SerializeField] private float _timeOfSlow;
 
         protected override void EnemyHitReaction(Collider2D collision)
         {
-            base.EnemyHitReaction(collision);
+            base.EnemyHitReaction(collision); //TODO SLOWARE ANCHE I NEMICI
         }
 
         protected override bool PlayerHitReaction(Collider2D collision)
         {
-            return base.PlayerHitReaction(collision);
+            Player player;
+            bool isLocalPlayer = false;
+            bool isLocalBullet = true;
+
+            player = collision.GetComponent<Player>();
+
+            if (player != null)
+            {
+                isLocalPlayer = player.entity.IsOwner;
+                isLocalBullet = entity.IsOwner;
+
+                if (isLocalPlayer != isLocalBullet && isLocalBullet)
+                {
+                    
+                    ApplicateSlowDebuffEvent evnt;
+
+                    if (BoltNetwork.IsServer)
+                    {
+                        evnt = ApplicateSlowDebuffEvent.Create(player.entity.Source);
+                    }
+                    else
+                    {
+                        evnt = ApplicateSlowDebuffEvent.Create(BoltNetwork.Server);
+                    }
+
+                    evnt.TargetPlayerNetworkID = player.entity.NetworkId;
+                    evnt.TimeOfSlow = _timeOfSlow;
+                    Debug.LogError("[SLOW BULLET] ho colpito qualcuno e sto inviando l'evento");
+                    evnt.Send();
+                }
+            }else Debug.LogError("[SLOW BULLET] non hai colpito nessuno bravo");
+
+            return isLocalPlayer;
         }
 
         protected override void Update()

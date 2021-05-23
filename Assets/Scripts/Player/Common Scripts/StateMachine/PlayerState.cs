@@ -70,6 +70,9 @@ namespace ThePackt{
                     _detransformationInput = true;
                 }
             }
+
+            if(_playerData.isSlowed && Time.time > _playerData.debuffStartTime + _playerData.timeOfSlow)
+                _player.RemoveSlowDebuff();
         }
 
         protected void SetAnimatorBools(bool value)

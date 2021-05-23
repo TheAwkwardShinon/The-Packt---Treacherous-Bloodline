@@ -30,8 +30,9 @@ namespace ThePackt{
             base.LogicUpdate();
 
             _player.CheckIfShouldFlip(_xInput);
-
-            _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
+            if(_player.state.slowDebuff)
+                _player.SetVelocityX(_player.GetPlayerData().velocityWhenSlowed * _xInput);
+            else _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
 
             if (!_isExitingState)
             {

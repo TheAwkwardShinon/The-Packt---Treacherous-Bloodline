@@ -92,6 +92,8 @@ namespace ThePackt{
         public float velocityWhenSlowed = 4f;
         public float timeOfSlow = 0f;
 
+        public float debuffStartTime = 0f;
+
         #endregion
 
         #region Sprite

@@ -181,7 +181,7 @@ namespace ThePackt{
                 state.Health = _playerData.currentLifePoints;
                 state.Nickname = _selectedData.GetNickname();
             }
-
+            state.AddCallback("slowDebuff",SlowDebuffCallback);
             state.AddCallback("Health", HealthCallback);
             state.AddCallback("Nickname", NicknameCallback);
             state.AddCallback("isDowned", IsDownedCallback);
@@ -295,6 +295,31 @@ namespace ThePackt{
 
         #region stats modification
 
+
+        ///<summary>
+        /// apply slow debuff for time : time -- can't jump and cant dash
+        ///</summary>
+        public void ApplicateSlow(float time){
+            Debug.LogError("[SLOW BULLET] applico il debuff");
+            state.slowDebuff = true;
+            _playerData.timeOfSlow = time;
+            _playerData.cantDash = true;
+            _playerData.cantJump = true;
+            _playerData.debuffStartTime = Time.time;
+        }
+
+        ///<summary>
+        /// remove slow debuff
+        ///</summary>
+        public void RemoveSlowDebuff(){
+            Debug.LogError("[SLOW BULLET]tempo scaduto, rimuovo il debuff");
+            state.slowDebuff = false;
+            _playerData.timeOfSlow = 0f;
+            _playerData.cantDash = false;
+            _playerData.cantJump = false;
+        }
+
+
         ///<summary>
         /// subtracts the player's health component by "damage" input field
         ///</summary>
@@ -367,6 +392,10 @@ namespace ThePackt{
         private void IsDownedCallback()
         {
             _isDowned = state.isDowned;
+        }
+
+        private void SlowDebuffCallback(){
+            _playerData.isSlowed = state.slowDebuff;
         }
 
         private void IsBeingHealedCallback()

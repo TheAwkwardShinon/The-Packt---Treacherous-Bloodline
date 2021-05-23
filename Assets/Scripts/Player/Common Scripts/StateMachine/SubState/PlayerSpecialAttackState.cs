@@ -56,7 +56,8 @@ namespace ThePackt{
                 case "ceuin": break;
                 case "fele": blt = BoltNetwork.Instantiate(_player.GetFeleBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
                             break;
-                case "herin": break;
+                case "herin": blt = BoltNetwork.Instantiate(_player.GetHerinBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                            break;
                 case "moonsighter": break;
                 case "naturia": break;
             }

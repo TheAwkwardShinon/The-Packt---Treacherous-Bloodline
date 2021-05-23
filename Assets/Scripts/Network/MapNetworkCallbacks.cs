@@ -245,6 +245,34 @@ namespace ThePackt
             }
         }
 
+          public override void OnEvent(ApplicateSlowDebuffEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                Debug.LogError("[SLOW BULLET] sono il server");
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    Debug.LogError("[SLOW BULLET] e sono stato colpito io");
+                    _player.ApplicateSlow(evnt.TimeOfSlow);
+                }
+                else {
+                    Debug.LogError("[SLOW BULLET] il target è un client, ora gli inoltro il colpo");
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = ApplicateSlowDebuffEvent.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.TimeOfSlow = evnt.TimeOfSlow;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    Debug.LogError("[SLOW BULLET] client colpito e affondato");
+                    _player.ApplicateSlow(evnt.TimeOfSlow);
+                }
+            }
+        }
+
 
         #endregion
 

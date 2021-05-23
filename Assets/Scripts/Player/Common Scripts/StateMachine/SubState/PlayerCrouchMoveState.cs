@@ -40,7 +40,9 @@ namespace ThePackt{
             _isTouchingCeiling = _player.CheckForCeiling();
             if (!_isExitingState)
             {
-                _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
+                if(_player.GetPlayerData().isSlowed)
+                    _player.SetVelocityX(_player.GetPlayerData().velocityWhenSlowed * _player._facingDirection);
+                else _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
                 _player.CheckIfShouldFlip(_xInput);
 
                 if(_xInput == 0)
