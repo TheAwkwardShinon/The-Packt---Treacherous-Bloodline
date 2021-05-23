@@ -19,7 +19,6 @@ namespace ThePackt
 		[SerializeField] private float _perceptionRange;
 
 		private Vector2 _currentVelocity;
-		private int _facingDirection;
 		private Collider2D[] _nearPlayers;
 		private Rigidbody2D _rb;
 		private Collider2D _col;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 namespace ThePackt{
-    public class Fele_Bullet : Bullet
+    public class Fele_Bullet : PlayerBullet
     {
 
 

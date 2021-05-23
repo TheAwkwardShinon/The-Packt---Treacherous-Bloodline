@@ -36,7 +36,7 @@ namespace ThePackt
         }
 
         // react to the hit of a player applying damage to that player. returns if the player is the owner
-        private bool PlayerHitReaction(Collider2D collision)
+        protected virtual bool PlayerHitReaction(Collider2D collision)
         {
             Player player;
             bool isLocalPlayer = false;

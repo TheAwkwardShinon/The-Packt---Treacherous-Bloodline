@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.key0.r
       value: 0.6886792
       objectReference: {fileID: 0}
+    - target: {fileID: 2287292978710983868, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
+      propertyPath: _prefabId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3240735629097040211, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0
@@ -81,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4269573159081168778, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
       propertyPath: m_Name
-      value: HerinProjectile
+      value: HerinProjectile Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5953155798196732195, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
       propertyPath: m_RootOrder

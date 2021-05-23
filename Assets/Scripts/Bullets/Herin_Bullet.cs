@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 namespace ThePackt{
-    public class Herin_Bullet : Bullet
+    public class Herin_Bullet : PlayerBullet
     {
         [SerializeField] private float _slowValue;
         [SerializeField] private float _timeOfSlow;
