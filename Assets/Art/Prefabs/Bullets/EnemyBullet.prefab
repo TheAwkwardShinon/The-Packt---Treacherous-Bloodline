@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2292969274440695781}
   - component: {fileID: 2825768225714068848}
   - component: {fileID: 5172270753451977181}
-  - component: {fileID: 2077741190352671594}
+  - component: {fileID: 6694372955216321830}
   m_Layer: 8
-  m_Name: Bullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 34587324d412940a79d530020c957dc0, type: 3}
-  m_Color: {r: 0.9433962, g: 0.31019118, b: 0, a: 1}
+  m_Color: {r: 0.4245283, g: 0.013616918, b: 0.27263242, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -120,8 +120,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03701045, y: 0.03701239}
-  m_Size: {x: 2.258356, y: 4.516717}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.0000002, y: 2.0000005}
   m_Direction: 0
 --- !u!114 &5172270753451977181
 MonoBehaviour:
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 49d1298b-e3cd-4186-9771-e57e3efd43e2
-  _prefabId: 1
+  _prefabId: 2
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -152,7 +152,7 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 1
   _entityReplicationFilterQueryOption: 1
---- !u!114 &2077741190352671594
+--- !u!114 &6694372955216321830
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,9 +161,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6276787510045633164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3671f2b1309365b42b23ce5dafadcbdc, type: 3}
+  m_Script: {fileID: 11500000, guid: 74ceaa3a125ecb7468b554e5603a0f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
   _range: 7
-  _attackPower: 15
+  _attackPower: 10

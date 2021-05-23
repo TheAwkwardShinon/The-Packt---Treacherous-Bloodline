@@ -301,6 +301,16 @@ namespace ThePackt
             }
         }
 
+        public bool CheckIfPlayerIsInRoom(BoltEntity plyr)
+        {
+            if (_playersInRoom.Contains(plyr))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public bool CheckIfCompleted()
         {
             return _completeCondition();

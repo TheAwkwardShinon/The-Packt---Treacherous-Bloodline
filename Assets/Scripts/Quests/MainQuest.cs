@@ -19,6 +19,8 @@ namespace ThePackt
 
         private static MainQuest _instance;
 
+        private List<BoltEntity> _playersInRoom;
+
         public static MainQuest Instance
         {
             get
@@ -43,6 +45,7 @@ namespace ThePackt
             {
                 _notImpostors = new List<BoltEntity>();
                 _objectives = new List<BoltEntity>();
+                _playersInRoom = new List<BoltEntity>();
                 state.State = Constants.READY;
 
                 SpawnObjective(_objectivePositions[1]);
@@ -195,6 +198,46 @@ namespace ThePackt
                 evnt.ImpostorNetworkID = _impostor.NetworkId;
                 evnt.Send();
             }
+        }
+        #endregion
+
+        #region others
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Player enteredPlayer = collision.GetComponent<Player>();
+            if (enteredPlayer != null)
+            {
+                if (!_playersInRoom.Contains(enteredPlayer.entity))
+                {
+                    Debug.Log("[MAIN] player entered");
+
+                    _playersInRoom.Add(enteredPlayer.entity);
+                }
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            Player exitingPlayer = collision.GetComponent<Player>();
+            if (exitingPlayer != null)
+            {
+                if (_playersInRoom.Contains(exitingPlayer.entity))
+                {
+                    Debug.Log("[QUEST] player leaved");
+
+                    _playersInRoom.Remove(exitingPlayer.entity);
+                }
+            }
+        }
+
+        public bool CheckIfPlayerIsInRoom(BoltEntity plyr)
+        {
+            if (_playersInRoom.Contains(plyr))
+            {
+                return true;
+            }
+
+            return false;
         }
         #endregion
 

@@ -69,6 +69,7 @@ namespace ThePackt
             //hit handling is delegated to the bullet
             GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
+            blt.GetComponent<Bullet>().SetOwner(_player);
         }
 
         public void BaseWereWolfAttack()
@@ -104,13 +105,14 @@ namespace ThePackt
                 if (BoltNetwork.IsServer)
                 {
                     Debug.Log("[NETWORKLOG] server hit enemy");
-                    enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf);
+                    enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf, _player);
                 }
                 else
                 {
                     Debug.Log("[NETWORKLOG] from client to server");
                     evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
                     evnt.HitNetworkId = enemy.entity.NetworkId;
+                    evnt.AttackerNetworkId = _player.entity.NetworkId;
                     evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
                     evnt.Send();
                 }

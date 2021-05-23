@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace ThePackt
 {
@@ -12,8 +13,19 @@ namespace ThePackt
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
+        [SerializeField] protected float _attackRange;
+        [SerializeField] protected float _attackPower;
+        [SerializeField] protected float _attackRate;
+        [SerializeField] protected float _movementSpeed;
+        protected int _facingDirection;
         protected Slider healthSlider;
+        //protected Vector3 _canvasPos;
         protected FSM _fsm;
+
+        protected BoltEntity _lastAttacker;
+        protected Dictionary<BoltEntity,float> _damageMap;
+        protected Dictionary<BoltEntity, float> _hitTimeMap;
+        protected Quest _room;
         #endregion
 
         #region methods
@@ -26,6 +38,9 @@ namespace ThePackt
             if (BoltNetwork.IsServer)
             {
                 state.Health = _health;
+
+                _damageMap = new Dictionary<BoltEntity, float>();
+                _hitTimeMap = new Dictionary<BoltEntity, float>();
             }
 
             state.AddCallback("Health", HealthCallback);
@@ -33,20 +48,41 @@ namespace ThePackt
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
             healthSlider.maxValue = _health;
+            //_canvasPos = canvas.transform.localPosition;
         }
 
-        private void Update()
+        public virtual void Update()
         {
+            if (entity.IsOwner)
+            {
+                _facingDirection = 1;
+                if (IsFacingLeft())
+                {
+                    _facingDirection = -1;
+                }
+            }
+
             canvas.transform.rotation = Quaternion.identity;
+            //canvas.transform.localPosition = _canvasPos;
         }
 
-        public void ApplyDamage(float damage)
+        public void ApplyDamage(float damage, Player attacker)
         {
-            Debug.Log("[ENEMY] apply damage: " + entity.IsOwner);
+            Debug.Log("[ENEMY] apply damage: " + entity.IsOwner + ". From attacker: " + attacker.tag);
 
             if (BoltNetwork.IsServer)
             {
                 state.Health -= damage;
+                _lastAttacker = attacker.entity;
+
+                if (_damageMap.ContainsKey(attacker.entity))
+                {
+                    _damageMap[attacker.entity] += damage;
+                }
+                else
+                {
+                    _damageMap.Add(attacker.entity, damage);
+                }
             }
         }
 
@@ -71,6 +107,45 @@ namespace ThePackt
             }
         }
 
+        protected void DealDamage(BoltEntity hitPlayer)
+        {
+            Debug.Log("[BASEENEMY] hit player " + hitPlayer.NetworkId);
+
+            if (hitPlayer.IsOwner)
+            {
+                hitPlayer.GetComponent<Player>().ApplyDamage(_attackPower);
+            }
+            else
+            {
+                var evnt = PlayerAttackHitEvent.Create(hitPlayer.Source);
+                evnt.HitNetworkId = hitPlayer.NetworkId;
+                evnt.Damage = _attackPower;
+                evnt.Send();
+            }
+        }
+
+        protected bool IsFacingLeft()
+        {
+            if (transform.right.x > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected void SetHitTime(BoltEntity hitEntity)
+        {
+            if (_hitTimeMap.ContainsKey(hitEntity))
+            {
+                _hitTimeMap[hitEntity] = Time.time;
+            }
+            else
+            {
+                _hitTimeMap.Add(hitEntity, Time.time);
+            }
+        }
+
         #endregion
 
         #region getter
@@ -85,9 +160,10 @@ namespace ThePackt
         {
             _health = value;
         }
-        public uint getConnectionID()
+
+        public void SetRoom(Quest value)
         {
-            return entity.Source.ConnectionId;
+            _room = value;
         }
         #endregion
     }

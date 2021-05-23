@@ -29,6 +29,7 @@ namespace ThePackt
             if (BoltNetwork.IsServer)
             {
                 _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefab, _spawnPoint.position, _spawnPoint.rotation);
+                _spawnedEnemy.GetComponent<Enemy>().SetRoom(this);
             }
         }
 

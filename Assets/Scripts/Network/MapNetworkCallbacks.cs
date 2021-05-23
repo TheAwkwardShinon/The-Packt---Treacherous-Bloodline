@@ -155,7 +155,10 @@ namespace ThePackt
                 Enemy enemy = entity.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    enemy.ApplyDamage(evnt.Damage);
+                    Debug.Log("[PROTOTYPE] id " + evnt.AttackerNetworkId);
+
+                    BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
+                    enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
                 }
             }
         }

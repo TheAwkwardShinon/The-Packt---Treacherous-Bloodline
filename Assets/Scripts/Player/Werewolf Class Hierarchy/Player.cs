@@ -56,6 +56,7 @@ namespace ThePackt{
         protected bool _isHuman = true;
         protected bool _isImpostor = false;
 
+        public bool _isGrounded { get; private set; }
         public  bool _isDowned {get; private set;} = false;
         public  bool _isBeingHealed {get; private set;} = false;
 
@@ -400,7 +401,8 @@ namespace ThePackt{
          public bool CheckIfGrounded()
         {   
             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
-            return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
+            _isGrounded = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
+            return _isGrounded;
         }
 
         ///<summary>

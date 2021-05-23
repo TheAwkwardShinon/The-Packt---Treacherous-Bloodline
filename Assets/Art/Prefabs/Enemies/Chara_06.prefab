@@ -464,6 +464,10 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  _attackRange: 0
+  _attackPower: 0
+  _attackRate: 0
+  _movementSpeed: 0
 --- !u!114 &674738543523109926
 MonoBehaviour:
   m_ObjectHideFlags: 0
