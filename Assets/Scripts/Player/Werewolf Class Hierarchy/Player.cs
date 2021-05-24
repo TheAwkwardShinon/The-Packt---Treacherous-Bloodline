@@ -358,6 +358,14 @@ namespace ThePackt{
             _playerData.timeOfDmgReduction = 0f;
         }
 
+        ///<summary>
+        /// sets the diamater of the fog of war circle to size
+        ///</summary>
+        public void SetFogOfWarDiameter(float size)
+        {
+            _fogCircle.transform.localScale = new Vector3(size, size, _fogCircle.transform.localScale.z);
+        }
+
 
         ///<summary>
         /// subtracts the player's health component by "damage" input field
@@ -393,6 +401,7 @@ namespace ThePackt{
 
             _activeQuest = null;
             hasActiveQuest = false;
+            SetFogOfWarDiameter(_playerData.standardCircleSize);
         }
 
         ///TODO change in deathState.
@@ -596,6 +605,7 @@ namespace ThePackt{
             {
                 _activeQuest = null;
                 hasActiveQuest = false;
+                SetFogOfWarDiameter(_playerData.standardCircleSize);
 
                 Debug.Log("[QUEST] player abandoned the quest " + _activeQuest._title);
 
