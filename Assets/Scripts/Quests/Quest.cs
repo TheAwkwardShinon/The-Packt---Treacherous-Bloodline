@@ -7,6 +7,7 @@ namespace ThePackt
 {
     public delegate bool CompleteCondition();
     public delegate void StartAction();
+    public delegate void InProgressAction();
     public delegate void FailAction();
 
     public class Quest : Bolt.EntityBehaviour<IQuestState>
@@ -27,6 +28,7 @@ namespace ThePackt
         protected bool _timerJoin;
         protected bool _timerAbandon;
 
+        protected float _startTime;
         protected float _endTime;
         protected bool _timerEnd;
 
@@ -38,6 +40,7 @@ namespace ThePackt
 
         protected CompleteCondition _completeCondition;
         protected StartAction _startAction;
+        protected StartAction _inProgressAction;
         protected FailAction _failAction;
         #endregion
 
@@ -99,6 +102,10 @@ namespace ThePackt
                     state.State = Constants.COMPLETED;
 
                     //TODO special effect
+                }
+                else if (_inProgressAction != null)
+                {
+                    _inProgressAction();
                 }
             }
             else
@@ -324,7 +331,12 @@ namespace ThePackt
 
             if (BoltNetwork.IsServer && _state == Constants.STARTED)
             {
-                _startAction();
+                _startTime = Time.time;
+
+                if(_startAction != null)
+                {
+                    _startAction();
+                }
             }
 
             if (_state == Constants.STARTED && _playersInRoom.Contains(_localPlayer.entity))
@@ -339,7 +351,7 @@ namespace ThePackt
                 _endTime = Time.time;
                 _timerEnd = true;
 
-                if(_state == Constants.FAILED)
+                if(_state == Constants.FAILED && _failAction != null)
                 {
                     _failAction();
                 }
