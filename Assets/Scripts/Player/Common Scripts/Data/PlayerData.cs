@@ -85,14 +85,28 @@ namespace ThePackt{
 
         public bool healing = false;
 
-        [Header("debuff")]
+        [Header("Debuff Slow")]
         public bool isSlowed = false;
         public bool cantJump = false;
         public bool cantDash = false;
         public float velocityWhenSlowed = 4f;
         public float timeOfSlow = 0f;
-
         public float debuffStartTime = 0f;
+
+        [Header("Debuff Fog Of War")]
+
+        public float timeOffogDebuff = 0f;
+        public float debuffFogStartTime = 0f;
+        public float sizeOfCircle = 0f;
+        public float standardCircleSize = 2f;
+        public bool isFogDebuffActive = false;
+
+        [Header("Debuff Damage Reduction")]
+
+        public bool isDmgReductionDebuffActive = false;
+        public float damageReductionDebuffStartTime = 0f;
+        public float dmgReduction = 0f;
+        public float timeOfDmgReduction = 0f;
 
         #endregion
 

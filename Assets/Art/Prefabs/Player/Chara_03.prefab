@@ -1144,10 +1144,10 @@ MonoBehaviour:
   _bullet: {fileID: 6276787510045633164, guid: 7fc32c0119bb85143930e7214e88fa5d, type: 3}
   _feleBullet: {fileID: 4269573159081168778, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
   _herinBullet: {fileID: 5092806663819052801, guid: 42a86315c652aec47a43c9eb11de3453, type: 3}
-  _ceuinBullet: {fileID: 0}
-  _ayatanaBullet: {fileID: 0}
-  _naturiaBullet: {fileID: 0}
-  _moonsightersBullet: {fileID: 0}
+  _ceuinBullet: {fileID: 6254577298028764589, guid: d20c001711500eb419710c3925b500fc, type: 3}
+  _ayatanaBullet: {fileID: 5794560634370409764, guid: 39f7c878b227786448dfb01171bee325, type: 3}
+  _naturiaBullet: {fileID: 5039456749749259329, guid: 530a21686b82f9e4f91e05f0076cfea6, type: 3}
+  _moonsightersBullet: {fileID: 5094389427070485809, guid: d719809c84319914b915e27e5d76a858, type: 3}
   _fogCircle: {fileID: 7037150400093548404}
   canvas: {fileID: 690350350571956738}
   nicknameText: {fileID: 7065724407605014184}
@@ -1472,7 +1472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: b91d6ae1-f195-42e8-97fa-23afd5a060a9
-  _prefabId: 10
+  _prefabId: 14
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -1607,7 +1607,7 @@ Transform:
   m_GameObject: {fileID: 7037150400093548404}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 1.4285713}
+  m_LocalScale: {x: 2, y: 2, z: 1.4285713}
   m_Children: []
   m_Father: {fileID: 3539249949499421977}
   m_RootOrder: 18

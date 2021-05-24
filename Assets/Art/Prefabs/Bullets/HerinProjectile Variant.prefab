@@ -15,6 +15,7 @@ MonoBehaviour:
   _speed: 12
   _range: 12
   _attackPower: 4
+  _bulletOwner: {fileID: 0}
   _timeOfSlow: 15
 --- !u!1001 &9074149098839214219
 PrefabInstance:
@@ -61,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2287292978710983868, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
       propertyPath: _prefabId
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3240735629097040211, guid: 89a7a3ad3a6243b45a4ca8662e2e2c77, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b

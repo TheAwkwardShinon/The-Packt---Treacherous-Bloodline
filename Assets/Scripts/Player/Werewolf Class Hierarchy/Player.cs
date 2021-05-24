@@ -181,6 +181,8 @@ namespace ThePackt{
                 state.Health = _playerData.currentLifePoints;
                 state.Nickname = _selectedData.GetNickname();
             }
+            state.AddCallback("dmgReductionDebuff",DamageReducionCallback);
+            state.AddCallback("fogDebuff",FogDebuffCallback);
             state.AddCallback("slowDebuff",SlowDebuffCallback);
             state.AddCallback("Health", HealthCallback);
             state.AddCallback("Nickname", NicknameCallback);
@@ -319,6 +321,43 @@ namespace ThePackt{
             _playerData.cantJump = false;
         }
 
+        ///<summary>
+        /// apply fog of war debuff for time : time, the circle : circle
+        ///</summary>
+         public void ApplicateFogDebuff(float time,float circleSize){
+            state.fogDebuff = true;
+            _fogCircle.transform.localScale = new Vector3(circleSize,circleSize,_fogCircle.transform.localScale.z);
+            _playerData.timeOffogDebuff = time;
+            _playerData.debuffFogStartTime = Time.time;
+        }
+
+         ///<summary>
+        /// remove fog of war debuff
+        ///</summary>
+         public void RemoveFogDebuff(){
+            state.fogDebuff = false;
+            _fogCircle.transform.localScale = new Vector3(_playerData.standardCircleSize,_playerData.standardCircleSize,_fogCircle.transform.localScale.z);
+            _playerData.timeOffogDebuff = 0f;
+        }
+
+        ///<summary>
+        /// apply damage reduction debuff for time : time
+        ///</summary>
+         public void ApplicateDamageReductionDebuff(float time,float dmgReduction){
+            state.dmgReductionDebuff = true;
+            _playerData.dmgReduction = dmgReduction;
+            _playerData.timeOfDmgReduction = time;
+            _playerData.damageReductionDebuffStartTime = Time.time;
+        }
+
+        ///<summary>
+        /// remove damage reduction debuff
+        ///</summary>
+        public void RemoveDmgReductionDebuff(){
+            state.dmgReductionDebuff = false;
+            _playerData.timeOfDmgReduction = 0f;
+        }
+
 
         ///<summary>
         /// subtracts the player's health component by "damage" input field
@@ -397,6 +436,16 @@ namespace ThePackt{
         private void SlowDebuffCallback(){
             _playerData.isSlowed = state.slowDebuff;
         }
+
+        private void FogDebuffCallback(){
+            _playerData.isFogDebuffActive = state.fogDebuff;
+        }
+
+        private void DamageReducionCallback(){
+            _playerData.isDmgReductionDebuffActive = state.dmgReductionDebuff;
+        }
+
+
 
         private void IsBeingHealedCallback()
         {
@@ -568,6 +617,7 @@ namespace ThePackt{
         public void ActivateFogCircle()
         {
             _fogCircle.SetActive(true);
+            
         } 
         #endregion
 

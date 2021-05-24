@@ -43,11 +43,12 @@ namespace ThePackt{
 
                     evnt.TargetPlayerNetworkID = player.entity.NetworkId;
                     evnt.TimeOfSlow = _timeOfSlow;
-                    Debug.LogError("[SLOW BULLET] ho colpito qualcuno e sto inviando l'evento");
+                     if(_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
+                    else evnt.Damage = _attackPower +(_attackPower * _owner.GetPlayerData().damageMultiplier);
                     evnt.Send();
                 }
-            }else Debug.LogError("[SLOW BULLET] non hai colpito nessuno bravo");
-
+            }
             return isLocalPlayer;
         }
 

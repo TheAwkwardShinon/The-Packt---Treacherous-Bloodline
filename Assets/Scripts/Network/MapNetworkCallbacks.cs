@@ -254,6 +254,7 @@ namespace ThePackt
                 {
                     Debug.LogError("[SLOW BULLET] e sono stato colpito io");
                     _player.ApplicateSlow(evnt.TimeOfSlow);
+                    _player.ApplyDamage(evnt.Damage);
                 }
                 else {
                     Debug.LogError("[SLOW BULLET] il target è un client, ora gli inoltro il colpo");
@@ -269,9 +270,68 @@ namespace ThePackt
                 {
                     Debug.LogError("[SLOW BULLET] client colpito e affondato");
                     _player.ApplicateSlow(evnt.TimeOfSlow);
+                    _player.ApplyDamage(evnt.Damage);
                 }
             }
         }
+
+
+          public override void OnEvent(ApplicateFogOfWarDebuffEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.ApplicateFogDebuff(evnt.TimeOfDebuff,evnt.CircleSize);
+                    _player.ApplyDamage(evnt.Damage);
+                }
+                else {
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = ApplicateFogOfWarDebuffEvent.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.TimeOfDebuff = evnt.TimeOfDebuff;
+                    newEvnt.CircleSize = evnt.CircleSize;
+                    newEvnt.Damage = evnt.Damage;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.ApplicateFogDebuff(evnt.TimeOfDebuff,evnt.CircleSize);
+                    _player.ApplyDamage(evnt.Damage);
+                }
+            }
+        }
+
+          public override void OnEvent(ApplicateDamageReductionEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.ApplicateDamageReductionDebuff(evnt.TimeOfDebuff,evnt.DamageReduction);
+                    _player.ApplyDamage(evnt.Damage);
+                }
+                else {
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = ApplicateDamageReductionEvent.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.TimeOfDebuff = evnt.TimeOfDebuff;
+                    newEvnt.DamageReduction = evnt.DamageReduction;
+                    newEvnt.Damage = evnt.Damage;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                     _player.ApplicateDamageReductionDebuff(evnt.TimeOfDebuff,evnt.DamageReduction);
+                    _player.ApplyDamage(evnt.Damage);
+                }
+            }
+        }
+
 
 
         #endregion

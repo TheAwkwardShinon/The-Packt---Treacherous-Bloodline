@@ -13,21 +13,45 @@ namespace ThePackt{
             base.EnemyHitReaction(collision);
         }
 
+
         protected override bool PlayerHitReaction(Collider2D collision)
         {
-            return base.PlayerHitReaction(collision);
+            Player player;
+            bool isLocalPlayer = false;
+            bool isLocalBullet = true;
+
+            player = collision.GetComponent<Player>();
+
+            if (player != null)
+            {
+                isLocalPlayer = player.entity.IsOwner;
+                isLocalBullet = entity.IsOwner;
+
+                if (isLocalPlayer != isLocalBullet && isLocalBullet)
+                {
+                    
+                    PlayerAttackHitEvent evnt;
+
+                    if (BoltNetwork.IsServer)
+                    {
+                        evnt = PlayerAttackHitEvent.Create(player.entity.Source);
+                    }
+                    else
+                    {
+                        evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
+                    }
+
+                    evnt.HitNetworkId = player.entity.NetworkId;
+                     if(_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
+                    else evnt.Damage = _attackPower +(_attackPower * _owner.GetPlayerData().damageMultiplier);
+                    evnt.Send();
+                }
+            }
+            return isLocalPlayer;
         }
 
-        protected override void Update()
-        {
-            base.Update();
-            //Debug.LogError("[PROJECTILE] MOVING AT : "+_speed+" SPEED");
-        }
-
-        protected override void Start()
-        {
-            base.Start();
-        }
+  
 
 
     }

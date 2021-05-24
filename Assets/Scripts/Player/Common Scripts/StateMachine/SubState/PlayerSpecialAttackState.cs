@@ -52,13 +52,16 @@ namespace ThePackt{
         public void SpecialAttack(string clan){
             GameObject blt;
             switch(clan){
-                case "ayatana": break;
-                case "ceuin": break;
+                case "ayatana": blt = BoltNetwork.Instantiate(_player.GetAyatanaBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                            break;
+                case "ceuin": blt = BoltNetwork.Instantiate(_player.GetCeuinBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                            break;
                 case "fele": blt = BoltNetwork.Instantiate(_player.GetFeleBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
                             break;
                 case "herin": blt = BoltNetwork.Instantiate(_player.GetHerinBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
                             break;
-                case "moonsighter": break;
+                case "moonsighters": blt = BoltNetwork.Instantiate(_player.GetMoonsighterBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                            break;
                 case "naturia": break;
             }
         }

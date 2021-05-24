@@ -73,6 +73,12 @@ namespace ThePackt{
 
             if(_playerData.isSlowed && Time.time > _playerData.debuffStartTime + _playerData.timeOfSlow)
                 _player.RemoveSlowDebuff();
+
+            if(_playerData.isFogDebuffActive && Time.time > _playerData.debuffFogStartTime + _playerData.timeOffogDebuff)
+                _player.RemoveFogDebuff();
+            
+            if(_playerData.isDmgReductionDebuffActive && Time.time > _playerData.damageReductionDebuffStartTime+ _playerData.timeOfDmgReduction)
+                _player.RemoveDmgReductionDebuff();
         }
 
         protected void SetAnimatorBools(bool value)

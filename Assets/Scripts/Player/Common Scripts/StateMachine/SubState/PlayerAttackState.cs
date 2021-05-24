@@ -113,7 +113,9 @@ namespace ThePackt
                     evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
                     evnt.HitNetworkId = enemy.entity.NetworkId;
                     evnt.AttackerNetworkId = _player.entity.NetworkId;
-                    evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                    if(_player.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier)) - _player.GetPlayerData().dmgReduction; 
+                    else evnt.Damage =_player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier);
                     evnt.Send();
                 }
             }
@@ -149,7 +151,9 @@ namespace ThePackt
                     }
 
                     evnt.HitNetworkId = hitPlayer.entity.NetworkId;
-                    evnt.Damage = _player.GetPlayerData().powerBaseWerewolf;
+                    if(_player.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier)) - _player.GetPlayerData().dmgReduction; 
+                    else evnt.Damage =_player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier);
                     evnt.Send();
                 }
             }
