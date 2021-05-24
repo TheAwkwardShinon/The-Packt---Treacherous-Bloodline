@@ -9,9 +9,6 @@ namespace ThePackt
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform[] _spawnPoints;
         [SerializeField] private float _duration;
-        [SerializeField] private float _fireRate;
-        [SerializeField] private float _maxDegreeOfFire;
-        private float _lastFireTime;
 
         #region methods
         private void Awake()
@@ -33,15 +30,9 @@ namespace ThePackt
 
         protected void SpawnBullets()
         {
-            if (BoltNetwork.IsServer && Time.time >= _lastFireTime + _fireRate)
+            foreach(Transform sp in _spawnPoints)
             {
-                foreach(Transform sp in _spawnPoints)
-                {
-                    float angle = UnityEngine.Random.Range(-_maxDegreeOfFire, _maxDegreeOfFire);
-                    BoltNetwork.Instantiate(_bulletPrefab, sp.position, sp.rotation * Quaternion.Euler(0,0,angle));
-
-                    _lastFireTime = Time.time;
-                }
+                sp.GetComponent<BulletSpawnPoint>().Shoot(_bulletPrefab);
             }
         }
 

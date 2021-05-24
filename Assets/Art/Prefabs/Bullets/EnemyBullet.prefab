@@ -166,4 +166,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 10
   _range: 7
-  _attackPower: 10
+  _attackPower: 0
