@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ThePackt
@@ -6,48 +7,60 @@ namespace ThePackt
     public class EnemyQuest : Quest
     {
         protected CharacterSelectionData _selectedData;
-        [SerializeField] private GameObject _enemyPrefab;
-        [SerializeField] private Transform _spawnPoint;
-        private BoltEntity _spawnedEnemy;
+        [SerializeField] private GameObject[] _enemyPrefabs;
+        [SerializeField] private Transform[] _spawnPoints;
+        private List<BoltEntity> _spawnedEnemies;
 
         #region methods
         private void Awake()
         {
             _selectedData = CharacterSelectionData.Instance;
+            _spawnedEnemies = new List<BoltEntity>();
 
-            _completeCondition = IsEnemyDead;
+            _completeCondition = AreEnemiesDead;
 
-            _startAction = SpawnEnemy;
+            _startAction = SpawnEnemies;
 
-            _failAction = DespawnEnemy;
+            _failAction = DespawnEnemies;
 
             _localPlayer = _selectedData.GetPlayerScript();
         }
 
-        protected void SpawnEnemy()
+        protected void SpawnEnemies()
         {
             if (BoltNetwork.IsServer)
             {
-                _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefab, _spawnPoint.position, _spawnPoint.rotation);
-                _spawnedEnemy.GetComponent<Enemy>().SetRoom(this);
+                foreach(var sp in _spawnPoints)
+                {
+                    int randomIndex = Random.Range(0, _enemyPrefabs.Length - 1);
+                    BoltEntity spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[randomIndex], sp.position, sp.rotation);
+                    spawnedEnemy.GetComponent<Enemy>().SetRoom(this);
+                    _spawnedEnemies.Add(spawnedEnemy);
+                }
             }
         }
 
-        protected bool IsEnemyDead()
+        protected bool AreEnemiesDead()
         {
-            if(!_spawnedEnemy.IsAttached)
+            foreach (var enemy in _spawnedEnemies)
             {
-                return true;
+                if (enemy.IsAttached)
+                {
+                    return false;
+                }
             }
 
-            return false;
+            return true;
         }
 
-        protected void DespawnEnemy()
+        protected void DespawnEnemies()
         {
-            if (_spawnedEnemy.IsAttached)
+            foreach(var enemy in _spawnedEnemies)
             {
-                BoltNetwork.Destroy(_spawnedEnemy);
+                if (enemy.IsAttached)
+                {
+                    BoltNetwork.Destroy(enemy);
+                }
             }
         }
         #endregion

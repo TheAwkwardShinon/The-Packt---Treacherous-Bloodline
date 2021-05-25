@@ -360,6 +360,7 @@ namespace ThePackt
             if (_state == Constants.COMPLETED && _localPlayerPartecipates)
             {
                 _localPlayer.ObtainRewards(_expReward, _timeReward);
+                _localPlayerPartecipates = false;
             }
 
             if (_state == Constants.FAILED && _localPlayerPartecipates)
@@ -368,6 +369,7 @@ namespace ThePackt
 
                 _timerJoin = false;
                 _timerAbandon = false;
+                _localPlayerPartecipates = false;
             }
         }
 
