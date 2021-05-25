@@ -20,7 +20,7 @@ namespace ThePackt
 
         #region scenes
         public const string LOBBY = "LobbyScene";
-        public const string MAP = "NetworkTestScene";
+        public const string MAP = "MapScene";
         public const string MENU = "MenuScene";
         #endregion 
 
