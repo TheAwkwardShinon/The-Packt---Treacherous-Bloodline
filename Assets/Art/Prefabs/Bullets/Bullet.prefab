@@ -167,4 +167,3 @@ MonoBehaviour:
   _speed: 10
   _range: 7
   _attackPower: 15
-  _bulletOwner: {fileID: 0}

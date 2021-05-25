@@ -6,7 +6,6 @@ namespace ThePackt
 {
     public class PlayerBullet : Bullet { 
         
-        [SerializeField] protected Player _bulletOwner;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -25,6 +24,7 @@ namespace ThePackt
                 }
                 else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
                 {
+                    Debug.LogError("[BULLET] colpito un giocatore, on trigegr enter");
                     isLocalPlayer = PlayerHitReaction(collision);
                     isLocalBullet = entity.IsOwner;
                 }
@@ -32,6 +32,7 @@ namespace ThePackt
                 // Does not destroy bullets on impact with other bullets or the local player
                 if (!(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets") && isLocalPlayer != isLocalBullet && !(LayerMask.LayerToName(collision.gameObject.layer) == "Room"))
                 {
+                    Debug.LogError("[BULLET] destroyed");
                     BoltNetwork.Destroy(gameObject);
                 }
             }
@@ -51,7 +52,7 @@ namespace ThePackt
                 {
                     Debug.Log("[NETWORKLOG] server hit enemy");
                     // if the player has a dmg reduction debuff thank substract the dmg reduction value before applaying damage
-                    if(_bulletOwner.GetPlayerData().isDmgReductionDebuffActive)
+                    if(_owner.GetPlayerData().isDmgReductionDebuffActive)
                         enemy.ApplyDamage((_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction,_owner);
                     else enemy.ApplyDamage((_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)), _owner);
                 }
@@ -116,10 +117,10 @@ namespace ThePackt
 
                     evnt.HitNetworkId = player.entity.NetworkId;
                     // if the player has a dmg reduction debuff thank substract the dmg reduction value before applaying damage
-                    if(_bulletOwner.GetPlayerData().isDmgReductionDebuffActive)
-                        evnt.Damage = _attackPower - _bulletOwner.GetPlayerData().dmgReduction;
-                    else evnt.Damage = _attackPower;
-                    evnt.Send();
+                   if(_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
+                   else evnt.Damage = _attackPower +(_attackPower * _owner.GetPlayerData().damageMultiplier);
+                   evnt.Send();
                 }
             }
 

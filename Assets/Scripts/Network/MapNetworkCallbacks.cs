@@ -333,6 +333,34 @@ namespace ThePackt
         }
 
 
+        
+          public override void OnEvent(ApplicateforceInDirection evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.ApplicateForce(evnt.Direction);
+                    _player.ApplyDamage(evnt.Damage);
+                }
+                else {
+                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+                    var newEvnt = ApplicateforceInDirection.Create(entity.Source);
+                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
+                    newEvnt.Direction = evnt.Direction;
+                    newEvnt.Damage = evnt.Damage;
+                    newEvnt.Send();
+                }
+            }
+            else{
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.ApplicateForce(evnt.Direction);
+                    _player.ApplyDamage(evnt.Damage);
+                }
+            }
+        }
+
 
         #endregion
 

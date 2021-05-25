@@ -104,6 +104,8 @@ namespace ThePackt{
         protected Quest _activeQuest;
         protected float _spendableExp = 0;
         protected float _spendableTime = 0;
+
+        protected string _nextBullet = "naturia";
         #endregion
 
         #endregion
@@ -319,6 +321,14 @@ namespace ThePackt{
             _playerData.timeOfSlow = 0f;
             _playerData.cantDash = false;
             _playerData.cantJump = false;
+        }
+
+        public void ApplicateForce(Vector2 direction){
+            _rb.AddForce(direction*20000f);
+        }
+
+        public void NextBullet(string bullet){
+            _nextBullet = bullet;
         }
 
         ///<summary>
@@ -689,6 +699,10 @@ namespace ThePackt{
         public uint getConnectionID()
         {
             return entity.Source.ConnectionId;
+        }
+
+        public string GetNextBullet(){
+            return _nextBullet;
         }
 
         #endregion
