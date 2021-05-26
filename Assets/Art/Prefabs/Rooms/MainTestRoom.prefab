@@ -320,8 +320,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectivePrefab: {fileID: 7263629113391493904, guid: a76e5ff7d3a3e3342ab7280aae830bd4, type: 3}
   _objectivePositions:
-  - {x: -22.8, y: 1.03}
-  - {x: -22.8, y: -2.47}
+  - {fileID: 0}
+  - {fileID: 0}
   _returnToMenuSeconds: 5
 --- !u!61 &3179878646566682094
 BoxCollider2D:

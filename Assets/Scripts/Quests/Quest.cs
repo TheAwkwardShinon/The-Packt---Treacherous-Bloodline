@@ -19,7 +19,7 @@ namespace ThePackt
         public float _timeReward;
         public float _cooldown;
         
-        protected string _state;
+        protected int _state;
 
         protected float _enteringTime;
         protected float _leavingTime;
@@ -395,14 +395,14 @@ namespace ThePackt
             return _playersInRoom;
         }
 
-        public string GetQuestState()
+        public int GetQuestState()
         {
             return _state;
         }
         #endregion
 
         #region setters
-        public void SetQuestState(string value)
+        public void SetQuestState(int value)
         {
             if (entity.IsOwner)
             {

@@ -12,7 +12,7 @@ namespace ThePackt
         private List<BoltEntity> _objectives;
         private List<BoltEntity> _notImpostors;
         private BoltEntity _impostor;
-        private string _state;
+        private int _state;
 
         private Player _localPlayer;
         protected CharacterSelectionData _selectedData;
@@ -240,14 +240,14 @@ namespace ThePackt
         #endregion
 
         #region getters
-        public string GetQuestState()
+        public int GetQuestState()
         {
             return _state;
         }
         #endregion
 
         #region setters
-        public void SetQuestState(string value)
+        public void SetQuestState(int value)
         {
             if (entity.IsOwner)
             {

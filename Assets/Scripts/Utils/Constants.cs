@@ -25,10 +25,10 @@ namespace ThePackt
         #endregion 
 
         #region quests
-        public const string COMPLETED = "completed";
-        public const string FAILED = "failed";
-        public const string STARTED = "started";
-        public const string READY = "ready";
+        public const int COMPLETED = 3;
+        public const int FAILED = 2;
+        public const int STARTED = 1;
+        public const int READY = 0;
         #endregion 
     }
 }
