@@ -10540,17 +10540,17 @@ MonoBehaviour:
   enemySpawnPos: {x: -3, y: 0}
   playersSpawnPositions:
   - name: ceuin
-    position: {x: -8, y: 0, z: 0}
+    position: {x: -1.856205, y: -2.354314, z: 0}
   - name: ayatana
-    position: {x: -7, y: 0, z: 0}
+    position: {x: 0.27, y: -3.79, z: 0}
   - name: naturia
-    position: {x: -6, y: 0, z: 0}
+    position: {x: 2.16, y: -3.8, z: 0}
   - name: herin
-    position: {x: -5, y: 0, z: 0}
+    position: {x: 0.54, y: -6.06, z: 0}
   - name: moonsighters
-    position: {x: -0.19, y: 6.52, z: 0}
+    position: {x: -1.14, y: -5.24, z: 0}
   - name: fele
-    position: {x: 0, y: 0, z: 0}
+    position: {x: 2.35, y: -6.08, z: 0}
   _timeManagerPrefab: {fileID: 8079289482650668179, guid: da2ff5b9b865e91408486249936367e3, type: 3}
   _blackScreenCanvas: {fileID: 403471171}
   _loadingScreenTime: 3
@@ -16319,6 +16319,7 @@ MonoBehaviour:
   - {fileID: 8079166369461331315, guid: 9528698a560c60a45ba17521fef423dd, type: 3}
   - {fileID: 7126608235017570830, guid: e7aa4045429d3ae4da932f6522fce40d, type: 3}
   - {fileID: 3281881553664090555, guid: 1b70eb5e89ea470438f88eb86fb547e3, type: 3}
+  _mainRoomPrefab: {fileID: 5870793638613931984, guid: 019a3754acf46744297457fe31c9248f, type: 3}
   _testRoomPrefab: {fileID: 3485943434703338905, guid: b5a3874a00ccfca45a636a880e834392, type: 3}
   _mainTestRoomPrefab: {fileID: 2494373562238020612, guid: abbd6c1510955b64980ce9471d74838b, type: 3}
 --- !u!4 &958143743
@@ -31414,7 +31415,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -31445,7 +31446,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915659260}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -31464,7 +31465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5f79081dc522d47b336a91d86de2cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _yOffset: 2
+  _yOffset: 1
 --- !u!1 &1921193094
 GameObject:
   m_ObjectHideFlags: 0

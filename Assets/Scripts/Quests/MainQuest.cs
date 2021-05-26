@@ -7,7 +7,7 @@ namespace ThePackt
     public class MainQuest : Bolt.EntityBehaviour<IQuestState>
     {
         [SerializeField] private GameObject _objectivePrefab;
-        [SerializeField] private Vector2[] _objectivePositions;
+        [SerializeField] private Transform[] _objectivePositions;
         [SerializeField] private float _returnToMenuSeconds;
         private List<BoltEntity> _objectives;
         private List<BoltEntity> _notImpostors;
@@ -48,14 +48,10 @@ namespace ThePackt
                 _playersInRoom = new List<BoltEntity>();
                 state.State = Constants.READY;
 
-                SpawnObjective(_objectivePositions[1]);
-
-                /*
-                foreach(Vector2 pos in _objectivePositions)
+                foreach(Transform pos in _objectivePositions)
                 {
                     SpawnObjective(pos);
                 }
-                */
             }
 
             state.AddCallback("State", StateCallback);
@@ -71,12 +67,14 @@ namespace ThePackt
             }
         }
 
-        protected void SpawnObjective(Vector2 pos)
+        protected void SpawnObjective(Transform pos)
         {
             if (BoltNetwork.IsServer)
             {
-                BoltEntity _spawnedObjective = BoltNetwork.Instantiate(_objectivePrefab, pos, Quaternion.identity);
+                BoltEntity _spawnedObjective = BoltNetwork.Instantiate(_objectivePrefab, pos.position, pos.rotation);
                 _objectives.Add(_spawnedObjective);
+
+                _spawnedObjective.GetComponent<Objective>()._rotation = pos.rotation;
             }
         }
 

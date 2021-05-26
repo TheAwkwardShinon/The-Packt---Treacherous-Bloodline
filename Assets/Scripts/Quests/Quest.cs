@@ -61,14 +61,13 @@ namespace ThePackt
             _timerJoin = false;
             _timerAbandon = false;
 
-            _cooldown = 15.0f;
             _autoJoinTime = 5.0f;
             _autoAbandonTime = 5.0f;
 
             state.AddCallback("State", StateCallback);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             string s = "";
             foreach (BoltEntity e in _playersInRoom)
@@ -84,6 +83,12 @@ namespace ThePackt
                 Join(_localPlayer.entity);
             }
 
+            Debug.Log("[QUESTTIMER] timeraba: " + _timerAbandon);
+            if (_timerAbandon)
+            {
+                Debug.Log("[QUESTTIMER] abandon. timerabandon: " + _timerAbandon + "; Time: " + Time.time + "; sum: " + _leavingTime + _autoAbandonTime);
+            }
+           
             if (_timerAbandon && Time.time >= _leavingTime + _autoAbandonTime)
             {
                 _timerAbandon = false;
@@ -366,7 +371,7 @@ namespace ThePackt
             if (_state == Constants.FAILED && _localPlayerPartecipates)
             {
                 //TODO display fail message
-
+                
                 _timerJoin = false;
                 _timerAbandon = false;
                 _localPlayerPartecipates = false;

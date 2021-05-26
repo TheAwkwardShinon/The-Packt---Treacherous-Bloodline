@@ -59,6 +59,10 @@ namespace ThePackt{
 
         public float healAfterHit = 0f;
 
+        [Header("Interact State")]
+
+        public float interactRange = 1f;
+
         [Header("Layer masks")]
         public LayerMask whatIsGround;
         public LayerMask whatIsCeiling;

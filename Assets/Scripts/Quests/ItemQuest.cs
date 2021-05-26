@@ -27,8 +27,10 @@ namespace ThePackt
             _localPlayer = _selectedData.GetPlayerScript();
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             if (_state == Constants.STARTED && _localPlayerPartecipates)
             {
                 _localPlayer.SetFogOfWarDiameter(_fogOfWarDiameter);

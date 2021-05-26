@@ -8,7 +8,7 @@ namespace ThePackt
     public class Objective : Bolt.EntityBehaviour<IObjectiveState>
     {
         [SerializeField] private float _integrity;
-        [SerializeField] private GameObject _enemyPrefab;
+        [SerializeField] private GameObject[] _enemyPrefabs;
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject integrityBar;
@@ -21,6 +21,9 @@ namespace ThePackt
         [SerializeField] private float _spawnCooldown;
         private float _spawnStartTime;
         private BoltEntity _spawnedEnemy;
+        private int _randomIndex;
+
+        public Quaternion _rotation;
 
         public override void SimulateOwner()
         {
@@ -52,6 +55,7 @@ namespace ThePackt
         {
             if (BoltNetwork.IsServer)
             {
+                _randomIndex = Random.Range(0, _enemyPrefabs.Length);
                 _spawnedEnemy = null;
                 _spawnStartTime = Time.time;
                 _isEnemyAlive = false;
@@ -69,7 +73,7 @@ namespace ThePackt
 
         private void Update()
         {
-            canvas.transform.rotation = Quaternion.identity;
+            canvas.transform.rotation = _rotation;
         }
 
         public void ApplyDamage(float damage)
@@ -91,7 +95,7 @@ namespace ThePackt
         {
             if (BoltNetwork.IsServer)
             {
-                _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefab, _spawnPoint.position, _spawnPoint.rotation);
+                _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[_randomIndex], _spawnPoint.position, _spawnPoint.rotation);
                 _isEnemyAlive = true;
 
                 if(!_spawnedEnemy)
