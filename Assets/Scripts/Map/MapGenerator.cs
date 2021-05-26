@@ -24,19 +24,21 @@ public class MapGenerator : MonoBehaviour
             GameObject toSpawn;
             for (int i = 0; i < nPoints; i++)
             {
-                randomIndex = Random.Range(0, nRooms - 1);
+                randomIndex = Random.Range(0, nRooms);
                 toSpawn = _roomPrefabs[randomIndex];
-                _roomPrefabs.RemoveAt(randomIndex);
-                nRooms--;
+                //_roomPrefabs.RemoveAt(randomIndex);
+                //nRooms--;
 
-                //BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
+                BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
             }
 
             Debug.Log("[QUEST] " + _testRoomPrefab.name);
             //BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
             //BoltNetwork.Instantiate(_mainTestRoomPrefab, _mainTestRoomPrefab.transform.position, _mainTestRoomPrefab.transform.rotation);
+
+            //BoltNetwork.Instantiate(_testRoomPrefab, new Vector3(-0.062f, -0.267f, 0), _testRoomPrefab.transform.rotation);
         }
-        
+
     }
     #endregion
 
