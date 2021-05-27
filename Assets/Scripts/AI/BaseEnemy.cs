@@ -405,6 +405,8 @@ namespace ThePackt
 			}
 			*/
 
+			Debug.Log("[BASEENEMY] target " + _target);
+
 			if (_damageMap.Count > 0)
 			{
 				var sortedDict = from entry in _damageMap orderby entry.Value descending select entry;
@@ -538,12 +540,13 @@ namespace ThePackt
 		}
 
 		private bool PlayerNear()
-		{
+		{ 
 			ContactFilter2D filter = new ContactFilter2D();
 			filter.SetLayerMask(LayerMask.GetMask("Players"));
 
 			int nearPlayersNum = Physics2D.OverlapCircle(transform.position, _perceptionRange, filter, _nearPlayers);
 
+			Debug.Log("[BASEENEMY] checking near " + nearPlayersNum);
 			if (nearPlayersNum > 0)
 			{
 				BoltEntity nearPlayer = _nearPlayers[0].gameObject.GetComponent<Player>().entity;
@@ -585,7 +588,7 @@ namespace ThePackt
 			{
 				if (_room.CheckIfPlayerIsInRoom(plyr) && plyr.IsAttached)
 				{
-					return false;
+					return true;
 				}
 			}
 			else
