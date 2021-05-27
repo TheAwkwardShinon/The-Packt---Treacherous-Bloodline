@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: f2e1903862e86b54386e843cc1ec3088, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -208,20 +208,20 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  _attackRange: 1.6
+  _attackRange: 0.6
   _attackPower: 2
   _attackRate: 0.7
-  _movementSpeed: 4
+  _movementSpeed: 2
   _reactionTime: 0.1
-  _jumpVelocity: 10
+  _jumpVelocity: 4
   _jumpCooldown: 1.5
-  _avoidRange: 2
-  _perceptionRange: 4
+  _avoidRange: 0.7
+  _perceptionRange: 2
   _minChangeDirectionTime: 1
   _maxChangeDirectionTime: 3
   _minStandStillTime: 1
   _maxStandStillTime: 2
-  _seekThreshold: 1.3
+  _seekThreshold: 0.6
   _unreachabilityTime: 4
 --- !u!1001 &7133072558059141707
 PrefabInstance:

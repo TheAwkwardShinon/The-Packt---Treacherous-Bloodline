@@ -19,22 +19,6 @@ namespace ThePackt
 
         #region callbacks
 
-        /*
-        public override void SceneLoadLocalBegin(string scene, IProtocolToken token)
-        {
-            Debug.Log("begin aaaaa");
-
-            //put here black screen while loading
-            if (BoltNetwork.IsServer)
-            {
-                foreach (BoltEntity ent in BoltNetwork.SceneObjects)
-                {
-                    ent.transform.position = new Vector3(-7f, 0f, 0f);
-                }
-            }
-        }
-        */
-
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
             List<BoltEntity> players = new List<BoltEntity>();

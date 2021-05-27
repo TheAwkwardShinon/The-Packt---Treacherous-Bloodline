@@ -10,7 +10,7 @@ namespace ThePackt
     public class LobbyNetworkCallbacks : NetworkCallbacks
     {
         public Utils.PrefabAssociation[] playerPrefabs;
-        public Vector2 playerSpawnPos;
+        public Utils.VectorAssociation[] playersSpawnPositions;
         private Player _player;
         private string _playerToSpawnName;
         private List<string> _availableFactions;
@@ -22,20 +22,6 @@ namespace ThePackt
         [SerializeField] private float _loadingScreenTime;
 
         #region callbacks
-
-        /*
-        public override void SceneLoadLocalBegin(string scene, Bolt.IProtocolToken token)
-        {
-            Debug.Log("[SPAWNPLAYER] scene load begin");
-            if (BoltNetwork.IsClient)
-            {
-                var evnt = RequestAvailableFactions.Create(BoltNetwork.Server);
-                evnt.Send();
-
-                Debug.Log("[SPAWNPLAYER] request available factions sent at: " + BoltNetwork.Server.ConnectionId);
-            }
-        }
-        */
 
         public override void SceneLoadLocalDone(string scene, Bolt.IProtocolToken token)
         {
@@ -201,13 +187,23 @@ namespace ThePackt
         private bool SpawnRandomPlayer()
         {
             bool spawned = false;
+            Vector3 spawnPos = Vector3.zero;
             foreach (Utils.PrefabAssociation assoc in playerPrefabs)
             {
                 if (_availableFactions.Contains(assoc.name))
                 {
+                    foreach (Utils.VectorAssociation assov in playersSpawnPositions)
+                    {
+                        if (assov.name == assoc.name)
+                        {
+                            spawnPos = assov.position;
+                            break;
+                        }
+                    }
+
                     _selectedData.SetNickname("Player-" + UnityEngine.Random.Range(1, 9999));
                     _selectedData.SetCharacterSelected(assoc.name);
-                    BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
+                    BoltNetwork.Instantiate(assoc.prefab, spawnPos, Quaternion.identity);
                     spawned = true;
                     break;
                 }
@@ -223,11 +219,21 @@ namespace ThePackt
             
             //instantiate the selected player in the given position
             bool spawned = false;
+            Vector3 spawnPos = Vector3.zero;
             foreach (Utils.PrefabAssociation assoc in playerPrefabs)
             {
                 if (assoc.name == _playerToSpawnName && _availableFactions.Contains(assoc.name))
                 {
-                    BoltNetwork.Instantiate(assoc.prefab, playerSpawnPos, Quaternion.identity);
+                    foreach (Utils.VectorAssociation assov in playersSpawnPositions)
+                    {
+                        if (assov.name == assoc.name)
+                        {
+                            spawnPos = assov.position;
+                            break;
+                        }
+                    }
+
+                    BoltNetwork.Instantiate(assoc.prefab, spawnPos, Quaternion.identity);
                     spawned = true;
                     break;
                 }

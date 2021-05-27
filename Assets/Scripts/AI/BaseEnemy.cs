@@ -196,8 +196,15 @@ namespace ThePackt
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawRay(transform.position, -transform.right * _avoidRange);
-
+			if (Math.Abs(transform.rotation.y % 180) == 1)
+			{
+				Gizmos.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -transform.right * _avoidRange);
+			}
+			else
+			{
+				Gizmos.DrawRay(transform.position + new Vector3(0, 0.1f, 0), -transform.right * _avoidRange);
+			}
+			//
 			Gizmos.color = Color.red;
 			Gizmos.DrawWireSphere(transform.position, _attackRange);
 
@@ -354,7 +361,7 @@ namespace ThePackt
 			RaycastHit2D[] hits = new RaycastHit2D[1];
 			ContactFilter2D filter = new ContactFilter2D();
 			//filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall"));
-			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Objectives"));
+			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
 
 			int numHits = _col.Cast(-transform.right, filter, hits, _avoidRange, true);
 

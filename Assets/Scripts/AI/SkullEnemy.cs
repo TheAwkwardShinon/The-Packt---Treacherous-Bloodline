@@ -77,7 +77,7 @@ namespace ThePackt
             RaycastHit2D[] hits = new RaycastHit2D[1];
             ContactFilter2D filter = new ContactFilter2D();
             
-            filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Objectives"));
+            filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Enemies", "EnemyInvisibleFloor"));
 
             int numHits = _col.Cast(-transform.right, filter, hits, _avoidRange, true);
 
