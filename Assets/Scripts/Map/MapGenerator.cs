@@ -7,6 +7,7 @@ public class MapGenerator : MonoBehaviour
     #region variables 
     [SerializeField] private List<Vector2> _spawnPoints;
     [SerializeField] private List<GameObject> _roomPrefabs;
+    [SerializeField] private GameObject _mainRoomPrefab;
     [SerializeField] private GameObject _testRoomPrefab;
     [SerializeField] private GameObject _mainTestRoomPrefab;
     #endregion
@@ -20,23 +21,24 @@ public class MapGenerator : MonoBehaviour
             int nPoints = _spawnPoints.Count;
             int nRooms = _roomPrefabs.Count;
 
-            int randomIndex = 0;
+            int randomIndex = Random.Range(0, nPoints);
+            BoltNetwork.Instantiate(_mainRoomPrefab, _spawnPoints[randomIndex], _mainRoomPrefab.transform.rotation);
+            _spawnPoints.RemoveAt(randomIndex);
+            nPoints--;
+
             GameObject toSpawn;
             for (int i = 0; i < nPoints; i++)
             {
-                randomIndex = Random.Range(0, nRooms - 1);
+                randomIndex = Random.Range(0, nRooms);
                 toSpawn = _roomPrefabs[randomIndex];
-                _roomPrefabs.RemoveAt(randomIndex);
-                nRooms--;
 
-                //BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
+                BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
             }
 
-            Debug.Log("[QUEST] " + _testRoomPrefab.name);
-            BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
-            BoltNetwork.Instantiate(_mainTestRoomPrefab, _mainTestRoomPrefab.transform.position, _mainTestRoomPrefab.transform.rotation);
+            //BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
+            //BoltNetwork.Instantiate(_mainTestRoomPrefab, _mainTestRoomPrefab.transform.position, _mainTestRoomPrefab.transform.rotation);
         }
-        
+
     }
     #endregion
 

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: PlayerBaseData
   m_EditorClassIdentifier: 
   movementVelocity: 5
+  movementMultiplierWhenFullLife: 0
+  movementVelocityMultiplier: 0
   jumpVelocity: 9
   amountOfJumps: 1
-  coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: -3
   dashCooldown: 0.5
@@ -23,7 +24,6 @@ MonoBehaviour:
   holdTimeScale: 0.25
   dashTime: 0.2
   dashVelocity: 20
-  drag: 5
   dashEndYMultiplier: 0.15
   distBetweenAfterImages: 0.5
   crouchMovementVelocity: 5
@@ -39,6 +39,8 @@ MonoBehaviour:
   powerBaseHuman: 10
   baseHumanCooldown: 0.5
   baseWerewolfCooldown: 0.5
+  specialAttackCooldown: 10
+  healAfterHit: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -53,7 +55,7 @@ MonoBehaviour:
     m_Bits: 0
   whatIsRoom:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 65536
   WhatIsPlayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -70,6 +72,21 @@ MonoBehaviour:
   transformStateDuration: 10
   _startTransformationTime: 0
   healing: 0
+  isSlowed: 0
+  cantJump: 0
+  cantDash: 0
+  velocityWhenSlowed: 4
+  timeOfSlow: 0
+  debuffStartTime: 0
+  timeOffogDebuff: 0
+  debuffFogStartTime: 0
+  sizeOfCircle: 0
+  standardCircleSize: 2
+  isFogDebuffActive: 0
+  isDmgReductionDebuffActive: 0
+  damageReductionDebuffStartTime: 0
+  dmgReduction: 0
+  timeOfDmgReduction: 0
   humanFace: {fileID: 21300118, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
   humanHat: {fileID: 21300032, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
   humanArms: {fileID: 21300066, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}

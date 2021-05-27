@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ThePackt
 {
-    public class Item : MonoBehaviour
+    public class Item : Bolt.EntityBehaviour<IItemState>
     {
         private void OnTriggerEnter2D(Collider2D collision)
         {

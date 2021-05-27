@@ -58,7 +58,7 @@ namespace ThePackt{
                     evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
                     evnt.Send();
                 }
-                else _player.AcceptQuest(_interactionTarget.GetComponent<Quest>());
+                else _player.AcceptQuest(_interactionTarget.GetComponentInParent<Quest>());
                 _isAbilityDone = true;
             }
         }
@@ -69,13 +69,15 @@ namespace ThePackt{
         }
 
         public bool CheckIfCanInteract(){
-           Collider2D[] col = Physics2D.OverlapCircleAll(_player.transform.position,8f, 
+           Collider2D[] col = Physics2D.OverlapCircleAll(_player.transform.position,_player.GetPlayerData().interactRange, 
                _player.GetPlayerData().WhatIsPlayer | _player.GetPlayerData().whatIsRoom);
-            if(col != null){
+            
+            if (col != null){
                 
                 foreach(Collider2D hit in col){
-                   // Debug.LogError("[INTERACT CHECK] hit object layermask is = "+LayerMask.LayerToName(hit.gameObject.layer));
-                    if(LayerMask.LayerToName(hit.gameObject.layer).Equals("Players")){
+                    
+                    // Debug.LogError("[INTERACT CHECK] hit object layermask is = "+LayerMask.LayerToName(hit.gameObject.layer));
+                    if (LayerMask.LayerToName(hit.gameObject.layer).Equals("Players")){
                         if(hit.gameObject != _player.gameObject && hit.gameObject.GetComponent<Player>()._isDowned &&
                                 !hit.gameObject.GetComponent<Player>()._isBeingHealed){
                             _interactionType = "player";
@@ -87,8 +89,9 @@ namespace ThePackt{
                             return true;   
                         }
                         else continue;
-                    }else if(LayerMask.LayerToName(hit.gameObject.layer).Equals("Room")){
+                    }else if(LayerMask.LayerToName(hit.gameObject.layer).Equals("Pillar")){
                         //TODO IF THE QUEST IS NOT ALREADY ACCEPTED.
+                        
                         _interactionType = "quest";
                         _interactionTarget = hit.gameObject;
                         if(_player._interactTooltip.activeSelf)
