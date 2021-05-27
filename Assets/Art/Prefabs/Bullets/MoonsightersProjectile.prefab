@@ -4930,11 +4930,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c67b551ee577da45aabdb07240912c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0
-  _range: 0
-  _attackPower: 0
-  _debuffTime: 0
-  _damageReductionValue: 0
+  _speed: 12
+  _range: 12
+  _attackPower: 4
+  _debuffTime: 15
+  _damageReductionValue: 8
 --- !u!1 &5893517736209977043
 GameObject:
   m_ObjectHideFlags: 0
