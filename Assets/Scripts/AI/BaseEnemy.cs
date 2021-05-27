@@ -12,6 +12,7 @@ namespace ThePackt
 	{
 		#region variables
 
+		[Header("Specific")]
 		[SerializeField] private float _reactionTime;
 		[SerializeField] private float _jumpVelocity;
 		[SerializeField] private float _jumpCooldown;
@@ -27,6 +28,7 @@ namespace ThePackt
 		protected CheckSpecificRange _checkSpecificRange;
 
 		#region wandering
+		[Header("Wandering")]
 		[SerializeField] private float _minChangeDirectionTime;
 		[SerializeField] private float _maxChangeDirectionTime;
 		[SerializeField] private float _minStandStillTime;
@@ -39,6 +41,7 @@ namespace ThePackt
 		#endregion
 
 		#region seek
+		[Header("Seek")]
 		[SerializeField] private float _seekThreshold;
 		[SerializeField] private float _unreachabilityTime;
 		private bool _jump;

@@ -6,6 +6,7 @@ namespace ThePackt
 {
     public class SkullEnemy : Enemy
     {
+        [Header("Specific")]
         [SerializeField] private float _minRotation;
         [SerializeField] private float _maxRotation;
         [SerializeField] private float _avoidRange;

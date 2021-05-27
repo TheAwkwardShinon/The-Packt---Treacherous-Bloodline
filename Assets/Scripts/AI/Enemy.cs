@@ -8,6 +8,7 @@ namespace ThePackt
     public class Enemy : Bolt.EntityBehaviour<ICustomEnemyState>
     {
         #region variables
+        [Header("General")]
         [SerializeField] protected float _health;
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject healthBar;
