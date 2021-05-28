@@ -67,7 +67,7 @@ namespace ThePackt
 
 		// Start is called before the first frame update
 		public override void Attached()
-		{
+		{//
 			base.Attached();
 
 			#region wander fsm
@@ -96,7 +96,9 @@ namespace ThePackt
 			wanderJump.AddTransition(LandedTrans, wanderWalk);
 			*/
 
+			FSMTransition StunTrans = new FSMTransition(IsStunned);
 			FSMTransition WalkTimeoutTrans = new FSMTransition(MustStandStill);
+			wanderWalk.AddTransition(StunTrans, wanderIdle);
 			wanderWalk.AddTransition(WalkTimeoutTrans, wanderIdle);
 
 			FSMTransition IdleTimeoutTrans = new FSMTransition(MustNotStandStill);
@@ -138,6 +140,7 @@ namespace ThePackt
 			FSMTransition TargetReachedTrans = new FSMTransition(MustStandStill);
 			FSMTransition TargetAboveTrans = new FSMTransition(MustJump);
 			//we must check if the player is in range before checking if is reached, so it will go idle only if it is not in range
+			seekWalk.AddTransition(StunTrans, seekIdle);
 			seekWalk.AddTransition(TargetInRangeTrans, seekAttack);
 			seekWalk.AddTransition(TargetAboveTrans, seekJump);
 			seekWalk.AddTransition(TargetReachedTrans, seekIdle);
@@ -152,7 +155,8 @@ namespace ThePackt
 			//seekAttack.AddTransition(AttackEndTrans, seekWalk);
 
 			FSMTransition JumpEndTrans = new FSMTransition(JumpFinished);
-			seekJump.AddTransition(JumpEndTrans, seekWalk);
+			seekJump.AddTransition(JumpEndTrans, seekIdle);
+			//seekJump.AddTransition(JumpEndTrans, seekWalk);
 
 			FSM fsmSeek = new FSM(seekWalk);
 
@@ -504,14 +508,19 @@ namespace ThePackt
 			return _standStill;
 		}
 
+		private bool IsStunned()
+		{ 
+			return _stunned;
+		}
+
 		private bool MustNotStandStill()
 		{
-			return !_standStill;
+			return !_standStill && !_stunned;
 		}
 
 		private bool MustJump()
 		{
-			return _jump;
+			return _jump && !_stunned;
 		}
 
 		private bool JumpFinished()
@@ -521,7 +530,7 @@ namespace ThePackt
 
 		private bool MustAttack()
 		{
-			return _attack;
+			return _attack && !_stunned;
 		}
 
 		private bool AttackFinished()

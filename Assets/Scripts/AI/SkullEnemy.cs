@@ -33,10 +33,17 @@ namespace ThePackt
 
             Attack();
 
-            CheckInFront();
+            if (!_stunned)
+            {
+                CheckInFront();
 
-            _currentVelocity = _rb.velocity;
-            _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
+                _currentVelocity = _rb.velocity;
+                _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
+            }
+            else
+            {
+                _rb.velocity = Vector2.zero;
+            }
         }
 
         public override void Update()
