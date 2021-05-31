@@ -12,7 +12,7 @@ namespace ThePackt{
         private string[] nextAttack = {"naturia","naturia"};
 
 
-        public PlayerSpecialAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerSpecialAttackState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
         }
 

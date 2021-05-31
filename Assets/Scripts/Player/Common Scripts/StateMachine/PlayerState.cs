@@ -19,23 +19,31 @@ namespace ThePackt{
 
         protected bool _detransformationInput = false;
 
+        protected string _wolfAnimationName;
+        protected string _aniamtionToShow;
+
 
 
         
-        public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName){
+        public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName,string wolfAnimationName){
             _player = player;
             _stateMachine = stateMachine;
             _aniamtionName = animationName;
+            _wolfAnimationName = wolfAnimationName;
             _playerData = data;
         }
 
         public virtual void Enter(){
             Checks();
-
+            if(_player.GetIsHuman())
+                _aniamtionToShow = _aniamtionName;
+            else _aniamtionToShow = _wolfAnimationName;
             SetAnimatorBools(true);
 
             //_player._anim.SetBool(_aniamtionName,true);
 
+            
+                
             _startTime = Time.time;
             _isAnimationFinished = false;
             _isExitingState = false;
@@ -83,53 +91,88 @@ namespace ThePackt{
 
         protected void SetAnimatorBools(bool value)
         {
-            switch (_aniamtionName)
+            switch (_aniamtionToShow)
             {
-                case "Idle":
-                    _player.state.Idle = value;
+                case "IdleHuman":
+                    _player.state.IdleHuman = value;
                     break;
-                case "Move":
-                    _player.state.Move = value;
+                case "MoveHuman":
+                    _player.state.MoveHuman = value;
                     break;
-                case "InAir":
-                    _player.state.InAir = value;
+                case "InAirHuman":
+                    _player.state.InAirHuman = value;
                     break;
-                case "CrouchIdle":
-                    _player.state.CrouchIdle = value;
+                case "CrouchHuman":
+                    _player.state.CrouchHuman = value;
                     break;
-                case "CrouchMove":
-                    _player.state.CrouchMove = value;
+                case "CrouchMoveHuman":
+                    _player.state.CrouchMoveHuman = value;
                     break;
-                case "Land":
-                    _player.state.Land = value;
+                case "LandHuman":
+                    _player.state.LandHuman = value;
                     break;
-                case "WallSlide":
-                    _player.state.WallSlide = value;
+                case "WallSlideHuman":
+                    _player.state.WallSlideHuman = value;
                     break;
-                case "Dash":
-                    _player.state.Dash = value;
+                case "DashHuman":
+                    _player.state.DashHuman = value;
                     break;
-                case "attack":
-                    _player.state.attack = value;
+                case "AttackHuman":
+                    _player.state.AttackHuman = value;
                     break;
                 case "transformation":
-                    _player.state.transformation = value;
+                    _player.state.Transformation = value;
                     break;
-                case "detrasformation":
-                    _player.state.detrasformation = value;
+                case "Tetrasformation":
+                    _player.state.Detransformation = value;
                     break;
-                case "Down":
-                    _player.state.Down = value;
+                case "DownedHuman":
+                    _player.state.DownedHuman = value;
                     break;
-                case "DownMove":
-                    _player.state.DownMove = value;
+                case "DownedMoveHuman":
+                    _player.state.DownedMoveHuman = value;
                     break;
-                case "Interact":
-                    _player.state.Interact = value;
+                case "InteractHuman":
+                    _player.state.InteractHuman = value;
                     break;
-                case "special":
-                    Debug.LogError("trying to enter in special aniamtion");
-                    _player.state.special = value;
+                case "SpecialWolf":
+                    _player.state.SpecialWolf = value;
+                    break;
+                case "IdleWolf":
+                    _player.state.IdleWolf = value;
+                    break;
+                case "MoveWolf":
+                    _player.state.MoveWolf = value;
+                    break;
+                case "InAirWolf":
+                    _player.state.InAirWolf = value;
+                    break;
+                case "CrouchWolf":
+                    _player.state.CrouchWolf = value;
+                    break;
+                case "CrouchMoveWolf":
+                    _player.state.CrouchMoveWolf = value;
+                    break;
+                case "LandWolf":
+                    _player.state.LandWolf = value;
+                    break;
+                case "WallSlideWolf":
+                    _player.state.WallSlideWolf = value;
+                    break;
+                case "DashWolf":
+                    _player.state.DashWolf = value;
+                    break;
+                case "AttackWolf":
+                    _player.state.AttackWolf = value;
+                    break;
+                case "DownedWolf":
+                    _player.state.DownedWolf = value;
+                    break;
+                case "DownedMoveWolf":
+                    _player.state.DownedMoveWolf = value;
+                    break;
+                case "InteractWolf":
+                    _player.state.InteractWolf = value;
                     break;
             }
         }

@@ -4527,42 +4527,6 @@
           }
         },
         {
-          "Name": "Idle",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "Move",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
           "Name": "xVelocity",
           "Enabled": true,
           "Expanded": true,
@@ -4617,222 +4581,6 @@
           }
         },
         {
-          "Name": "InAir",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "Land",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "WallSlide",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "CrouchIdle",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "CrouchMove",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "Dash",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "attack",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "transformation",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "detrasformation",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "Down",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "DownMove",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "Interact",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
-            "MecanimDirection": 1,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
           "Name": "isDowned",
           "Enabled": true,
           "Expanded": true,
@@ -4846,6 +4594,7 @@
             "ExtrapolationErrorTolerance": 0.25,
             "_ExtrapolationCorrectionFrames": 6,
             "ExtrapolationMaxFrames": 9,
+            "MecanimDirection": 1,
             "SnapMagnitude": 10.0
           }
         },
@@ -4863,6 +4612,7 @@
             "ExtrapolationErrorTolerance": 0.25,
             "_ExtrapolationCorrectionFrames": 6,
             "ExtrapolationMaxFrames": 9,
+            "MecanimDirection": 1,
             "SnapMagnitude": 10.0
           }
         },
@@ -4889,23 +4639,6 @@
             "ExtrapolationErrorTolerance": 0.25,
             "_ExtrapolationCorrectionFrames": 6,
             "ExtrapolationMaxFrames": 9,
-            "SnapMagnitude": 10.0
-          }
-        },
-        {
-          "Name": "special",
-          "Enabled": true,
-          "Expanded": true,
-          "Priority": 1,
-          "PropertyType": {
-            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
-          },
-          "AssetSettings": {
-            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
-            "ExtrapolationErrorTolerance": 0.25,
-            "_ExtrapolationCorrectionFrames": 6,
-            "ExtrapolationMaxFrames": 9,
-            "MecanimMode": 1,
             "MecanimDirection": 1,
             "SnapMagnitude": 10.0
           }
@@ -4924,6 +4657,7 @@
             "ExtrapolationErrorTolerance": 0.25,
             "_ExtrapolationCorrectionFrames": 6,
             "ExtrapolationMaxFrames": 9,
+            "MecanimDirection": 1,
             "SnapMagnitude": 10.0
           }
         },
@@ -4941,6 +4675,7 @@
             "ExtrapolationErrorTolerance": 0.25,
             "_ExtrapolationCorrectionFrames": 6,
             "ExtrapolationMaxFrames": 9,
+            "MecanimDirection": 1,
             "SnapMagnitude": 10.0
           }
         },
@@ -4958,6 +4693,493 @@
             "ExtrapolationErrorTolerance": 0.25,
             "_ExtrapolationCorrectionFrames": 6,
             "ExtrapolationMaxFrames": 9,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "InAirHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "WallSlideHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "MoveHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "IdleHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "CrouchHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "CrouchMoveHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "DownedHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "DownedMoveHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "LandHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "InteractHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "AttackHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "DashHuman",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "Transformation",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "Detransformation",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "IdleWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "MoveWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "InAirWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "LandWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "WallSlideWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "DashWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "InteractWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "AttackWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "SpecialWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "CrouchWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "CrouchMoveWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "DownedWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
+            "SnapMagnitude": 10.0
+          }
+        },
+        {
+          "Name": "DownedMoveWolf",
+          "Enabled": true,
+          "Expanded": true,
+          "Priority": 1,
+          "PropertyType": {
+            "$type": "Bolt.Compiler.PropertyTypeBool, bolt.compiler"
+          },
+          "AssetSettings": {
+            "$type": "Bolt.Compiler.PropertyStateSettings, bolt.compiler",
+            "ExtrapolationErrorTolerance": 0.25,
+            "_ExtrapolationCorrectionFrames": 6,
+            "ExtrapolationMaxFrames": 9,
+            "MecanimMode": 1,
+            "MecanimDirection": 1,
             "SnapMagnitude": 10.0
           }
         }

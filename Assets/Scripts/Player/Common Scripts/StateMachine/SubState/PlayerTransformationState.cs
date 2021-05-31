@@ -6,7 +6,7 @@ namespace ThePackt{
     public class PlayerTransformationState : PlayerAbilityState
     {
         private float _transformationTime = 0.251f;
-        public PlayerTransformationState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName) : base(player, stateMachine, data, animationName)
+        public PlayerTransformationState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName,string wolfAnimBool) : base(player, stateMachine, data, animationName,wolfAnimBool)
         {
         }
 

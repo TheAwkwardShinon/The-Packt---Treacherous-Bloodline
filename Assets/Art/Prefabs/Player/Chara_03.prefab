@@ -1156,7 +1156,7 @@ MonoBehaviour:
   healthImage: {fileID: 690350350142763907}
   healthGradient:
     serializedVersion: 2
-    key0: {r: 0.9245283, g: 0, b: 0, a: 1}
+    key0: {r: 0.7686275, g: 0.019607844, b: 0.019607844, a: 1}
     key1: {r: 0.5377358, g: 0.05275897, b: 0.05275897, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2045,6 +2045,10 @@ PrefabInstance:
     - target: {fileID: 915266501028632057, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 915266501028632059, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_Pivot.x

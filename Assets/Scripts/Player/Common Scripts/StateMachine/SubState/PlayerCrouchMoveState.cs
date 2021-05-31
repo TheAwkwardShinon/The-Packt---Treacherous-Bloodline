@@ -10,7 +10,7 @@ namespace ThePackt{
         #endregion
 
         #region methods
-        public PlayerCrouchMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerCrouchMoveState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
         }
 
@@ -19,17 +19,17 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            _heightValue = _player.GetPlayerData().ceilingHeight;
-            _player.GetPlayerData().ceilingHeight = _heightValue *2 +0.05f;
-            _player.SetColliderHeight(_player.GetPlayerData().crouchColliderHeight);
+           // _heightValue = _player.GetPlayerData().ceilingHeight;
+            //_player.GetPlayerData().ceilingHeight = _heightValue *2 +0.05f;
+           // _player.SetColliderHeight(_player.GetPlayerData().crouchColliderHeight);
         }
 
         /* reset the collider height */
         public override void Exit()
         {
             base.Exit();
-            _player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
-            _player.GetPlayerData().ceilingHeight = _heightValue;
+            //_player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
+            //_player.GetPlayerData().ceilingHeight = _heightValue;
 
         }
 

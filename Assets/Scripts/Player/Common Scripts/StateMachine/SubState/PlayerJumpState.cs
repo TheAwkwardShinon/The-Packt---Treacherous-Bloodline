@@ -8,7 +8,7 @@ namespace ThePackt{
     {
         private int amountOfJumpsLeft;
 
-        public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
             amountOfJumpsLeft = playerData.amountOfJumps;
         }

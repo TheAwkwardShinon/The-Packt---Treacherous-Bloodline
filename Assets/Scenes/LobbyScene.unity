@@ -156,7 +156,7 @@ MonoBehaviour:
   - name: ceuin
     prefab: {fileID: 4285145117753477461, guid: 90801a24fa82f91419ff20557fe3cb3d, type: 3}
   - name: ayatana
-    prefab: {fileID: 2171198968574040643, guid: 80bd73a64563d164690eab6b8b2551e4, type: 3}
+    prefab: {fileID: 4220082733420956671, guid: 3f5d1b65d1d5cc64ea552a05c0d617b1, type: 3}
   - name: fele
     prefab: {fileID: 6408361816425853829, guid: a44c30dcc4d9e854b9161ec71238aa6d, type: 3}
   - name: herin

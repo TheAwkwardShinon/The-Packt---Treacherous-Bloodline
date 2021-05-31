@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerDownState : PlayerGroundedState
     {
-        public PlayerDownState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerDownState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
         }
 

@@ -69,7 +69,7 @@ namespace ThePackt{
         #region components
         public  Animator _anim {get; private set;} 
         protected Rigidbody2D _rb;
-        protected Collider2D _col;
+        protected Collider2D _col;//this is only used for checking the ground
 
         #endregion
 
@@ -124,22 +124,22 @@ namespace ThePackt{
             _selectedData = CharacterSelectionData.Instance;
             _playerData = Instantiate(_playerBaseData);
             _stateMachine = new PlayerStateMachine();
-            _idleState = new PlayerIdleState(this, _stateMachine, _playerData, "Idle");
-            _moveState = new PlayerMoveState(this, _stateMachine, _playerData, "Move");
-            _jumpState = new PlayerJumpState(this, _stateMachine, _playerData, "InAir");
-            _inAirState = new PlayerInAirState(this, _stateMachine, _playerData, "InAir");
-            _crouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, _playerData, "CrouchIdle");
-            _crouchMoveState = new PlayerCrouchMoveState(this, _stateMachine, _playerData, "CrouchMove");
-            _landState = new PlayerLandState(this, _stateMachine, _playerData, "Land");
-            _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlide");
-            _dashState = new PlayerDashState(this, _stateMachine, _playerData, "Dash");
-            _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "attack");
-            _transformState = new PlayerTransformationState(this, _stateMachine, _playerData, "transformation");
-            _detransformationState = new PlayerDetransformationState(this, _stateMachine, _playerData, "transformation");
-            _downMoveState = new PlayerDownMoveState(this, _stateMachine, _playerData, "DownMove");
-            _downState = new PlayerDownState(this, _stateMachine, _playerData, "Down");
-            _interactState = new PlayerInteractState(this, _stateMachine, _playerData, "Interact");
-            _specialAttack = new PlayerSpecialAttackState(this, _stateMachine, _playerData, "special");
+            _idleState = new PlayerIdleState(this, _stateMachine, _playerData, "IdleHuman","IdleWolf");
+            _moveState = new PlayerMoveState(this, _stateMachine, _playerData, "MoveHuman","MoveWolf");
+            _jumpState = new PlayerJumpState(this, _stateMachine, _playerData, "InAirHuman","InAirWolf");
+            _inAirState = new PlayerInAirState(this, _stateMachine, _playerData, "InAirHuman","InAirWolf");
+            _crouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, _playerData, "CrouchHuman","CrouchWolf");
+            _crouchMoveState = new PlayerCrouchMoveState(this, _stateMachine, _playerData, "CrouchMoveHuman","CrouchMoveWolf");
+            _landState = new PlayerLandState(this, _stateMachine, _playerData, "LandHuman","LandWolf");
+            _wallSlideState = new PlayerWallSlideState(this, _stateMachine, _playerData, "WallSlideHuman","WallSlideWolf");
+            _dashState = new PlayerDashState(this, _stateMachine, _playerData, "DashHuman","DashWolf");
+            _attackState = new PlayerAttackState(this, _stateMachine, _playerData, "AttackHuman","AttackWolf");
+            _transformState = new PlayerTransformationState(this, _stateMachine, _playerData, "Transformation","Transformation");
+            _detransformationState = new PlayerDetransformationState(this, _stateMachine, _playerData, "Detransformation","Detransformation");
+            _downMoveState = new PlayerDownMoveState(this, _stateMachine, _playerData, "DownedMoveHuman","DownedMoveWolf");
+            _downState = new PlayerDownState(this, _stateMachine, _playerData, "DownedHuman","DownedWolf");
+            _interactState = new PlayerInteractState(this, _stateMachine, _playerData, "InteractHuman","InteractWolf");
+            _specialAttack = new PlayerSpecialAttackState(this, _stateMachine, _playerData, "SpecialWolf","SpecialWolf");
         }
 
         ///<summary>
@@ -160,7 +160,7 @@ namespace ThePackt{
 
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            _col = gameObject.GetComponent<Collider2D>();
+            //_col = gameObject.GetComponent<Collider2D>();
             _playerInput = GetComponent<PlayerInput>();
             _anim = GetComponent<Animator>();
             _facingDirection = -1;
@@ -487,16 +487,13 @@ namespace ThePackt{
         ///</summary>
         public bool CheckForCeiling()
         {
-            _workspace = _col.bounds.center + Vector3.up * _col.bounds.size.y * 0.5f;
-            return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f), 0f, _playerData.whatIsCeiling);
+            return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.15f, 0.005f, 0f), 0f, _playerData.whatIsCeiling);
         }
 
         public void OnDrawGizmos(){
-            Debug.LogError("gizmos started");
-            _col = GetComponent<Collider2D>();
-            _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
+            
             Gizmos.color = Color.green;
-            Gizmos.DrawCube(_workspace,new Vector3(_col.bounds.size.x *5f - 0.01f, 0.1f, 0f));
+            Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.15f, 0.005f, 0f));
         }
 
         ///<summary>
@@ -504,8 +501,8 @@ namespace ThePackt{
         ///<summary>
          public bool CheckIfGrounded()
         {   
-            _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
-            _isGrounded = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x *2f - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
+            
+            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.15f, 0.005f, 0f), 0f, _playerData.whatIsGround);
             return _isGrounded;
         }
 
@@ -513,8 +510,8 @@ namespace ThePackt{
         /// method that returns true if the player is on other players, false instead
         ///</summary>
         public bool CheckIfGroundOnOtherPlayer(){
-            _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
-            Collider2D col = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, 
+            
+            Collider2D col = Physics2D.OverlapBox(_ledgeCheck.position, new Vector3(0.15f, 0.005f, 0f), 0f, 
                 _playerData.WhatIsPlayer);
             if(col.gameObject != gameObject)
                 return true;
@@ -525,8 +522,8 @@ namespace ThePackt{
         /// method that returns true if the player is on an enemy, false instead
         ///</summary>
         public bool CheckIfGroundedOnEnemy(){
-             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
-              return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, 
+             
+              return Physics2D.OverlapBox(_ledgeCheck.position, new Vector3(0.15f, 0.005f, 0f), 0f, 
                 _playerData.WhatIsEnemy);
         }
 
@@ -539,7 +536,6 @@ namespace ThePackt{
                 if(col.gameObject != this.gameObject && 
                     col.gameObject.GetComponent<Player>()._isDowned &&
                     !col.gameObject.GetComponent<Player>()._isBeingHealed){
-                        Debug.LogError("[DEBUG] found a downed player");
                         if(!_interactTooltip.activeSelf){
                             _interactTooltip.transform.position = new Vector2(col.transform.position.x,col.transform.position.y + 1f);
                               _interactTooltip.SetActive(true);
@@ -729,7 +725,7 @@ namespace ThePackt{
         ///<summary>
         ///method that sets the height of the collider, useful in the crouch states
         ///</summary>
-        public void SetColliderHeight(float height)
+/*        public void SetColliderHeight(float height)
         {
             Vector2 center = _col.offset;
             _workspace.Set(_col.transform.localScale.x, height);
@@ -738,7 +734,7 @@ namespace ThePackt{
 
             _col.transform.localScale = _workspace;
             _col.offset = center;
-        }
+        }*/
 
         ///<summary>
         ///method that sets the width of the collider, useful in the down states

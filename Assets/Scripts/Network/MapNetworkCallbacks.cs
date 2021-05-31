@@ -24,6 +24,7 @@ namespace ThePackt
             List<BoltEntity> players = new List<BoltEntity>();
             foreach (BoltEntity ent in BoltNetwork.Entities)
             {
+                Debug.LogError("gameobject.name = "+ent.gameObject.name);
                 if(ent.gameObject.GetComponent<Player>() != null)
                 {
                     players.Add(ent);
@@ -35,14 +36,16 @@ namespace ThePackt
 
                         foreach (Utils.VectorAssociation assoc in playersSpawnPositions)
                         {
+                            Debug.LogError("sono in foreach");
                             if (assoc.name == _selectedData.GetCharacterSelected())
                             {
+                                Debug.LogError("inside that magic if");
                                 ent.gameObject.transform.position = assoc.position;
                                 Camera.main.GetComponent<CameraFollow>().SetFollowTransform(ent.gameObject.transform);
                             }
                         }
                     }
-                }
+                }else Debug.LogError("il gameobject non è stato trovato");
             }
 
             if (BoltNetwork.IsServer)

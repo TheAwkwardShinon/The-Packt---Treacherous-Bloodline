@@ -7,7 +7,7 @@ namespace ThePackt{
     public class PlayerDetransformationState : PlayerAbilityState
     {
         private float _detransformationTime = 0.16f;
-        public PlayerDetransformationState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerDetransformationState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
         }
 

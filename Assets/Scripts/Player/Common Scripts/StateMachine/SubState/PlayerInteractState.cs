@@ -14,7 +14,7 @@ namespace ThePackt{
         #endregion
 
         #region methods
-        public PlayerInteractState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
+        public PlayerInteractState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
         }
 
@@ -78,8 +78,8 @@ namespace ThePackt{
                     
                     // Debug.LogError("[INTERACT CHECK] hit object layermask is = "+LayerMask.LayerToName(hit.gameObject.layer));
                     if (LayerMask.LayerToName(hit.gameObject.layer).Equals("Players")){
-                        if(hit.gameObject != _player.gameObject && hit.gameObject.GetComponent<Player>()._isDowned &&
-                                !hit.gameObject.GetComponent<Player>()._isBeingHealed){
+                        if(hit.gameObject != _player.gameObject && hit.gameObject.GetComponentInParent<Player>()._isDowned &&
+                                !hit.gameObject.GetComponentInParent<Player>()._isBeingHealed){
                             _interactionType = "player";
                             _interactionTarget = hit.gameObject;
                             if(!_player._interactTooltip.activeSelf){

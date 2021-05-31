@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerIdleState : PlayerGroundedState
     {
-        public PlayerIdleState(Player player, PlayerStateMachine stateMachine,PlayerData data, string animation) : base(player, stateMachine, data,animation)
+        public PlayerIdleState(Player player, PlayerStateMachine stateMachine,PlayerData data, string animation,string wolfAnimBool) : base(player, stateMachine, data,animation,wolfAnimBool)
         {
 
         }
