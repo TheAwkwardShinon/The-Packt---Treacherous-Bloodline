@@ -28,7 +28,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.33333334
-        value: {x: 0, y: 0, z: -211.281}
+        value: {x: 0, y: 0, z: -221.569}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -96,7 +96,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.33333334
-        value: {x: 0, y: 0, z: 55.256}
+        value: {x: 0, y: 0, z: 81.304}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -130,7 +130,7 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.33333334
-        value: {x: 0, y: 0, z: -31.198}
+        value: {x: 0, y: 0, z: -58.071}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -712,7 +712,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.33333334
-        value: -211.281
+        value: -221.569
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -934,7 +934,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.33333334
-        value: 55.256
+        value: 81.304
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1045,7 +1045,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.33333334
-        value: -31.198
+        value: -58.071
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2142,7 +2142,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: wolf/UpperRightArm/BottomRightArm
+    path: wolf/UpperRightArm/BottomRightArm/RightHand
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2152,7 +2152,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: wolf/UpperRightArm/BottomRightArm
+    path: wolf/UpperRightArm/BottomRightArm/RightHand
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2162,7 +2162,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: wolf/UpperRightArm/BottomRightArm
+    path: wolf/UpperRightArm/BottomRightArm/RightHand
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2262,7 +2262,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: wolf/UpperRightArm
+    path: wolf/tail
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2272,7 +2272,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: wolf/UpperRightArm
+    path: wolf/tail
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2282,7 +2282,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: wolf/UpperRightArm
+    path: wolf/tail
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2442,7 +2442,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: wolf/UpperRightArm/BottomRightArm/RightHand
+    path: wolf/UpperRightArm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2452,7 +2452,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: wolf/UpperRightArm/BottomRightArm/RightHand
+    path: wolf/UpperRightArm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2462,7 +2462,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: wolf/UpperRightArm/BottomRightArm/RightHand
+    path: wolf/UpperRightArm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2472,7 +2472,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: wolf/tail
+    path: wolf/UpperRightArm/BottomRightArm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2482,7 +2482,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: wolf/tail
+    path: wolf/UpperRightArm/BottomRightArm
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2492,7 +2492,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: wolf/tail
+    path: wolf/UpperRightArm/BottomRightArm
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

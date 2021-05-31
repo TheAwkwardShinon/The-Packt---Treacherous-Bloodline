@@ -69,7 +69,7 @@ namespace ThePackt{
         #region components
         public  Animator _anim {get; private set;} 
         protected Rigidbody2D _rb;
-        protected BoxCollider2D _col;
+        protected Collider2D _col;
 
         #endregion
 
@@ -160,7 +160,7 @@ namespace ThePackt{
 
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            _col = gameObject.GetComponent<BoxCollider2D>();
+            _col = gameObject.GetComponent<Collider2D>();
             _playerInput = GetComponent<PlayerInput>();
             _anim = GetComponent<Animator>();
             _facingDirection = -1;
@@ -414,7 +414,6 @@ namespace ThePackt{
             SetFogOfWarDiameter(_playerData.standardCircleSize);
         }
 
-        ///TODO change in deathState.
 
         ///<summary>
         /// changes the state to death state
@@ -492,13 +491,21 @@ namespace ThePackt{
             return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, _playerData.ceilingHeight, 0f), 0f, _playerData.whatIsCeiling);
         }
 
+        public void OnDrawGizmos(){
+            Debug.LogError("gizmos started");
+            _col = GetComponent<Collider2D>();
+            _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(_workspace,new Vector3(_col.bounds.size.x *5f - 0.01f, 0.1f, 0f));
+        }
+
         ///<summary>
         ///method that returns true if the player is grounded, false instead
         ///<summary>
          public bool CheckIfGrounded()
         {   
             _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
-            _isGrounded = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
+            _isGrounded = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x *2f - 0.01f, 0.1f, 0f), 0f, _playerData.whatIsGround);
             return _isGrounded;
         }
 
@@ -725,17 +732,18 @@ namespace ThePackt{
         public void SetColliderHeight(float height)
         {
             Vector2 center = _col.offset;
-            _workspace.Set(_col.size.x, height);
+            _workspace.Set(_col.transform.localScale.x, height);
 
-            center.y += (height - _col.size.y) / 2;
+            center.y += (height - _col.transform.localScale.y) / 2;
 
-            _col.size = _workspace;
+            _col.transform.localScale = _workspace;
             _col.offset = center;
         }
 
         ///<summary>
         ///method that sets the width of the collider, useful in the down states
         ///</summary>
+        /*
         public void SetColliderWidth(float width)
         {
             Vector2 center = _col.offset;
@@ -746,7 +754,7 @@ namespace ThePackt{
             _col.size = _workspace;
             _col.offset = center;
         }
-        
+        */
         ///<summary>
         ///set the variable isHuman to a value, this method should be used in transformation and detransformation states
         ///</summary>

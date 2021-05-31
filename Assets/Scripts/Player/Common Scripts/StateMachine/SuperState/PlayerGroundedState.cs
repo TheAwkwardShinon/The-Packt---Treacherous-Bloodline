@@ -97,7 +97,7 @@ namespace ThePackt{
                     Debug.LogWarning("[GROUNDED STATE] -->  inAir");
                     _stateMachine.ChangeState(_player._inAirState);
                 }
-                else if (_dashInput && _player._dashState.CheckIfCanDash())
+                else if (_dashInput && _player._dashState.CheckIfCanDash() && !_isTouchingWall)
                 {
                     Debug.LogWarning("[GROUNDED STATE] -->  dash");
                     _stateMachine.ChangeState(_player._dashState);

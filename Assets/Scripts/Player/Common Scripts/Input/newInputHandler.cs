@@ -72,7 +72,7 @@ namespace ThePackt{
 
             playerInputComponent = GetComponent<PlayerInput>();
             
-            if(SceneManager.GetActiveScene().name.Equals("NetworkTestScene")){ //TODO Change scene name here whene scene name changes
+            if(SceneManager.GetActiveScene().name.Equals("MapScene")){ //TODO Change scene name here whene scene name changes
                 _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
                 _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
             }
@@ -83,7 +83,7 @@ namespace ThePackt{
             CheckJumpInputHoldTime();
             CheckDashInputHoldTime();
             CheckBaseAttackInputHoldTime();
-            if(_menuInGameUI == null && _eventSystem == null && SceneManager.GetActiveScene().name.Equals("NetworkTestScene")){
+            if(_menuInGameUI == null && _eventSystem == null && SceneManager.GetActiveScene().name.Equals("MapScene")){
                 _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
                 _firstTabSelected = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetFirstTab();
                 _eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();

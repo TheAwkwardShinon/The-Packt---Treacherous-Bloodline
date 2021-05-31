@@ -14,7 +14,7 @@ namespace ThePackt
     {
         #region variables
         public string _title;
-        public string _description;
+        [TextArea(0,50)]public string _description;
         public float _expReward;
         public float _timeReward;
         public float _cooldown;

@@ -24,7 +24,7 @@ namespace ThePackt{
         #region methods
 
       private void Start(){
-            if(SceneManager.GetActiveScene().name.Equals("NetworkTestScene")){ //TODO Change scene name here whene scene name changes
+            if(SceneManager.GetActiveScene().name.Equals("MapScene")){ //TODO Change scene name here whene scene name changes
                 _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTabGroup();
                 _eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
                 _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
@@ -33,7 +33,7 @@ namespace ThePackt{
         }
 
         private void Update(){
-            if(_tabgroup == null && _eventsystem == null && _menuInGameUI == null && SceneManager.GetActiveScene().name.Equals("NetworkTestScene")){
+            if(_tabgroup == null && _eventsystem == null && _menuInGameUI == null && SceneManager.GetActiveScene().name.Equals("MapScene")){
                _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTabGroup();
                _eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>(); 
                _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
