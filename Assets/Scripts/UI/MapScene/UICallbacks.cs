@@ -10,6 +10,10 @@ namespace ThePackt {
 
         public void Disconnect()
         {
+            VoiceManager voiceManager = VoiceManager.Instance;
+            voiceManager.LeaveChannel();
+            voiceManager.Logout();
+
             /*
             if (BoltNetwork.IsServer)
             {
@@ -23,7 +27,7 @@ namespace ThePackt {
                 }
             }*/
 
-            
+
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("[NETWORKLOG] server disconnecting");

@@ -178,7 +178,7 @@ MonoBehaviour:
     position: {x: 7.59, y: -0.94, z: 0}
   - name: naturia
     position: {x: 5.13, y: -0.94, z: 0}
-  _minPlayerNumber: 1
+  _minPlayerNumber: 2
   gameStartSeconds: 4
   _blackScreenCanvas: {fileID: 1452120456}
   _loadingScreenTime: 1
@@ -222,11 +222,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 433369851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83619d9bc35461f45b7f76db7d9a55ae, type: 3}
+  m_Script: {fileID: 11500000, guid: ffeb897aa6483b5409ab2308a40a02a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agoraAppID: 520e1b1302304c2fa9b7e7e737b9650c
-  channelName: default
+  _issuer: federi9918-th71-dev
+  _domain: mt1s.vivox.com
+  _tokenKey: cozy037
 --- !u!4 &433369853
 Transform:
   m_ObjectHideFlags: 0
