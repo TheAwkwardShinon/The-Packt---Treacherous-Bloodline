@@ -63,22 +63,28 @@ namespace ThePackt{
             BoltLauncher.StartServer();
         }
 
+        public override void BoltStartBegin()
+        {
+            BoltNetwork.RegisterTokenClass<SessionDataToken>();
+        }
+
         public override void BoltStartDone()
         {
             
             var id = Guid.NewGuid().ToString().Split('-')[0];
             var matchName = string.Format("{0} - {1}", id, Constants.LOBBY);
 
-            BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: Constants.LOBBY);
+            BoltMatchmaking.CreateSession(sessionID: matchName,  sceneToLoad: Constants.LOBBY);
+            Debug.Log("[SESSIONID] " + matchName);
 
-           /*
-           int sessions = BoltNetwork.SessionList.Count;
-           Debug.Log("NUMBER OF SESSIONS: " + sessions);
-           if (sessions <= 3)
-           {
-               BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
-           }
-           */
+            /*
+            int sessions = BoltNetwork.SessionList.Count;
+            Debug.Log("NUMBER OF SESSIONS: " + sessions);
+            if (sessions <= 3)
+            {
+                BoltMatchmaking.CreateSession(sessionID: matchName, sceneToLoad: map);
+            }
+            */
         }
 
         // called from client button
@@ -162,6 +168,20 @@ namespace ThePackt{
 
             _connectionTentatives++;
             SearchAndJoinSessionRetry();
+        }
+
+        public override void SessionConnected(UdpSession session, IProtocolToken token)
+        {
+            Debug.Log("[CONNECTIONLOG] session id " + session.Id);
+
+            _selectedData.SetSessionId(session.Id.ToString());
+        }
+
+        public override void SessionCreatedOrUpdated(UdpSession session)
+        {
+            Debug.Log("[CONNECTIONLOG] session id " + session.Id);
+
+            _selectedData.SetSessionId(session.Id.ToString());
         }
 
         private void SearchAndJoinSession()

@@ -18,12 +18,14 @@ namespace ThePackt
         [SerializeField] private Uri _server = new Uri("https://mt1s.www.vivox.com/api2");
 
         private CharacterSelectionData _selectedData;
+        private Player _localPlayer;
 
         private Client _client;
         private TimeSpan _timeSpan;
         private string _channelName;
         private bool _loggedIn;
         private bool _joinChannelStarted;
+        private bool _channelJoined;
 
         private ILoginSession _loginSession;
         private IChannelSession _channelSession;
@@ -50,14 +52,16 @@ namespace ThePackt
         {
             _loggedIn = false;
             _joinChannelStarted = false;
+            _channelJoined = false;
 
             DontDestroyOnLoad(this);
 
             _selectedData = CharacterSelectionData.Instance;
+
             _timeSpan = TimeSpan.FromSeconds(90);
 
             //TODO set channel name to the name of session (passed to client using protocol token)
-            _channelName = "default";
+            _channelName = _selectedData.GetSessionId();
 
             _client = new Client();
             _client.Uninitialize();
@@ -74,6 +78,19 @@ namespace ThePackt
                 _joinChannelStarted = true;
 
                 JoinChannel();
+            }
+
+            if(_localPlayer == null)
+            {
+                _localPlayer = _selectedData.GetPlayerScript();
+            }
+
+            if (_channelJoined && _localPlayer != null)
+            {
+                //Debug.Log("[VOICE] update position");
+                Transform speaker = _localPlayer.transform;
+                Transform listener = _localPlayer.transform;
+                _channelSession.Set3DPosition(speaker.position, listener.position, listener.forward, listener.up);
             }
         }
 
@@ -143,10 +160,12 @@ namespace ThePackt
 
         public void Logout()
         {
+            Debug.Log("[VOICE] Logging Out");
+
             _loginSession.Logout();
             BindLoginCallbackListeners(false, _loginSession);
 
-            Debug.Log("[VOICE] Logging Out");
+            GameObject.Destroy(this);
         }
 
         #endregion
@@ -155,7 +174,8 @@ namespace ThePackt
 
         private void JoinChannel()
         {
-            ChannelId channelId = new ChannelId(_issuer, _channelName, _domain, ChannelType.NonPositional);
+            Channel3DProperties properties = new Channel3DProperties();
+            ChannelId channelId = new ChannelId(_issuer, _channelName, _domain, ChannelType.Positional, properties);
             _channelSession = _loginSession.GetChannelSession(channelId);
 
             BindChannelCallbackListeners(true, _channelSession);
@@ -201,6 +221,7 @@ namespace ThePackt
                     break;
                 case ConnectionState.Connected:
                     Debug.Log("[VOICE] Connected " + source.Channel.Name);
+                    _channelJoined = true;
                     break;
                 case ConnectionState.Disconnecting:
                     Debug.Log("[VOICE] Disconnecting " + source.Channel.Name);
@@ -210,6 +231,12 @@ namespace ThePackt
                     break;
             }
         }
+
+        #endregion
+
+        #region positional
+
+        
 
         #endregion
 

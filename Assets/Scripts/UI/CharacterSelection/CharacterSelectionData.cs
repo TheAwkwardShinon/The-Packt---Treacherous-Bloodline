@@ -11,6 +11,7 @@ namespace ThePackt{
         private string _playerNickname = "none";
         private Player _playerScript = null;
         private string _disconnectReason = null;
+        private string _sessionId = null;
 
         private int _characterIndex = 0;
 
@@ -36,6 +37,11 @@ namespace ThePackt{
             return _characterIndex;
         }
 
+        public string GetSessionId()
+        {
+            return _sessionId;
+        }
+
         public void SetNickname(string name){
             _playerNickname = name;
         }
@@ -58,13 +64,17 @@ namespace ThePackt{
             _disconnectReason = value;
         }
 
+        public void SetSessionId(string value)
+        {
+            _sessionId = value;
+        }
 
         public void Reset(){
             _characterSelected = "none";
             _playerNickname = "none";
             _playerScript = null;
             _disconnectReason = null;
-
+            _sessionId = null;
         }
     }
 }
