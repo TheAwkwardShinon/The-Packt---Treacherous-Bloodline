@@ -8,6 +8,7 @@ namespace ThePackt
     public class Enemy : Bolt.EntityBehaviour<ICustomEnemyState>
     {
         #region variables
+        [Header("General")]
         [SerializeField] protected float _health;
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject healthBar;
@@ -17,6 +18,9 @@ namespace ThePackt
         [SerializeField] protected float _attackPower;
         [SerializeField] protected float _attackRate;
         [SerializeField] protected float _movementSpeed;
+        protected float _lastStunTime;
+        protected float _stunTime;
+        protected bool _stunned;
         protected int _facingDirection;
         protected Slider healthSlider;
         //protected Vector3 _canvasPos;
@@ -59,6 +63,11 @@ namespace ThePackt
                 if (IsFacingLeft())
                 {
                     _facingDirection = -1;
+                }
+
+                if (_stunned && Time.time >= _lastStunTime + _stunTime)
+                {
+                    _stunned = false;
                 }
             }
 
@@ -122,6 +131,13 @@ namespace ThePackt
                 evnt.Damage = _attackPower;
                 evnt.Send();
             }
+        }
+
+        public void Stun(float time)
+        {
+            _stunTime = time;
+            _lastStunTime = Time.time;
+            _stunned = true;
         }
 
         protected bool IsFacingLeft()

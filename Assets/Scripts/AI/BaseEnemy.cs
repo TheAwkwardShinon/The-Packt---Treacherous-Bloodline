@@ -12,6 +12,7 @@ namespace ThePackt
 	{
 		#region variables
 
+		[Header("Specific")]
 		[SerializeField] private float _reactionTime;
 		[SerializeField] private float _jumpVelocity;
 		[SerializeField] private float _jumpCooldown;
@@ -27,6 +28,7 @@ namespace ThePackt
 		protected CheckSpecificRange _checkSpecificRange;
 
 		#region wandering
+		[Header("Wandering")]
 		[SerializeField] private float _minChangeDirectionTime;
 		[SerializeField] private float _maxChangeDirectionTime;
 		[SerializeField] private float _minStandStillTime;
@@ -39,6 +41,7 @@ namespace ThePackt
 		#endregion
 
 		#region seek
+		[Header("Seek")]
 		[SerializeField] private float _seekThreshold;
 		[SerializeField] private float _unreachabilityTime;
 		private bool _jump;
@@ -64,7 +67,7 @@ namespace ThePackt
 
 		// Start is called before the first frame update
 		public override void Attached()
-		{
+		{//
 			base.Attached();
 
 			#region wander fsm
@@ -93,7 +96,9 @@ namespace ThePackt
 			wanderJump.AddTransition(LandedTrans, wanderWalk);
 			*/
 
+			FSMTransition StunTrans = new FSMTransition(IsStunned);
 			FSMTransition WalkTimeoutTrans = new FSMTransition(MustStandStill);
+			wanderWalk.AddTransition(StunTrans, wanderIdle);
 			wanderWalk.AddTransition(WalkTimeoutTrans, wanderIdle);
 
 			FSMTransition IdleTimeoutTrans = new FSMTransition(MustNotStandStill);
@@ -135,6 +140,7 @@ namespace ThePackt
 			FSMTransition TargetReachedTrans = new FSMTransition(MustStandStill);
 			FSMTransition TargetAboveTrans = new FSMTransition(MustJump);
 			//we must check if the player is in range before checking if is reached, so it will go idle only if it is not in range
+			seekWalk.AddTransition(StunTrans, seekIdle);
 			seekWalk.AddTransition(TargetInRangeTrans, seekAttack);
 			seekWalk.AddTransition(TargetAboveTrans, seekJump);
 			seekWalk.AddTransition(TargetReachedTrans, seekIdle);
@@ -149,7 +155,8 @@ namespace ThePackt
 			//seekAttack.AddTransition(AttackEndTrans, seekWalk);
 
 			FSMTransition JumpEndTrans = new FSMTransition(JumpFinished);
-			seekJump.AddTransition(JumpEndTrans, seekWalk);
+			seekJump.AddTransition(JumpEndTrans, seekIdle);
+			//seekJump.AddTransition(JumpEndTrans, seekWalk);
 
 			FSM fsmSeek = new FSM(seekWalk);
 
@@ -196,8 +203,15 @@ namespace ThePackt
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.yellow;
-			Gizmos.DrawRay(transform.position, -transform.right * _avoidRange);
-
+			if (Math.Abs(transform.rotation.y % 180) == 1)
+			{
+				Gizmos.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -transform.right * _avoidRange);
+			}
+			else
+			{
+				Gizmos.DrawRay(transform.position + new Vector3(0, 0.1f, 0), -transform.right * _avoidRange);
+			}
+			//
 			Gizmos.color = Color.red;
 			Gizmos.DrawWireSphere(transform.position, _attackRange);
 
@@ -354,7 +368,7 @@ namespace ThePackt
 			RaycastHit2D[] hits = new RaycastHit2D[1];
 			ContactFilter2D filter = new ContactFilter2D();
 			//filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall"));
-			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Objectives"));
+			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
 
 			int numHits = _col.Cast(-transform.right, filter, hits, _avoidRange, true);
 
@@ -394,6 +408,8 @@ namespace ThePackt
 				}
 			}
 			*/
+
+			Debug.Log("[BASEENEMY] target " + _target);
 
 			if (_damageMap.Count > 0)
 			{
@@ -492,14 +508,19 @@ namespace ThePackt
 			return _standStill;
 		}
 
+		private bool IsStunned()
+		{ 
+			return _stunned;
+		}
+
 		private bool MustNotStandStill()
 		{
-			return !_standStill;
+			return !_standStill && !_stunned;
 		}
 
 		private bool MustJump()
 		{
-			return _jump;
+			return _jump && !_stunned;
 		}
 
 		private bool JumpFinished()
@@ -509,7 +530,7 @@ namespace ThePackt
 
 		private bool MustAttack()
 		{
-			return _attack;
+			return _attack && !_stunned;
 		}
 
 		private bool AttackFinished()
@@ -528,12 +549,13 @@ namespace ThePackt
 		}
 
 		private bool PlayerNear()
-		{
+		{ 
 			ContactFilter2D filter = new ContactFilter2D();
 			filter.SetLayerMask(LayerMask.GetMask("Players"));
 
 			int nearPlayersNum = Physics2D.OverlapCircle(transform.position, _perceptionRange, filter, _nearPlayers);
 
+			Debug.Log("[BASEENEMY] checking near " + nearPlayersNum);
 			if (nearPlayersNum > 0)
 			{
 				BoltEntity nearPlayer = _nearPlayers[0].gameObject.GetComponent<Player>().entity;
@@ -575,7 +597,7 @@ namespace ThePackt
 			{
 				if (_room.CheckIfPlayerIsInRoom(plyr) && plyr.IsAttached)
 				{
-					return false;
+					return true;
 				}
 			}
 			else

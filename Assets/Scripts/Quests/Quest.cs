@@ -82,12 +82,6 @@ namespace ThePackt
 
                 Join(_localPlayer.entity);
             }
-
-            Debug.Log("[QUESTTIMER] timeraba: " + _timerAbandon);
-            if (_timerAbandon)
-            {
-                Debug.Log("[QUESTTIMER] abandon. timerabandon: " + _timerAbandon + "; Time: " + Time.time + "; sum: " + _leavingTime + _autoAbandonTime);
-            }
            
             if (_timerAbandon && Time.time >= _leavingTime + _autoAbandonTime)
             {

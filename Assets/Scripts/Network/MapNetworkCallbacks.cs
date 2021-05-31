@@ -19,22 +19,6 @@ namespace ThePackt
 
         #region callbacks
 
-        /*
-        public override void SceneLoadLocalBegin(string scene, IProtocolToken token)
-        {
-            Debug.Log("begin aaaaa");
-
-            //put here black screen while loading
-            if (BoltNetwork.IsServer)
-            {
-                foreach (BoltEntity ent in BoltNetwork.SceneObjects)
-                {
-                    ent.transform.position = new Vector3(-7f, 0f, 0f);
-                }
-            }
-        }
-        */
-
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
             List<BoltEntity> players = new List<BoltEntity>();
@@ -304,7 +288,26 @@ namespace ThePackt
             }
         }
 
-          public override void OnEvent(ApplicateDamageReductionEvent evnt)
+        public override void OnEvent(EnemyStunEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[HEALTH] enemy attack hit with damage: " + evnt.Damage);
+
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                Enemy enemy = entity.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    Debug.Log("[PROTOTYPE] id " + evnt.AttackerNetworkId);
+
+                    BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
+                    enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
+                    enemy.Stun(evnt.StunTime);
+                }
+            }
+        }
+
+        public override void OnEvent(ApplicateDamageReductionEvent evnt)
         {
             if (BoltNetwork.IsServer)
             {

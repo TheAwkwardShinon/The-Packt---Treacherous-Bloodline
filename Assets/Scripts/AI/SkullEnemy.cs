@@ -6,6 +6,7 @@ namespace ThePackt
 {
     public class SkullEnemy : Enemy
     {
+        [Header("Specific")]
         [SerializeField] private float _minRotation;
         [SerializeField] private float _maxRotation;
         [SerializeField] private float _avoidRange;
@@ -32,10 +33,17 @@ namespace ThePackt
 
             Attack();
 
-            CheckInFront();
+            if (!_stunned)
+            {
+                CheckInFront();
 
-            _currentVelocity = _rb.velocity;
-            _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
+                _currentVelocity = _rb.velocity;
+                _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
+            }
+            else
+            {
+                _rb.velocity = Vector2.zero;
+            }
         }
 
         public override void Update()
@@ -77,7 +85,7 @@ namespace ThePackt
             RaycastHit2D[] hits = new RaycastHit2D[1];
             ContactFilter2D filter = new ContactFilter2D();
             
-            filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Objectives"));
+            filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Enemies", "EnemyInvisibleFloor"));
 
             int numHits = _col.Cast(-transform.right, filter, hits, _avoidRange, true);
 
