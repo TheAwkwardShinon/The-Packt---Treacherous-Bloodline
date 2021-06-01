@@ -77,11 +77,11 @@ namespace ThePackt{
                 foreach(Collider2D hit in col){
                     
                     // Debug.LogError("[INTERACT CHECK] hit object layermask is = "+LayerMask.LayerToName(hit.gameObject.layer));
-                    if (LayerMask.LayerToName(hit.gameObject.layer).Equals("Players")){
-                        if(hit.gameObject != _player.gameObject && hit.gameObject.GetComponentInParent<Player>()._isDowned &&
-                                !hit.gameObject.GetComponentInParent<Player>()._isBeingHealed){
+                    if (LayerMask.LayerToName(hit.transform.root.gameObject.layer).Equals("Players")){
+                        if(hit.transform.root.gameObject != _player.gameObject && hit.transform.root.gameObject.GetComponent<Player>()._isDowned &&
+                                !hit.transform.root.gameObject.GetComponent<Player>()._isBeingHealed){
                             _interactionType = "player";
-                            _interactionTarget = hit.gameObject;
+                            _interactionTarget = hit.transform.root.gameObject;
                             if(!_player._interactTooltip.activeSelf){
                                 _player._interactTooltip.transform.position = new Vector2(hit.transform.position.x,hit.transform.position.y + 2f);
                                 _player._interactTooltip.SetActive(true);

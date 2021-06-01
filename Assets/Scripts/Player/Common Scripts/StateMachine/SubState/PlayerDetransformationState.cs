@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerDetransformationState : PlayerAbilityState
     {
-        private float _detransformationTime = 0.16f;
+        private float _detransformationTime = 1.5f;
         public PlayerDetransformationState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName,string wolfAnimBool) : base(player, stateMachine, playerData, animBoolName,wolfAnimBool)
         {
         }
@@ -22,12 +22,7 @@ namespace ThePackt{
             
             Debug.LogWarning("DETRANSFORMATION : ABILITY START");
             
-            _player.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanHat;
-            _player.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanFace;
-            _player.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanClothes;
-            _player.transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanArms;
-            _player.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().humanArms;
-
+            
         }
 
         public override void Exit()
@@ -50,6 +45,8 @@ namespace ThePackt{
            
 
             if(Time.time > _startTime + _detransformationTime){
+                _player.GetWolfObject().SetActive(false);
+                _player.GetHumanObject().SetActive(true);
                 _isAbilityDone = true;
             }
 

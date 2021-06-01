@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThePackt{
     public class PlayerTransformationState : PlayerAbilityState
     {
-        private float _transformationTime = 0.251f;
+        private float _transformationTime = 1.5f;
         public PlayerTransformationState(Player player, PlayerStateMachine stateMachine, PlayerData data, string animationName,string wolfAnimBool) : base(player, stateMachine, data, animationName,wolfAnimBool)
         {
         }
@@ -22,12 +22,6 @@ namespace ThePackt{
           
             _player._inputHandler.UseTransformInput();
 
-            _player.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfEars;
-            _player.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfFace;
-            _player.transform.GetChild(4).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfBody;
-            _player.transform.GetChild(5).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfArms;
-            _player.transform.GetChild(6).GetComponent<SpriteRenderer>().sprite = _player.GetPlayerData().wolfArms;
-
         }
 
         public override void Exit()
@@ -43,7 +37,10 @@ namespace ThePackt{
            
 
             if(Time.time > _startTime + _transformationTime){
-                _isAbilityDone = true;
+                _player.GetHumanObject().SetActive(false);
+                _player.GetWolfObject().SetActive(true);
+                  Debug.LogWarning("TRANSFORMATION set active done");
+                _isAbilityDone = true;  
             }
 
 

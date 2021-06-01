@@ -120,10 +120,10 @@ namespace ThePackt{
                 case "AttackHuman":
                     _player.state.AttackHuman = value;
                     break;
-                case "transformation":
+                case "Transformation":
                     _player.state.Transformation = value;
                     break;
-                case "Tetrasformation":
+                case "Detransformation":
                     _player.state.Detransformation = value;
                     break;
                 case "DownedHuman":

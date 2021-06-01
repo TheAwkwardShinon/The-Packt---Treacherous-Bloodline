@@ -156,7 +156,7 @@ MonoBehaviour:
   - name: ceuin
     prefab: {fileID: 4285145117753477461, guid: 90801a24fa82f91419ff20557fe3cb3d, type: 3}
   - name: ayatana
-    prefab: {fileID: 4220082733420956671, guid: 3f5d1b65d1d5cc64ea552a05c0d617b1, type: 3}
+    prefab: {fileID: 8238035284825824629, guid: cdf1a316d2a89374aa81c94d50c2de40, type: 3}
   - name: fele
     prefab: {fileID: 6408361816425853829, guid: a44c30dcc4d9e854b9161ec71238aa6d, type: 3}
   - name: herin
@@ -178,7 +178,7 @@ MonoBehaviour:
     position: {x: 7.59, y: -0.94, z: 0}
   - name: naturia
     position: {x: 5.13, y: -0.94, z: 0}
-  _minPlayerNumber: 2
+  _minPlayerNumber: 1
   gameStartSeconds: 4
   _blackScreenCanvas: {fileID: 1452120456}
   _loadingScreenTime: 1

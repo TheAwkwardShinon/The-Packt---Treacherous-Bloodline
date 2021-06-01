@@ -1184,6 +1184,9 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   _interactTooltip: {fileID: 5801603802447404744}
+  _humanObject: {fileID: 0}
+  _wolfObject: {fileID: 0}
+  _transformationVfx: {fileID: 0}
 --- !u!114 &3384684059551268301
 MonoBehaviour:
   m_ObjectHideFlags: 0

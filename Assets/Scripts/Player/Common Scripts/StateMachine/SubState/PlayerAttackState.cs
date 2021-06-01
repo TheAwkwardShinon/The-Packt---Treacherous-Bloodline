@@ -124,7 +124,7 @@ namespace ThePackt
         // react to the hit of a player applying damage to that player. returns if the player is the owner
         private void PlayerHitReaction(Collider2D collision)
         {
-            Player hitPlayer = collision.GetComponent<Player>();
+            Player hitPlayer = collision.transform.root.GetComponent<Player>();
             Debug.Log("player hit is owner: " + hitPlayer.entity.IsOwner);
             Debug.Log("player attacker is owner: " + _player.entity.IsOwner);
 

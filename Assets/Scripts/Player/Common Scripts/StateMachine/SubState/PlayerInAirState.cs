@@ -70,6 +70,9 @@ namespace ThePackt{
             _transformationInput = _player._inputHandler._transformInput;
             _specialAttack = _player._inputHandler._specialAttackInput;
             _isGrounded = _player.CheckIfGrounded();
+
+            Debug.LogError("[InAir] is grounded ? = "+ _isGrounded);
+            Debug.LogError("[InAir] is touching wall? = "+_isTouchingWall);
            
 
             CheckJumpMultiplier();
@@ -87,27 +90,28 @@ namespace ThePackt{
             }
             else if (_isGrounded && _player._currentVelocity.y < 0.01f)
             {        
-                Debug.LogWarning("[IN AIR STATE] ----> land");
+                Debug.LogError("[IN AIR STATE] ----> land");
                 _player._jumpState.ResetAmountOfJumpsLeft();
                 _stateMachine.ChangeState(_player._landState);
             }
             else if(_jumpInput && _player._jumpState.CanJump() && _isGrounded)
             {
-                Debug.LogWarning("[IN AIR STATE] ----> jump");
+                Debug.LogError("[IN AIR STATE] ----> jump");
                 _stateMachine.ChangeState(_player._jumpState); //if more jump can be done
             }
             else if(_isTouchingWall && _xInput == _player._facingDirection && _player._currentVelocity.y <= 0)
             {
+                Debug.LogError("[IN AIR STATE] ----> wallslide");
                 _stateMachine.ChangeState(_player._wallSlideState);
             }
             else if(_dashInput && _player._dashState.CheckIfCanDash())
             {
-                Debug.LogWarning("[IN AIR STATE] ----> dash");
+                Debug.LogError("[IN AIR STATE] ----> dash");
                 _stateMachine.ChangeState(_player._dashState);
             }
             else if (_attackInput && _player._attackState.CheckIfCanAttack())
             {
-                Debug.LogWarning("[IN AIR STATE] ----> attack");
+                Debug.LogError("[IN AIR STATE] ----> attack");
                 _stateMachine.ChangeState(_player._attackState);
             }
             else if(_transformationInput && _player.GetIsHuman()){
@@ -122,12 +126,13 @@ namespace ThePackt{
             }
             else
             {
+                Debug.LogWarning("[IN AIR STATE] ----> falling down  + current y velocity = "+_player._currentVelocity.y);
                 //Debug.Log("[PLAYER IS IN AIR] no input from palyer, just falling, waiting to land");
                 _player.CheckIfShouldFlip(_xInput);
                 _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);
 
-                //_player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
-                //_player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
+                _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
+                _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));
                 _player.state.yVelocity = _player._currentVelocity.y;
                 _player.state.xVelocity = Mathf.Abs(_player._currentVelocity.x);
             }

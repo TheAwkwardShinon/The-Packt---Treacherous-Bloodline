@@ -20,9 +20,9 @@ MonoBehaviour:
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: -3
   dashCooldown: 0.5
-  maxHoldTime: 1
+  maxHoldTime: 0.2
   holdTimeScale: 0.25
-  dashTime: 0.2
+  dashTime: 0.3
   dashVelocity: 20
   dashEndYMultiplier: 0.15
   distBetweenAfterImages: 0.5
@@ -41,6 +41,7 @@ MonoBehaviour:
   baseWerewolfCooldown: 0.5
   specialAttackCooldown: 10
   healAfterHit: 0
+  interactRange: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8

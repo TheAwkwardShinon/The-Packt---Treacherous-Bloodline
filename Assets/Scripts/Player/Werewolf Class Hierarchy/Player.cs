@@ -10,7 +10,7 @@ namespace ThePackt{
         #region variables
 
         #region core
-        
+       
         public newInputHandler _inputHandler { get; private set; }
         private PlayerInput _playerInput;
         private PlayerData _playerData;
@@ -29,6 +29,8 @@ namespace ThePackt{
         [SerializeField] protected GameObject  _naturiaBullet;
         [SerializeField] protected GameObject  _moonsightersBullet;
 
+        [SerializeField] protected Transform _specialAttackPoint;
+
 
         [SerializeField] protected GameObject _fogCircle;
 
@@ -42,6 +44,8 @@ namespace ThePackt{
         [SerializeField] protected Image healthImage;
         [SerializeField] protected Gradient healthGradient;
         [SerializeField] public GameObject _interactTooltip;
+        [SerializeField]protected GameObject _humanObject;
+        [SerializeField]protected GameObject _wolfObject;
         protected CharacterSelectionData _selectedData;
         #endregion
 
@@ -108,6 +112,12 @@ namespace ThePackt{
         protected string _nextBullet = "naturia";
         #endregion
 
+
+        #region vfx
+        [SerializeField] private GameObject _transformationVfx;
+        [SerializeField] private GameObject _shootVfx;
+        #endregion
+
         #endregion
 
 
@@ -147,6 +157,7 @@ namespace ThePackt{
         /// </summary>
         public override void Attached()
         {
+            
             if(entity.IsOwner)
                Debug.Log("[NETWORKLOG] my network id: " + entity.NetworkId);
             else
@@ -494,6 +505,7 @@ namespace ThePackt{
             
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.15f, 0.005f, 0f));
+            Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.15f, 0.005f, 0f));
         }
 
         ///<summary>
@@ -513,7 +525,7 @@ namespace ThePackt{
             
             Collider2D col = Physics2D.OverlapBox(_ledgeCheck.position, new Vector3(0.15f, 0.005f, 0f), 0f, 
                 _playerData.WhatIsPlayer);
-            if(col.gameObject != gameObject)
+            if(col.transform.root.gameObject != gameObject)
                 return true;
             else return false;
         }
@@ -534,8 +546,8 @@ namespace ThePackt{
             Collider2D col = Physics2D.OverlapCircle(transform.position,12f,_playerData.WhatIsPlayer);
             if(col != null){
                 if(col.gameObject != this.gameObject && 
-                    col.gameObject.GetComponent<Player>()._isDowned &&
-                    !col.gameObject.GetComponent<Player>()._isBeingHealed){
+                    col.gameObject.transform.root.GetComponent<Player>()._isDowned &&
+                    !col.gameObject.transform.root.GetComponent<Player>()._isBeingHealed){
                         if(!_interactTooltip.activeSelf){
                             _interactTooltip.transform.position = new Vector2(col.transform.position.x,col.transform.position.y + 1f);
                               _interactTooltip.SetActive(true);
@@ -627,12 +639,15 @@ namespace ThePackt{
         }
   
         ///<summary>
-        ///method that flips the player
+        ///method that flips the playera
         ///</summary>
         private void Flip()
         {
             _facingDirection *= -1;
+           
             transform.Rotate(0.0f, 180.0f, 0.0f);
+            //_humanObject.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+            //_wolfObject.transform.localRotation = Quaternion.identity;
             _interactTooltip.transform.Rotate(0.0f, 180.0f, 0.0f);
             canvas.transform.rotation = Quaternion.identity;
         }
@@ -665,6 +680,10 @@ namespace ThePackt{
         public Transform GetAttackPoint()
         {
             return _attackPoint;
+        }
+        public Transform GetSpecialAttackPoint()
+        {
+            return _specialAttackPoint;
         }
         public GameObject GetBullet()
         {
@@ -718,42 +737,19 @@ namespace ThePackt{
             return _nextBullet;
         }
 
+        public GameObject GetHumanObject(){
+            return _humanObject;
+        }
+
+        public GameObject GetWolfObject(){
+            return _wolfObject;
+        }
+
         #endregion
 
         #region setter
 
-        ///<summary>
-        ///method that sets the height of the collider, useful in the crouch states
-        ///</summary>
-/*        public void SetColliderHeight(float height)
-        {
-            Vector2 center = _col.offset;
-            _workspace.Set(_col.transform.localScale.x, height);
-
-            center.y += (height - _col.transform.localScale.y) / 2;
-
-            _col.transform.localScale = _workspace;
-            _col.offset = center;
-        }*/
-
-        ///<summary>
-        ///method that sets the width of the collider, useful in the down states
-        ///</summary>
-        /*
-        public void SetColliderWidth(float width)
-        {
-            Vector2 center = _col.offset;
-            _workspace.Set(_col.size.y, width);
-
-            center.x += (width - _col.size.x) / 2;
-
-            _col.size = _workspace;
-            _col.offset = center;
-        }
-        */
-        ///<summary>
-        ///set the variable isHuman to a value, this method should be used in transformation and detransformation states
-        ///</summary>
+        
         public void SetIsHuman(bool value)
         {
             _isHuman = value;
@@ -769,6 +765,27 @@ namespace ThePackt{
             if(entity.IsOwner)
                 state.isBeingHealed = value;
         }
+
+
+        public void SetTransformationVFXActive(){
+            Debug.LogError("attivo");
+            _transformationVfx.SetActive(true);
+        }
+        public void SetTransformationVFXNotActive(){
+            _transformationVfx.SetActive(false);
+        }
+
+         public void SetShootVFXActive(){
+            Debug.LogError("attivo");
+            _shootVfx.SetActive(true);
+        }
+        public void SetShootVFXNotActive(){
+            _shootVfx.SetActive(false);
+        }
+
+       
+
+
 
         #endregion
 

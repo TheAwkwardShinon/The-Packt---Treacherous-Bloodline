@@ -27,12 +27,7 @@ namespace ThePackt{
             {
                 firstAttack = false;
             }
-             if (!_player.GetIsHuman()){
-                SpecialAttack(_player.gameObject.tag);
-                _lastAttackTime = Time.time;
-             }
-                
-            _isAbilityDone = true;
+            
         }
 
         public override void Exit()
@@ -43,6 +38,17 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+        }
+
+        public override void AnimationFinishTrigger()
+        {
+             if (!_player.GetIsHuman()){
+                SpecialAttack(_player.gameObject.tag);
+                _lastAttackTime = Time.time;
+             }
+                
+            _isAbilityDone = true;
         }
 
         public override void PhysicsUpdate()
@@ -61,22 +67,22 @@ namespace ThePackt{
                 _player.NextBullet(nextAttack[1]);
             }
             switch(clan){
-                case "ayatana": blt = BoltNetwork.Instantiate(_player.GetAyatanaBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                case "ayatana": blt = BoltNetwork.Instantiate(_player.GetAyatanaBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
                                 blt.GetComponent<Bullet>().SetOwner(_player);
                             break;
-                case "ceuin": blt = BoltNetwork.Instantiate(_player.GetCeuinBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                case "ceuin": blt = BoltNetwork.Instantiate(_player.GetCeuinBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
                               blt.GetComponent<Bullet>().SetOwner(_player);
                             break;
-                case "fele": blt = BoltNetwork.Instantiate(_player.GetFeleBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                case "fele": blt = BoltNetwork.Instantiate(_player.GetFeleBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
                              blt.GetComponent<Bullet>().SetOwner(_player);
                             break;
-                case "herin": blt = BoltNetwork.Instantiate(_player.GetHerinBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                case "herin": blt = BoltNetwork.Instantiate(_player.GetHerinBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
                               blt.GetComponent<Bullet>().SetOwner(_player);
                             break;
-                case "moonsighters": blt = BoltNetwork.Instantiate(_player.GetMoonsighterBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                case "moonsighters": blt = BoltNetwork.Instantiate(_player.GetMoonsighterBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
                                      blt.GetComponent<Bullet>().SetOwner(_player);
                             break;
-                case "naturia": blt = BoltNetwork.Instantiate(_player.GetNaturiaBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
+                case "naturia": blt = BoltNetwork.Instantiate(_player.GetNaturiaBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
                                 blt.GetComponent<Bullet>().SetOwner(_player);
                              break;
             }

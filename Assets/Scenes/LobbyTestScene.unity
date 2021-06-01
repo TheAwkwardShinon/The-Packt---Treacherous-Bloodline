@@ -1044,7 +1044,7 @@ MonoBehaviour:
   - name: ceuin
     prefab: {fileID: 4285145117753477461, guid: 90801a24fa82f91419ff20557fe3cb3d, type: 3}
   - name: ayatana
-    prefab: {fileID: 2171198968574040643, guid: 80bd73a64563d164690eab6b8b2551e4, type: 3}
+    prefab: {fileID: 6765691665394093959, guid: 1b0944988d78fb547a365da5f5c23820, type: 3}
   - name: fele
     prefab: {fileID: 6408361816425853829, guid: a44c30dcc4d9e854b9161ec71238aa6d, type: 3}
   - name: herin
@@ -1053,7 +1053,7 @@ MonoBehaviour:
     prefab: {fileID: 7264801324103693775, guid: acf43979f5af96f43aa867a08375f429, type: 3}
   - name: naturia
     prefab: {fileID: 5768500020073882521, guid: cc762e852b8899449b400c714bb728e7, type: 3}
-  playerSpawnPos: {x: 0, y: 0}
+  playersSpawnPositions: []
   _minPlayerNumber: 1
   gameStartSeconds: 4
   _blackScreenCanvas: {fileID: 1452120456}
