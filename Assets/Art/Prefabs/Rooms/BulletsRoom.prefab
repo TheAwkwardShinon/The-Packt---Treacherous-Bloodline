@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 637044060467253173}
   - component: {fileID: 2186016580219498372}
   - component: {fileID: 7869141785170559317}
+  - component: {fileID: 4266860391029436105}
+  - component: {fileID: 9149461748070105935}
   m_Layer: 6
   m_Name: Tilemap wall
   m_TagString: Untagged
@@ -329,10 +331,79 @@ TilemapCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!50 &4266860391029436105
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384374713446138349}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!66 &9149461748070105935
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384374713446138349}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 7869141785170559317}
+    m_ColliderPaths:
+    - - X: 36000000
+        Y: -14399999
+      - X: 28799998
+        Y: -14399999
+      - X: 28799998
+        Y: -57599996
+      - X: 36000000
+        Y: -57599996
+    - - X: 107999992
+        Y: -14399999
+      - X: 100800000
+        Y: -14399999
+      - X: 100800000
+        Y: -57599996
+      - X: 107999992
+        Y: -57599996
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 10.79997, y: -5.7599998}
+      - {x: 10.79997, y: -1.4399999}
+      - {x: 10.08, y: -1.4400293}
+      - {x: 10.0800295, y: -5.7599998}
+    - - {x: 3.5999708, y: -5.7599998}
+      - {x: 3.5999708, y: -1.4399999}
+      - {x: 2.8799999, y: -1.4400293}
+      - {x: 2.8800292, y: -5.7599998}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
 --- !u!1 &1782059026688892553
 GameObject:
   m_ObjectHideFlags: 0
