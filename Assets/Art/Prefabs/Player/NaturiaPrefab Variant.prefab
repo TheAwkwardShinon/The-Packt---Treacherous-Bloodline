@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Extent.y
       value: 7.3200006
       objectReference: {fileID: 0}
+    - target: {fileID: 162581874709981046, guid: cdf1a316d2a89374aa81c94d50c2de40, type: 3}
+      propertyPath: _prefabId
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 260977792845337334, guid: cdf1a316d2a89374aa81c94d50c2de40, type: 3}
       propertyPath: m_Bounds.m_Center.x
       value: 2.4837606
