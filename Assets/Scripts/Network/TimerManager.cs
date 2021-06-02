@@ -79,6 +79,7 @@ namespace ThePackt
                     if (BoltNetwork.IsServer)
                     {
                         MainQuest.Instance.SetQuestState(Constants.STARTED);
+                        MapGenerator.Instance.DestroyMagicObstacles();
                     }
                 }
 
