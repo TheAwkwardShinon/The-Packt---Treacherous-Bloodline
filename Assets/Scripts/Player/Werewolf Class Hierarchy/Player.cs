@@ -776,9 +776,11 @@ namespace ThePackt{
         }
 
         public void SetTransformationVFXActive(){
+            Debug.LogError("vfx on , player : "+gameObject.tag);
             _transformationVfx.SetActive(true);
         }
         public void SetTransformationVFXNotActive(){
+            Debug.LogError("vfx off , player : "+gameObject.tag);
             _transformationVfx.SetActive(false);
         }
         public void SetHitVFXActive(){
