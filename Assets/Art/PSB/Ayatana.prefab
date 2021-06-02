@@ -3985,6 +3985,7 @@ MonoBehaviour:
   _ayatanaBullet: {fileID: 3385130490133487830, guid: 49181f063bd623445a896a09e9406026, type: 3}
   _naturiaBullet: {fileID: 2555247505363502100, guid: a8d17f5c6c8e6344bb17b7b53a355f1b, type: 3}
   _moonsightersBullet: {fileID: 1499651947312127093, guid: 2b41f54f4a5d0b244b8400c65d2a98c3, type: 3}
+  _specialAttackPoint: {fileID: 0}
   _fogCircle: {fileID: 3417959146354312835}
   canvas: {fileID: 4580102911394077746}
   nicknameText: {fileID: 7115041083890765407}
@@ -4023,6 +4024,7 @@ MonoBehaviour:
   _humanObject: {fileID: 6895724688822269914}
   _wolfObject: {fileID: 3210523206248650304}
   _transformationVfx: {fileID: 0}
+  _shootVfx: {fileID: 0}
 --- !u!114 &1855368464512095662
 MonoBehaviour:
   m_ObjectHideFlags: 0
