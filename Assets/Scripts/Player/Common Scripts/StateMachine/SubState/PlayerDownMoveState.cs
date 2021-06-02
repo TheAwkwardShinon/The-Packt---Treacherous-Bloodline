@@ -40,8 +40,14 @@ namespace ThePackt{
                 Debug.LogWarning("[DOWNED MOVE STATE] ---> IDLE");
                 _player.state.isDowned = false;
                 _isStand = true;
-                //_player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
-                //_player.SetColliderWidth(_player.GetPlayerData().standColliderWidth);
+                if(_player.GetIsHuman()){
+                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                    _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                }
+                else{
+                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
+                    _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                }
                 _stateMachine.ChangeState(_player._idleState);
             } 
             else if(_xInput == 0)

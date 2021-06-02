@@ -18,7 +18,6 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            Debug.LogWarning("TRANSFORMATION : ABILITY START");
           
             _player._inputHandler.UseTransformInput();
 
@@ -28,7 +27,13 @@ namespace ThePackt{
         {
             base.Exit();
             
-            Debug.LogWarning("TRANSFORMATION : ABILITY DONE");
+        }
+
+        public override void AnimationFinishTrigger()
+        {
+            _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
+            _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+
         }
 
         public override void LogicUpdate()
@@ -39,7 +44,6 @@ namespace ThePackt{
             if(Time.time > _startTime + _transformationTime){
                 _player.GetHumanObject().SetActive(false);
                 _player.GetWolfObject().SetActive(true);
-                  Debug.LogWarning("TRANSFORMATION set active done");
                 _isAbilityDone = true;  
             }
 

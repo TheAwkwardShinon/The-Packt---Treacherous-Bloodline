@@ -22,10 +22,8 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-            //_heightValue = _player.GetPlayerData().ceilingHeight;
-            //_player.GetPlayerData().ceilingHeight = _heightValue *2 +0.05f;
             _player.SetVelocityZero();
-           // _player.SetColliderHeight(_player.GetPlayerData().crouchColliderHeight);
+           
 
             
         }
@@ -34,8 +32,19 @@ namespace ThePackt{
         public override void Exit()
         {
             base.Exit();
-           // _player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
             _player.GetPlayerData().ceilingHeight = _heightValue;
+        }
+
+         public override void AnimationFinishTrigger()
+        {
+            if(_player.GetIsHuman()){
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-4.783879f,-18.35041f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(38.76051f,10.20428f);
+            }else{
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.583345f,-9.130901f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(36.60429f,29.61012f);
+            }
+
         }
 
         public override void LogicUpdate()
@@ -51,7 +60,15 @@ namespace ThePackt{
                     _stateMachine.ChangeState(_player._crouchMoveState);
                 }
                 else if(_yInput != -1 && !_isTouchingCeiling)
-                {
+                {   
+                    if(_player.GetIsHuman()){
+                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                    }
+                    else{
+                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
+                        _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                    }
                     _stateMachine.ChangeState(_player._idleState);
                 }
             } 

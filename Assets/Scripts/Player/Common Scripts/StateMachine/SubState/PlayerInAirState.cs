@@ -71,8 +71,7 @@ namespace ThePackt{
             _specialAttack = _player._inputHandler._specialAttackInput;
             _isGrounded = _player.CheckIfGrounded();
 
-            Debug.LogError("[InAir] is grounded ? = "+ _isGrounded);
-            Debug.LogError("[InAir] is touching wall? = "+_isTouchingWall);
+
            
 
             CheckJumpMultiplier();
@@ -126,7 +125,6 @@ namespace ThePackt{
             }
             else
             {
-                Debug.LogWarning("[IN AIR STATE] ----> falling down  + current y velocity = "+_player._currentVelocity.y);
                 //Debug.Log("[PLAYER IS IN AIR] no input from palyer, just falling, waiting to land");
                 _player.CheckIfShouldFlip(_xInput);
                 _player.SetVelocityX(_player.GetPlayerData().movementVelocity * _xInput);

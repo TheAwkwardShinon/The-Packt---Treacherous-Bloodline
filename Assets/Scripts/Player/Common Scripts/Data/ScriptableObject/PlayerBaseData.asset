@@ -82,7 +82,7 @@ MonoBehaviour:
   timeOffogDebuff: 0
   debuffFogStartTime: 0
   sizeOfCircle: 0
-  standardCircleSize: 2
+  standardCircleSize: 48
   isFogDebuffActive: 0
   isDmgReductionDebuffActive: 0
   damageReductionDebuffStartTime: 0

@@ -154,17 +154,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefabs:
   - name: ceuin
-    prefab: {fileID: 4285145117753477461, guid: 90801a24fa82f91419ff20557fe3cb3d, type: 3}
+    prefab: {fileID: 5593473977451830794, guid: c0354081cbe86ae45b9622e3a7ef3a98, type: 3}
   - name: ayatana
     prefab: {fileID: 8238035284825824629, guid: cdf1a316d2a89374aa81c94d50c2de40, type: 3}
   - name: fele
-    prefab: {fileID: 6408361816425853829, guid: a44c30dcc4d9e854b9161ec71238aa6d, type: 3}
+    prefab: {fileID: 1949492497929934025, guid: 8ee812735010e0345b6550c9122cf591, type: 3}
   - name: herin
-    prefab: {fileID: 2318574125669386212, guid: 292711a92fc5df04084ba1e20a9d4fb7, type: 3}
+    prefab: {fileID: 9061892849190405125, guid: 656ca108b023d5549bc6e6e7f647ce55, type: 3}
   - name: moonsighters
-    prefab: {fileID: 7264801324103693775, guid: acf43979f5af96f43aa867a08375f429, type: 3}
+    prefab: {fileID: 1745204253748971324, guid: 70d3921f3beb94441bdd731650e095b9, type: 3}
   - name: naturia
-    prefab: {fileID: 5768500020073882521, guid: cc762e852b8899449b400c714bb728e7, type: 3}
+    prefab: {fileID: 2731274209279898658, guid: 5c2839d2392009f4e81de4685b222d6f, type: 3}
   playersSpawnPositions:
   - name: ceuin
     position: {x: 2.72, y: -3.839218, z: 0}

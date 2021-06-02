@@ -19,17 +19,13 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
-           // _heightValue = _player.GetPlayerData().ceilingHeight;
-            //_player.GetPlayerData().ceilingHeight = _heightValue *2 +0.05f;
-           // _player.SetColliderHeight(_player.GetPlayerData().crouchColliderHeight);
+
         }
 
         /* reset the collider height */
         public override void Exit()
         {
             base.Exit();
-            //_player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
-            //_player.GetPlayerData().ceilingHeight = _heightValue;
 
         }
 
@@ -51,6 +47,14 @@ namespace ThePackt{
                 }
                 else if(_yInput != -1 && !_isTouchingCeiling)
                 {
+                    if(_player.GetIsHuman()){
+                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                    }
+                    else{
+                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
+                        _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                    }
                     _stateMachine.ChangeState(_player._moveState);
                 }
 

@@ -20,8 +20,7 @@ namespace ThePackt{
         {
             base.Enter();
             _isStand = false;
-            //_player.SetColliderHeight(_player.GetPlayerData().downColliderHeight);
-            //_player.SetColliderWidth(_player.GetPlayerData().downColliderWidth);
+          
             Debug.LogWarning("[DOWNED STATE] ENTER");
 
         }
@@ -32,6 +31,18 @@ namespace ThePackt{
             Debug.LogWarning("[DOWNED STATE] EXIT ---> stand = "+_isStand);
         }
 
+        public override void AnimationFinishTrigger()
+        {
+            if(_player.GetIsHuman()){
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(35.94624f,-18.82179f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(33.21022f,10.22835f);
+            }else{
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(4.416998f,-12.08582f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(33.30902f,23.7003f);
+            }
+            
+        }
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();
@@ -39,9 +50,14 @@ namespace ThePackt{
                  Debug.LogWarning("[DOWNED STATE] ---> IDLE");
                 _isStand = true;
                 _player.state.isDowned = false;
-                //
-                //_player.SetColliderHeight(_player.GetPlayerData().standColliderHeight);
-                //_player.SetColliderWidth(_player.GetPlayerData().standColliderWidth);
+                if(_player.GetIsHuman()){
+                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                    _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                }
+                else{
+                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
+                    _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                }
                 _stateMachine.ChangeState(_player._idleState);
             }else if(_xInput != 0){
                 Debug.LogWarning("[DOWNED STATE] ---> DOWNED MOVE STATE");

@@ -18,6 +18,8 @@ namespace ThePackt{
         [Header("Core Data Fields")]
         [SerializeField] protected PlayerData _playerBaseData;
         [SerializeField] private Transform _wallCheck;
+        [SerializeField] private Transform _wallCheckWolf;
+
         [SerializeField] private Transform _ledgeCheck;
         [SerializeField] private Transform _ceilingCheck;
         [SerializeField] protected Transform _attackPoint;
@@ -116,6 +118,7 @@ namespace ThePackt{
         #region vfx
         [SerializeField] private GameObject _transformationVfx;
         [SerializeField] private GameObject _shootVfx;
+        [SerializeField] private GameObject _hitVfx;
         #endregion
 
         #endregion
@@ -498,14 +501,16 @@ namespace ThePackt{
         ///</summary>
         public bool CheckForCeiling()
         {
-            return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.15f, 0.005f, 0f), 0f, _playerData.whatIsCeiling);
+            return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.10f, 0.0001f, 0f), 0f, _playerData.whatIsGround);
         }
 
         public void OnDrawGizmos(){
             
             Gizmos.color = Color.green;
-            Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.15f, 0.005f, 0f));
-            Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.15f, 0.005f, 0f));
+            Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.10f, 0.0001f, 0f));
+            Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.0001f, 0f));
+            Gizmos.DrawCube(_wallCheck.position,new Vector3(0.0001f,0.5f,0f));
+            Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.0001f,0.5f,0f));
         }
 
         ///<summary>
@@ -514,7 +519,7 @@ namespace ThePackt{
          public bool CheckIfGrounded()
         {   
             
-            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.15f, 0.005f, 0f), 0f, _playerData.whatIsGround);
+            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.10f, 0.0001f, 0f), 0f, _playerData.whatIsGround);
             return _isGrounded;
         }
 
@@ -566,7 +571,11 @@ namespace ThePackt{
         ///</summary>
         public bool CheckIfTouchingWall()
         {
-            return Physics2D.Raycast(_wallCheck.position, Vector2.right * _facingDirection, _playerData.wallCheckDistance, _playerData.whatIsWall);
+            if(_isHuman)
+                return Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.0001f,0.5f,0f), 0f, 
+                    _playerData.whatIsWall);
+            else return Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.0001f,0.5f,0f), 0f, 
+                    _playerData.whatIsWall);
         }
 
         ///<summary>
@@ -766,17 +775,20 @@ namespace ThePackt{
                 state.isBeingHealed = value;
         }
 
-
         public void SetTransformationVFXActive(){
-            Debug.LogError("attivo");
             _transformationVfx.SetActive(true);
         }
         public void SetTransformationVFXNotActive(){
             _transformationVfx.SetActive(false);
         }
+        public void SetHitVFXActive(){
+            _hitVfx.SetActive(true);
+        }
+        public void SetHitVFXNotActive(){
+            _hitVfx.SetActive(false);
+        }
 
          public void SetShootVFXActive(){
-            Debug.LogError("attivo");
             _shootVfx.SetActive(true);
         }
         public void SetShootVFXNotActive(){

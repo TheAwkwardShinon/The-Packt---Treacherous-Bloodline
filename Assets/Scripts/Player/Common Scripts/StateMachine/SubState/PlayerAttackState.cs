@@ -26,32 +26,31 @@ namespace ThePackt
         {
             base.Enter();
 
-            if (_player._inputHandler._attackInputs[Constants.BASE])
+        }
+
+        public override void AnimationFinishTrigger()
+        {
+            _player._inputHandler.UseBaseAttackInput();
+
+            if (firstAttack)
             {
-                _player._inputHandler.UseBaseAttackInput();
-
-                if (firstAttack)
-                {
-                    firstAttack = false;
-                }
-
-                if (_player.GetIsHuman())
-                {
-                    Debug.Log("[ATTACK STATE] entered (base human)");
-                    BaseHumanAttack();
-                    Debug.Log("[ATTACK STATE] ability done (base human)");
-                    _lastHumanAttackTime = Time.time;
-                }
-                else
-                {
-                    Debug.Log("[ATTACK STATE] entered (base werewolf)");
-                    BaseWereWolfAttack();
-                    Debug.Log("[ATTACK STATE] ability done (base werewolf)");
-                    _lastWerewolfAttackTime = Time.time;
-                }
-
-                _isAbilityDone = true;
+                firstAttack = false;
             }
+             if(!_player.GetIsHuman()){
+                Debug.Log("[ATTACK STATE] entered (base werewolf)");
+                BaseWereWolfAttack();
+                Debug.Log("[ATTACK STATE] ability done (base werewolf)");
+                _lastWerewolfAttackTime = Time.time;
+            }
+            else{
+                Debug.Log("[ATTACK STATE] entered (base human)");
+                BaseHumanAttack();
+                Debug.Log("[ATTACK STATE] ability done (base human)");
+                _lastHumanAttackTime = Time.time;
+            }
+            _isAbilityDone = true;
+
+
         }
 
         public override void LogicUpdate()
