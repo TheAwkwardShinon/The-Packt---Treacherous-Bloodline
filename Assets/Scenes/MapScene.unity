@@ -16578,36 +16578,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 089f63b2fc6582c4ba2939bc95d69cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnPoints:
-  - {x: -0.06, y: -0.27}
-  - {x: -0.06, y: 5.49}
-  - {x: -0.06, y: 11.25}
-  - {x: 10.74, y: -6.03}
-  - {x: 10.74, y: -0.27}
-  - {x: 10.74, y: 5.49}
-  - {x: 21.54, y: -6.03}
-  - {x: 21.54, y: -0.27}
-  - {x: 21.54, y: 5.49}
-  - {x: 32.338, y: -6.03}
-  - {x: 32.338, y: -0.27}
-  - {x: 32.338, y: 5.49}
-  - {x: -10.86, y: -6.03}
-  - {x: -10.86, y: -0.27}
-  - {x: -10.86, y: 5.49}
-  - {x: -21.66, y: -6.03}
-  - {x: -21.66, y: -0.27}
-  - {x: -21.66, y: 5.49}
-  - {x: -32.46, y: -6.03}
-  - {x: -32.46, y: -0.27}
-  - {x: -32.46, y: 5.49}
-  - {x: -32.46, y: 11.25}
+  _roomsSpawnPoints: []
   _roomPrefabs:
   - {fileID: 8079166369461331315, guid: 9528698a560c60a45ba17521fef423dd, type: 3}
   - {fileID: 7126608235017570830, guid: e7aa4045429d3ae4da932f6522fce40d, type: 3}
   - {fileID: 3281881553664090555, guid: 1b70eb5e89ea470438f88eb86fb547e3, type: 3}
   _mainRoomPrefab: {fileID: 5870793638613931984, guid: 019a3754acf46744297457fe31c9248f, type: 3}
-  _testRoomPrefab: {fileID: 3485943434703338905, guid: b5a3874a00ccfca45a636a880e834392, type: 3}
-  _mainTestRoomPrefab: {fileID: 2494373562238020612, guid: abbd6c1510955b64980ce9471d74838b, type: 3}
+  _magicWallsSpawnPoints:
+  - {x: -3.69, y: -5.8}
+  - {x: -3.5399, y: -5.8}
+  - {x: -3.5399, y: -3.5596}
+  _magicFloorSpawnPoints:
+  - {x: -2.54, y: -1.06}
+  - {x: -2.54, y: -6.87}
+  _magicWallPrefab: {fileID: 1075369543325004679, guid: 0b5c3170643e31c448c0f30b412121f9, type: 3}
+  _magicFloorPrefab: {fileID: 4889301231692642881, guid: c0936ed715301be40a5eccc3a81a594e, type: 3}
 --- !u!4 &958143743
 Transform:
   m_ObjectHideFlags: 0

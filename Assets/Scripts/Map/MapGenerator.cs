@@ -5,11 +5,13 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     #region variables 
-    [SerializeField] private List<Vector2> _spawnPoints;
+    [SerializeField] private List<Vector2> _roomsSpawnPoints;
     [SerializeField] private List<GameObject> _roomPrefabs;
     [SerializeField] private GameObject _mainRoomPrefab;
-    [SerializeField] private GameObject _testRoomPrefab;
-    [SerializeField] private GameObject _mainTestRoomPrefab;
+    [SerializeField] private List<Vector2> _magicWallsSpawnPoints;
+    [SerializeField] private List<Vector2> _magicFloorSpawnPoints;
+    [SerializeField] private GameObject _magicWallPrefab;
+    [SerializeField] private GameObject _magicFloorPrefab;
     #endregion
 
     #region methods 
@@ -18,27 +20,44 @@ public class MapGenerator : MonoBehaviour
     {
         if (BoltNetwork.IsServer)
         {
-            int nPoints = _spawnPoints.Count;
-            int nRooms = _roomPrefabs.Count;
+            SpawnMagicObstacles();
 
-            int randomIndex = Random.Range(0, nPoints);
-            BoltNetwork.Instantiate(_mainRoomPrefab, _spawnPoints[randomIndex], _mainRoomPrefab.transform.rotation);
-            _spawnPoints.RemoveAt(randomIndex);
-            nPoints--;
-
-            GameObject toSpawn;
-            for (int i = 0; i < nPoints; i++)
-            {
-                randomIndex = Random.Range(0, nRooms);
-                toSpawn = _roomPrefabs[randomIndex];
-
-                BoltNetwork.Instantiate(toSpawn, _spawnPoints[i], toSpawn.transform.rotation);
-            }
-
-            //BoltNetwork.Instantiate(_testRoomPrefab, _testRoomPrefab.transform.position, _testRoomPrefab.transform.rotation);
-            //BoltNetwork.Instantiate(_mainTestRoomPrefab, _mainTestRoomPrefab.transform.position, _mainTestRoomPrefab.transform.rotation);
+            SpawnRooms();
         }
 
+    }
+
+    private void SpawnMagicObstacles()
+    {
+        foreach(Vector2 sp in _magicFloorSpawnPoints)
+        {
+            BoltNetwork.Instantiate(_magicFloorPrefab, sp, _magicFloorPrefab.transform.rotation);
+        }
+
+        foreach (Vector2 sp in _magicWallsSpawnPoints)
+        {
+            BoltNetwork.Instantiate(_magicWallPrefab, sp, _magicWallPrefab.transform.rotation);
+        }
+    }
+
+    private void SpawnRooms()
+    {
+        int nPoints = _roomsSpawnPoints.Count;
+        int nRooms = _roomPrefabs.Count;
+
+        int randomIndex = Random.Range(0, nPoints);
+        BoltNetwork.Instantiate(_mainRoomPrefab, _roomsSpawnPoints[randomIndex], _mainRoomPrefab.transform.rotation);
+        _roomsSpawnPoints.RemoveAt(randomIndex);
+        nPoints--;
+
+        GameObject toSpawn;
+        for (int i = 0; i < nPoints; i++)
+        {
+            randomIndex = Random.Range(0, nRooms);
+            toSpawn = _roomPrefabs[randomIndex];
+
+            BoltNetwork.Instantiate(toSpawn, _roomsSpawnPoints[i], toSpawn.transform.rotation);
+        }
     }
     #endregion
 
