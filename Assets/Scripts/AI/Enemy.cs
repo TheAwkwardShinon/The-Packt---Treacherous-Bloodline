@@ -18,9 +18,20 @@ namespace ThePackt
         [SerializeField] protected float _attackPower;
         [SerializeField] protected float _attackRate;
         [SerializeField] protected float _movementSpeed;
+        [SerializeField] protected float _slowedSpeed;
+
         protected float _lastStunTime;
         protected float _stunTime;
         protected bool _stunned;
+
+        protected float _lastSlowTime;
+        protected float _slowTime;
+        protected bool _slowed;
+
+        protected float _lastDamageReductionTime;
+        protected float _damageReductionTime;
+        protected bool _damageReduced;
+
         protected int _facingDirection;
         protected Slider healthSlider;
         //protected Vector3 _canvasPos;
@@ -68,6 +79,16 @@ namespace ThePackt
                 if (_stunned && Time.time >= _lastStunTime + _stunTime)
                 {
                     _stunned = false;
+                }
+
+                if (_slowed && Time.time >= _lastSlowTime + _slowTime)
+                {
+                    _slowed = false;
+                }
+
+                if (_damageReduced && Time.time >= _lastDamageReductionTime + _damageReductionTime)
+                {
+                    _damageReduced = false;
                 }
             }
 
@@ -131,6 +152,20 @@ namespace ThePackt
                 evnt.Damage = _attackPower;
                 evnt.Send();
             }
+        }
+
+        public void ApplySlow(float time)
+        {
+            _slowTime = time;
+            _lastSlowTime = Time.time;
+            _slowed = true;
+        }
+
+        public void ApplyDamageReduction(float time)
+        {
+            _damageReductionTime = time;
+            _lastDamageReductionTime = Time.time;
+            _damageReduced = true;
         }
 
         public void Stun(float time)

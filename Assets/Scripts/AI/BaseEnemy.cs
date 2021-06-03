@@ -319,7 +319,14 @@ namespace ThePackt
 			{
 				//if there is not a target go in the current direction
 
-				_rb.velocity = new Vector2(_movementSpeed * _facingDirection, _currentVelocity.y);
+				if (_slowed)
+				{
+					_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
+				}
+				else
+				{
+					_rb.velocity = new Vector2(_movementSpeed * _facingDirection, _currentVelocity.y);
+				}
 			}
 			else
 			{
@@ -335,7 +342,14 @@ namespace ThePackt
 
 				if (!_attack)
 				{
-					_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
+                    if (_slowed)
+                    {
+						_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
+					}
+                    else
+                    {
+						_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
+					}
 				}
 			}
 		}
@@ -520,7 +534,7 @@ namespace ThePackt
 
 		private bool MustJump()
 		{
-			return _jump && !_stunned;
+			return _jump && !_stunned && !_slowed;
 		}
 
 		private bool JumpFinished()

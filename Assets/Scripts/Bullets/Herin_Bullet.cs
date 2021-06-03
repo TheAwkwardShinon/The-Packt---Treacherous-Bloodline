@@ -11,7 +11,40 @@ namespace ThePackt{
 
         protected override void EnemyHitReaction(Collider2D collision)
         {
-            base.EnemyHitReaction(collision); //TODO SLOWARE ANCHE I NEMICI
+            Enemy enemy;
+            enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                EnemySlowEvent evnt;
+
+                // if we are on the server, directly apply the damage to the enemy
+                // otherwise we sent an event to the server
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[NETWORKLOG] server hit enemy");
+                    // if the enemy has a dmg reduction debuff thank substract the dmg reduction value before applaying damage
+                    if (_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        enemy.ApplyDamage((_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction, _owner);
+                    else enemy.ApplyDamage((_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)), _owner);
+
+                    enemy.ApplySlow(_timeOfSlow);
+                }
+                else
+                {
+                    Debug.Log("[NETWORKLOG] from client to server");
+                    evnt = EnemySlowEvent.Create(BoltNetwork.Server);
+                    evnt.HitNetworkId = enemy.entity.NetworkId;
+                    evnt.AttackerNetworkId = _owner.entity.NetworkId;
+                    evnt.SlowTime = _timeOfSlow;
+                    // if the enemy has a dmg reduction debuff thank substract the dmg reduction value before applaying damage
+
+                    if (_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
+                    else evnt.Damage = _attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier);
+
+                    evnt.Send();
+                }
+            }
         }
 
         protected override bool PlayerHitReaction(Collider2D collision)
