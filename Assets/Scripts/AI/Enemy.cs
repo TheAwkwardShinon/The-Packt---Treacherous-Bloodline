@@ -31,6 +31,7 @@ namespace ThePackt
         protected float _lastDamageReductionTime;
         protected float _damageReductionTime;
         protected bool _damageReduced;
+        protected float _damageReductionValue;
 
         protected int _facingDirection;
         protected Slider healthSlider;
@@ -141,15 +142,25 @@ namespace ThePackt
         {
             Debug.Log("[BASEENEMY] hit player " + hitPlayer.NetworkId);
 
+            float damage = 0;
+            if (_damageReduced)
+                damage = _attackPower - _damageReductionValue;
+            else damage = _attackPower;
+
+            if(damage <= 0)
+            {
+                damage = 0.1f;
+            }
+
             if (hitPlayer.IsOwner)
             {
-                hitPlayer.GetComponent<Player>().ApplyDamage(_attackPower);
+                hitPlayer.GetComponent<Player>().ApplyDamage(damage);
             }
             else
             {
                 var evnt = PlayerAttackHitEvent.Create(hitPlayer.Source);
                 evnt.HitNetworkId = hitPlayer.NetworkId;
-                evnt.Damage = _attackPower;
+                evnt.Damage = damage;
                 evnt.Send();
             }
         }
@@ -161,11 +172,13 @@ namespace ThePackt
             _slowed = true;
         }
 
-        public void ApplyDamageReduction(float time)
+        public void ApplyDamageReduction(float time, float reductionValue)
         {
             _damageReductionTime = time;
             _lastDamageReductionTime = Time.time;
             _damageReduced = true;
+
+            _damageReductionValue = reductionValue;
         }
 
         public void Stun(float time)

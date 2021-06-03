@@ -276,6 +276,22 @@ namespace ThePackt
             }
         }
 
+        public override void OnEvent(EnemyDamageReductionEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[HEALTH] enemy attack hit with damage: " + evnt.Damage);
+
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                Enemy enemy = entity.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
+                    enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
+                    enemy.ApplyDamageReduction(evnt.DamageTime, evnt.DamageReduction);
+                }
+            }
+        }
 
         public override void OnEvent(ApplicateFogOfWarDebuffEvent evnt)
         {
