@@ -90,10 +90,10 @@ namespace ThePackt{
             else if (_isGrounded && _player._currentVelocity.y < 0.01f)
             {        
                 Debug.LogError("[IN AIR STATE] ----> land");
-                _player._jumpState.ResetAmountOfJumpsLeft();
+               // _player._jumpState.ResetAmountOfJumpsLeft();
                 _stateMachine.ChangeState(_player._landState);
             }
-            else if(_jumpInput && _player._jumpState.CanJump() && _isGrounded)
+            else if(_jumpInput && _player._jumpState.CanJump())
             {
                 Debug.LogError("[IN AIR STATE] ----> jump");
                 _stateMachine.ChangeState(_player._jumpState); //if more jump can be done

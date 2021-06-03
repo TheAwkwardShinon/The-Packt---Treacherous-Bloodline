@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using Bolt;
+using UnityEngine.SceneManagement;
 
 namespace ThePackt{
     public class Player : Bolt.EntityBehaviour<ICustomPlayerState>
@@ -120,6 +121,15 @@ namespace ThePackt{
         [SerializeField] private GameObject _transformationVfx;
         [SerializeField] private GameObject _shootVfx;
         [SerializeField] private GameObject _hitVfx;
+        #endregion
+
+
+        #region quest UI
+        private Text _questTitleText;
+        private Text _questDescriptionText;
+        private Text _questReward;
+        private Text _questAction;
+        private GameObject _questPanel;
         #endregion
 
         #endregion
@@ -240,6 +250,13 @@ namespace ThePackt{
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
+             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel.Equals(null)){
+                 _questPanel = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestPanel();
+                 _questReward = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetReward();
+                 _questTitleText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTitle();
+                 _questDescriptionText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetDescription();
+                 _questAction = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetAction();
+             }
         }
 
         public override void Detached()
@@ -502,16 +519,16 @@ namespace ThePackt{
         ///</summary>
         public bool CheckForCeiling()
         {
-            return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.10f, 0.0001f, 0f), 0f, _playerData.whatIsGround);
+            return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f), 0f, _playerData.whatIsGround|_playerData.whatIsWall);
         }
 
         public void OnDrawGizmos(){
             
             Gizmos.color = Color.green;
-            Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.10f, 0.0001f, 0f));
-            Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.0001f, 0f));
-            Gizmos.DrawCube(_wallCheck.position,new Vector3(0.1f,0.5f,0f));
-            Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.1f,0.5f,0f));
+            Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f));
+            Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f));
+            Gizmos.DrawCube(_wallCheck.position,new Vector3(0.12f,0.5f,0f));
+            Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.12f,0.5f,0f));
         }
 
         ///<summary>
@@ -520,7 +537,7 @@ namespace ThePackt{
          public bool CheckIfGrounded()
         {   
             
-            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.10f, 0.1f, 0f), 0f, _playerData.whatIsGround);
+            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f), 0f, _playerData.whatIsGround);
             return _isGrounded;
         }
 
@@ -573,9 +590,9 @@ namespace ThePackt{
         public bool CheckIfTouchingWall()
         {
             if(_isHuman)
-                return Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.1f,0.5f,0f), 0f, 
+                return Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.12f,0.5f,0f), 0f, 
                     _playerData.whatIsWall);
-            else return Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.1f,0.5f,0f), 0f, 
+            else return Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.12f,0.5f,0f), 0f, 
                     _playerData.whatIsWall);
         }
 
@@ -646,7 +663,11 @@ namespace ThePackt{
 
                 Debug.Log("[QUEST] player joined the quest " + quest._title);
 
-                //TODO show quest UI
+                _questTitleText.text = quest._title;
+                _questDescriptionText.text = quest._description;
+                _questReward.text = quest._timeReward.ToString();
+                _questAction.text = "QUEST JOINED";
+                _questPanel.SetActive(true);
             }
         }
 
@@ -665,6 +686,10 @@ namespace ThePackt{
 
                 //TODO remove quest UI
             }
+        }
+
+        public void DisableQuestPanel(){
+            _questPanel.SetActive(false);
         }
   
         ///<summary>
@@ -798,7 +823,6 @@ namespace ThePackt{
         }
 
         public void SetTransformationVFXActive(){
-            Debug.LogError("i am : "+tag);
             ActivateVFXEvent evnt;
             evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
             evnt.TargetPlayerNetworkID = this.entity.NetworkId;

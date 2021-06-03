@@ -19,6 +19,7 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
+            _player._crouchIdleState.SetCrouch(true);
 
         }
 
@@ -47,6 +48,7 @@ namespace ThePackt{
                 }
                 else if(_yInput != -1 && !_isTouchingCeiling)
                 {
+                    _player._crouchIdleState.SetCrouch(false);
                     if(_player.GetIsHuman()){
                          _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
                          _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);

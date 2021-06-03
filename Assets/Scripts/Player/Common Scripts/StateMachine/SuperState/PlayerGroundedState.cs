@@ -19,7 +19,7 @@ namespace ThePackt{
         private bool _isNearDownedPlayer;
 
 
-        private bool _jumpInput;
+        protected bool _jumpInput;
         private bool _isGrounded;
         private bool _dashInput;
         private bool _attackInput;
@@ -51,6 +51,7 @@ namespace ThePackt{
         {
             base.Enter();
             _player._dashState.ResetCanDash(); //todo usless line
+            _player._jumpState.ResetAmountOfJumpsLeft();
         }
 
         public override void Exit()
@@ -88,8 +89,9 @@ namespace ThePackt{
                     _detransformationInput = false;
                     _stateMachine.ChangeState(_player._detransformationState);
                 }
-                else if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling && !_isTouchingWall||
-                     _isTouchingWall && _jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling && _xInput == 0)
+                //else if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling && !_isTouchingWall||
+                     //_isTouchingWall && _jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling && _xInput == 0)
+                else if(_jumpInput && _player._jumpState.CanJump())
                 {
                     Debug.LogWarning("[GROUNDED STATE] -->  jump");
                     _stateMachine.ChangeState(_player._jumpState);
@@ -98,7 +100,7 @@ namespace ThePackt{
                     Debug.LogWarning("[GROUNDED STATE] -->  inAir");
                     _stateMachine.ChangeState(_player._inAirState);
                 }
-                else if (_dashInput && _player._dashState.CheckIfCanDash() && !_isTouchingWall)
+                else if (_dashInput && _player._dashState.CheckIfCanDash()) //&& !_isTouchingWall)
                 {
                     Debug.LogWarning("[GROUNDED STATE] -->  dash");
                     _stateMachine.ChangeState(_player._dashState);

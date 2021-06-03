@@ -45,7 +45,7 @@ namespace ThePackt{
         public bool CanJump()
         {
             Debug.LogWarning("[CAN JUMP] number of jump left: "+amountOfJumpsLeft);
-            if (amountOfJumpsLeft > 0 && !_player.GetPlayerData().cantJump)
+            if (amountOfJumpsLeft > 0 && !_player.GetPlayerData().cantJump && !_player._crouchIdleState.isCrouched())
             {
                 Debug.LogWarning("[CAN JUMP] returning true");
                 return true;

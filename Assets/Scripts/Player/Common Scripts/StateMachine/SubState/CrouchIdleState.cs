@@ -9,6 +9,7 @@ namespace ThePackt{
 
         #region variables
         private float _heightValue;
+        private bool _isCrouched = false;
         #endregion
 
         #region methods
@@ -22,10 +23,9 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
+            _isCrouched = true;
             _player.SetVelocityZero();
-           
-
-            
+               
         }
 
         /* reset the collider height */
@@ -59,8 +59,9 @@ namespace ThePackt{
                 {
                     _stateMachine.ChangeState(_player._crouchMoveState);
                 }
-                else if(_yInput != -1 && !_isTouchingCeiling)
+                else if(_yInput !=-1 && !_isTouchingCeiling)
                 {   
+                    SetCrouch(false);
                     if(_player.GetIsHuman()){
                          _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
                          _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
@@ -72,6 +73,14 @@ namespace ThePackt{
                     _stateMachine.ChangeState(_player._idleState);
                 }
             } 
+        }
+
+        public bool isCrouched(){
+            return _isCrouched;
+        }
+
+        public void SetCrouch(bool value){
+            _isCrouched = value;
         }
 
         #endregion
