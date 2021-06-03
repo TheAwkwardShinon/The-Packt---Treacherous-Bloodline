@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5930952737616163253}
   - component: {fileID: 542854058783178530}
   - component: {fileID: 8238037147472388438}
-  - component: {fileID: -4320896309239703178}
+  - component: {fileID: 4424268628871494974}
   m_Layer: 0
   m_Name: NaturiaProjectile
   m_TagString: Untagged
@@ -102,7 +102,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.010103048, y: 0.0033671574}
   m_Size: {x: 0.98942053, y: 0.41676188}
   m_Direction: 1
---- !u!114 &-4320896309239703178
+--- !u!114 &4424268628871494974
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,12 +111,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2555247505363502100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 385546ab379b8754291d359811aedc81, type: 3}
+  m_Script: {fileID: 11500000, guid: cda30020eb5efbf43ae9e19234236eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 12
   _range: 12
-  _attackPower: 5
+  _attackPower: 4
 --- !u!1 &3540468841551897610
 GameObject:
   m_ObjectHideFlags: 0

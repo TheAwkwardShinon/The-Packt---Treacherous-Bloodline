@@ -6,10 +6,7 @@ using UnityEngine;
 namespace ThePackt{
     public class Ceuin_Bullet : PlayerBullet
     {
-        
-
-        //apply damage event (with low damage) + apply force
-        protected override bool PlayerHitReaction(Collider2D collision)
+         protected override bool PlayerHitReaction(Collider2D collision)
         {
             Player player;
             bool isLocalPlayer = false;
@@ -21,26 +18,23 @@ namespace ThePackt{
             {
                 isLocalPlayer = player.entity.IsOwner;
                 isLocalBullet = entity.IsOwner;
-                player.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.right * 30f,ForceMode2D.Force);
-
+                _owner.NextBullet(player.gameObject.tag);
                 if (isLocalPlayer != isLocalBullet && isLocalBullet)
                 {
                     
-                    ApplicateforceInDirection evnt;
+                    PlayerAttackHitEvent evnt;
 
                     if (BoltNetwork.IsServer)
                     {
-                        evnt = ApplicateforceInDirection.Create(player.entity.Source);
+                        evnt = PlayerAttackHitEvent.Create(player.entity.Source);
                     }
                     else
                     {
-                        evnt = ApplicateforceInDirection.Create(BoltNetwork.Server);
+                        evnt = PlayerAttackHitEvent.Create(BoltNetwork.Server);
                     }
 
-                    evnt.TargetPlayerNetworkID = player.entity.NetworkId;
-                    evnt.Direction = GetComponent<Rigidbody2D>().velocity * 30f;
-
-                    if(_owner.GetPlayerData().isDmgReductionDebuffActive)
+                    evnt.HitNetworkId = player.entity.NetworkId;
+                     if(_owner.GetPlayerData().isDmgReductionDebuffActive)
                         evnt.Damage = (_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
                     else evnt.Damage = _attackPower +(_attackPower * _owner.GetPlayerData().damageMultiplier);
                     evnt.Send();
@@ -48,5 +42,6 @@ namespace ThePackt{
             }
             return isLocalPlayer;
         }
+
     }
 }

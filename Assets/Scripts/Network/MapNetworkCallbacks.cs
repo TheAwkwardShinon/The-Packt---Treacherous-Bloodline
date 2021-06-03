@@ -259,8 +259,25 @@ namespace ThePackt
             }
         }
 
+        public override void OnEvent(EnemySlowEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[HEALTH] enemy attack hit with damage: " + evnt.Damage);
 
-          public override void OnEvent(ApplicateFogOfWarDebuffEvent evnt)
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                Enemy enemy = entity.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
+                    enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
+                    enemy.ApplySlow(evnt.SlowTime);
+                }
+            }
+        }
+
+
+        public override void OnEvent(ApplicateFogOfWarDebuffEvent evnt)
         {
             if (BoltNetwork.IsServer)
             {
@@ -298,8 +315,6 @@ namespace ThePackt
                 Enemy enemy = entity.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    Debug.Log("[PROTOTYPE] id " + evnt.AttackerNetworkId);
-
                     BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
                     enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
                     enemy.Stun(evnt.StunTime);

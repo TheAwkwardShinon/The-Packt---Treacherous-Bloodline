@@ -180,7 +180,8 @@ MonoBehaviour:
   _attackRange: 0.26
   _attackPower: 0.5
   _attackRate: 0
-  _movementSpeed: 2.5
+  _movementSpeed: 1
+  _slowedSpeed: 0.1
   _minRotation: -30
   _maxRotation: -160
   _avoidRange: 0.1

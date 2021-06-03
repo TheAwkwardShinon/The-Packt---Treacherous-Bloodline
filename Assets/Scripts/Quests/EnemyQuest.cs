@@ -32,7 +32,7 @@ namespace ThePackt
             {
                 foreach(var sp in _spawnPoints)
                 {
-                    int randomIndex = Random.Range(0, _enemyPrefabs.Length - 1);
+                    int randomIndex = Random.Range(0, _enemyPrefabs.Length);
                     BoltEntity spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[randomIndex], sp.position, sp.rotation);
                     spawnedEnemy.GetComponent<Enemy>().SetRoom(this);
                     _spawnedEnemies.Add(spawnedEnemy);

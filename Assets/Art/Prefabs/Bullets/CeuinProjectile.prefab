@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8577772314889649644}
   - component: {fileID: 2507447870982386555}
   - component: {fileID: 6275703740053908751}
-  - component: {fileID: 446617770859530316}
+  - component: {fileID: 8217982309739186578}
   m_Layer: 0
   m_Name: CeuinProjectile
   m_TagString: Untagged
@@ -102,7 +102,7 @@ CapsuleCollider2D:
   m_Offset: {x: -0.010103048, y: 0.0033671574}
   m_Size: {x: 0.98942053, y: 0.41676188}
   m_Direction: 1
---- !u!114 &446617770859530316
+--- !u!114 &8217982309739186578
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,12 +111,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 446617770859530317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda30020eb5efbf43ae9e19234236eb5, type: 3}
+  m_Script: {fileID: 11500000, guid: 385546ab379b8754291d359811aedc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 12
   _range: 12
-  _attackPower: 4
+  _attackPower: 5
 --- !u!1 &1470110583517522003
 GameObject:
   m_ObjectHideFlags: 0

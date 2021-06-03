@@ -37,8 +37,16 @@ namespace ThePackt
             {
                 CheckInFront();
 
+                if (_slowed)
+                {
+                    _rb.velocity = new Vector2(_slowedSpeed * -transform.right.x, _slowedSpeed * -transform.right.y);
+                }
+                else
+                {
+                    _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
+                }
+
                 _currentVelocity = _rb.velocity;
-                _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
             }
             else
             {
@@ -48,6 +56,8 @@ namespace ThePackt
 
         public override void Update()
         {
+            base.Update();
+
             canvas.transform.rotation = transform.rotation;
         }
 
@@ -85,7 +95,7 @@ namespace ThePackt
             RaycastHit2D[] hits = new RaycastHit2D[1];
             ContactFilter2D filter = new ContactFilter2D();
             
-            filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Enemies", "EnemyInvisibleFloor"));
+            filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall", "Enemies", "EnemyInvisibleGround"));
 
             int numHits = _col.Cast(-transform.right, filter, hits, _avoidRange, true);
 
