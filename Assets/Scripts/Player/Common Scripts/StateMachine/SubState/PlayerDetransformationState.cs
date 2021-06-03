@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Bolt;
 
 
 namespace ThePackt{
@@ -36,8 +37,12 @@ namespace ThePackt{
         {
             _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
             _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
-             _player.GetWolfObject().SetActive(false);
-            _player.GetHumanObject().SetActive(true);
+            DetransformationEvent evnt;
+            evnt = DetransformationEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+            evnt.Send();
+            /* _player.GetWolfObject().SetActive(false);
+            _player.GetHumanObject().SetActive(true);*/
 
         }
 

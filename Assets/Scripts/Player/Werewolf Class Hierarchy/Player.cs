@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using Bolt;
 
 namespace ThePackt{
     public class Player : Bolt.EntityBehaviour<ICustomPlayerState>
@@ -509,8 +510,8 @@ namespace ThePackt{
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.10f, 0.0001f, 0f));
             Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.0001f, 0f));
-            Gizmos.DrawCube(_wallCheck.position,new Vector3(0.0001f,0.5f,0f));
-            Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.0001f,0.5f,0f));
+            Gizmos.DrawCube(_wallCheck.position,new Vector3(0.1f,0.5f,0f));
+            Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.1f,0.5f,0f));
         }
 
         ///<summary>
@@ -519,7 +520,7 @@ namespace ThePackt{
          public bool CheckIfGrounded()
         {   
             
-            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.10f, 0.0001f, 0f), 0f, _playerData.whatIsGround);
+            _isGrounded = Physics2D.OverlapBox(_ledgeCheck.position,new Vector3(0.10f, 0.1f, 0f), 0f, _playerData.whatIsGround);
             return _isGrounded;
         }
 
@@ -572,10 +573,29 @@ namespace ThePackt{
         public bool CheckIfTouchingWall()
         {
             if(_isHuman)
-                return Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.0001f,0.5f,0f), 0f, 
+                return Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.1f,0.5f,0f), 0f, 
                     _playerData.whatIsWall);
-            else return Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.0001f,0.5f,0f), 0f, 
+            else return Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.1f,0.5f,0f), 0f, 
                     _playerData.whatIsWall);
+        }
+
+         public bool CheckIfTouchingPlayer()
+        {
+            if(_isHuman){
+                Collider2D col = Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.1f,0.5f,0f), 0f, 
+                    _playerData.WhatIsPlayer);
+                if(!col.Equals(null))
+                    if(!col.gameObject.Equals(gameObject))
+                        return true;
+            }
+            else{
+                Collider2D col = Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.1f,0.5f,0f), 0f, 
+                    _playerData.WhatIsPlayer);
+                if(!col.Equals(null))
+                    if(!col.gameObject.Equals(gameObject))
+                        return true;
+            }
+            return false;
         }
 
         ///<summary>
@@ -660,6 +680,8 @@ namespace ThePackt{
             _interactTooltip.transform.Rotate(0.0f, 180.0f, 0.0f);
             canvas.transform.rotation = Quaternion.identity;
         }
+
+          
 
         public void ActivateFogCircle()
         {
@@ -776,27 +798,65 @@ namespace ThePackt{
         }
 
         public void SetTransformationVFXActive(){
-            Debug.LogError("vfx on , player : "+gameObject.tag);
-            _transformationVfx.SetActive(true);
+            Debug.LogError("i am : "+tag);
+            ActivateVFXEvent evnt;
+            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+            evnt.Active = true;
+            evnt.VFXName = "transformation";
+            evnt.Send();
         }
         public void SetTransformationVFXNotActive(){
-            Debug.LogError("vfx off , player : "+gameObject.tag);
-            _transformationVfx.SetActive(false);
+            ActivateVFXEvent evnt;
+            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+            evnt.Active = false;
+            evnt.VFXName = "transformation";
+            evnt.Send();
         }
         public void SetHitVFXActive(){
-            _hitVfx.SetActive(true);
+            ActivateVFXEvent evnt;
+            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+            evnt.Active = true;
+            evnt.VFXName = "hit";
+            evnt.Send();
         }
         public void SetHitVFXNotActive(){
-            _hitVfx.SetActive(false);
+            ActivateVFXEvent evnt;
+            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+            evnt.Active = false;
+            evnt.VFXName = "hit";
+            evnt.Send();
         }
 
          public void SetShootVFXActive(){
-            _shootVfx.SetActive(true);
+            ActivateVFXEvent evnt;
+            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+            evnt.Active = true;
+            evnt.VFXName = "special";
+            evnt.Send();
         }
         public void SetShootVFXNotActive(){
-            _shootVfx.SetActive(false);
+            ActivateVFXEvent evnt;
+            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+            evnt.Active = false;
+            evnt.VFXName = "special";
+            evnt.Send();
         }
 
+        public void SetTransformationVFX(bool value){
+            _transformationVfx.SetActive(value);
+        }
+        public void SetHitVFX(bool value){
+            _hitVfx.SetActive(value);
+        }
+        public void SetSpecialVFX(bool value){
+            _shootVfx.SetActive(value);
+        }
        
 
 

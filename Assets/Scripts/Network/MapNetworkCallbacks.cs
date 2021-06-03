@@ -83,7 +83,7 @@ namespace ThePackt
 
         public override void OnEvent(PlayerAttackHitEvent evnt)
         {
-            Debug.Log("[HEALTH] attack hit with damage: " + evnt.Damage);
+            Debug.LogError("[HEALTH] attack hit with damage: " + evnt.Damage);
 
             if (BoltNetwork.IsServer)
             {
@@ -363,6 +363,42 @@ namespace ThePackt
                 }
             }
         }
+
+         public override void OnEvent(TransformationEvent evnt)
+        {
+            BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+            Player player =entity.GetComponent<Player>();
+            player.GetHumanObject().SetActive(false);
+            player.GetWolfObject().SetActive(true);
+
+        }
+
+        public override void OnEvent(DetransformationEvent evnt)
+        {
+            BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+            Player player =entity.GetComponent<Player>();
+            player.GetWolfObject().SetActive(false);
+            player.GetHumanObject().SetActive(true);
+            
+
+        }
+
+        public override void OnEvent(ActivateVFXEvent evnt)
+        {
+            BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+            Player player =entity.GetComponent<Player>();
+            switch(evnt.VFXName){
+                case "transformation": player.SetTransformationVFX(evnt.Active);
+                                        break;
+                case "hit": player.SetHitVFX(evnt.Active);
+                            break;
+                case "special": player.SetSpecialVFX(evnt.Active);
+                            break;
+            }
+        }
+
+
+        
 
 
         #endregion

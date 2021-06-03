@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Bolt;
 
 namespace ThePackt{
-    public class PlayerState 
+    public class PlayerState
     {
         protected Player _player;
         protected PlayerStateMachine _stateMachine;
@@ -181,5 +182,6 @@ namespace ThePackt{
         public virtual void AnimationTrigger() { }
 
         public virtual void AnimationFinishTrigger() => _isAnimationFinished = true;
+        
     }
 }

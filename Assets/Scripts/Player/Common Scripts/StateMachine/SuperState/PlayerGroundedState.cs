@@ -88,7 +88,8 @@ namespace ThePackt{
                     _detransformationInput = false;
                     _stateMachine.ChangeState(_player._detransformationState);
                 }
-                else if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling )
+                else if (_jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling && !_isTouchingWall||
+                     _isTouchingWall && _jumpInput && _player._jumpState.CanJump() && _isGrounded && !_isTouchingCeiling && _xInput == 0)
                 {
                     Debug.LogWarning("[GROUNDED STATE] -->  jump");
                     _stateMachine.ChangeState(_player._jumpState);

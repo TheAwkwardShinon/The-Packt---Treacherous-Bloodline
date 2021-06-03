@@ -51,7 +51,7 @@ namespace ThePackt{
 
             xInput = _player._inputHandler._normInputX;
             yInput = _player._inputHandler._normInputY;
-    
+            if(!isTouchingWall) Debug.LogError("no touching wall");
            
             if (isGrounded)
             {
@@ -59,6 +59,7 @@ namespace ThePackt{
             }
             else if(!isTouchingWall || (xInput != _player._facingDirection))
             {
+
                 _stateMachine.ChangeState(_player._inAirState);
             }
         }

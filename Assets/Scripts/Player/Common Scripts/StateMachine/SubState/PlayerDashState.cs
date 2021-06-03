@@ -16,6 +16,8 @@ namespace ThePackt{
         private Vector2 _dashDirectionInput;
         private Vector2 _lastAIPos;
 
+        private bool _isTouchingWall;
+
         #endregion 
 
         #region methods
@@ -50,6 +52,14 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            if(_isTouchingWall){
+                _isAbilityDone = true;
+                _player.SetVelocity(0f, _dashDirection);
+                _lastDashTime = Time.time;
+                return;
+            }
+
 //
            // Debug.Log("[DASH STATE] performing dash");
             _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
@@ -67,6 +77,12 @@ namespace ThePackt{
                 _lastDashTime = Time.time;
             }
            
+        }
+
+        public override void Checks()
+        {
+            base.Checks();
+            _isTouchingWall = _player.CheckIfTouchingWall();
         }
 
         public override void PhysicsUpdate()

@@ -45,7 +45,7 @@ namespace ThePackt{
             {
                 _stateMachine.ChangeState(_player._moveState);
             }
-            else if (_yInput == -1)
+            else if (_yInput == -1 && !_player.CheckIfTouchingPlayer() && !_player.CheckIfTouchingWall())
             {
                 _stateMachine.ChangeState(_player._crouchIdleState);
             }   
