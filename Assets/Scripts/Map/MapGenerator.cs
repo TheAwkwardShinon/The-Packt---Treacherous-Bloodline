@@ -12,12 +12,31 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private List<Vector2> _magicFloorSpawnPoints;
     [SerializeField] private GameObject _magicWallPrefab;
     [SerializeField] private GameObject _magicFloorPrefab;
+
+    private List<BoltEntity> _magicObstacles;
+
+    private static MapGenerator _instance;
+
+    public static MapGenerator Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<MapGenerator>();
+            }
+
+            return _instance;
+        }
+    }
     #endregion
 
     #region methods 
     // Start is called before the first frame update
     void Start()
     {
+        _magicObstacles = new List<BoltEntity>();
+
         if (BoltNetwork.IsServer)
         {
             SpawnMagicObstacles();
@@ -31,12 +50,12 @@ public class MapGenerator : MonoBehaviour
     {
         foreach(Vector2 sp in _magicFloorSpawnPoints)
         {
-            BoltNetwork.Instantiate(_magicFloorPrefab, sp, _magicFloorPrefab.transform.rotation);
+            _magicObstacles.Add(BoltNetwork.Instantiate(_magicFloorPrefab, sp, _magicFloorPrefab.transform.rotation));
         }
 
         foreach (Vector2 sp in _magicWallsSpawnPoints)
         {
-            BoltNetwork.Instantiate(_magicWallPrefab, sp, _magicWallPrefab.transform.rotation);
+            _magicObstacles.Add(BoltNetwork.Instantiate(_magicWallPrefab, sp, _magicWallPrefab.transform.rotation));
         }
     }
 
@@ -57,6 +76,14 @@ public class MapGenerator : MonoBehaviour
             toSpawn = _roomPrefabs[randomIndex];
 
             BoltNetwork.Instantiate(toSpawn, _roomsSpawnPoints[i], toSpawn.transform.rotation);
+        }
+    }
+
+    public void DestroyMagicObstacles()
+    {
+        foreach(var obs in _magicObstacles)
+        {
+            BoltNetwork.Destroy(obs);
         }
     }
     #endregion
