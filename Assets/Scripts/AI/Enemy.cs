@@ -34,6 +34,8 @@ namespace ThePackt
         protected float _damageReductionValue;
 
         protected int _facingDirection;
+        protected Rigidbody2D _rb;
+        protected Collider2D _col;
         protected Slider healthSlider;
         //protected Vector3 _canvasPos;
         protected FSM _fsm;
@@ -45,6 +47,12 @@ namespace ThePackt
         #endregion
 
         #region methods
+
+        protected virtual void Awake()
+        {
+            _rb = gameObject.GetComponent<Rigidbody2D>();
+            _col = gameObject.GetComponent<Collider2D>();
+        }
 
         public override void Attached()
         {
@@ -181,8 +189,14 @@ namespace ThePackt
             _damageReductionValue = reductionValue;
         }
 
+        public void ApplyKnockback(Vector3 direction, float power)
+        {
+            _rb.AddForce(direction * power);
+        }
+
         public void Stun(float time)
         {
+            Debug.Log("[STUN]");
             _stunTime = time;
             _lastStunTime = Time.time;
             _stunned = true;

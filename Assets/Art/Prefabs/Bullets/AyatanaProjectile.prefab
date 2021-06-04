@@ -4829,7 +4829,7 @@ GameObject:
   - component: {fileID: 3385130490133489693}
   - component: {fileID: 3385130490133489180}
   - component: {fileID: 3385130490133490239}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AyatanaProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4935,7 +4935,7 @@ MonoBehaviour:
   _attackPower: 5
   _circleSize: 0.6
   _debuffTime: 15
-  _stunTime: 1
+  _stunTime: 30
 --- !u!1 &3385130490133488637
 GameObject:
   m_ObjectHideFlags: 0

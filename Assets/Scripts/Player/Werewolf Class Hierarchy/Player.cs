@@ -355,8 +355,8 @@ namespace ThePackt{
             _playerData.cantJump = false;
         }
 
-        public void ApplicateForce(Vector2 direction){
-            _rb.AddForce(direction*20000f);
+        public void ApplicateForce(Vector2 direction, float power){
+            _rb.AddForce(direction * power);
         }
 
         public void NextBullet(string bullet){

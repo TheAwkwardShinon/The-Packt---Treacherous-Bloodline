@@ -9645,7 +9645,7 @@ GameObject:
   - component: {fileID: 8086681667673282394}
   - component: {fileID: 423993541335861550}
   - component: {fileID: 124777237804480193}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HerinProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

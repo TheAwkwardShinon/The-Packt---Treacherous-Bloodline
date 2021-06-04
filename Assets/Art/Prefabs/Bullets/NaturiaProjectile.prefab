@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 542854058783178530}
   - component: {fileID: 8238037147472388438}
   - component: {fileID: 4424268628871494974}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NaturiaProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,6 +117,7 @@ MonoBehaviour:
   _speed: 12
   _range: 12
   _attackPower: 4
+  _knockbackPower: 500
 --- !u!1 &3540468841551897610
 GameObject:
   m_ObjectHideFlags: 0
