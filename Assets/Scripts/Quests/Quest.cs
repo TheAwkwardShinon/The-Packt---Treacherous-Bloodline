@@ -13,6 +13,10 @@ namespace ThePackt
     public class Quest : Bolt.EntityBehaviour<IQuestState>
     {
         #region variables
+        [SerializeField] protected Sprite _readySprite;
+        [SerializeField] protected Sprite _activeSprite;
+        [SerializeField] protected Sprite _notReadySprite;
+
         public string _title;
         [TextArea(0,50)]public string _description;
         public float _expReward;
@@ -328,32 +332,45 @@ namespace ThePackt
 
             Debug.Log("[QUEST] " + _state);
 
-            if (BoltNetwork.IsServer && _state == Constants.STARTED)
+            if (_state == Constants.READY)
             {
-                _startTime = Time.time;
+                GetComponent<SpriteRenderer>().sprite = _readySprite;
+            }
+            else if(_state == Constants.STARTED)
+            {
+                GetComponent<SpriteRenderer>().sprite = _activeSprite;
 
-                if(_startAction != null)
+                if (BoltNetwork.IsServer)
                 {
-                    _startAction();
+                    _startTime = Time.time;
+
+                    if (_startAction != null)
+                    {
+                        _startAction();
+                    }
+                }
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().sprite = _notReadySprite;
+
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[QUEST] cooldown started");
+
+                    _endTime = Time.time;
+                    _timerEnd = true;
+
+                    if (_state == Constants.FAILED && _failAction != null)
+                    {
+                        _failAction();
+                    }
                 }
             }
 
             if (_state == Constants.STARTED && _playersInRoom.Contains(_localPlayer.entity))
             {
                 _localPlayer.JoinQuest(this);
-            }
-
-            if (BoltNetwork.IsServer && (_state == Constants.COMPLETED || _state == Constants.FAILED))
-            {
-                Debug.Log("[QUEST] cooldown started");
-
-                _endTime = Time.time;
-                _timerEnd = true;
-
-                if(_state == Constants.FAILED && _failAction != null)
-                {
-                    _failAction();
-                }
             }
 
             if (_state == Constants.COMPLETED && _localPlayerPartecipates)
