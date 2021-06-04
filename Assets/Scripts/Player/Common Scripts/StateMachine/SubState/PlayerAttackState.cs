@@ -77,15 +77,53 @@ namespace ThePackt
 
             foreach (Collider2D collision in hitEnemies)
             {
-                Debug.Log(collision.gameObject.name + " hit");
+                Collider2D myCollider = _player.GetComponent<Collider2D>();
+                float myIncrement = myCollider.bounds.size.y / 4;
+                Collider2D otherCollider = collision.GetComponent<Collider2D>();
+                float otherIncrement = otherCollider.bounds.size.y / 4;
+                bool enemyReachable = false;
 
-                if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
+                float j = 0;
+                float i = 0;
+                for (float k = 0; k < 3; k ++)
                 {
-                    EnemyHitReaction(collision);
+                    float originY = otherCollider.bounds.center.y + otherCollider.bounds.size.y / 2 - j;
+                    if (originY > otherCollider.bounds.center.y)
+                    {
+                        originY -= 0.01f;
+                    }
+                    else
+                    {
+                        originY += 0.01f;
+                    }
+
+                    Vector2 target = new Vector2(myCollider.bounds.center.x, myCollider.bounds.center.y + myCollider.bounds.size.y/2 - i);
+                    Vector2 origin = new Vector2(otherCollider.bounds.center.x, originY);
+                    Vector2 direction = target - origin;
+                    var hit = Physics2D.Raycast(origin, direction, Vector2.Distance(target, origin) + 0.01f, LayerMask.GetMask("Players", "Ground", "Enemies", "Wall", "Objectives"));
+
+                    if(hit.collider != null && hit.collider.gameObject == _player.gameObject)
+                    {
+                        enemyReachable = true;
+                        break;
+                    }
+
+                    i += myIncrement;
+                    j += otherIncrement;
                 }
-                else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
+
+                if (enemyReachable)
                 {
-                    PlayerHitReaction(collision);
+                    Debug.Log(collision.gameObject.name + " hit");
+
+                    if (LayerMask.LayerToName(collision.gameObject.layer) == "Enemies")
+                    {
+                        EnemyHitReaction(collision);
+                    }
+                    else if (LayerMask.LayerToName(collision.gameObject.layer) == "Players")
+                    {
+                        PlayerHitReaction(collision);
+                    }
                 }
             }
         }

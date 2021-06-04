@@ -185,7 +185,7 @@ namespace ThePackt{
 
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            //_col = gameObject.GetComponent<Collider2D>();
+            _col = gameObject.GetComponent<Collider2D>();
             _playerInput = GetComponent<PlayerInput>();
             _anim = GetComponent<Animator>();
             _facingDirection = -1;
@@ -250,7 +250,7 @@ namespace ThePackt{
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
-             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel.Equals(null)){
+             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel == null){
                  _questPanel = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestPanel();
                  _questReward = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetReward();
                  _questTitleText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTitle();
@@ -523,12 +523,24 @@ namespace ThePackt{
         }
 
         public void OnDrawGizmos(){
-            
+            //
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f));
             Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f));
             Gizmos.DrawCube(_wallCheck.position,new Vector3(0.12f,0.5f,0f));
             Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.12f,0.5f,0f));
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_attackPoint.position, _playerBaseData.rangeBaseWerewolf);
+
+            /*
+            Gizmos.color = Color.yellow;
+            Vector2 target = new Vector2(_col.bounds.center.x, _col.bounds.center.y + _col.bounds.size.y / 2 - _col.bounds.size.y / 4);
+            Vector2 origin = Vector2.zero;
+            Vector2 direction = target - origin;
+            Ray r = new Ray(origin, direction);
+            Gizmos.DrawRay(r);
+            */
         }
 
         ///<summary>
