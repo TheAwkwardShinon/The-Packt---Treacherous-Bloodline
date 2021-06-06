@@ -229,7 +229,18 @@ namespace ThePackt
             }
         }
 
-          public override void OnEvent(ApplicateSlowDebuffEvent evnt)
+        public override void OnEvent(FountainHealEvent evnt)
+        {
+            if (BoltNetwork.IsClient)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.FountainHeal(evnt.Amount);
+                }
+            }
+        }
+
+        public override void OnEvent(ApplicateSlowDebuffEvent evnt)
         {
             if (BoltNetwork.IsServer)
             {
@@ -275,7 +286,6 @@ namespace ThePackt
                 }
             }
         }
-
 
         public override void OnEvent(ApplicateFogOfWarDebuffEvent evnt)
         {
@@ -350,15 +360,30 @@ namespace ThePackt
             }
         }
 
+        public override void OnEvent(EnemyDamageReductionEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[HEALTH] enemy attack hit with damage: " + evnt.Damage);
 
-        
-          public override void OnEvent(ApplicateforceInDirection evnt)
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                Enemy enemy = entity.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
+                    enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
+                    enemy.ApplyDamageReduction(evnt.DamageTime, evnt.DamageReduction);
+                }
+            }
+        }
+
+        public override void OnEvent(ApplicateforceInDirection evnt)
         {
             if (BoltNetwork.IsServer)
             {
                 if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
                 {
-                    _player.ApplicateForce(evnt.Direction);
+                    _player.ApplicateForce(evnt.Direction, evnt.Power);
                     _player.ApplyDamage(evnt.Damage);
                 }
                 else {
@@ -373,13 +398,30 @@ namespace ThePackt
             else{
                 if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
                 {
-                    _player.ApplicateForce(evnt.Direction);
+                    _player.ApplicateForce(evnt.Direction, evnt.Power);
                     _player.ApplyDamage(evnt.Damage);
                 }
             }
         }
 
-         public override void OnEvent(TransformationEvent evnt)
+        public override void OnEvent(EnemyKnockbackEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                Debug.Log("[HEALTH] enemy attack hit with damage: " + evnt.Damage);
+
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.HitNetworkId);
+                Enemy enemy = entity.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    BoltEntity attacker = BoltNetwork.FindEntity(evnt.AttackerNetworkId);
+                    enemy.ApplyDamage(evnt.Damage, attacker.GetComponent<Player>());
+                    enemy.ApplyKnockback(evnt.Direction, evnt.KnockbackPower);
+                }
+            }
+        }
+
+        public override void OnEvent(TransformationEvent evnt)
         {
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player =entity.GetComponent<Player>();

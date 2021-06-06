@@ -125,6 +125,15 @@ namespace ThePackt{
         [SerializeField] private GameObject _hitVfx;
         #endregion
 
+        #region sfx
+        [SerializeField] private GameObject _gunshotSfx;
+        [SerializeField] private GameObject _walkSfx;
+        [SerializeField] private GameObject _jumpSfx;
+        [SerializeField] private GameObject _wolfJumpSfx;
+        [SerializeField] private GameObject _transformationSfx;
+        [SerializeField] private GameObject _attackSfx;
+        #endregion
+
 
         #region quest UI
         private Text _questTitleText;
@@ -187,7 +196,7 @@ namespace ThePackt{
 
             //get core components and initialize the fsm
             _rb = gameObject.GetComponent<Rigidbody2D>();
-            //_col = gameObject.GetComponent<Collider2D>();
+            _col = gameObject.GetComponent<Collider2D>();
             _playerInput = GetComponent<PlayerInput>();
             _anim = GetComponent<Animator>();
             _facingDirection = -1;
@@ -358,8 +367,8 @@ namespace ThePackt{
             _playerData.cantJump = false;
         }
 
-        public void ApplicateForce(Vector2 direction){
-            _rb.AddForce(direction*20000f);
+        public void ApplicateForce(Vector2 direction, float power){
+            _rb.AddForce(direction * power);
         }
 
         public void NextBullet(string bullet){
@@ -425,13 +434,25 @@ namespace ThePackt{
         }
 
         ///<summary>
-        /// heal the player by 30% of his mac hp
+        /// heal the player by 30% of his max hp
         ///</summary>
         public void Heal(){
             if(entity.IsOwner){
                 Debug.LogError("[HEALED]");
                 state.Health = _playerData.maxLifePoints * 0.3f;
                 SetIsBeingHealed(false);
+            }
+        }
+
+        ///<summary>
+        /// heals the player by the specified percentage of his max hp
+        ///</summary>
+        public void FountainHeal(float amount)
+        {
+            if (entity.IsOwner)
+            {
+                Debug.LogError("[HEALED]");
+                state.Health += _playerData.maxLifePoints * amount;
             }
         }
 
@@ -526,12 +547,24 @@ namespace ThePackt{
         }
 
         public void OnDrawGizmos(){
-            
+            //
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f));
             Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f));
             Gizmos.DrawCube(_wallCheck.position,new Vector3(0.12f,0.5f,0f));
             Gizmos.DrawCube(_wallCheckWolf.position,new Vector3(0.12f,0.5f,0f));
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_attackPoint.position, _playerBaseData.rangeBaseWerewolf);
+
+            /*
+            Gizmos.color = Color.yellow;
+            Vector2 target = new Vector2(_col.bounds.center.x, _col.bounds.center.y + _col.bounds.size.y / 2 - _col.bounds.size.y / 4);
+            Vector2 origin = Vector2.zero;
+            Vector2 direction = target - origin;
+            Ray r = new Ray(origin, direction);
+            Gizmos.DrawRay(r);
+            */
         }
 
         ///<summary>
@@ -908,8 +941,36 @@ namespace ThePackt{
         public void SetSpecialVFX(bool value){
             _shootVfx.SetActive(value);
         }
-       
 
+        public void PlayGunshotSFX()
+        {
+            _gunshotSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayWalkSFX()
+        {
+            _walkSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayJumpSFX()
+        {
+            _jumpSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayAttackSFX()
+        {
+            _attackSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayTransformationSFX()
+        {
+            _transformationSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayWolfJumpSFX()
+        {
+            _wolfJumpSfx.GetComponent<AudioSource>().Play();
+        }
 
 
         #endregion

@@ -14170,6 +14170,9 @@ MonoBehaviour:
   - {x: -2.54, y: -6.87}
   _magicWallPrefab: {fileID: 1075369543325004679, guid: 0b5c3170643e31c448c0f30b412121f9, type: 3}
   _magicFloorPrefab: {fileID: 4889301231692642881, guid: c0936ed715301be40a5eccc3a81a594e, type: 3}
+  _fountainPrefab: {fileID: 112512688685291273, guid: aeb5bdf818a27d949be0d2c7104e134e, type: 3}
+  _fountainsSpawnPoints:
+  - {x: 1.96, y: -6.02}
 --- !u!4 &958143743
 Transform:
   m_ObjectHideFlags: 0

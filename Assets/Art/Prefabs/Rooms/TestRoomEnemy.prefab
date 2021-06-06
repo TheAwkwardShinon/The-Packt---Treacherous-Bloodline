@@ -238,6 +238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af19dbbf542ed2f4dbe144261996ea9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _readySprite: {fileID: 0}
+  _activeSprite: {fileID: 0}
+  _notReadySprite: {fileID: 0}
   _title: Colosseum
   _description: Defeat the enemy!
   _expReward: 15
@@ -264,7 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 30725c77-0e18-4f3e-a73d-0750082dea8b
-  _prefabId: 31
+  _prefabId: 32
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

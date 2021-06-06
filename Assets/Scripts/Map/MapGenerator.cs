@@ -12,6 +12,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private List<Vector2> _magicFloorSpawnPoints;
     [SerializeField] private GameObject _magicWallPrefab;
     [SerializeField] private GameObject _magicFloorPrefab;
+    [SerializeField] private GameObject _fountainPrefab;
+    [SerializeField] private List<Vector2> _fountainsSpawnPoints;
 
     private List<BoltEntity> _magicObstacles;
 
@@ -41,9 +43,19 @@ public class MapGenerator : MonoBehaviour
         {
             SpawnMagicObstacles();
 
+            SpawnFountains();
+
             SpawnRooms();
         }
 
+    }
+
+    private void SpawnFountains()
+    {
+        foreach (Vector2 sp in _fountainsSpawnPoints)
+        {
+            BoltNetwork.Instantiate(_fountainPrefab, sp, _fountainPrefab.transform.rotation);
+        }
     }
 
     private void SpawnMagicObstacles()

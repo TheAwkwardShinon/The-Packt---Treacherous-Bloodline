@@ -35,7 +35,7 @@ MonoBehaviour:
   downColliderWidth: 1.3
   damageMultiplier: 0
   powerBaseWerewolf: 10
-  rangeBaseWerewolf: 0.35
+  rangeBaseWerewolf: 0.3
   powerBaseHuman: 10
   baseHumanCooldown: 0.5
   baseWerewolfCooldown: 0.5

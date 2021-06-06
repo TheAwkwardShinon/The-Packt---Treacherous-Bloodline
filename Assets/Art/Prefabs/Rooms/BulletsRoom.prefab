@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 30725c77-0e18-4f3e-a73d-0750082dea8b
-  _prefabId: 23
+  _prefabId: 24
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -1110,6 +1110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b32151272979c48bad04cca4c8221c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _readySprite: {fileID: -6251682230944352461, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
+  _activeSprite: {fileID: 8020143640844766479, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
+  _notReadySprite: {fileID: -1259408508766424310, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _title: Heavy rain
   _description: Dodge the bullets!
   _expReward: 0

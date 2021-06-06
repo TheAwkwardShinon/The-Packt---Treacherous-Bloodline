@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: -7562570225892731680}
   - component: {fileID: 2642888126845550595}
   - component: {fileID: 5861211612403354926}
+  - component: {fileID: 1684147407743310678}
   m_Layer: 13
   m_Name: Objective
   m_TagString: Untagged
@@ -132,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 989da2cb-da70-41f0-819a-25f417d77af2
-  _prefabId: 29
+  _prefabId: 30
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -212,7 +213,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.027986854, y: -0.013993464}
+  m_Offset: {x: -0.0005179122, y: 0.00029038638}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -223,7 +224,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16039222, y: 0.41478437}
+  m_Size: {x: 0.16698478, y: 0.42577195}
   m_EdgeRadius: 0
 --- !u!50 &5861211612403354926
 Rigidbody2D:
@@ -246,6 +247,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!95 &1684147407743310678
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7263629113391493904}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 590a8706de40d3240a88d98e9aff1993, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &2397537773558463653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -343,7 +363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0057988
+      value: 0.023
       objectReference: {fileID: 0}
     - target: {fileID: 915266501028632069, guid: e1418e024029dad48b5fad5c66fbd661, type: 3}
       propertyPath: m_AnchoredPosition.y

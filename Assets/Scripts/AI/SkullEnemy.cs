@@ -11,16 +11,11 @@ namespace ThePackt
         [SerializeField] private float _maxRotation;
         [SerializeField] private float _avoidRange;
         private Vector2 _currentVelocity;
-        private Rigidbody2D _rb;
-        private Collider2D _col;
         private Vector3 _direction;
 
         public override void Attached()
         {
             base.Attached();
-
-            _rb = gameObject.GetComponent<Rigidbody2D>();
-            _col = gameObject.GetComponent<Collider2D>();
 
             ChangeDirection();
         }

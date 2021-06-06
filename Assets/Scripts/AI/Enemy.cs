@@ -31,8 +31,11 @@ namespace ThePackt
         protected float _lastDamageReductionTime;
         protected float _damageReductionTime;
         protected bool _damageReduced;
+        protected float _damageReductionValue;
 
         protected int _facingDirection;
+        protected Rigidbody2D _rb;
+        protected Collider2D _col;
         protected Slider healthSlider;
         //protected Vector3 _canvasPos;
         protected FSM _fsm;
@@ -44,6 +47,12 @@ namespace ThePackt
         #endregion
 
         #region methods
+
+        protected virtual void Awake()
+        {
+            _rb = gameObject.GetComponent<Rigidbody2D>();
+            _col = gameObject.GetComponent<Collider2D>();
+        }
 
         public override void Attached()
         {
@@ -141,15 +150,25 @@ namespace ThePackt
         {
             Debug.Log("[BASEENEMY] hit player " + hitPlayer.NetworkId);
 
+            float damage = 0;
+            if (_damageReduced)
+                damage = _attackPower - _damageReductionValue;
+            else damage = _attackPower;
+
+            if(damage <= 0)
+            {
+                damage = 0.1f;
+            }
+
             if (hitPlayer.IsOwner)
             {
-                hitPlayer.GetComponent<Player>().ApplyDamage(_attackPower);
+                hitPlayer.GetComponent<Player>().ApplyDamage(damage);
             }
             else
             {
                 var evnt = PlayerAttackHitEvent.Create(hitPlayer.Source);
                 evnt.HitNetworkId = hitPlayer.NetworkId;
-                evnt.Damage = _attackPower;
+                evnt.Damage = damage;
                 evnt.Send();
             }
         }
@@ -161,15 +180,23 @@ namespace ThePackt
             _slowed = true;
         }
 
-        public void ApplyDamageReduction(float time)
+        public void ApplyDamageReduction(float time, float reductionValue)
         {
             _damageReductionTime = time;
             _lastDamageReductionTime = Time.time;
             _damageReduced = true;
+
+            _damageReductionValue = reductionValue;
+        }
+
+        public void ApplyKnockback(Vector3 direction, float power)
+        {
+            _rb.AddForce(direction * power);
         }
 
         public void Stun(float time)
         {
+            Debug.Log("[STUN]");
             _stunTime = time;
             _lastStunTime = Time.time;
             _stunned = true;

@@ -5,6 +5,12 @@ TextureImporter:
   - first:
       213: -9189654260004807166
     second: klipartz.com_0
+  - first:
+      213: -2601237859970785609
+    second: klipartz.com_1
+  - first:
+      213: 6839058595312881686
+    second: klipartz.com_2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -102,7 +108,7 @@ TextureImporter:
         width: 307
         height: 665
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -110,6 +116,48 @@ TextureImporter:
       bones: []
       spriteID: 20e12cfa32ac77080800000000000000
       internalID: -9189654260004807166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: klipartz.com_1
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 733
+        width: 273
+        height: 667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bed424c2fb86ebd0800000000000000
+      internalID: -2601237859970785609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: klipartz.com_2
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 34
+        width: 271
+        height: 668
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 610d4bbbe8739ee50800000000000000
+      internalID: 6839058595312881686
       vertices: []
       indices: 
       edges: []

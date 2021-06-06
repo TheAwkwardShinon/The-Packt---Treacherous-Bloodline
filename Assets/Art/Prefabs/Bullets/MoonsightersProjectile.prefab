@@ -4829,7 +4829,7 @@ GameObject:
   - component: {fileID: 3472661733368162115}
   - component: {fileID: 5038022416697555255}
   - component: {fileID: 4308699332432827622}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MoonsightersProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

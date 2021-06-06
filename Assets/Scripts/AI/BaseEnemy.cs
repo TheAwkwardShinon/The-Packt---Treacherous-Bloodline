@@ -21,8 +21,6 @@ namespace ThePackt
 
 		private Vector2 _currentVelocity;
 		private Collider2D[] _nearPlayers;
-		private Rigidbody2D _rb;
-		private Collider2D _col;
 
 		protected SpecificAttack _specificAttack;
 		protected CheckSpecificRange _checkSpecificRange;
@@ -58,16 +56,16 @@ namespace ThePackt
 
         #region methods
 
-        private void Awake()
+        protected override void Awake()
 		{
-			_rb = gameObject.GetComponent<Rigidbody2D>();
-			_col = gameObject.GetComponent<Collider2D>();
+			base.Awake();
+
 			_nearPlayers = new Collider2D[6];
 		}
 
 		// Start is called before the first frame update
 		public override void Attached()
-		{//
+		{
 			base.Attached();
 
 			#region wander fsm
@@ -357,7 +355,7 @@ namespace ThePackt
 		private void CheckIfMustWalk()
 		{
 			//Debug.Log("[BASEENEMY] time: " + Time.time + "   last stand: " + _lastStandStillTime + "     stand time " + _standStillTime);
-			if (Time.time >= _lastStandStillTime + _standStillTime)
+			if (Time.time >= _lastStandStillTime + _standStillTime && !_stunned)
 			{
 				Flip();
 				_lastDirectionChangeTime = Time.time;

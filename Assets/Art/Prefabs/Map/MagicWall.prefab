@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4067327185306694916}
   - component: {fileID: 8736723266486506283}
   - component: {fileID: 2841675068815044375}
+  - component: {fileID: 8510942453012073912}
   m_Layer: 6
   m_Name: MagicWall
   m_TagString: Untagged
@@ -124,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 0ce36d39-d79e-44e5-912c-71e006145444
-  _prefabId: 15
+  _prefabId: 16
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -139,3 +140,22 @@ MonoBehaviour:
   _entityBehaviourQueryOption: 0
   _entityPriorityCalculatorQueryOption: 1
   _entityReplicationFilterQueryOption: 1
+--- !u!95 &8510942453012073912
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075369543325004679}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6d441ed0829ac68479f0b61180d5f446, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
