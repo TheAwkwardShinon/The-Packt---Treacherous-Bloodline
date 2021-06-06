@@ -69,6 +69,7 @@ namespace ThePackt
             GameObject blt = BoltNetwork.Instantiate(_player.GetBullet(), _player.GetAttackPoint().position, _player.GetAttackPoint().rotation);
             blt.GetComponent<Bullet>().SetAttackPower(_player.GetPlayerData().powerBaseHuman);
             blt.GetComponent<Bullet>().SetOwner(_player);
+            //_player.PlayGunshotSFX();
         }
 
         public void BaseWereWolfAttack()

@@ -123,6 +123,15 @@ namespace ThePackt{
         [SerializeField] private GameObject _hitVfx;
         #endregion
 
+        #region sfx
+        [SerializeField] private GameObject _gunshotSfx;
+        [SerializeField] private GameObject _walkSfx;
+        [SerializeField] private GameObject _jumpSfx;
+        [SerializeField] private GameObject _wolfJumpSfx;
+        [SerializeField] private GameObject _transformationSfx;
+        [SerializeField] private GameObject _attackSfx;
+        #endregion
+
 
         #region quest UI
         private Text _questTitleText;
@@ -905,8 +914,36 @@ namespace ThePackt{
         public void SetSpecialVFX(bool value){
             _shootVfx.SetActive(value);
         }
-       
 
+        public void PlayGunshotSFX()
+        {
+            _gunshotSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayWalkSFX()
+        {
+            _walkSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayJumpSFX()
+        {
+            _jumpSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayAttackSFX()
+        {
+            _attackSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayTransformationSFX()
+        {
+            _transformationSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayWolfJumpSFX()
+        {
+            _wolfJumpSfx.GetComponent<AudioSource>().Play();
+        }
 
 
         #endregion

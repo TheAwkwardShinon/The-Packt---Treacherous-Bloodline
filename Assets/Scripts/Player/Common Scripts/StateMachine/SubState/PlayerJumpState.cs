@@ -18,6 +18,16 @@ namespace ThePackt{
             base.Enter();
             _player._inputHandler.UseJumpInput();
             _player.SetVelocityY(_player.GetPlayerData().jumpVelocity);
+
+            if (_player.GetIsHuman())
+            {
+                _player.PlayJumpSFX();
+            }
+            else
+            {
+                _player.PlayWolfJumpSFX();
+            }
+            
             Debug.LogWarning("[JUMP STATE] entered + number of jump left before perform this: "+amountOfJumpsLeft);
             amountOfJumpsLeft--;
             Debug.LogWarning("[JUMP STATE] numebr of jump left after this jump = "+ amountOfJumpsLeft);
