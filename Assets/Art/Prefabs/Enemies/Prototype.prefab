@@ -212,7 +212,7 @@ MonoBehaviour:
   _attackPower: 2
   _attackRate: 0.7
   _movementSpeed: 2
-  _slowedSpeed: 0.2
+  _slowedSpeed: 0
   _reactionTime: 0.1
   _jumpVelocity: 4
   _jumpCooldown: 1.5

@@ -19,6 +19,8 @@ namespace ThePackt{
         [SerializeField]private Text _questAction;
         [SerializeField]private GameObject _questPanel;
 
+        [SerializeField] private QuestUIHandler _questHandler;
+
         public GameObject GetMenu(){
             return menu;
         }
@@ -51,6 +53,9 @@ namespace ThePackt{
 
         public Text GetReward(){
             return _questReward;
+        }
+        public QuestUIHandler GetQuestHandler(){
+            return _questHandler;
         }
 
     }

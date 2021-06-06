@@ -70,6 +70,8 @@ namespace ThePackt{
 
         protected bool hasActiveQuest = false;
 
+        protected QuestUIHandler _questHandler;
+
 
 
         #endregion
@@ -250,12 +252,13 @@ namespace ThePackt{
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
-             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel.Equals(null)){
+             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel == null){
                  _questPanel = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestPanel();
                  _questReward = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetReward();
                  _questTitleText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTitle();
                  _questDescriptionText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetDescription();
                  _questAction = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetAction();
+                 _questHandler = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestHandler();
              }
         }
 
@@ -662,12 +665,17 @@ namespace ThePackt{
                 quest.LocalPartecipate();
 
                 Debug.Log("[QUEST] player joined the quest " + quest._title);
-
+                if(_questTitleText == null)
+                    Debug.LogError("the object is null");
+                if(quest._title.Equals(null)){
+                    Debug.LogError("title is is null");
+                }
                 _questTitleText.text = quest._title;
                 _questDescriptionText.text = quest._description;
                 _questReward.text = quest._timeReward.ToString();
                 _questAction.text = "QUEST JOINED";
                 _questPanel.SetActive(true);
+                _questHandler.SetActiveQuest(quest);
             }
         }
 
@@ -801,10 +809,29 @@ namespace ThePackt{
             return _wolfObject;
         }
 
+        public bool isImpostor(){
+            return _isImpostor;
+        }
+
+        public float GetSpendableTime(){
+            return _spendableTime;
+        }
+
+         public float GetSpendableExp(){
+            return _spendableExp;
+        }
+
         #endregion
 
         #region setter
 
+        public void SetSpendableTime(float value){
+            _spendableTime = value;
+        }
+
+         public void SetSpendableExp(float value){
+            _spendableExp = value;
+        }
         
         public void SetIsHuman(bool value)
         {

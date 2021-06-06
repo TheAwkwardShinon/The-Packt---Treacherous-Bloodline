@@ -178,7 +178,7 @@ MonoBehaviour:
     position: {x: 7.59, y: -0.94, z: 0}
   - name: naturia
     position: {x: 5.13, y: -0.94, z: 0}
-  _minPlayerNumber: 1
+  _minPlayerNumber: 2
   gameStartSeconds: 4
   _blackScreenCanvas: {fileID: 1452120456}
   _loadingScreenTime: 1
