@@ -229,7 +229,18 @@ namespace ThePackt
             }
         }
 
-          public override void OnEvent(ApplicateSlowDebuffEvent evnt)
+        public override void OnEvent(FountainHealEvent evnt)
+        {
+            if (BoltNetwork.IsClient)
+            {
+                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
+                {
+                    _player.FountainHeal(evnt.Amount);
+                }
+            }
+        }
+
+        public override void OnEvent(ApplicateSlowDebuffEvent evnt)
         {
             if (BoltNetwork.IsServer)
             {

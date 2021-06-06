@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 162581874709981046, guid: cdf1a316d2a89374aa81c94d50c2de40, type: 3}
       propertyPath: _prefabId
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 260977792845337334, guid: cdf1a316d2a89374aa81c94d50c2de40, type: 3}
       propertyPath: m_Bounds.m_Center.x

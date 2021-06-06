@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 30725c77-0e18-4f3e-a73d-0750082dea8b
-  _prefabId: 32
+  _prefabId: 33
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -262,6 +262,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d933de3dc4b91348b22f463f58361f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _readySprite: {fileID: 0}
+  _activeSprite: {fileID: 0}
+  _notReadySprite: {fileID: 0}
   _title: Treasure hunt
   _description: Collect all the items!
   _expReward: 5

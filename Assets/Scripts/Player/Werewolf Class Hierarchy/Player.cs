@@ -422,13 +422,25 @@ namespace ThePackt{
         }
 
         ///<summary>
-        /// heal the player by 30% of his mac hp
+        /// heal the player by 30% of his max hp
         ///</summary>
         public void Heal(){
             if(entity.IsOwner){
                 Debug.LogError("[HEALED]");
                 state.Health = _playerData.maxLifePoints * 0.3f;
                 SetIsBeingHealed(false);
+            }
+        }
+
+        ///<summary>
+        /// heals the player by the specified percentage of his max hp
+        ///</summary>
+        public void FountainHeal(float amount)
+        {
+            if (entity.IsOwner)
+            {
+                Debug.LogError("[HEALED]");
+                state.Health += _playerData.maxLifePoints * amount;
             }
         }
 
