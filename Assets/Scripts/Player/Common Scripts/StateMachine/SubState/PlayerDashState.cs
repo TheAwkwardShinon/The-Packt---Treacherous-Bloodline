@@ -31,11 +31,11 @@ namespace ThePackt{
         {
             base.Enter();
 
+            _player.PlayDashSFX();
+
             CanDash = false;
             _player._inputHandler.UseDashInput();
             _dashDirection = Vector2.right * _player._facingDirection;
-
-
         }
 
         public override void Exit()
@@ -60,7 +60,6 @@ namespace ThePackt{
                 return;
             }
 
-//
            // Debug.Log("[DASH STATE] performing dash");
             _player._anim.SetFloat("yVelocity", _player._currentVelocity.y);
             _player._anim.SetFloat("xVelocity", Mathf.Abs(_player._currentVelocity.x));

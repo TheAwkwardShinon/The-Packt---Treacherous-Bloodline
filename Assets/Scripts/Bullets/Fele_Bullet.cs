@@ -6,13 +6,10 @@ using UnityEngine;
 namespace ThePackt{
     public class Fele_Bullet : PlayerBullet
     {
-
-
         protected override void EnemyHitReaction(Collider2D collision)
         {
             base.EnemyHitReaction(collision);
         }
-
 
         protected override bool PlayerHitReaction(Collider2D collision)
         {

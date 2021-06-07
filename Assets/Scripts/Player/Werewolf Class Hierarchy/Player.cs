@@ -132,6 +132,9 @@ namespace ThePackt{
         [SerializeField] private GameObject _wolfJumpSfx;
         [SerializeField] private GameObject _transformationSfx;
         [SerializeField] private GameObject _attackSfx;
+        [SerializeField] private GameObject _dashSfx;
+        [SerializeField] private GameObject _humanHurtSfx;
+        [SerializeField] private GameObject _wolfHurtSfx;
         #endregion
 
 
@@ -430,6 +433,15 @@ namespace ThePackt{
             if (entity.IsOwner)
             {
                 state.Health -= damage;
+
+                if (GetIsHuman())
+                {
+                    _humanHurtSfx.GetComponent<AudioSource>().Play();
+                }
+                else
+                {
+                    _wolfHurtSfx.GetComponent<AudioSource>().Play();
+                }
             }
         }
 
@@ -668,6 +680,45 @@ namespace ThePackt{
             {
                 Flip();
             }
+        }
+
+        #endregion
+
+        #region sfx
+
+        public void PlayGunshotSFX()
+        {
+            _gunshotSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayWalkSFX()
+        {
+            _walkSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayJumpSFX()
+        {
+            _jumpSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayAttackSFX()
+        {
+            _attackSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayTransformationSFX()
+        {
+            _transformationSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayWolfJumpSFX()
+        {
+            _wolfJumpSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayDashSFX()
+        {
+            _dashSfx.GetComponent<AudioSource>().Play();
         }
 
         #endregion
@@ -940,36 +991,6 @@ namespace ThePackt{
         }
         public void SetSpecialVFX(bool value){
             _shootVfx.SetActive(value);
-        }
-
-        public void PlayGunshotSFX()
-        {
-            _gunshotSfx.GetComponent<AudioSource>().Play();
-        }
-
-        public void PlayWalkSFX()
-        {
-            _walkSfx.GetComponent<AudioSource>().Play();
-        }
-
-        public void PlayJumpSFX()
-        {
-            _jumpSfx.GetComponent<AudioSource>().Play();
-        }
-
-        public void PlayAttackSFX()
-        {
-            _attackSfx.GetComponent<AudioSource>().Play();
-        }
-
-        public void PlayTransformationSFX()
-        {
-            _transformationSfx.GetComponent<AudioSource>().Play();
-        }
-
-        public void PlayWolfJumpSFX()
-        {
-            _wolfJumpSfx.GetComponent<AudioSource>().Play();
         }
 
 

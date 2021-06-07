@@ -5,7 +5,6 @@ using UnityEngine;
 namespace ThePackt
 {
     public class PlayerBullet : Bullet { 
-        
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

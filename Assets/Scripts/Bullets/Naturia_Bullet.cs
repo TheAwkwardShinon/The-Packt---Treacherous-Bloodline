@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ThePackt{
     public class Naturia_Bullet : PlayerBullet
-    {//
+    {
         [SerializeField] private float _knockbackPower;
 
         //apply damage event (with low damage) + apply force

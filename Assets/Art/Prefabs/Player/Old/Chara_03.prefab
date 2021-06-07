@@ -1191,6 +1191,12 @@ MonoBehaviour:
   _transformationVfx: {fileID: 0}
   _shootVfx: {fileID: 0}
   _hitVfx: {fileID: 0}
+  _gunshotSfx: {fileID: 0}
+  _walkSfx: {fileID: 0}
+  _jumpSfx: {fileID: 0}
+  _wolfJumpSfx: {fileID: 0}
+  _transformationSfx: {fileID: 0}
+  _attackSfx: {fileID: 0}
 --- !u!114 &3384684059551268301
 MonoBehaviour:
   m_ObjectHideFlags: 0

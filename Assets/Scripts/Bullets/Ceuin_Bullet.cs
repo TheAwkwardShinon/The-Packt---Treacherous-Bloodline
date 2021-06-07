@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace ThePackt{
     public class Ceuin_Bullet : PlayerBullet
-    {
-         protected override bool PlayerHitReaction(Collider2D collision)
+    { 
+
+        protected override bool PlayerHitReaction(Collider2D collision)
         {
             Player player;
             bool isLocalPlayer = false;

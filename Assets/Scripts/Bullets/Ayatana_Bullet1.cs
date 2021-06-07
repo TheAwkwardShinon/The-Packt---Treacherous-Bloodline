@@ -6,14 +6,9 @@ using UnityEngine;
 namespace ThePackt{
     public class Ayatana_Bullet1 : PlayerBullet
     {
-
-
         [SerializeField] private float _circleSize;
         [SerializeField] private float _debuffTime;
         [SerializeField] private float _stunTime;
-
-
-
 
         protected override bool PlayerHitReaction(Collider2D collision)
         {
