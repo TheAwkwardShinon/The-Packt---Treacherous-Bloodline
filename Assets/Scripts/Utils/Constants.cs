@@ -30,5 +30,11 @@ namespace ThePackt
         public const int STARTED = 1;
         public const int READY = 0;
         #endregion 
+
+        #region enemy sound state
+        public const int ATTACK = 2;
+        public const int WALK = 1;
+        public const int HURT = 0;
+        #endregion 
     }
 }

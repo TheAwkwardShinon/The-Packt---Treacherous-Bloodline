@@ -50,13 +50,13 @@ namespace ThePackt
 		protected bool _attack;
 		protected float _lastAttackTime;
 		private float _lastJumpTime;
-        #endregion
+		#endregion
 
-        #endregion
+		#endregion
 
-        #region methods
+		#region methods
 
-        protected override void Awake()
+		protected override void Awake()
 		{
 			base.Awake();
 
@@ -317,6 +317,13 @@ namespace ThePackt
 			{
 				//if there is not a target go in the current direction
 
+				/*
+				var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+				evnt.EntityID = entity.NetworkId;
+				evnt.Sound = Constants.WALK;
+				evnt.Send();
+				*/
+
 				if (_slowed)
 				{
 					_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
@@ -340,7 +347,14 @@ namespace ThePackt
 
 				if (!_attack)
 				{
-                    if (_slowed)
+					/*
+					var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+					evnt.EntityID = entity.NetworkId;
+					evnt.Sound = Constants.WALK;
+					evnt.Send();
+					*/
+
+					if (_slowed)
                     {
 						_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
 					}

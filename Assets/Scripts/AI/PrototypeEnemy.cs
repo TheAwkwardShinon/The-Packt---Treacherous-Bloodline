@@ -4,13 +4,13 @@ namespace ThePackt
 {
 	public class PrototypeEnemy : BaseEnemy
 	{
-		#region variables
+        #region variables
+        
+        #endregion
 
-		#endregion
+        #region methods
 
-		#region methods
-
-		public override void Attached()
+        public override void Attached()
 		{
 			base.Attached();
 
@@ -81,6 +81,11 @@ namespace ThePackt
 
                     if (enemyReachable)
                     {
+                        var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+                        evnt.EntityID = entity.NetworkId;
+                        evnt.Sound = Constants.ATTACK;
+                        evnt.Send();
+
                         BoltEntity hitEntity = collision.GetComponent<Player>().entity;
                         DealDamage(hitEntity);
                         SetHitTime(hitEntity);
@@ -90,6 +95,6 @@ namespace ThePackt
             }
 		}
 
-		#endregion
-	}
+        #endregion
+    }
 }

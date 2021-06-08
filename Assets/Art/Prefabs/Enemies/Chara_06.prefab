@@ -469,6 +469,7 @@ MonoBehaviour:
   _attackRate: 0
   _movementSpeed: 0
   _slowedSpeed: 0
+  _hurtSfx: {fileID: 0}
 --- !u!114 &674738543523109926
 MonoBehaviour:
   m_ObjectHideFlags: 0

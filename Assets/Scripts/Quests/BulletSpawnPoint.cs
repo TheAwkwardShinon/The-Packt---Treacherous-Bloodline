@@ -12,12 +12,17 @@ namespace ThePackt
 
         public void Shoot(GameObject bulletPrefab)
         {
-            if (BoltNetwork.IsServer && Time.time >= _lastFireTime + _fireRate)
+            if (Time.time >= _lastFireTime + _fireRate)
             {
-                float angle = UnityEngine.Random.Range(-_maxDegreeOfFire, _maxDegreeOfFire);
-                BoltNetwork.Instantiate(bulletPrefab, transform.position, transform.rotation * Quaternion.Euler(0, 0, angle));
+                gameObject.GetComponent<AudioSource>().Play();
 
-                _lastFireTime = Time.time;
+                if (BoltNetwork.IsServer)
+                {
+                    float angle = UnityEngine.Random.Range(-_maxDegreeOfFire, _maxDegreeOfFire);
+                    BoltNetwork.Instantiate(bulletPrefab, transform.position, transform.rotation * Quaternion.Euler(0, 0, angle));
+
+                    _lastFireTime = Time.time;
+                }
             }
         }
     }
