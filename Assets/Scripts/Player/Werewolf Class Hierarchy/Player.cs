@@ -135,6 +135,9 @@ namespace ThePackt{
         [SerializeField] private GameObject _dashSfx;
         [SerializeField] private GameObject _humanHurtSfx;
         [SerializeField] private GameObject _wolfHurtSfx;
+        [SerializeField] private GameObject _drinkSfx;
+        [SerializeField] private GameObject _interactSfx;
+        [SerializeField] private GameObject _pickUpSfx;
         #endregion
 
 
@@ -464,6 +467,9 @@ namespace ThePackt{
             if (entity.IsOwner)
             {
                 Debug.LogError("[HEALED]");
+
+                _drinkSfx.GetComponent<AudioSource>().Play();
+
                 state.Health += _playerData.maxLifePoints * amount;
             }
         }
@@ -706,6 +712,11 @@ namespace ThePackt{
             _attackSfx.GetComponent<AudioSource>().Play();
         }
 
+        public void PlayPickUpSFX()
+        {
+            _pickUpSfx.GetComponent<AudioSource>().Play();
+        }
+
         public void PlayTransformationSFX()
         {
             _transformationSfx.GetComponent<AudioSource>().Play();
@@ -719,6 +730,11 @@ namespace ThePackt{
         public void PlayDashSFX()
         {
             _dashSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayInteractSFX()
+        {
+            _interactSfx.GetComponent<AudioSource>().Play();
         }
 
         #endregion

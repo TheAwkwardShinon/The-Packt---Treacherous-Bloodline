@@ -1197,6 +1197,11 @@ MonoBehaviour:
   _wolfJumpSfx: {fileID: 0}
   _transformationSfx: {fileID: 0}
   _attackSfx: {fileID: 0}
+  _dashSfx: {fileID: 0}
+  _humanHurtSfx: {fileID: 0}
+  _wolfHurtSfx: {fileID: 0}
+  _drinkSfx: {fileID: 0}
+  _interactSfx: {fileID: 0}
 --- !u!114 &3384684059551268301
 MonoBehaviour:
   m_ObjectHideFlags: 0

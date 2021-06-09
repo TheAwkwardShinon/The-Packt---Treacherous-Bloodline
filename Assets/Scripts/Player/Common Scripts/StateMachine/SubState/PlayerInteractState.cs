@@ -27,6 +27,9 @@ namespace ThePackt{
         {
             base.Enter();
             _player._inputHandler.UseInteractInput();
+
+            _player.PlayInteractSFX();
+
             if(_interactionType.Equals("player")){
                 var evnt = StartHealingEvent.Create(BoltNetwork.Server);
                 evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;

@@ -11,6 +11,8 @@ namespace ThePackt
             Player player = collision.GetComponent<Player>();
             if (player != null)
             {
+                player.PlayPickUpSFX();
+
                 BoltNetwork.Destroy(gameObject);
             }
         }

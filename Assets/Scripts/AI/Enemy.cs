@@ -44,6 +44,15 @@ namespace ThePackt
         protected Dictionary<BoltEntity,float> _damageMap;
         protected Dictionary<BoltEntity, float> _hitTimeMap;
         protected Quest _room;
+
+        #region sfx
+        [Header("SFX")]
+        [SerializeField] protected GameObject _walkSfx;
+        [SerializeField] protected GameObject _attackSfx;
+        [SerializeField] protected GameObject _hurtSfx;
+        private bool _callbackAdded = false;
+        #endregion
+
         #endregion
 
         #region methods
@@ -111,6 +120,11 @@ namespace ThePackt
 
             if (BoltNetwork.IsServer)
             {
+                var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+                evnt.EntityID = entity.NetworkId;
+                evnt.Sound = Constants.HURT;
+                evnt.Send();
+
                 state.Health -= damage;
                 _lastAttacker = attacker.entity;
 
@@ -222,6 +236,21 @@ namespace ThePackt
             {
                 _hitTimeMap.Add(hitEntity, Time.time);
             }
+        }
+
+        public void PlayWalkSFX()
+        {
+            _walkSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayAttackSFX()
+        {
+            _attackSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayHurtSFX()
+        {
+            _hurtSfx.GetComponent<AudioSource>().Play();
         }
 
         #endregion

@@ -421,6 +421,24 @@ namespace ThePackt
             }
         }
 
+        public override void OnEvent(PlayEnemySoundEvent evnt)
+        {
+            BoltEntity entity = BoltNetwork.FindEntity(evnt.EntityID);
+            Enemy enemy = entity.GetComponent<Enemy>();
+            switch (evnt.Sound)
+            {
+                case Constants.ATTACK:
+                    enemy.PlayAttackSFX();
+                    break;
+                case Constants.HURT:
+                    enemy.PlayHurtSFX();
+                    break;
+                case Constants.WALK:
+                    enemy.PlayWalkSFX();
+                    break;
+            }
+        }
+
         public override void OnEvent(TransformationEvent evnt)
         {
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);

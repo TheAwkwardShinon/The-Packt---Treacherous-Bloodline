@@ -330,6 +330,8 @@ namespace ThePackt
         {
             _state = state.State;
 
+            gameObject.GetComponent<AudioSource>().Play();
+
             Debug.Log("[QUEST] " + _state);
 
             if (_state == Constants.READY)
