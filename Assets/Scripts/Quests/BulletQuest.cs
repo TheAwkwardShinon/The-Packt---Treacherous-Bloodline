@@ -46,6 +46,18 @@ namespace ThePackt
             return false;
         }
 
+        public void PlayShotSound(int cannonId)
+        {
+            foreach (Transform sp in _spawnPoints)
+            {
+                if (sp.GetComponent<BulletSpawnPoint>().GetId() == cannonId)
+                {
+                    sp.GetComponent<AudioSource>().Play();
+                    break;
+                }
+            }
+        }
+
         #endregion
     }
 }

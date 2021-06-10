@@ -341,7 +341,10 @@ MonoBehaviour:
   _attackRate: 0
   _movementSpeed: 1
   _slowedSpeed: 0
+  _walkSfx: {fileID: 0}
+  _attackSfx: {fileID: 0}
   _hurtSfx: {fileID: 127231876232393874}
+  _deathSfx: {fileID: 8300000, guid: db234de2cd1a65a46948c46271a4ea32, type: 3}
   _minRotation: -30
   _maxRotation: -160
   _avoidRange: 0.1

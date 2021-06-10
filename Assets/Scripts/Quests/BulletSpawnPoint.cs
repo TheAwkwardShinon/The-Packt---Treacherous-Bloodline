@@ -6,6 +6,7 @@ namespace ThePackt
 {
     public class BulletSpawnPoint : MonoBehaviour
     {
+        [SerializeField] private int id;
         [SerializeField] private float _fireRate;
         [SerializeField] private float _maxDegreeOfFire;
         private float _lastFireTime;
@@ -14,7 +15,10 @@ namespace ThePackt
         {
             if (Time.time >= _lastFireTime + _fireRate)
             {
-                gameObject.GetComponent<AudioSource>().Play();
+                var evnt = PlayBulletQuestSoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+                evnt.RoomId = GetComponentInParent<BulletQuest>().entity.NetworkId;
+                evnt.CannonId = id;
+                evnt.Send();
 
                 if (BoltNetwork.IsServer)
                 {
@@ -24,6 +28,11 @@ namespace ThePackt
                     _lastFireTime = Time.time;
                 }
             }
+        }
+
+        public int GetId()
+        {
+            return id;
         }
     }
 }

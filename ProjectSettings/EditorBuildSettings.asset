@@ -18,10 +18,13 @@ EditorBuildSettings:
     path: Assets/Scenes/LobbyTestScene.unity
     guid: 05d5cab61cbef3848b3c0b46719de1fb
   - enabled: 1
-    path: Assets/Scenes/MapScene.unity
+    path: Assets/Scenes/OldMapScene.unity
     guid: 59488e67def42774d9f5fd693a247e57
   - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: eb61ffde71ef80a4382ec9ff5b436a24
+  - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: 0d5db393259515746bc62f208ec09b56
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e374018d531288e44a0abd03a0324728, type: 2}

@@ -50,6 +50,7 @@ namespace ThePackt
         [SerializeField] protected GameObject _walkSfx;
         [SerializeField] protected GameObject _attackSfx;
         [SerializeField] protected GameObject _hurtSfx;
+        [SerializeField] protected AudioClip _deathSfx;
         private bool _callbackAdded = false;
         #endregion
 
@@ -141,6 +142,11 @@ namespace ThePackt
 
         private void Die()
         {
+            var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+            evnt.EntityID = entity.NetworkId;
+            evnt.Sound = Constants.DEATH;
+            evnt.Send();
+
             BoltNetwork.Destroy(gameObject);
         }
 
@@ -153,7 +159,7 @@ namespace ThePackt
             healthSlider.value = _health;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
 
-            if (_health <= 0)
+            if (entity.IsOwner && _health <= 0)
             {
                 Debug.Log("[ENEMY] dead");
                 Die();
@@ -251,6 +257,11 @@ namespace ThePackt
         public void PlayHurtSFX()
         {
             _hurtSfx.GetComponent<AudioSource>().Play();
+        }
+
+        public void PlayDeathSFX()
+        {
+            AudioSource.PlayClipAtPoint(_deathSfx, transform.position);
         }
 
         #endregion

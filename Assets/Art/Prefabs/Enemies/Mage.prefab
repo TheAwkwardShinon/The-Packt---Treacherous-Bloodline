@@ -623,12 +623,13 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   _attackRange: 2
   _attackPower: 10
-  _attackRate: 0.7
+  _attackRate: 1.4
   _movementSpeed: 2
   _slowedSpeed: 0
   _walkSfx: {fileID: 1240082063751483126}
   _attackSfx: {fileID: 2524790272905883523}
   _hurtSfx: {fileID: 4398186918879835584}
+  _deathSfx: {fileID: 8300000, guid: db234de2cd1a65a46948c46271a4ea32, type: 3}
   _reactionTime: 0.1
   _jumpVelocity: 4
   _jumpCooldown: 1.5
