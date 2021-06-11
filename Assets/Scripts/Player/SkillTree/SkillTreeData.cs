@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ThePackt{
 
@@ -20,6 +21,8 @@ namespace ThePackt{
         [SerializeField] private AudioSource _audio;
         [SerializeField] private AudioSource _audioDeny;
         [SerializeField] private ChangeBranchColor _changeBranch;
+
+        [SerializeField] private Text _spendableExp;
 
 
 
@@ -69,6 +72,7 @@ namespace ThePackt{
                         a.GainAbility(_player);
                          _unlockedAbility.Add(a);
                         _unlockableAbility.Remove(a);
+                        _spendableExp.text = _player.GetSpendableExp().ToString();
                         _audio.Play();
                         return;
                         
