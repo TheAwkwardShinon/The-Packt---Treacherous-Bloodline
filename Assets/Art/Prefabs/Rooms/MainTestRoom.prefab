@@ -323,6 +323,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _returnToMenuSeconds: 5
+  _startSound: {fileID: 0}
+  _victorySound: {fileID: 0}
+  _defeatSound: {fileID: 0}
 --- !u!61 &3179878646566682094
 BoxCollider2D:
   m_ObjectHideFlags: 0

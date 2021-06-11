@@ -20,7 +20,7 @@ namespace ThePackt
 
         #region scenes
         public const string LOBBY = "LobbyScene";
-        public const string MAP = "MapScene";
+        public const string MAP = "OldMapScene";
         public const string MENU = "MenuScene";
         #endregion 
 
@@ -32,6 +32,7 @@ namespace ThePackt
         #endregion 
 
         #region enemy sound state
+        public const int DEATH = 3;
         public const int ATTACK = 2;
         public const int WALK = 1;
         public const int HURT = 0;

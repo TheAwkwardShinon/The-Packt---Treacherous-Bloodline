@@ -21,6 +21,10 @@ namespace ThePackt
 
         private List<BoltEntity> _playersInRoom;
 
+        [SerializeField] private AudioClip _startSound;
+        [SerializeField] private AudioClip _victorySound;
+        [SerializeField] private AudioClip _defeatSound;
+
         public static MainQuest Instance
         {
             get
@@ -94,14 +98,13 @@ namespace ThePackt
 
             Debug.Log("[MAIN] " + _state);
 
-            if (BoltNetwork.IsServer)
+            if(_state == Constants.STARTED)
             {
-                if(_state == Constants.STARTED)
-                {
-                    Debug.Log("[MAIN] main quest started");
+                Debug.Log("[MAIN] main quest started");
 
-                    //TODO ui of impostor/not impostor, open gates...
-                }
+                //TODO ui of impostor/not impostor
+
+                AudioSource.PlayClipAtPoint(_startSound, Camera.main.transform.position);
             }
 
             if (_state == Constants.COMPLETED)
@@ -110,12 +113,30 @@ namespace ThePackt
 
                 //TODO victory ui if _localPlayer is not impostor or defeat ui otherwise
 
+                if (_localPlayer.isImpostor())
+                {
+                    AudioSource.PlayClipAtPoint(_defeatSound, Camera.main.transform.position);
+                }
+                else
+                {
+                    AudioSource.PlayClipAtPoint(_victorySound, Camera.main.transform.position);
+                }
+
                 StartCoroutine("ReturnToMenu");
             }
 
             if (_state == Constants.FAILED)
             {
-                //TODO victory ui if _localPlayer is not impostor or defeat ui otherwise
+                //TODO victory ui if _localPlayer is impostor or defeat ui otherwise
+
+                if (_localPlayer.isImpostor())
+                {
+                    AudioSource.PlayClipAtPoint(_victorySound, Camera.main.transform.position);
+                }
+                else
+                {
+                    AudioSource.PlayClipAtPoint(_defeatSound, Camera.main.transform.position);
+                }
 
                 StartCoroutine("ReturnToMenu");
             }

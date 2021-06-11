@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50521156164d39744a72158f4e52f01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   _fireRate: 2
   _maxDegreeOfFire: 40
 --- !u!1 &2578016017821039205
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50521156164d39744a72158f4e52f01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   _fireRate: 0.5
   _maxDegreeOfFire: 10
 --- !u!1 &3485943434703338905
@@ -2560,5 +2562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50521156164d39744a72158f4e52f01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   _fireRate: 1
   _maxDegreeOfFire: 20

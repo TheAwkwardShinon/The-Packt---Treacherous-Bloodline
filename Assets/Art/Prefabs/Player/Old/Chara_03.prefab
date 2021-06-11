@@ -1202,6 +1202,7 @@ MonoBehaviour:
   _wolfHurtSfx: {fileID: 0}
   _drinkSfx: {fileID: 0}
   _interactSfx: {fileID: 0}
+  _pickUpSfx: {fileID: 0}
 --- !u!114 &3384684059551268301
 MonoBehaviour:
   m_ObjectHideFlags: 0

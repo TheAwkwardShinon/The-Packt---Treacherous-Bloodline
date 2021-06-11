@@ -16,6 +16,7 @@ namespace ThePackt{
         public newInputHandler _inputHandler { get; private set; }
         private PlayerInput _playerInput;
         private PlayerData _playerData;
+        protected CharacterSelectionData _selectedData;
 
         [Header("Core Data Fields")]
         [SerializeField] protected PlayerData _playerBaseData;
@@ -42,6 +43,8 @@ namespace ThePackt{
 
         #region UI
         private Slider healthSlider;
+
+        [Header("UI")]
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected Text nicknameText;
         [SerializeField] protected GameObject healthBar;
@@ -50,7 +53,6 @@ namespace ThePackt{
         [SerializeField] public GameObject _interactTooltip;
         [SerializeField]protected GameObject _humanObject;
         [SerializeField]protected GameObject _wolfObject;
-        protected CharacterSelectionData _selectedData;
         #endregion
 
         #region velocity
@@ -120,12 +122,14 @@ namespace ThePackt{
 
 
         #region vfx
+        [Header("VFX")]
         [SerializeField] private GameObject _transformationVfx;
         [SerializeField] private GameObject _shootVfx;
         [SerializeField] private GameObject _hitVfx;
         #endregion
 
         #region sfx
+        [Header("SFX")]
         [SerializeField] private GameObject _gunshotSfx;
         [SerializeField] private GameObject _walkSfx;
         [SerializeField] private GameObject _jumpSfx;
@@ -138,6 +142,11 @@ namespace ThePackt{
         [SerializeField] private GameObject _drinkSfx;
         [SerializeField] private GameObject _interactSfx;
         [SerializeField] private GameObject _pickUpSfx;
+        [SerializeField] private GameObject _humanDeathSfx;
+        [SerializeField] private GameObject _wolfDeathSfx;
+        [SerializeField] private GameObject _joinSfx;
+        [SerializeField] private GameObject _abandonSfx;
+        [SerializeField] private GameObject _completeSfx;
         #endregion
 
 
@@ -263,18 +272,21 @@ namespace ThePackt{
 
         private void Update()
         {
+            
             if (!entity.IsOwner)
             {
                 canvas.transform.rotation = Quaternion.identity;
             }
-             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel == null){
+            
+
+            if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel == null){
                  _questPanel = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestPanel();
                  _questReward = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetReward();
                  _questTitleText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTitle();
                  _questDescriptionText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetDescription();
                  _questAction = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetAction();
                  _questHandler = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestHandler();
-             }
+            }
         }
 
         public override void Detached()
@@ -479,6 +491,8 @@ namespace ThePackt{
         ///</summary>
         public void ObtainRewards(float exp, float time)
         {
+            AudioSource.PlayClipAtPoint(_completeSfx.GetComponent<AudioSource>().clip, Camera.main.transform.position);
+
             Debug.Log("[QUEST] rewards obtained. Exp: " + exp + ", Time: " + time);
             _spendableTime += time;
             _spendableExp += exp;
@@ -494,6 +508,15 @@ namespace ThePackt{
         ///</summary>
         private void Die()
         {
+            if (GetIsHuman())
+            {
+                AudioSource.PlayClipAtPoint(_humanDeathSfx.GetComponent<AudioSource>().clip, Camera.main.transform.position);
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(_wolfDeathSfx.GetComponent<AudioSource>().clip, Camera.main.transform.position);
+            }
+
             BoltNetwork.Destroy(gameObject);
             AbandonQuest();
         }
@@ -515,6 +538,15 @@ namespace ThePackt{
                 if(_isDowned)
                     Die();
                 else{
+
+                    if (GetIsHuman())
+                    {
+                        _humanDeathSfx.GetComponent<AudioSource>().Play();
+                    }
+                    else
+                    {
+                        _wolfDeathSfx.GetComponent<AudioSource>().Play();
+                    }
                     state.isDowned = true;
                 }
             }
@@ -760,6 +792,8 @@ namespace ThePackt{
         {
             if (!hasActiveQuest && entity.IsOwner)
             {
+                _joinSfx.GetComponent<AudioSource>().Play();
+
                 _activeQuest = quest;
                 hasActiveQuest = true;
                 quest.LocalPartecipate();
@@ -786,6 +820,8 @@ namespace ThePackt{
         {
             if (hasActiveQuest)
             {
+                _abandonSfx.GetComponent<AudioSource>().Play();
+
                 _activeQuest = null;
                 hasActiveQuest = false;
                 SetFogOfWarDiameter(_playerData.standardCircleSize);
