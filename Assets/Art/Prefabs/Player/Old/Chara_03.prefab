@@ -1203,6 +1203,11 @@ MonoBehaviour:
   _drinkSfx: {fileID: 0}
   _interactSfx: {fileID: 0}
   _pickUpSfx: {fileID: 0}
+  _humanDeathSfx: {fileID: 0}
+  _wolfDeathSfx: {fileID: 0}
+  _joinSfx: {fileID: 0}
+  _abandonSfx: {fileID: 0}
+  _completeSfx: {fileID: 0}
 --- !u!114 &3384684059551268301
 MonoBehaviour:
   m_ObjectHideFlags: 0

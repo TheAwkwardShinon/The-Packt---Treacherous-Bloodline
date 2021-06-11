@@ -12088,6 +12088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63ebb8d02c36554882e6e673ca48d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyDeathSfx: {fileID: 8300000, guid: db234de2cd1a65a46948c46271a4ea32, type: 3}
 --- !u!1 &663479289
 GameObject:
   m_ObjectHideFlags: 0
@@ -15039,7 +15040,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Space
+  m_Text: BARRA SPAZIATRICE
 --- !u!222 &828648559
 CanvasRenderer:
   m_ObjectHideFlags: 0

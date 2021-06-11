@@ -6,24 +6,30 @@ namespace ThePackt
 {
     public class SoundCallbacks : NetworkCallbacks
     {
+        [SerializeField] protected AudioClip _enemyDeathSfx;
+
         public override void OnEvent(PlayEnemySoundEvent evnt)
         {
-            BoltEntity entity = BoltNetwork.FindEntity(evnt.EntityID);
-            Enemy enemy = entity.GetComponent<Enemy>();
-            switch (evnt.Sound)
+            if(evnt.Sound != Constants.DEATH)
             {
-                case Constants.ATTACK:
-                    enemy.PlayAttackSFX();
-                    break;
-                case Constants.HURT:
-                    enemy.PlayHurtSFX();
-                    break;
-                case Constants.WALK:
-                    enemy.PlayWalkSFX();
-                    break;
-                case Constants.DEATH:
-                    enemy.PlayDeathSFX();
-                    break;
+                BoltEntity entity = BoltNetwork.FindEntity(evnt.EntityID);
+                Enemy enemy = entity.GetComponent<Enemy>();
+                switch (evnt.Sound)
+                {
+                    case Constants.ATTACK:
+                        enemy.PlayAttackSFX();
+                        break;
+                    case Constants.HURT:
+                        enemy.PlayHurtSFX();
+                        break;
+                    case Constants.WALK:
+                        enemy.PlayWalkSFX();
+                        break;
+                }
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(_enemyDeathSfx, evnt.Position);
             }
         }
 

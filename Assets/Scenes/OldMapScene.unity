@@ -8630,6 +8630,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3265a67cad9b98c4b8bb2039af3bf4aa, type: 2}
   - {fileID: 11400000, guid: 5fdc22ad5d5f6e9439ad53dfe6748080, type: 2}
   - {fileID: 11400000, guid: 7da57b307eee41440a915fcdf11a5837, type: 2}
+  _impostorText: {fileID: 0}
+  _spendableExp: {fileID: 0}
 --- !u!114 &653467868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8686,6 +8688,7 @@ MonoBehaviour:
   _audio: {fileID: 1586096249}
   _audioDeny: {fileID: 1719352075}
   _changeBranch: {fileID: 128481107}
+  _spendableExp: {fileID: 0}
 --- !u!1 &654832893
 GameObject:
   m_ObjectHideFlags: 0
@@ -9180,6 +9183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63ebb8d02c36554882e6e673ca48d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyDeathSfx: {fileID: 8300000, guid: db234de2cd1a65a46948c46271a4ea32, type: 3}
 --- !u!1 &663479289
 GameObject:
   m_ObjectHideFlags: 0
