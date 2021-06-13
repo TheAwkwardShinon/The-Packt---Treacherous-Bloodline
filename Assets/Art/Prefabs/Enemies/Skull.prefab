@@ -51,10 +51,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 2
+  MaxDistance: 4
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -87,7 +87,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -344,7 +344,6 @@ MonoBehaviour:
   _walkSfx: {fileID: 0}
   _attackSfx: {fileID: 0}
   _hurtSfx: {fileID: 127231876232393874}
-  _deathSfx: {fileID: 8300000, guid: db234de2cd1a65a46948c46271a4ea32, type: 3}
   _minRotation: -30
   _maxRotation: -160
   _avoidRange: 0.1

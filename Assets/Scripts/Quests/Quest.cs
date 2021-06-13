@@ -27,8 +27,8 @@ namespace ThePackt
 
         protected float _enteringTime;
         protected float _leavingTime;
-        protected float _autoJoinTime;
-        protected float _autoAbandonTime;
+        [SerializeField] protected float _autoJoinTime = 5.0f;
+        [SerializeField] protected float _autoAbandonTime = 5.0f;
         protected bool _timerJoin;
         protected bool _timerAbandon;
 
@@ -64,9 +64,6 @@ namespace ThePackt
 
             _timerJoin = false;
             _timerAbandon = false;
-
-            _autoJoinTime = 5.0f;
-            _autoAbandonTime = 5.0f;
 
             state.AddCallback("State", StateCallback);
         }

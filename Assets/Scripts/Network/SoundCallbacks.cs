@@ -6,7 +6,7 @@ namespace ThePackt
 {
     public class SoundCallbacks : NetworkCallbacks
     {
-        [SerializeField] protected AudioClip _enemyDeathSfx;
+        [SerializeField] protected GameObject _enemyDeathSfx;
 
         public override void OnEvent(PlayEnemySoundEvent evnt)
         {
@@ -29,7 +29,7 @@ namespace ThePackt
             }
             else
             {
-                AudioSource.PlayClipAtPoint(_enemyDeathSfx, evnt.Position);
+                Instantiate(_enemyDeathSfx, evnt.Position, Quaternion.identity);
             }
         }
 
