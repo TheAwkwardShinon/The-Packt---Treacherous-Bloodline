@@ -16,6 +16,9 @@ namespace ThePackt
         [SerializeField] private string _domain = "mt1s.vivox.com";
         [SerializeField] private string _tokenKey = "cozy037";
         [SerializeField] private Uri _server = new Uri("https://mt1s.www.vivox.com/api2");
+        [SerializeField] private int _audibleDistance = 4; // not audible outside this distance
+        [SerializeField] private int _conversationalDistance = 1; // starts fading outside this distance
+        [SerializeField] private int _fadeIntensity = 1; // normal = 1
 
         private CharacterSelectionData _selectedData;
         private Player _localPlayer;
@@ -174,7 +177,8 @@ namespace ThePackt
 
         private void JoinChannel()
         {
-            Channel3DProperties properties = new Channel3DProperties();
+            Channel3DProperties properties = new Channel3DProperties(_audibleDistance, _conversationalDistance, _fadeIntensity, AudioFadeModel.LinearByDistance);
+            
             ChannelId channelId = new ChannelId(_issuer, _channelName, _domain, ChannelType.Positional, properties);
             _channelSession = _loginSession.GetChannelSession(channelId);
 

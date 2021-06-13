@@ -178,7 +178,7 @@ MonoBehaviour:
     position: {x: 7.59, y: -0.94, z: 0}
   - name: naturia
     position: {x: 5.13, y: -0.94, z: 0}
-  _minPlayerNumber: 1
+  _minPlayerNumber: 2
   gameStartSeconds: 4
   _blackScreenCanvas: {fileID: 1452120456}
   _loadingScreenTime: 1
@@ -228,6 +228,9 @@ MonoBehaviour:
   _issuer: federi9918-th71-dev
   _domain: mt1s.vivox.com
   _tokenKey: cozy037
+  _audibleDistance: 4
+  _conversationalDistance: 1
+  _fadeIntensity: 1
 --- !u!4 &433369853
 Transform:
   m_ObjectHideFlags: 0
