@@ -4000,14 +4000,14 @@ RectTransform:
   m_GameObject: {fileID: 229220922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.74693, y: 0.74693, z: 0.74693}
+  m_LocalScale: {x: 0.672237, y: 0.672237, z: 0.672237}
   m_Children: []
   m_Father: {fileID: 1712090935}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 226, y: 385}
+  m_AnchoredPosition: {x: 205, y: 382}
   m_SizeDelta: {x: 200, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &229220924
@@ -4030,7 +4030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7526d4a452d36584f939b71a2d5bfecc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47a6ba47a8997054786d2903fada3484, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27102,7 +27102,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 407, y: 324}
+  m_AnchoredPosition: {x: 384, y: 324}
   m_SizeDelta: {x: 1198.7864, y: 157.7873}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1656013362
@@ -27138,7 +27138,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The Packt - Threacherous Bloodline
+  m_Text: The Packt       Threacherous Bloodline
 --- !u!222 &1656013363
 CanvasRenderer:
   m_ObjectHideFlags: 0

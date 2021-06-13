@@ -275,7 +275,8 @@ namespace ThePackt{
             
             if (!entity.IsOwner)
             {
-                canvas.transform.rotation = Quaternion.identity;
+                //canvas.transform.rotation = Quaternion.identity;
+                canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             
 
@@ -847,7 +848,7 @@ namespace ThePackt{
             //_humanObject.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
             //_wolfObject.transform.localRotation = Quaternion.identity;
             _interactTooltip.transform.Rotate(0.0f, 180.0f, 0.0f);
-            canvas.transform.rotation = Quaternion.identity;
+            canvas.transform.rotation = Quaternion.Euler(0,0,0);
         }
 
           
