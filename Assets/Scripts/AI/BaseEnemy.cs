@@ -229,6 +229,10 @@ namespace ThePackt
 			Gizmos.color = Color.magenta;
 			Gizmos.DrawRay(transform.position + new Vector3(0, _col.bounds.size.y, 0), -transform.right * 3);
 			//_col.bounds.size.y
+
+			Gizmos.color = Color.white;
+			Vector2 start = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f + Vector3.right * _facingDirection * _avoidRange;
+			Gizmos.DrawRay(start, -transform.up * 0.1f);
 		}
 
 		#region fsm enter actions
@@ -404,6 +408,17 @@ namespace ThePackt
 
 				Flip();
 				//_lastDirectionChangeTime = Time.time;
+			}
+            else
+            {
+				Vector2 _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f + Vector3.right * _facingDirection * _avoidRange;
+				RaycastHit2D groundInFront = Physics2D.Raycast(_workspace, -transform.up, 0.1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+				//Collider2D groundInFront = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+
+				if (!groundInFront)
+                {
+					Flip();
+				}
 			}
 		}
 		#endregion

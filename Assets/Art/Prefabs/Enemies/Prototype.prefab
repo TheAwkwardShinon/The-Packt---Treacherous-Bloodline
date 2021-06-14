@@ -507,7 +507,7 @@ MonoBehaviour:
   _reactionTime: 0.1
   _jumpVelocity: 4
   _jumpCooldown: 1.5
-  _avoidRange: 0.7
+  _avoidRange: 0.6
   _perceptionRange: 2
   _minChangeDirectionTime: 1
   _maxChangeDirectionTime: 3
