@@ -55,7 +55,7 @@ namespace ThePackt{
         public float baseHumanCooldown = 0.5f;
         public float baseWerewolfCooldown = 0.5f;
 
-        public float specialAttackCooldown = 10f;
+        public float specialAttackCooldown = 15f;
 
         public float healAfterHit = 0f;
 

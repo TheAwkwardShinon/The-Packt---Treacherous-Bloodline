@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2909c5a291a1314fa59a3d06e852e52, type: 3}
   m_Name: PlayerBaseData
   m_EditorClassIdentifier: 
-  movementVelocity: 5
+  movementVelocity: 4
   movementMultiplierWhenFullLife: 0
   movementVelocityMultiplier: 0
-  jumpVelocity: 9
+  jumpVelocity: 8
   amountOfJumps: 1
   variableJumpHeightMultiplier: 0.5
   wallSlideVelocity: -3
-  dashCooldown: 0.5
+  dashCooldown: 0.8
   maxHoldTime: 0.2
   holdTimeScale: 0.25
   dashTime: 0.3
-  dashVelocity: 20
+  dashVelocity: 16
   dashEndYMultiplier: 0.15
   distBetweenAfterImages: 0.5
   crouchMovementVelocity: 5
@@ -82,7 +82,7 @@ MonoBehaviour:
   timeOffogDebuff: 0
   debuffFogStartTime: 0
   sizeOfCircle: 0
-  standardCircleSize: 48
+  standardCircleSize: 10000
   isFogDebuffActive: 0
   isDmgReductionDebuffActive: 0
   damageReductionDebuffStartTime: 0

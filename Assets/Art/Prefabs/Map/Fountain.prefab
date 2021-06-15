@@ -154,5 +154,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _readySprite: {fileID: 21300000, guid: 9bdbc8428daadf34b9fcd7ae2e3c9511, type: 3}
   _notReadySprite: {fileID: 21300000, guid: d35701cd89d96da478e45740b2232432, type: 3}
-  _healAmount: 0.3
+  _healAmount: 0.5
   _cooldown: 10
