@@ -31,6 +31,11 @@ namespace ThePackt
         public const int READY = 0;
         #endregion 
 
+        #region altar
+        public const int NOTCHARGING = 0;
+        public const int CHARGING = 1;
+        #endregion
+
         #region enemy sound state
         public const int DEATH = 3;
         public const int ATTACK = 2;

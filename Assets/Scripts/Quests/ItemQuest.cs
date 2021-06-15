@@ -60,6 +60,8 @@ namespace ThePackt
                 }
             }
 
+            _spawnedItems = new List<BoltEntity>();
+
             return true;
         }
 
@@ -72,6 +74,8 @@ namespace ThePackt
                     BoltNetwork.Destroy(item);
                 }
             }
+
+            _spawnedItems = new List<BoltEntity>();
         }
         #endregion
     }

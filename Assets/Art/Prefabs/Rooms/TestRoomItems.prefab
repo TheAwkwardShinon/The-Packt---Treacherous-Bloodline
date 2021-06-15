@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 30725c77-0e18-4f3e-a73d-0750082dea8b
-  _prefabId: 33
+  _prefabId: 35
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1
@@ -270,6 +270,8 @@ MonoBehaviour:
   _expReward: 5
   _timeReward: 5
   _cooldown: 10
+  _autoJoinTime: 5
+  _autoAbandonTime: 5
   _itemPrefabs:
   - {fileID: 7146104618824561415, guid: ea2a14022b9265543bef57cb463d6b78, type: 3}
   _spawnPoints:
