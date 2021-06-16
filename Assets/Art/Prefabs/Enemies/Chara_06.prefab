@@ -472,7 +472,6 @@ MonoBehaviour:
   _walkSfx: {fileID: 0}
   _attackSfx: {fileID: 0}
   _hurtSfx: {fileID: 0}
-  _deathSfx: {fileID: 0}
 --- !u!114 &674738543523109926
 MonoBehaviour:
   m_ObjectHideFlags: 0

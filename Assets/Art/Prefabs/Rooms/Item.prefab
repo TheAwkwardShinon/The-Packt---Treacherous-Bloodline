@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: 479ac9fa-51ba-43e2-a551-938962b496a2
-  _prefabId: 26
+  _prefabId: 28
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

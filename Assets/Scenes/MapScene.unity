@@ -33513,6 +33513,7 @@ MonoBehaviour:
   - {fileID: 8079166369461331315, guid: 9528698a560c60a45ba17521fef423dd, type: 3}
   - {fileID: 7126608235017570830, guid: e7aa4045429d3ae4da932f6522fce40d, type: 3}
   - {fileID: 3281881553664090555, guid: 1b70eb5e89ea470438f88eb86fb547e3, type: 3}
+  - {fileID: 1695514848839727999, guid: 05756f485fdc8284e99b0a4a4d7c9b5f, type: 3}
   _mainRoomPrefab: {fileID: 5870793638613931984, guid: 019a3754acf46744297457fe31c9248f, type: 3}
   _magicWallsSpawnPoints:
   - {x: 14.37, y: -3.53}
