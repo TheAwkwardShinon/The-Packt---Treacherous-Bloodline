@@ -272,13 +272,12 @@ namespace ThePackt{
 
         private void Update()
         {
-            
             if (!entity.IsOwner)
             {
                 //canvas.transform.rotation = Quaternion.identity;
-                canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
+                //canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
+                healthBar.transform.rotation = Quaternion.identity;
             }
-            
 
             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel == null){
                  _questPanel = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestPanel();
