@@ -387,7 +387,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 50
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e37c77baa8dc9b4fb64b51c0b7cf5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 50
+  _health: 40
   canvas: {fileID: 7948411039607155791}
   healthBar: {fileID: 7948411038742688202}
   healthImage: {fileID: 7948411039163938254}
@@ -496,21 +496,21 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  _attackRange: 0.6
-  _attackPower: 10
-  _attackRate: 0.7
-  _movementSpeed: 2
-  _slowedSpeed: 0
+  _attackRange: 0.4
+  _attackPower: 8
+  _attackRate: 0.8
+  _movementSpeed: 3
+  _slowedSpeed: 0.3
   _walkSfx: {fileID: 575646567715241601}
   _attackSfx: {fileID: 3579213105201263715}
   _hurtSfx: {fileID: 6181980213178154832}
   _reactionTime: 0.1
-  _jumpVelocity: 4
-  _jumpCooldown: 1.5
+  _jumpVelocity: 6
+  _jumpCooldown: 1
   _avoidRange: 0.6
-  _perceptionRange: 2
-  _minChangeDirectionTime: 1
-  _maxChangeDirectionTime: 3
+  _perceptionRange: 1.5
+  _minChangeDirectionTime: 0.5
+  _maxChangeDirectionTime: 4.5
   _minStandStillTime: 1
   _maxStandStillTime: 2
   _seekThreshold: 0.6

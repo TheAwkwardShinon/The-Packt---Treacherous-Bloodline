@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13f71e93c768bc4db856e708934f407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 50
+  _health: 100
   canvas: {fileID: 7948411039607155791}
   healthBar: {fileID: 7948411038742688202}
   healthImage: {fileID: 7948411039163938254}
@@ -339,8 +339,8 @@ MonoBehaviour:
   _attackRange: 0.26
   _attackPower: 0.5
   _attackRate: 0
-  _movementSpeed: 1
-  _slowedSpeed: 0
+  _movementSpeed: 2
+  _slowedSpeed: 0.2
   _walkSfx: {fileID: 0}
   _attackSfx: {fileID: 0}
   _hurtSfx: {fileID: 127231876232393874}
@@ -359,7 +359,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 50
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0

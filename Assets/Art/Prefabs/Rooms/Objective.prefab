@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41bff1e4f9c75f14fb126b5510fcbc7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _integrity: 30
+  _integrity: 200
   _enemyPrefabs:
   - {fileID: 5888237620715083050, guid: c315e8d4761a09b4eb7a9be4f2378a89, type: 3}
   - {fileID: 5888237620715083050, guid: a6453d217b676eb48ad6f2d358785abe, type: 3}
