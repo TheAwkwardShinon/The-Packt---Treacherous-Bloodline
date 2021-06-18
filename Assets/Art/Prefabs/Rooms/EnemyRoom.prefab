@@ -1838,8 +1838,8 @@ MonoBehaviour:
   _activeSprite: {fileID: 8020143640844766479, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _notReadySprite: {fileID: -1259408508766424310, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _title: Colosseum
-  _description: Defeat the enemy!
-  _expReward: 15
+  _description: Defeat the enemies!
+  _expReward: 1
   _timeReward: 0
   _cooldown: 10
   _autoJoinTime: 5

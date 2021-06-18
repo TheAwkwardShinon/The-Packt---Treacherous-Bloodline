@@ -76,13 +76,13 @@ MonoBehaviour:
   isSlowed: 0
   cantJump: 0
   cantDash: 0
-  velocityWhenSlowed: 4
+  velocityWhenSlowed: 2
   timeOfSlow: 0
   debuffStartTime: 0
   timeOffogDebuff: 0
   debuffFogStartTime: 0
   sizeOfCircle: 0
-  standardCircleSize: 10000
+  standardCircleSize: 65
   isFogDebuffActive: 0
   isDmgReductionDebuffActive: 0
   damageReductionDebuffStartTime: 0

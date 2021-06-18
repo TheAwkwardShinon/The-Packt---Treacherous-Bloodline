@@ -73,5 +73,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b2083ce53cb3345959600a5b7917e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerDuration: 1210
-  gameDuration: 1200
+  timerDuration: 370
+  gameDuration: 360
