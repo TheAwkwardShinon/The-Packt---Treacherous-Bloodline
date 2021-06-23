@@ -41,10 +41,21 @@ namespace ThePackt{
         private bool _tryingToConnect;
         private bool _canceled;
 
-        
+
         #endregion
 
         #region methods
+
+        public override void SceneLoadLocalDone(string scene, IProtocolToken token)
+        {
+            VoiceManager voiceManager = VoiceManager.Instance;
+
+            if(voiceManager != null)
+            {
+                voiceManager.Logout();
+                voiceManager.Die();
+            }
+        }
 
         // called from host button
         public void StartServer()

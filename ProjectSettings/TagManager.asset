@@ -13,6 +13,7 @@ TagManager:
   - moonsighters
   - debug
   - loading
+  - voicemanager
   layers:
   - Default
   - TransparentFX

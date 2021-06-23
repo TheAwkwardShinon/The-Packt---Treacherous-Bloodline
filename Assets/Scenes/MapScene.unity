@@ -28529,6 +28529,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDeathSfx: {fileID: 43026626663020417, guid: cd6093928c13a014db9c9aa191ca1cc9, type: 3}
+  _humanDownSfx: {fileID: 43026626663020417, guid: 985ae028f0b64c049ba7156d0d77213d, type: 3}
+  _wolfDownSfx: {fileID: 43026626663020417, guid: 0473d93d681c9d948ab30ea04738af28, type: 3}
 --- !u!1 &663479289
 GameObject:
   m_ObjectHideFlags: 0

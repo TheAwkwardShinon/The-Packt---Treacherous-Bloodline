@@ -779,6 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0b4018513b47446a969a96c86fca0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fogOfWarDiameter: 10
   _completeValue: 150
   _increment: 1
   _completeSprite: {fileID: 21300000, guid: 949a5eb231d0d034aba9d205fe85055d, type: 3}

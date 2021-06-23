@@ -316,7 +316,6 @@ MonoBehaviour:
   - {fileID: 8435525783475691468}
   - {fileID: 4301500554701641797}
   - {fileID: 1830933303623440649}
-  _fogOfWarDiameter: 10
 --- !u!1 &1830933303623440648
 GameObject:
   m_ObjectHideFlags: 0

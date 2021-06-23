@@ -9,7 +9,6 @@ namespace ThePackt
         protected CharacterSelectionData _selectedData;
         [SerializeField] private GameObject[] _altarPrefabs;
         [SerializeField] private Transform[] _spawnPoints;
-        [SerializeField] private float _fogOfWarDiameter;
         private List<BoltEntity> _spawnedAltars;
 
         #region methods
@@ -31,10 +30,12 @@ namespace ThePackt
         {
             base.Update();
 
+            /*
             if (_state == Constants.STARTED && _localPlayerPartecipates)
             {
                 _localPlayer.SetFogOfWarDiameter(_fogOfWarDiameter);
             }
+            */
         }
 
         protected void SpawnAltars()

@@ -7,6 +7,8 @@ namespace ThePackt
     public class SoundCallbacks : NetworkCallbacks
     {
         [SerializeField] protected GameObject _enemyDeathSfx;
+        [SerializeField] protected GameObject _humanDownSfx;
+        [SerializeField] protected GameObject _wolfDownSfx;
 
         public override void OnEvent(PlayEnemySoundEvent evnt)
         {
@@ -31,6 +33,21 @@ namespace ThePackt
             {
                 Instantiate(_enemyDeathSfx, evnt.Position, Quaternion.identity);
             }
+        }
+
+        public override void OnEvent(PlayPlayerDeathSoundEvent evnt)
+        {
+            /*
+            if (evnt.IsHuman)
+            {
+                Instantiate(_humanDownSfx, evnt.Position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(_wolfDownSfx, evnt.Position, Quaternion.identity);
+            }*/
+
+            Instantiate(_wolfDownSfx, evnt.Position, Quaternion.identity);
         }
 
         public override void OnEvent(PlayBulletQuestSoundEvent evnt)

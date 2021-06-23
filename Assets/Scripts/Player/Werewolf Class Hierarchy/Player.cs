@@ -539,14 +539,11 @@ namespace ThePackt{
                     Die();
                 else{
 
-                    if (GetIsHuman())
-                    {
-                        _humanDeathSfx.GetComponent<AudioSource>().Play();
-                    }
-                    else
-                    {
-                        _wolfDeathSfx.GetComponent<AudioSource>().Play();
-                    }
+                    var evnt = PlayPlayerDeathSoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+                    evnt.Position = transform.position;
+                    evnt.IsHuman = GetIsHuman();
+                    evnt.Send();
+
                     state.isDowned = true;
                 }
             }

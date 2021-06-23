@@ -122,13 +122,22 @@ namespace ThePackt
                     AudioSource.PlayClipAtPoint(_victorySound, Camera.main.transform.position);
                 }
 
+                
+                VoiceManager voiceManager = VoiceManager.Instance;
+                if (voiceManager != null)
+                {
+                    voiceManager.Logout();
+                    voiceManager.Die();
+                }
+
+
                 StartCoroutine("ReturnToMenu");
             }
 
             if (_state == Constants.FAILED)
             {
                 //TODO victory ui if _localPlayer is impostor or defeat ui otherwise
-
+                Debug.Log("[MAIN] failed impostor" + _localPlayer.isImpostor());
                 if (_localPlayer.isImpostor())
                 {
                     AudioSource.PlayClipAtPoint(_victorySound, Camera.main.transform.position);
@@ -137,6 +146,15 @@ namespace ThePackt
                 {
                     AudioSource.PlayClipAtPoint(_defeatSound, Camera.main.transform.position);
                 }
+
+                
+                VoiceManager voiceManager = VoiceManager.Instance;
+                if (voiceManager != null)
+                {
+                    voiceManager.Logout();
+                    voiceManager.Die();
+                }
+
 
                 StartCoroutine("ReturnToMenu");
             }
@@ -199,7 +217,7 @@ namespace ThePackt
 
         public void ChooseImpostor()
         {
-            int randomIndex = Random.Range(0, _notImpostors.Count - 1);
+            int randomIndex = Random.Range(0, _notImpostors.Count);
             _impostor = _notImpostors[randomIndex];
             _notImpostors.Remove(_impostor);
 

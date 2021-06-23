@@ -30,7 +30,15 @@ namespace ThePackt
         public override void BoltShutdownBegin(AddCallback registerDoneCallback, UdpConnectionDisconnectReason disconnectReason)
         {
             Debug.Log("[NETWORKLOG] Shutdown begin");
-            
+
+            VoiceManager voiceManager = VoiceManager.Instance;
+
+            if(voiceManager != null)
+            {
+                voiceManager.Logout();
+                voiceManager.Die();
+            }
+
             registerDoneCallback(() =>
             {
                 // Will show disconnect reason.

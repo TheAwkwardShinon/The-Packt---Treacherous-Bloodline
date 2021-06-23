@@ -21,6 +21,9 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
+            _player = _selectedData.GetPlayerScript();
+            _player.ActivateFogCircle();
+
             List<BoltEntity> players = new List<BoltEntity>();
             foreach (BoltEntity ent in BoltNetwork.Entities)
             {
@@ -30,8 +33,10 @@ namespace ThePackt
 
                     if (ent.IsOwner)
                     {
+                        /*
                         _player = _selectedData.GetPlayerScript();
                         _player.ActivateFogCircle();
+                        */
 
                         foreach (Utils.VectorAssociation assoc in playersSpawnPositions)
                         {
@@ -167,13 +172,18 @@ namespace ThePackt
 
         public override void OnEvent(ImpostorEvent evnt)
         {
-            Debug.Log("[MAIN] received impostor event");
+            //Debug.Log("[MAIN] received impostor event: " + _player.entity.NetworkId + "   " + evnt.ImpostorNetworkID);
+
+            _player = _selectedData.GetPlayerScript();
+            Debug.Log("[MAIN] received impostor event my: " + _player == null);
+            Debug.Log("[MAIN] received impostor event imp: " + evnt.ImpostorNetworkID);
 
             if (_player.entity.NetworkId.Equals(evnt.ImpostorNetworkID))
             {
                 Debug.Log("[MAIN] i'm the fucking impostor");
 
                 _player.SetIsImpostor(true);
+                Debug.Log("[MAIN] client imp" + _player.isImpostor());
             }
         }
 

@@ -44,9 +44,18 @@ namespace ThePackt
             {
                 if (_instance == null)
                 {
-                    _instance = FindObjectOfType<VoiceManager>();
+                    GameObject obj = GameObject.FindGameObjectWithTag("voicemanager");
+                    if (obj)
+                    {
+                        _instance = obj.GetComponent<VoiceManager>();
+                    }
+                    else
+                    {
+                        _instance = null;
+                    }
                 }
 
+                Debug.Log("[VOICE] is null " + _instance == null);
                 return _instance;
             }
         }
@@ -57,7 +66,7 @@ namespace ThePackt
             _joinChannelStarted = false;
             _channelJoined = false;
 
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
 
             _selectedData = CharacterSelectionData.Instance;
 
@@ -236,6 +245,11 @@ namespace ThePackt
             }
         }
 
+        public void Die()
+        {
+            Debug.Log("[VOICE] die");
+            Destroy(gameObject);
+        }
         #endregion
 
         #region positional

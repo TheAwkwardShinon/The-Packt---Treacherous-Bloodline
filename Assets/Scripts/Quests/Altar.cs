@@ -8,6 +8,7 @@ namespace ThePackt
     public class Altar : Bolt.EntityBehaviour<IAltarState>
     {
         private float _completeness;
+        [SerializeField] private float _fogOfWarDiameter;
         [SerializeField] private float _completeValue;
         [SerializeField] private float _increment;
         [SerializeField] private Sprite _completeSprite;
@@ -53,6 +54,8 @@ namespace ThePackt
                 }
             }
 
+            Debug.Log("[CHARGE] " + _players.Count);
+
             if(_players.Count == 0)
             {
                 state.State = Constants.NOTCHARGING;
@@ -61,10 +64,15 @@ namespace ThePackt
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (BoltNetwork.IsServer)
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
             {
-                Player player = collision.GetComponent<Player>();
-                if (player != null)
+                if(_completeness < _completeValue)
+                {
+                    player.SetFogOfWarDiameter(_fogOfWarDiameter);
+                }
+
+                if (BoltNetwork.IsServer)
                 {
                     _players.Add(player.entity);
                 }
@@ -85,10 +93,12 @@ namespace ThePackt
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (BoltNetwork.IsServer)
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
             {
-                Player player = collision.GetComponent<Player>();
-                if (player != null)
+                player.SetFogOfWarDiameter(player.GetPlayerData().standardCircleSize);
+
+                if (BoltNetwork.IsServer)
                 {
                     _players.Remove(player.entity);
                 }
