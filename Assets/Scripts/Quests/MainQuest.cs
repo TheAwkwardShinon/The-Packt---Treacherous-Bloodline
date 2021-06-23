@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ThePackt
 {
@@ -25,6 +26,10 @@ namespace ThePackt
         [SerializeField] private AudioClip _victorySound;
         [SerializeField] private AudioClip _defeatSound;
 
+        [SerializeField] private HiddenCanvas _hiddenCanvas;
+        private GameObject _objectiveMessage;
+        private Text _objectiveText;
+
         public static MainQuest Instance
         {
             get
@@ -44,6 +49,8 @@ namespace ThePackt
         {
             _selectedData = CharacterSelectionData.Instance;
             _localPlayer = _selectedData.GetPlayerScript();
+            _objectiveMessage = _hiddenCanvas.getObjectiveMessage();
+            _objectiveText = _objectiveMessage.GetComponentInChildren<Text>();
 
             if (entity.IsOwner)
             {
@@ -102,7 +109,17 @@ namespace ThePackt
             {
                 Debug.Log("[MAIN] main quest started");
 
-                //TODO ui of impostor/not impostor
+                if(_localPlayer.isImpostor()){
+                    _objectiveText.text = " YOU ARE THE IMPOSTOR";
+                    _objectiveText.color = Color.red;
+                    _objectiveMessage.SetActive(true);
+                }
+                else{
+                    _objectiveText.text = " YOU ARE NOT THE IMPOSTOR";
+                    _objectiveText.color = Color.blue;
+                    _objectiveMessage.SetActive(true);
+                }
+
 
                 AudioSource.PlayClipAtPoint(_startSound, Camera.main.transform.position);
             }
@@ -111,7 +128,16 @@ namespace ThePackt
             {
                 Debug.Log("[MAIN] all objectives detroyed. victory for non impostors");
 
-                //TODO victory ui if _localPlayer is not impostor or defeat ui otherwise
+                 if(_localPlayer.isImpostor()){
+                    _objectiveText.text = " YOU HAVE BEEN DEFEATED";
+                    _objectiveText.color = Color.red;
+                    _objectiveMessage.SetActive(true);
+                }
+                else{
+                    _objectiveText.text = " YOUR TEAM WON";
+                    _objectiveText.color = Color.yellow;
+                    _objectiveMessage.SetActive(true);
+                }
 
                 if (_localPlayer.isImpostor())
                 {
@@ -136,7 +162,17 @@ namespace ThePackt
 
             if (_state == Constants.FAILED)
             {
-                //TODO victory ui if _localPlayer is impostor or defeat ui otherwise
+                
+                if(_localPlayer.isImpostor()){
+                    _objectiveText.text = " YOU WON";
+                    _objectiveText.color = Color.yellow;
+                    _objectiveMessage.SetActive(true);
+                }
+                else{
+                    _objectiveText.text = " YOUR TEAM HAVE BEEN DEFEATED";
+                    _objectiveText.color = Color.red;
+                    _objectiveMessage.SetActive(true);
+                }
                 Debug.Log("[MAIN] failed impostor" + _localPlayer.isImpostor());
                 if (_localPlayer.isImpostor())
                 {

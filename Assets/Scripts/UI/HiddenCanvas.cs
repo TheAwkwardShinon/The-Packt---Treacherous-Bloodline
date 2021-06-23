@@ -21,6 +21,8 @@ namespace ThePackt{
 
         [SerializeField] private QuestUIHandler _questHandler;
 
+        [SerializeField] private GameObject _objectiveMessage;
+
         public GameObject GetMenu(){
             return menu;
         }
@@ -56,6 +58,10 @@ namespace ThePackt{
         }
         public QuestUIHandler GetQuestHandler(){
             return _questHandler;
+        }
+
+        public GameObject getObjectiveMessage(){
+            return _objectiveMessage;
         }
 
     }
