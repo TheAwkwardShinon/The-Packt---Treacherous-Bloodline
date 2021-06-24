@@ -15,6 +15,7 @@ namespace ThePackt
         [SerializeField] private GameObject _timeManagerPrefab;
         [SerializeField] private Canvas _blackScreenCanvas;
         [SerializeField] private float _loadingScreenTime;
+        private BoltEntity _timeManager;
         private Player _player;
 
         #region callbacks
@@ -58,8 +59,8 @@ namespace ThePackt
                     mainQuest.SetPlayers(players);
                 }
 
-                BoltEntity timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
-                timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
+                _timeManager = BoltNetwork.Instantiate(_timeManagerPrefab, Vector3.zero, Quaternion.identity);
+                _timeManager.GetComponent<TimerManager>().SetStartTime(BoltNetwork.ServerTime);
             }
 
             StartCoroutine("LoadingScreen");
@@ -184,6 +185,21 @@ namespace ThePackt
 
                 _player.SetIsImpostor(true);
                 Debug.Log("[MAIN] client imp" + _player.isImpostor());
+            }
+        }
+
+        public override void OnEvent(ModifyTimerEvent evnt)
+        {
+            if (BoltNetwork.IsServer)
+            {
+                if (evnt.MustBeAdded)
+                {
+                    _timeManager.GetComponent<TimerManager>().addTime(evnt.Amount);
+                }
+                else
+                {
+                    _timeManager.GetComponent<TimerManager>().subTime(evnt.Amount);
+                }
             }
         }
 
