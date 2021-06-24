@@ -35,6 +35,7 @@ namespace ThePackt{
             base.LogicUpdate();
 
             _isTouchingCeiling = _player.CheckForCeiling();
+            _isGrounded = _player.CheckIfGrounded();
             if (!_isExitingState)
             {
                 if(_player.GetPlayerData().isSlowed)
@@ -42,7 +43,19 @@ namespace ThePackt{
                 else _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
                 _player.CheckIfShouldFlip(_xInput);
 
-                if(_xInput == 0)
+                if(!_isGrounded){
+                     _player._crouchIdleState.SetCrouch(false);
+                    if(_player.GetIsHuman()){
+                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                    }
+                    else{
+                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
+                        _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                    }
+                    _stateMachine.ChangeState(_player._inAirState);
+                }
+                else if(_xInput == 0)
                 {
                     _stateMachine.ChangeState(_player._crouchIdleState);
                 }

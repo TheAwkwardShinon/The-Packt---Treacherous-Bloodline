@@ -1826,7 +1826,6 @@ MonoBehaviour:
   _startSound: {fileID: 8300000, guid: dec427b02297c634493a9abc557ef3c7, type: 3}
   _victorySound: {fileID: 8300000, guid: d1e7e3ee2b7712c47b639a7c4fd871d2, type: 3}
   _defeatSound: {fileID: 8300000, guid: 534b6b01933ca9a40bafef66fd244ee7, type: 3}
-  _hiddenCanvas: {fileID: 0}
 --- !u!61 &6901140770927052346
 BoxCollider2D:
   m_ObjectHideFlags: 0

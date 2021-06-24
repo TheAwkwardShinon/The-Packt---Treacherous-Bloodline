@@ -20,7 +20,7 @@ namespace ThePackt{
 
 
         protected bool _jumpInput;
-        private bool _isGrounded;
+        protected bool _isGrounded;
         private bool _dashInput;
         private bool _attackInput;
 
