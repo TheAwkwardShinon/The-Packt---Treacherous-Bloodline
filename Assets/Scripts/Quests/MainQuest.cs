@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ThePackt
@@ -26,7 +27,7 @@ namespace ThePackt
         [SerializeField] private AudioClip _victorySound;
         [SerializeField] private AudioClip _defeatSound;
 
-        [SerializeField] private HiddenCanvas _hiddenCanvas;
+        private HiddenCanvas _hiddenCanvas;
         private GameObject _objectiveMessage;
         private Text _objectiveText;
 
@@ -45,12 +46,23 @@ namespace ThePackt
 
         #region methods
 
+        public void Update(){
+            if(SceneManager.GetActiveScene().name.Equals("MapScene") && _hiddenCanvas == null){
+                _hiddenCanvas = GameObject.Find("Canvas").GetComponent<HiddenCanvas>();
+                _objectiveMessage = _hiddenCanvas.getObjectiveMessage();
+                _objectiveText = _objectiveMessage.GetComponentInChildren<Text>();
+            }
+        }
+
         public override void Attached()
         {
             _selectedData = CharacterSelectionData.Instance;
             _localPlayer = _selectedData.GetPlayerScript();
-            _objectiveMessage = _hiddenCanvas.getObjectiveMessage();
-            _objectiveText = _objectiveMessage.GetComponentInChildren<Text>();
+            if(SceneManager.GetActiveScene().Equals("MapScene")){
+                _hiddenCanvas = GameObject.Find("Canvas").GetComponent<HiddenCanvas>();
+                _objectiveMessage = _hiddenCanvas.getObjectiveMessage();
+                _objectiveText = _objectiveMessage.GetComponentInChildren<Text>();
+            }
 
             if (entity.IsOwner)
             {

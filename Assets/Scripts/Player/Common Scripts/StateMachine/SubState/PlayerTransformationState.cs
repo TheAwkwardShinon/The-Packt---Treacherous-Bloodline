@@ -34,10 +34,9 @@ namespace ThePackt{
         {
             _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
             _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
-            /* _player.GetHumanObject().SetActive(false);
-             _player.GetWolfObject().SetActive(true);*/
+        
             TransformationEvent evnt;
-            evnt = TransformationEvent.Create(GlobalTargets.Everyone);
+            evnt = TransformationEvent.Create(GlobalTargets.Everyone,ReliabilityModes.ReliableOrdered);
             evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
             evnt.Send();
 
