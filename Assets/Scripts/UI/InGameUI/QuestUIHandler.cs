@@ -18,8 +18,6 @@ namespace ThePackt{
 
         [SerializeField] protected Text _mainQuestDescription;
 
-        [SerializeField] protected GameObject _timeManager;
-
         [SerializeField] protected Text _playerSpendableTime;
 
         [SerializeField] protected Text _buttonText;
@@ -65,12 +63,37 @@ namespace ThePackt{
              else AddTime();
         }
         private void AddTime(){
-            _timeManager.GetComponent<TimerManager>().addTime(_player.GetSpendableTime());
+
+            if (BoltNetwork.IsServer)
+            {
+                TimerManager.Instance.addTime(_player.GetSpendableTime());
+            }
+            else
+            {
+                var evnt = ModifyTimerEvent.Create(BoltNetwork.Server);
+                evnt.Amount = _player.GetSpendableTime();
+                evnt.MustBeAdded = true;
+                evnt.Send();
+            }
+            
             _player.SetSpendableTime(0f);
         }
         private void SubTime(){
-            _timeManager.GetComponent<TimerManager>().subTime(_player.GetSpendableTime());
+
+            if (BoltNetwork.IsServer)
+            {
+                TimerManager.Instance.subTime(_player.GetSpendableTime());
+            }
+            else
+            {
+                var evnt = ModifyTimerEvent.Create(BoltNetwork.Server);
+                evnt.Amount = _player.GetSpendableTime();
+                evnt.MustBeAdded = false;
+                evnt.Send();
+            }
+            
             _player.SetSpendableTime(0f);
+
         }
 
         public void SetActiveQuest(Quest quest){

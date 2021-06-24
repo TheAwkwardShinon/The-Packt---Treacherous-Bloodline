@@ -15,7 +15,21 @@ namespace ThePackt
         public bool gameStarted { get; private set; }
         public bool gameEnded { get; private set; }
         private Text timerText;
+        private static TimerManager _instance;
         #endregion
+
+        public static TimerManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<TimerManager>();
+                }
+
+                return _instance;
+            }
+        }
 
         #region methods
         public override void Attached()
@@ -26,6 +40,16 @@ namespace ThePackt
             gameStarting = false;
             gameStarted = false;
             gameEnded = false;
+        }
+
+        public override void Detached()
+        {
+            Debug.Log("[TIMER] detatched");
+        }
+
+        public override void SimulateOwner()
+        {
+            Debug.Log("[TIMER] attached? " + entity.IsAttached);
         }
 
         private void Update()
@@ -125,7 +149,7 @@ namespace ThePackt
         //adds time in seconds (modifies the start time). Only the server can do it
         public void addTime(float time)
         {
-            if (BoltNetwork.IsServer)
+            if (entity.IsOwner)
             {
                 state.StartTime += time;
             }
@@ -134,10 +158,10 @@ namespace ThePackt
         //subtracts time in seconds (modifies the start time). Only the server can do it
         public void subTime(float time)
         {
-            Debug.Log("caia 3" + BoltNetwork.IsServer);
-            if (BoltNetwork.IsServer)
+            Debug.Log("[TIMER] " + BoltNetwork.IsServer);
+            if (entity.IsOwner)
             {
-                Debug.Log("caia 4" + 0);
+                Debug.Log("[TIMER] here " + entity.IsAttached);
                 state.StartTime -= time;
             }
         }
@@ -160,7 +184,7 @@ namespace ThePackt
         //sets start time in seconds. Only the server can do it
         public void SetStartTime(float time)
         {
-            if (BoltNetwork.IsServer)
+            if (entity.IsOwner)
             {
                 state.StartTime = time;
             }
