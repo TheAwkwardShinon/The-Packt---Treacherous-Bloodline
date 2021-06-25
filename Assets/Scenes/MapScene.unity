@@ -5354,7 +5354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &403471169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39579,7 +39579,6 @@ MonoBehaviour:
   _questTimetext: {fileID: 623951552}
   _questTimeValueText: {fileID: 1621806384}
   _mainQuestDescription: {fileID: 1961363779}
-  _timeManager: {fileID: 8079289482650668179, guid: da2ff5b9b865e91408486249936367e3, type: 3}
   _playerSpendableTime: {fileID: 1712855414}
   _buttonText: {fileID: 717088026}
 --- !u!114 &1412463385
