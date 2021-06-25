@@ -27,33 +27,34 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
   - {fileID: 21300000, guid: 642df502be8c75b49b3f691de3e9bbd5, type: 3}
   abilitiesDescription:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  abilitiesCost: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  - Obtain +15% Speed.
+  - Obtain +15% Speed.
+  - Your keen eyes scan the darkness that surrounds you. Field of view increased.
+  - Obtain +15% Speed.
+  - Obtain +15% Damage.
+  - Obtain +15% Damage.
+  - Obtain +15% Damage.
+  - "They don\u2019t know this world as much as you do. +50% experience gained. "
+  - Obtain +15% Speed.
+  - "\u201CI am one with the universe, I can see all its secrets\u201D.  +60% dmg
+    in the portal room."
+  - Obtain +15% Health.
+  - Obtain +15% Health.
+  - Cooldown special attack -3 seconds. +1 dash.
+  abilitiesCost: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   abilitiesName:
-  - Speed Power Up
-  - Speed Power Up
+  - Speed Power Up 1
+  - Speed Power Up 2
   - In My Sight
-  - Speed Power Up
-  - Damage Power Up
-  - Damage Power Up
-  - Damage Power Up
+  - Speed Power Up 3
+  - Damage Power Up 1
+  - Damage Power Up 2
+  - Damage Power Up 3
   - Field Experience
-  - Speed Power Up
+  - Speed Power Up 4
   - Astral Conjunction
-  - Hp Power Up
-  - Hp Power Up
+  - Hp Power Up 1
+  - Hp Power Up 2
   - Omniscence
   clanLogo: {fileID: 21300000, guid: 5130df14df983a544b3e60f0ba031ca8, type: 3}
   characterSprite: {fileID: 21300000, guid: d0207a641df40d249ba530f0b507bb76, type: 3}

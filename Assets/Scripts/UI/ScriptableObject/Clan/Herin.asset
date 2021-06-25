@@ -14,46 +14,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilitisSprite:
   - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
-  - {fileID: 21300000, guid: 2455fcb0222bdf64cb4786dca3f0b4a8, type: 3}
+  - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
   - {fileID: 21300000, guid: aec7c999d7f759a44a206babcf8beca3, type: 3}
   - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
   - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
   - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
-  - {fileID: 21300000, guid: a997d4bb22aa7f047b7f03cc63d15514, type: 3}
+  - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
   - {fileID: 21300000, guid: e811d081ce099d84e9b581c84dcc1e07, type: 3}
   - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
-  - {fileID: 21300000, guid: 55d8693ed821e384a8f0b424064dae3c, type: 3}
+  - {fileID: 21300000, guid: 656f8c7498209fc4abbdfdb8eca80ed4, type: 3}
   - {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
-  - {fileID: 21300000, guid: ec59e1bfe1ae4ab4999d7d94cd0699d7, type: 3}
+  - {fileID: 21300000, guid: 1ef3ec53283b84648b46b74e120ecec8, type: 3}
   - {fileID: 21300000, guid: 2246660941b89354c8d1e28bda3ee1f7, type: 3}
   abilitiesDescription:
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  abilitiesCost: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  - Obtain +15% Speed.
+  - Obtain +15% Speed.
+  - Your ears tune in to the needs of your friends. Proximity chat range increased.
+  - Obtain +15% Speed.
+  - Obtain +15% Health.
+  - Obtain +15% Health.
+  - Obtain +15% Health.
+  - Their strength is your strength. +6% dmg for every player near you, yourself
+    included.
+  - Obtain +15% Speed.
+  - " \u201CI can see right through you\u201D. Your dash is longer, has a lower cooldown
+    and deals damage on impact."
+  - Obtain +15% Damage.
+  - Obtain +15% Damage.
+  - Cooldown special attack -3 seconds. +1 dash.
+  abilitiesCost: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   abilitiesName:
-  - Speed Power Up
-  - Ignite
+  - Speed Power Up 1
+  - Speed Power Up 2
   - All Ears
-  - Speed Power Up
-  - Hp Power Up
-  - Hp Power Up
-  - Resourcefulness
+  - Speed Power Up 3
+  - Hp Power Up 1
+  - Hp Power Up 2
+  - Hp Power Up 3
   - Social Animal
-  - Speed Power Up
-  - Pressure
-  - Damage Power Up
-  - Reach
+  - Speed Power Up 4
+  - Cutting Edge
+  - Damage Power Up 1
+  - Damage Power Up 2
   - Cacophony
   clanLogo: {fileID: 21300000, guid: 2870291566faa8c4994e4722e4d9d2c6, type: 3}
   characterSprite: {fileID: 21300000, guid: 05ccb87c7bae5ad43b82fd73fc2765ff, type: 3}

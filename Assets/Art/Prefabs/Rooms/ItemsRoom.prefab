@@ -1657,7 +1657,7 @@ MonoBehaviour:
   _readySprite: {fileID: -6251682230944352461, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _activeSprite: {fileID: 8020143640844766479, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _notReadySprite: {fileID: -1259408508766424310, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
-  _title: Clue hunt
+  _title: Gathering Clues
   _description: Collect all the clues!
   _expReward: 0
   _timeReward: 45
@@ -1673,7 +1673,7 @@ MonoBehaviour:
   - {fileID: 3118781463474277797}
   - {fileID: 3899487621569446700}
   - {fileID: 2437837577747366489}
-  _fogOfWarDiameter: 1
+  _fogOfWarDiameter: 30
 --- !u!156049354 &2398241187721871340
 Grid:
   m_ObjectHideFlags: 0
