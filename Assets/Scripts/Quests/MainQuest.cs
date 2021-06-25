@@ -160,14 +160,13 @@ namespace ThePackt
                     AudioSource.PlayClipAtPoint(_victorySound, Camera.main.transform.position);
                 }
 
-                
+                /*
                 VoiceManager voiceManager = VoiceManager.Instance;
                 if (voiceManager != null)
                 {
                     voiceManager.Logout();
-                    voiceManager.Die();
                 }
-
+                */
 
                 StartCoroutine("ReturnToMenu");
             }
@@ -195,14 +194,13 @@ namespace ThePackt
                     AudioSource.PlayClipAtPoint(_defeatSound, Camera.main.transform.position);
                 }
 
-                
+                /*
                 VoiceManager voiceManager = VoiceManager.Instance;
                 if (voiceManager != null)
                 {
                     voiceManager.Logout();
-                    voiceManager.Die();
                 }
-
+                */
 
                 StartCoroutine("ReturnToMenu");
             }

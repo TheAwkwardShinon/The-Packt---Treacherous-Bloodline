@@ -36,7 +36,6 @@ namespace ThePackt
             if(voiceManager != null)
             {
                 voiceManager.Logout();
-                voiceManager.Die();
             }
 
             registerDoneCallback(() =>

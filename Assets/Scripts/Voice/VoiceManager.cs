@@ -104,12 +104,20 @@ namespace ThePackt
                 Transform listener = _localPlayer.transform;
                 _channelSession.Set3DPosition(speaker.position, listener.position, listener.forward, listener.up);
             }
+
+            if (_loggedIn && _loginSession.State == LoginState.LoggedOut)
+            {
+                Debug.Log("[VOICE] logged out");    
+                Destroy(gameObject);
+            }
         }
 
+        /*
         private void OnApplicationQuit()
         {
             _client.Uninitialize();
         }
+        */
 
         #endregion
 
@@ -176,8 +184,6 @@ namespace ThePackt
 
             _loginSession.Logout();
             BindLoginCallbackListeners(false, _loginSession);
-
-            GameObject.Destroy(this);
         }
 
         #endregion
@@ -241,14 +247,13 @@ namespace ThePackt
                     break;
                 case ConnectionState.Disconnected:
                     Debug.Log("[VOICE] Disconnected " + source.Channel.Name);
+                    /*
+                    if (_channelJoined)
+                    {
+                        Destroy(gameObject);
+                    }*/
                     break;
             }
-        }
-
-        public void Die()
-        {
-            Debug.Log("[VOICE] die");
-            Destroy(gameObject);
         }
         #endregion
 

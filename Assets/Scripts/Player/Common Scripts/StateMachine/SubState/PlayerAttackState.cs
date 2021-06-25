@@ -74,7 +74,7 @@ namespace ThePackt
 
         public void BaseWereWolfAttack()
         {
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies", "Players"));
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(_player.GetAttackPoint().position, _player.GetPlayerData().rangeBaseWerewolf, LayerMask.GetMask("Enemies", "Players", "Objectives"));
 
             foreach (Collider2D collision in hitEnemies)
             {
@@ -125,6 +125,10 @@ namespace ThePackt
                     {
                         PlayerHitReaction(collision);
                     }
+                    else if (LayerMask.LayerToName(collision.gameObject.layer) == "Objectives")
+                    {
+                        ObjectiveHitReaction(collision);
+                    }
                 }
             }
         }
@@ -143,7 +147,9 @@ namespace ThePackt
                 if (BoltNetwork.IsServer)
                 {
                     Debug.Log("[NETWORKLOG] server hit enemy");
-                    enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf, _player);
+                    if (_player.GetPlayerData().isDmgReductionDebuffActive)
+                        enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf + (_player.GetPlayerData().powerBaseWerewolf * _player.GetPlayerData().damageMultiplier) - _player.GetPlayerData().dmgReduction, _player);
+                    else enemy.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf + (_player.GetPlayerData().powerBaseWerewolf * _player.GetPlayerData().damageMultiplier), _player);
                 }
                 else
                 {
@@ -152,8 +158,40 @@ namespace ThePackt
                     evnt.HitNetworkId = enemy.entity.NetworkId;
                     evnt.AttackerNetworkId = _player.entity.NetworkId;
                     if(_player.GetPlayerData().isDmgReductionDebuffActive)
-                        evnt.Damage = (_player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier)) - _player.GetPlayerData().dmgReduction; 
+                        evnt.Damage = _player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier) - _player.GetPlayerData().dmgReduction; 
                     else evnt.Damage =_player.GetPlayerData().powerBaseWerewolf+(_player.GetPlayerData().powerBaseWerewolf*_player.GetPlayerData().damageMultiplier);
+                    evnt.Send();
+                }
+            }
+        }
+
+        // react to the hit of an objective applying damage to that enemy
+        protected void ObjectiveHitReaction(Collider2D collision)
+        {
+            Objective obj = collision.GetComponent<Objective>();
+            if (obj != null)
+            {
+                ObjectiveHitEvent evnt;
+
+                // if we are on the server, directly apply the damage to the objective
+                // otherwise we sent an event to the server
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[NETWORKLOG] server hit objective");
+                    if (_player.GetPlayerData().isDmgReductionDebuffActive)
+                        obj.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf + (_player.GetPlayerData().powerBaseWerewolf * _player.GetPlayerData().damageMultiplier) - _player.GetPlayerData().dmgReduction);
+                    else obj.ApplyDamage(_player.GetPlayerData().powerBaseWerewolf + (_player.GetPlayerData().powerBaseWerewolf * _player.GetPlayerData().damageMultiplier));
+                }
+                else
+                {
+                    Debug.Log("[NETWORKLOG] from client to server");
+                    evnt = ObjectiveHitEvent.Create(BoltNetwork.Server);
+                    evnt.HitNetworkId = obj.entity.NetworkId;
+
+                    if (_player.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_player.GetPlayerData().powerBaseWerewolf + (_player.GetPlayerData().powerBaseWerewolf * _player.GetPlayerData().damageMultiplier)) - _player.GetPlayerData().dmgReduction;
+                    else evnt.Damage = _player.GetPlayerData().powerBaseWerewolf + (_player.GetPlayerData().powerBaseWerewolf * _player.GetPlayerData().damageMultiplier);
+
                     evnt.Send();
                 }
             }

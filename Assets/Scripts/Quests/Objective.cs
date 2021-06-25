@@ -27,7 +27,7 @@ namespace ThePackt
 
         public override void SimulateOwner()
         {
-            if (!_spawnedEnemy.IsAttached)
+            if (_spawnedEnemy != null && !_spawnedEnemy.IsAttached)
             {
                 _isEnemyAlive = false;
             }
@@ -40,7 +40,7 @@ namespace ThePackt
                 {
                     Debug.Log("[OBJECTIVE] enemy spawning");
 
-                    SpawnEnemy();
+                    //SpawnEnemy();
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace ThePackt
                 _isEnemyAlive = false;
                 _mainQuest = MainQuest.Instance;
                 state.Integrity = _integrity;
-                SpawnEnemy();
+                //SpawnEnemy();
             }
 
             integritySlider = integrityBar.GetComponent<Slider>();

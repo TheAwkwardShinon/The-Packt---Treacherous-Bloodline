@@ -37,42 +37,6 @@ namespace ThePackt
             }
         }
 
-         protected override void EnemyHitReaction(Collider2D collision)
-        {
-            Enemy enemy;
-            enemy = collision.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                EnemyAttackHitEvent evnt;
-
-                // if we are on the server, directly apply the damage to the enemy
-                // otherwise we sent an event to the server
-                if (BoltNetwork.IsServer)
-                {
-                    Debug.Log("[NETWORKLOG] server hit enemy");
-                    // if the player has a dmg reduction debuff thank substract the dmg reduction value before applaying damage
-                    if(_owner.GetPlayerData().isDmgReductionDebuffActive)
-                        enemy.ApplyDamage((_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction,_owner);
-                    else enemy.ApplyDamage((_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)), _owner);
-                }
-                else
-                {
-                    Debug.Log("[NETWORKLOG] from client to server");
-                    evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
-                    evnt.HitNetworkId = enemy.entity.NetworkId;
-                    evnt.AttackerNetworkId = _owner.entity.NetworkId;
-                    // if the player has a dmg reduction debuff thank substract the dmg reduction value before applaying damag
-
-                    if(_owner.GetPlayerData().isDmgReductionDebuffActive)
-                        evnt.Damage = (_attackPower +( _attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
-                    else evnt.Damage = _attackPower +(_attackPower * _owner.GetPlayerData().damageMultiplier);
-
-                    evnt.Send();
-                }
-            }
-        }
-
-
         // react to the hit of a player applying damage to that player. returns if the player is the owner
         protected virtual bool PlayerHitReaction(Collider2D collision)
         {
@@ -124,6 +88,74 @@ namespace ThePackt
             }
 
             return isLocalPlayer;
+        }
+
+        // react to the hit of an enemy applying damage to that enemy
+        protected virtual void EnemyHitReaction(Collider2D collision)
+        {
+            Enemy enemy;
+            enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                EnemyAttackHitEvent evnt;
+
+                // if we are on the server, directly apply the damage to the enemy
+                // otherwise we sent an event to the server
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[NETWORKLOG] server hit enemy");
+                    // if the player has a dmg reduction debuff thank substract the dmg reduction value before applaying damage
+                    if (_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        enemy.ApplyDamage((_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction, _owner);
+                    else enemy.ApplyDamage((_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)), _owner);
+                }
+                else
+                {
+                    Debug.Log("[NETWORKLOG] from client to server");
+                    evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
+                    evnt.HitNetworkId = enemy.entity.NetworkId;
+                    evnt.AttackerNetworkId = _owner.entity.NetworkId;
+                    // if the player has a dmg reduction debuff thank substract the dmg reduction value before applaying damag
+
+                    if (_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
+                    else evnt.Damage = _attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier);
+
+                    evnt.Send();
+                }
+            }
+        }
+
+        // react to the hit of an objective applying damage to that enemy
+        protected virtual void ObjectiveHitReaction(Collider2D collision)
+        {
+            Objective obj = collision.GetComponent<Objective>();
+            if (obj != null)
+            {
+                ObjectiveHitEvent evnt;
+
+                // if we are on the server, directly apply the damage to the objective
+                // otherwise we sent an event to the server
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[NETWORKLOG] server hit objective");
+                    if (_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        obj.ApplyDamage((_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction);
+                    else obj.ApplyDamage((_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)));
+                }
+                else
+                {
+                    Debug.Log("[NETWORKLOG] from client to server");
+                    evnt = ObjectiveHitEvent.Create(BoltNetwork.Server);
+                    evnt.HitNetworkId = obj.entity.NetworkId;
+
+                    if (_owner.GetPlayerData().isDmgReductionDebuffActive)
+                        evnt.Damage = (_attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier)) - _owner.GetPlayerData().dmgReduction;
+                    else evnt.Damage = _attackPower + (_attackPower * _owner.GetPlayerData().damageMultiplier);
+
+                    evnt.Send();
+                }
+            }
         }
     }
 }

@@ -46,60 +46,6 @@ namespace ThePackt
             }
         }
 
-        // react to the hit of an enemy applying damage to that enemy
-        protected virtual void EnemyHitReaction(Collider2D collision)
-        {
-            Enemy enemy;
-            enemy = collision.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                EnemyAttackHitEvent evnt;
-
-                // if we are on the server, directly apply the damage to the enemy
-                // otherwise we sent an event to the server
-                if (BoltNetwork.IsServer)
-                {
-                    Debug.Log("[NETWORKLOG] server hit enemy");
-                    enemy.ApplyDamage(_attackPower, _owner);
-                }
-                else
-                {
-                    Debug.Log("[NETWORKLOG] from client to server");
-                    evnt = EnemyAttackHitEvent.Create(BoltNetwork.Server);
-                    evnt.HitNetworkId = enemy.entity.NetworkId;
-                    evnt.AttackerNetworkId = _owner.entity.NetworkId;
-                    evnt.Damage = _attackPower;
-                    evnt.Send();
-                }
-            }
-        }
-
-        // react to the hit of an objective applying damage to that enemy
-        protected void ObjectiveHitReaction(Collider2D collision)
-        {
-            Objective obj = collision.GetComponent<Objective>();
-            if (obj != null)
-            {
-                ObjectiveHitEvent evnt;
-
-                // if we are on the server, directly apply the damage to the objective
-                // otherwise we sent an event to the server
-                if (BoltNetwork.IsServer)
-                {
-                    Debug.Log("[NETWORKLOG] server hit objective");
-                    obj.ApplyDamage(_attackPower);
-                }
-                else
-                {
-                    Debug.Log("[NETWORKLOG] from client to server");
-                    evnt = ObjectiveHitEvent.Create(BoltNetwork.Server);
-                    evnt.HitNetworkId = obj.entity.NetworkId;
-                    evnt.Damage = _attackPower;
-                    evnt.Send();
-                }
-            }
-        }
-
         public void Die()
         {
             BoltNetwork.Destroy(gameObject);
