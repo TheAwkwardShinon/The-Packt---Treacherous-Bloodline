@@ -482,7 +482,13 @@ namespace ThePackt{
 
                 _drinkSfx.GetComponent<AudioSource>().Play();
 
-                state.Health += _playerData.maxLifePoints * amount;
+                float newHealth = state.Health + _playerData.maxLifePoints * amount;
+
+                if(newHealth > _playerData.maxLifePoints)
+                {
+                    newHealth = _playerData.maxLifePoints;
+                }
+                state.Health = newHealth;
             }
         }
 
