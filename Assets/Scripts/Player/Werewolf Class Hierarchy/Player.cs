@@ -549,8 +549,9 @@ namespace ThePackt{
                 AudioSource.PlayClipAtPoint(_wolfDeathSfx.GetComponent<AudioSource>().clip, Camera.main.transform.position);
             }
 
-            BoltNetwork.Destroy(gameObject);
             AbandonQuest();
+
+            BoltNetwork.Destroy(gameObject);
         }
         #endregion
 
