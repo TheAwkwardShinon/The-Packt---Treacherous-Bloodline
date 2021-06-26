@@ -54,6 +54,13 @@ namespace ThePackt
             }
         }
 
+        private void Awake(){
+            _notImpostors = new List<BoltEntity>();
+            _objectives = new List<BoltEntity>();
+            _playersInRoom = new List<BoltEntity>();
+            
+        }
+
         public override void Attached()
         {
             _selectedData = CharacterSelectionData.Instance;
@@ -66,9 +73,7 @@ namespace ThePackt
 
             if (entity.IsOwner)
             {
-                _notImpostors = new List<BoltEntity>();
-                _objectives = new List<BoltEntity>();
-                _playersInRoom = new List<BoltEntity>();
+                
                 state.State = Constants.READY;
 
                 foreach(Transform pos in _objectivePositions)
@@ -263,6 +268,7 @@ namespace ThePackt
 
         public void ChooseImpostor()
         {
+            
             int randomIndex = Random.Range(0, _notImpostors.Count);
             _impostor = _notImpostors[randomIndex];
             _notImpostors.Remove(_impostor);
@@ -347,6 +353,7 @@ namespace ThePackt
 
         public void SetPlayers(List<BoltEntity> plyrs)
         {
+            _localPlayer = _selectedData.GetPlayerScript();
             _notImpostors = plyrs;
 
             string s = "";

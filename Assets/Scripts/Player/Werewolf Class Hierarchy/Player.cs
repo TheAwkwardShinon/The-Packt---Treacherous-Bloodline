@@ -543,6 +543,13 @@ namespace ThePackt{
             _spendableTime += time;
             _spendableExp += exp;
 
+            _questTitleText.text = _activeQuest._title;
+            _questDescriptionText.text = "You got "+ _activeQuest._timeReward.ToString()+" spendable time and ";
+            _questReward.text = _activeQuest._timeReward.ToString();
+            //TODO_questExpReward
+            _questAction.text = "QUEST COMPLETED";
+            _questPanel.SetActive(true);
+
             _activeQuest = null;
             hasActiveQuest = false;
             SetFogOfWarDiameter(_playerData.standardCircleSize);
@@ -866,19 +873,19 @@ namespace ThePackt{
             if (hasActiveQuest)
             {
                 _abandonSfx.GetComponent<AudioSource>().Play();
-
-                _activeQuest = null;
-                hasActiveQuest = false;
-                SetFogOfWarDiameter(_playerData.standardCircleSize);
-
-                Debug.Log("[QUEST] player abandoned the quest " + _activeQuest._title);
-
-                _questTitleText.text = _activeQuest._title;
+                 _questTitleText.text = _activeQuest._title;
                 _questDescriptionText.text = _activeQuest._description;
                 _questReward.text = _activeQuest._timeReward.ToString();
                 _questAction.text = "QUEST ABANDONED";
                 _questPanel.SetActive(true);
                 _questHandler.RemoveActiveQuest();
+
+                _activeQuest = null;
+                hasActiveQuest = false;
+                SetFogOfWarDiameter(_playerData.standardCircleSize);
+
+                
+               
             }
         }
 
