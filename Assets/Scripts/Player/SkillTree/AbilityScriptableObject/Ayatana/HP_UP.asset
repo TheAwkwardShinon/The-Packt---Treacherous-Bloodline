@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2fab60b4a18c34e84d10c688bc9c65, type: 3}
+  m_Name: HP_UP
+  m_EditorClassIdentifier: 
+  _unlockableAbilities:
+  - {fileID: 11400000, guid: 6f0a901e2e713f449b24c9666833651c, type: 2}
+  - {fileID: 11400000, guid: dc0f530be760fc242aeb6dc2b1ce8b47, type: 2}
+  abilityName: Hp Power Up 1
+  animationName: first
+  colorIndex: 0

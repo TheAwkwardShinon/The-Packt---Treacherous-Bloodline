@@ -41,7 +41,7 @@ MonoBehaviour:
     time you hit a unit with a basic attack."
   - Obtain +15% Speed.
   - Obtain +15% Speed.
-  - Cooldown special attack -3 seconds. +1 dash.
+  - Cooldown special attack -3 seconds.
   abilitiesCost: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   abilitiesName:
   - Damage Power Up 1

@@ -23,6 +23,8 @@ namespace ThePackt{
         protected string _wolfAnimationName;
         protected string _aniamtionToShow;
 
+        
+
 
 
         
@@ -77,6 +79,16 @@ namespace ThePackt{
             if(!_player.GetIsHuman()){
                 if(Time.time > _player.GetPlayerData()._startTransformationTime + _player.GetPlayerData().transformStateDuration){
                     _detransformationInput = true;
+                }
+            }
+
+            if(_playerData.tasteLikeIron && _playerData.tasteLikeIronStart.Count > 0){
+                for(int i = 0; i< _playerData.tasteLikeIronStart.Count; i++){
+                    if(Time.time >= _playerData.tasteLikeIronStart[i] + _playerData.tasteLikeIronDuration){
+                        _playerData.TateLikeIronStack --;
+                        _playerData.tasteLikeIronStart.RemoveAt(i);
+                        _playerData.movementVelocityMultiplier -= 0.05f;
+                    }
                 }
             }
 

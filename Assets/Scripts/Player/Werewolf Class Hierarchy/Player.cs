@@ -264,6 +264,18 @@ namespace ThePackt{
             {
                 _stateMachine._currentState.LogicUpdate();
             }
+            if(_playerData.socialAnimal){
+                Collider2D[] col = Physics2D.OverlapCircleAll(transform.position,5f,_playerData.WhatIsPlayer);
+                if(col != null){
+                    _playerData.damageMultiplier -= _playerData.socialAnimalMultiplier * _playerData.numOfNearPlayer;
+                    _playerData.damageMultiplier += _playerData.socialAnimalMultiplier * col.Length;
+                    _playerData.numOfNearPlayer = col.Length;
+                }
+                else {
+                    _playerData.damageMultiplier -= _playerData.socialAnimalMultiplier * _playerData.numOfNearPlayer;
+                    _playerData.numOfNearPlayer = 0;
+                }
+            }
 
             healthSlider.value = _playerData.currentLifePoints;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
@@ -278,6 +290,8 @@ namespace ThePackt{
                 //canvas.transform.rotation = Quaternion.Euler(0, 0, 0);
                 healthBar.transform.rotation = Quaternion.identity;
             }
+            
+
 
             if(SceneManager.GetActiveScene().name.Equals("MapScene") && _questPanel == null){
                  _questPanel = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestPanel();
@@ -287,6 +301,7 @@ namespace ThePackt{
                  _questAction = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetAction();
                  _questHandler = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestHandler();
             }
+
         }
 
         public override void Detached()
@@ -448,6 +463,17 @@ namespace ThePackt{
             if (entity.IsOwner)
             {
                 state.Health -= damage;
+                if(_playerData.tasteLikeIron && _playerData.tasteLikeIronStart.Count == 0){
+                    _playerData.tasteLikeIronStart = new List<float>();
+                     _playerData.tasteLikeIronStart.Add(Time.time);
+                    _playerData.TateLikeIronStack = 1;
+                    _playerData.movementVelocityMultiplier += 0.05f;
+                }
+                else if (_playerData.tasteLikeIron && _playerData.TateLikeIronStack > 0){
+                    _playerData.TateLikeIronStack++;
+                     _playerData.tasteLikeIronStart.Add(Time.time);
+                    _playerData.movementVelocityMultiplier += 0.05f;
+                }
 
                 if (GetIsHuman())
                 {
@@ -512,7 +538,7 @@ namespace ThePackt{
         ///<summary>
         /// changes the state to death state
         ///</summary>
-        private void Die()
+        public void Die()
         {
             if (GetIsHuman())
             {

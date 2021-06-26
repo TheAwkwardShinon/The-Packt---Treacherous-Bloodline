@@ -33,6 +33,13 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            if(Time.time >= _player.GetPlayerData().downedStartTime + _player.GetPlayerData().bleedOutTime){
+                _player.Die();
+                return;
+            }
+
+
             _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
             _player.CheckIfShouldFlip(_xInput);
 

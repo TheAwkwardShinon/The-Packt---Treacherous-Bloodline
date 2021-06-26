@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ultimate : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+namespace ThePackt{
+    
+    [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/ability Data/Ultimate")]
+    public class Ultimate : AbilityData
     {
-        
+        public override void GainAbility(Player player)
+        {
+            base.GainAbility(player);
+            player.GetPlayerData().specialAttackCooldown -= 0.3f;
+        }
     }
 }

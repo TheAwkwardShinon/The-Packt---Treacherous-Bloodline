@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d895079bd05e6a4d947cf662172e3e1, type: 3}
+  m_Name: DMG_UP 3
+  m_EditorClassIdentifier: 
+  _unlockableAbilities:
+  - {fileID: 11400000, guid: cfa279f52fee8ed43846aaec52aa61ab, type: 2}
+  - {fileID: 11400000, guid: 67f66489700afc2459474de7c052b12c, type: 2}
+  - {fileID: 11400000, guid: 763711ce647047e43a66b22717a06f4e, type: 2}
+  abilityName: Damege Power Up 3
+  animationName: 4
+  colorIndex: 3

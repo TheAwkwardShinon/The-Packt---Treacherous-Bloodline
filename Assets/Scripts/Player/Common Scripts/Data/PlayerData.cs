@@ -46,6 +46,11 @@ namespace ThePackt{
         public float downColliderHeight = 0.4f;
         public float downColliderWidth = 1.3f;
 
+        public float downedStartTime = 0f;
+        public float bleedOutTime = 15f;
+        public float numOfReviveAction = 0f;
+
+
         [Header("Attack State")]
 
         public float damageMultiplier = 0f;
@@ -114,29 +119,29 @@ namespace ThePackt{
 
         #endregion
 
-        #region Sprite
-        [Header("Sprites")]
 
-        [Header("Human")]
-        public Sprite humanFace;
-        public Sprite humanHat;
-        public Sprite humanArms;
-        public Sprite humanFeet;
-        public Sprite humanClothes;
+        [Header("particular abilities")]
+        public bool astralconjuntion = false;
+        public bool tasteLikeIron = false;
+        public float tasteLikeIronDuration = 5f;
+        public int TateLikeIronStack = 0;
 
-        [Header("wolf")]
+        public List<float> tasteLikeIronStart;
+        public float portalRoomDamageMultiplier = 0.6f;
 
-        public Sprite wolfFace;
-        public Sprite wolfEars;
-        public Sprite wolfArms;
-        public Sprite wolfFeet;
-        public Sprite wolfBody;
+        public bool socialAnimal = false;
 
-        #endregion
+        public float socialAnimalMultiplier = 0.06f;
+        public int numOfNearPlayer = 0;
+
+        public List<GameObject> _sprites;
+
+        
 
         #region methods
         private void Start(){
             points = 0;
+            tasteLikeIronStart = new List<float>();
         }
 
         #endregion

@@ -33,6 +33,9 @@ MonoBehaviour:
   ceilingHeight: 0.1
   downColliderHeight: 0.4
   downColliderWidth: 1.3
+  downedStartTime: 0
+  bleedOutTime: 15
+  numOfReviveAction: 0
   damageMultiplier: 0
   powerBaseWerewolf: 10
   rangeBaseWerewolf: 0.3
@@ -88,13 +91,28 @@ MonoBehaviour:
   damageReductionDebuffStartTime: 0
   dmgReduction: 0
   timeOfDmgReduction: 0
-  humanFace: {fileID: 21300118, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  humanHat: {fileID: 21300032, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  humanArms: {fileID: 21300066, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  humanFeet: {fileID: 21300090, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  humanClothes: {fileID: 21300084, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  wolfFace: {fileID: 21300054, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  wolfEars: {fileID: 21300022, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  wolfArms: {fileID: 21300046, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  wolfFeet: {fileID: 21300092, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
-  wolfBody: {fileID: 21300152, guid: b08e570699f1c8a4f9cc388204aef3bc, type: 3}
+  astralconjuntion: 0
+  tasteLikeIron: 0
+  tasteLikeIronDuration: 5
+  TateLikeIronStack: 0
+  tasteLikeIronStart: []
+  portalRoomDamageMultiplier: 0.6
+  socialAnimal: 0
+  socialAnimalMultiplier: 0.06
+  numOfNearPlayer: 0
+  _sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

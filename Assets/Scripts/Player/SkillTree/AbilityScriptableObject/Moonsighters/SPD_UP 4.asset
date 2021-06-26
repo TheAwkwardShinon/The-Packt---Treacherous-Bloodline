@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ddd750fa7876544857743fcc4d310a, type: 3}
+  m_Name: SPD_UP 4
+  m_EditorClassIdentifier: 
+  _unlockableAbilities:
+  - {fileID: 11400000, guid: d7b90f16b840a834f819146fab6cb4de, type: 2}
+  - {fileID: 11400000, guid: b79943b8c0635a34e9d540d2d2094afe, type: 2}
+  abilityName: Speed Power Up 4
+  animationName: 9
+  colorIndex: 8

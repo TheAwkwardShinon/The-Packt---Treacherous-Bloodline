@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9de60e8ae266cad448f935fa7bfe21aa, type: 3}
+  m_Name: IN_MY_SIGHT
+  m_EditorClassIdentifier: 
+  _unlockableAbilities:
+  - {fileID: 11400000, guid: 5de0c6099e21cdc4e834a63bca0540ed, type: 2}
+  - {fileID: 11400000, guid: 020cdafdd547dff4e8fcd99f8a78e9dc, type: 2}
+  abilityName: In My Sight
+  animationName: third
+  colorIndex: 2

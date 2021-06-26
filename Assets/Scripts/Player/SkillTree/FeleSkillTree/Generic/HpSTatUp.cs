@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ThePackt{
 
     [CreateAssetMenu(fileName = "newPlayerData", menuName = "Data/skillTree Data/ability Data/hpUp")]
-    public class HpStatUP : AbilityData
+    public class HpSTatUp : AbilityData
     {
         public override void GainAbility(Player player)
         {

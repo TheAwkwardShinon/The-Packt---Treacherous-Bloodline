@@ -290,6 +290,8 @@ namespace ThePackt
             Player enteredPlayer = collision.GetComponent<Player>();
             if (enteredPlayer != null)
             {
+                if(enteredPlayer.GetPlayerData().astralconjuntion)
+                    enteredPlayer.GetPlayerData().damageMultiplier +=  enteredPlayer.GetPlayerData().portalRoomDamageMultiplier;
                 if (!_playersInRoom.Contains(enteredPlayer.entity))
                 {
                     Debug.Log("[MAIN] player entered");
@@ -304,6 +306,8 @@ namespace ThePackt
             Player exitingPlayer = collision.GetComponent<Player>();
             if (exitingPlayer != null)
             {
+                if(exitingPlayer.GetPlayerData().astralconjuntion)
+                    exitingPlayer.GetPlayerData().damageMultiplier -=  exitingPlayer.GetPlayerData().portalRoomDamageMultiplier;
                 if (_playersInRoom.Contains(exitingPlayer.entity))
                 {
                     Debug.Log("[QUEST] player leaved");
@@ -312,6 +316,7 @@ namespace ThePackt
                 }
             }
         }
+
 
         public bool CheckIfPlayerIsInRoom(BoltEntity plyr)
         {

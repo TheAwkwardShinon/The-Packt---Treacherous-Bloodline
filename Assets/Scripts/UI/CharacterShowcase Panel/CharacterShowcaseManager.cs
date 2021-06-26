@@ -66,9 +66,12 @@ namespace ThePackt{
             _className.text = _characters[_currentIndex].ClassName;
             _characterSprite.sprite = _characters[_currentIndex].classData.characterSprite;
             _logo.sprite = _characters[_currentIndex].classData.clanLogo;
+            _lore.text = _characters[_currentIndex].lore;
             /*to add description and other things */
             for(int i=1; i<=_characters[_currentIndex].classData._abilitisSprite.Count;i++){ 
                 _abilitiesImage[i].sprite = _characters[_currentIndex].classData._abilitisSprite[i-1];
+                _abilitiesDescription[i].text = _characters[_currentIndex].classData.abilitiesDescription[i-1];
+                
             }/* aggiungere varie descrizioni */
         }
 

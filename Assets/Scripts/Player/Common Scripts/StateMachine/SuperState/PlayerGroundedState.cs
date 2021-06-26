@@ -81,6 +81,7 @@ namespace ThePackt{
             if(_isStand){
                 if(_player._isDowned){
                      Debug.LogWarning("[GROUNDED STATE] -->  DOWN");
+                     _player.GetPlayerData().downedStartTime = Time.time;
                     _stateMachine.ChangeState(_player._downState);
                 }
                 else if(_detransformationInput && !_player.GetIsHuman() ){

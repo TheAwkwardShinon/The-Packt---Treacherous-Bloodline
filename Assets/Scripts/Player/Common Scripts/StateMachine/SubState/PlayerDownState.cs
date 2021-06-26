@@ -19,7 +19,13 @@ namespace ThePackt{
         public override void Enter()
         {
             base.Enter();
+
             _isStand = false;
+            if( _player.GetPlayerData().numOfReviveAction > 0){
+                 _player.GetPlayerData().numOfReviveAction = 0f;
+                 _player.Heal();
+            }
+
           
             Debug.LogWarning("[DOWNED STATE] ENTER");
 
@@ -46,6 +52,14 @@ namespace ThePackt{
         public override void LogicUpdate()
         {
             base.LogicUpdate();
+
+            if(Time.time >= _player.GetPlayerData().downedStartTime + _player.GetPlayerData().bleedOutTime){
+                _player.Die();
+                return;
+            }
+
+
+
             if(_player.state.Health >= _player.GetPlayerData().maxLifePoints * 0.3f){
                  Debug.LogWarning("[DOWNED STATE] ---> IDLE");
                 _isStand = true;

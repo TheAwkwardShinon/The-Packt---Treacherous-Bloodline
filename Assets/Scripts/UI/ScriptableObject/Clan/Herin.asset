@@ -15,7 +15,7 @@ MonoBehaviour:
   _abilitisSprite:
   - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
   - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
-  - {fileID: 21300000, guid: aec7c999d7f759a44a206babcf8beca3, type: 3}
+  - {fileID: 21300000, guid: aed5c470ed7a37f41889d7ffc7d0beac, type: 3}
   - {fileID: 21300000, guid: b5f19bd0052db2841b484418b0e76a86, type: 3}
   - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
   - {fileID: 21300000, guid: 12eb4df413ddc224589cb609d3999578, type: 3}
@@ -29,7 +29,7 @@ MonoBehaviour:
   abilitiesDescription:
   - Obtain +15% Speed.
   - Obtain +15% Speed.
-  - Your ears tune in to the needs of your friends. Proximity chat range increased.
+  - double jump.
   - Obtain +15% Speed.
   - Obtain +15% Health.
   - Obtain +15% Health.
@@ -41,12 +41,12 @@ MonoBehaviour:
     and deals damage on impact."
   - Obtain +15% Damage.
   - Obtain +15% Damage.
-  - Cooldown special attack -3 seconds. +1 dash.
+  - Cooldown special attack -3 seconds.
   abilitiesCost: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   abilitiesName:
   - Speed Power Up 1
   - Speed Power Up 2
-  - All Ears
+  - Touch The Moon
   - Speed Power Up 3
   - Hp Power Up 1
   - Hp Power Up 2
@@ -59,4 +59,4 @@ MonoBehaviour:
   - Cacophony
   clanLogo: {fileID: 21300000, guid: 2870291566faa8c4994e4722e4d9d2c6, type: 3}
   characterSprite: {fileID: 21300000, guid: 05ccb87c7bae5ad43b82fd73fc2765ff, type: 3}
-  _rootAbility: {fileID: 0}
+  _rootAbility: {fileID: 11400000, guid: 1a3bb1b59c579d84285901b2d6baf204, type: 2}
