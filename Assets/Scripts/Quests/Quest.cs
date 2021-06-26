@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Bolt;
+using UnityEngine.UI;
 
 namespace ThePackt
 {
@@ -46,6 +47,11 @@ namespace ThePackt
         protected StartAction _startAction;
         protected StartAction _inProgressAction;
         protected FailAction _failAction;
+
+        private HiddenCanvas _hiddenCanvas;
+        private GameObject _objectiveMessage;
+        private Text _objectiveText;
+
         #endregion
 
 
@@ -90,6 +96,12 @@ namespace ThePackt
 
                 Abandon(_localPlayer.entity);
             }
+
+            if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("MapScene") && _hiddenCanvas == null){
+                _hiddenCanvas = GameObject.Find("Canvas").GetComponent<HiddenCanvas>();
+                _objectiveMessage = _hiddenCanvas.getObjectiveMessage();
+                _objectiveText = _objectiveMessage.GetComponentInChildren<Text>();
+            }
         }
 
         // Update is called once per frame
@@ -100,8 +112,7 @@ namespace ThePackt
                 if (CheckIfCompleted())
                 {
                     state.State = Constants.COMPLETED;
-
-                    //TODO special effect
+                  
                 }
                 else if (_inProgressAction != null)
                 {
@@ -380,8 +391,10 @@ namespace ThePackt
 
             if (_state == Constants.FAILED && _localPlayerPartecipates)
             {
-                //TODO display fail message
-                
+                _objectiveText.text = "QUEST FAILED";
+                _objectiveText.color = Color.red;
+                _objectiveMessage.SetActive(true);
+            
                 _timerJoin = false;
                 _timerAbandon = false;
                 _localPlayerPartecipates = false;

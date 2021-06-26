@@ -37,9 +37,9 @@ namespace ThePackt{
         public void OnSelect(BaseEventData eventData)
         {
             if(_myCharacter != null){
-                _tooltip.transform.position = new Vector2(this.transform.position.x + 800f,this.transform.position.y);
+                _tooltip.transform.position = new Vector2(this.transform.position.x + 400f,this.transform.position.y);
                 _cost.text = _myCharacter.classData.abilitiesCost[my_index].ToString();
-                _description.text =_myCharacter.ClassName;//abilitiesDescription[my_index];
+                _description.text =_myCharacter.classData.abilitiesDescription[my_index];
                 _name.text = _myCharacter.classData.abilitiesName[my_index];
                 _abilityIcon.sprite = _myCharacter.classData._abilitisSprite[my_index];
 

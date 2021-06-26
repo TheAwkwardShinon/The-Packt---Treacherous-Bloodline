@@ -156,6 +156,12 @@ namespace ThePackt{
         private Text _questReward;
         private Text _questAction;
         private GameObject _questPanel;
+
+        private HiddenCanvas _hiddenCanvas;
+        private GameObject _objectiveMessage;
+        private Text _objectiveText;
+
+         //private Quest _activeQuest;
         #endregion
 
         #endregion
@@ -300,6 +306,11 @@ namespace ThePackt{
                  _questDescriptionText = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetDescription();
                  _questAction = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetAction();
                  _questHandler = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetQuestHandler();
+            }
+             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("MapScene") && _hiddenCanvas == null){
+                _hiddenCanvas = GameObject.Find("Canvas").GetComponent<HiddenCanvas>();
+                _objectiveMessage = _hiddenCanvas.getObjectiveMessage();
+                _objectiveText = _objectiveMessage.GetComponentInChildren<Text>();
             }
 
         }
@@ -526,6 +537,9 @@ namespace ThePackt{
             AudioSource.PlayClipAtPoint(_completeSfx.GetComponent<AudioSource>().clip, Camera.main.transform.position);
 
             Debug.Log("[QUEST] rewards obtained. Exp: " + exp + ", Time: " + time);
+            _objectiveText.text = "QUEST COMPLETED";
+            _objectiveText.color = Color.yellow;
+            _objectiveMessage.SetActive(true);
             _spendableTime += time;
             _spendableExp += exp;
 
@@ -834,6 +848,7 @@ namespace ThePackt{
                 if(quest._title.Equals(null)){
                     Debug.LogError("title is is null");
                 }
+                 
                 _questTitleText.text = quest._title;
                 _questDescriptionText.text = quest._description;
                 _questReward.text = quest._timeReward.ToString();
@@ -858,7 +873,12 @@ namespace ThePackt{
 
                 Debug.Log("[QUEST] player abandoned the quest " + _activeQuest._title);
 
-                //TODO remove quest UI
+                _questTitleText.text = _activeQuest._title;
+                _questDescriptionText.text = _activeQuest._description;
+                _questReward.text = _activeQuest._timeReward.ToString();
+                _questAction.text = "QUEST ABANDONED";
+                _questPanel.SetActive(true);
+                _questHandler.RemoveActiveQuest();
             }
         }
 
