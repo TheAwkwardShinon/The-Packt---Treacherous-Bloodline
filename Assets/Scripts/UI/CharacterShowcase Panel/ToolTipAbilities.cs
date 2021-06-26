@@ -27,8 +27,8 @@ namespace ThePackt{
         public void OnSelect(BaseEventData eventData)
         {
             _tooltip.transform.position = new Vector2(this.transform.position.x - 450f,this.transform.position.y);
-            //_cost.text = _manager.GetcharacterList()[_manager.GetIndex()].classData.abilitiesCost[my_index].ToString();
-            //_description.text = _manager.GetcharacterList()[_manager.GetIndex()].classData.abilitiesDescription[my_index];
+            _cost.text = _manager.GetcharacterList()[_manager.GetIndex()].classData.abilitiesCost[my_index].ToString();
+            _description.text = _manager.GetcharacterList()[_manager.GetIndex()].classData.abilitiesDescription[my_index];
             _name.text = _manager.GetcharacterList()[_manager.GetIndex()].classData.abilitiesName[my_index];
             _abilityIcon.sprite = _manager.GetcharacterList()[_manager.GetIndex()].classData._abilitisSprite[my_index];
 

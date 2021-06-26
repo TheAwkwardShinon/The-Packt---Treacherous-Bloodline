@@ -27,7 +27,7 @@ namespace ThePackt{
         [SerializeField] private Text _lore;
         [SerializeField] private Text _personalAbilityName;
         [SerializeField] private Text _className;
-        [SerializeField] private List<Text> _abilitiesDescription; //TODO change this to a single text (tooltip)
+        [SerializeField] private Text _abilitiesDescription; 
         [SerializeField] private Image _logo;
         [SerializeField] private List<CharacterShowCaseData> _characters;
         [SerializeField] private AudioSource _audioSource;
@@ -70,7 +70,6 @@ namespace ThePackt{
             /*to add description and other things */
             for(int i=1; i<=_characters[_currentIndex].classData._abilitisSprite.Count;i++){ 
                 _abilitiesImage[i].sprite = _characters[_currentIndex].classData._abilitisSprite[i-1];
-                _abilitiesDescription[i].text = _characters[_currentIndex].classData.abilitiesDescription[i-1];
                 
             }/* aggiungere varie descrizioni */
         }

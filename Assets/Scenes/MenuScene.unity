@@ -9926,8 +9926,7 @@ MonoBehaviour:
   _lore: {fileID: 2130861145}
   _personalAbilityName: {fileID: 780230422}
   _className: {fileID: 1667759524}
-  _abilitiesDescription:
-  - {fileID: 0}
+  _abilitiesDescription: {fileID: 595986026}
   _logo: {fileID: 1768778677}
   _characters:
   - {fileID: 11400000, guid: 331a1ec9da4fa054b820d96327cb8484, type: 2}
