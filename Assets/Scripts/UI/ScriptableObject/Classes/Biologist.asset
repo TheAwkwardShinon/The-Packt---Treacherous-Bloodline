@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 2c4c7dba9fe4b464796f11926672e336, type: 3}
   classData: {fileID: 11400000, guid: 37cb9a59d3dfd9e499151f87cd34c16d, type: 2}
-  lore: 
+  lore: "Yara always loved animals since she was little: her cute little smile would
+    especially show up when interacting with insects, her favorite type of animals.
+    During adulthood she found a newborn interest in studying creatures that aren\u2019t
+    well known, the Demons: she roams alone, at night, searching for new specimens
+    to study. Will it be her demise?"
   ClassName: Naturia - Biologist
   personalAbilityName: Master The Unknown
-  personalAbilityDescription: 
+  personalAbilityDescription: Swirling in the darkness of the night, strange figures
+    show themselves for what they really are, but only for you. +80% dmg against
+    demons.

@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: fb917d0669a8d664b9b1b6d590ff7acf, type: 3}
   classData: {fileID: 11400000, guid: 01096132e7ac7ff48812738a3acf08b5, type: 2}
-  lore: 
+  lore: "Never cornered. Cain knows how to bargain a deal, cut to the point, be the
+    best at his job. No one has the upper hand on him, he\u2019s always five steps
+    ahead. Incredibly smart and ambitious, he made a name for himself very quickly
+    in his field, impressing even veterans with his quick deductions and his fiery
+    tongue. Dashing, hot and young, this young wolf knows how this world works, and
+    nobody will stop his pursuit of success, power, and fame."
   ClassName: Ceuin - Lawyer
   personalAbilityName: Never Cornered
   personalAbilityDescription: There must be a way, you know it. Up to +30% dmg the

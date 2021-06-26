@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: d2a50a44644460c4c85a26e687ab8bbc, type: 3}
   classData: {fileID: 11400000, guid: 74bf2e224bce7ed47950cf3fceebddb6, type: 2}
-  lore: 
+  lore: "Antares has always been a people person. He loves to chit-chat about many
+    different topics, but especially about the landscapes of his hometown. As a guide,
+    his job is to help tourists to deeply experience a new culture foreign to them:
+    that\u2019s why, even in his free time, Antares spends every minute researching
+    new pieces of history lost in time about this building or that tree, tries to
+    explore every little spot, every little business, searching for any new information
+    that could give his clients a new insight on the city he so deeply loves and
+    cherishes."
   ClassName: Herin - Guide
   personalAbilityName: Fast Walker
-  personalAbilityDescription: 
+  personalAbilityDescription: Gliding through the crowd, your agile figure gets where
+    it wants faster than anyone else. +15% speed.

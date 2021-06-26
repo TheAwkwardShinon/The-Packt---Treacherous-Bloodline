@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 8b5e7a7d922761b499b893914455d831, type: 3}
   classData: {fileID: 11400000, guid: 74bf2e224bce7ed47950cf3fceebddb6, type: 2}
-  lore: 
+  lore: "Daughter of a famous social activist, Ireena had to spend her whole childhood
+    traveling the world: this didn\u2019t help her forming long lasting relationships,
+    but it helped her entering in contact with various cultures of the world. Being
+    a sweet and kind soul, she always liked helping people: she decided to study
+    various languages to become a translator, so she could go around the world helping
+    the less fortunate to communicate their needs."
   ClassName: Herin - Translator
   personalAbilityName: Deep Understanding
-  personalAbilityDescription: 
+  personalAbilityDescription: You really understand others on a deep, personal level.
+    Other people appear on your map when downed.

@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 23a3e23e5bbc3114486144c5b1507006, type: 3}
   classData: {fileID: 11400000, guid: 7cb515d76eff580458c6cbdf8e1561fc, type: 2}
-  lore: 
+  lore: 'Kindness alone won''t help you survive in this crazy world. Not all patients
+    receive proper care and not all doctors possess a benevolent heart. Naxara is
+    definitely not one of that kind-hearthed doctors: she started medical school
+    to find a way to improve her physical form even further, having nothing to do
+    with helping people or curing sicknesses. As a dietitian she spends most of her
+    days hating every overweight patient under her care, regretting her choice of
+    choosing medical school over becoming an athlete or a personal trainer.'
   ClassName: Fele - Doctor
   personalAbilityName: Stiches
-  personalAbilityDescription: 
+  personalAbilityDescription: You know how to mend yourself, even in a rush. Regenerate
+    1 hp each second if nobody is near.

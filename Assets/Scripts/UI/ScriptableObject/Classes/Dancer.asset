@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: bc9743a80e82ce34bbcd091e0401cebe, type: 3}
   classData: {fileID: 11400000, guid: f3adfa69650d61b43be6456488ed45ba, type: 2}
-  lore: 
+  lore: Sys day begins with her waking up, attending her classes at community college,
+    then she proceeds with her afternoon classes at dance school and concludes with
+    her job at the night club, where she pole dances for tips. Even if she struggles
+    a lot doing everything all the stuff she has to do, she always puts up a smile
+    on her face and performs on the stage of life like she would in a theater.
   ClassName: Ayatana - Dancer
-  personalAbilityName: Stretch & Warm Up
-  personalAbilityDescription: 
+  personalAbilityName: Stretching
+  personalAbilityDescription: A good warm up session never failed you. +10% dmg &
+    +10% speed.
