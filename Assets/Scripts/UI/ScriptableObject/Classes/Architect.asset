@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: f5f6e27566a1f484c8ba172560efccfe, type: 3}
   classData: {fileID: 11400000, guid: f3adfa69650d61b43be6456488ed45ba, type: 2}
-  lore: 
+  lore: "Eve has a keen eye: precise, calculative\u2026 a true perfectionist. She
+    is really famous, having created many masterpieces in her long lifespan: people
+    know her name and speak of her fondly, being one of the most influential people
+    of the century. Eve doesn't like the spotlight too much, though. She would much
+    rather be in her element, creating beautiful pockets of art in the world, instead
+    of being constantly pursued by the media and the fans. That\u2019s why she usually
+    goes out undercover, managing to live her world at her own pace."
   ClassName: Ayatana - Architect
   personalAbilityName: I've Built This
-  personalAbilityDescription: 
+  personalAbilityDescription: You could swear you had the blueprint of this place
+    somewhere in your office, you are sure about it. At the start, 6 random challenges
+    get revealed to you.

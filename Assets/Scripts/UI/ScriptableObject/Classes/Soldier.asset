@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 964b9aafd9b6080418c084d82425f79a, type: 3}
   classData: {fileID: 11400000, guid: 7cb515d76eff580458c6cbdf8e1561fc, type: 2}
-  lore: 
+  lore: "Zarks joined the military when he was young, following the same career path
+    of his parents. Skilled with many different types of weapons, he\u2019s very
+    observant and always on edge. He loves taking naps whenever possible, because
+    he never knows when he'll get a chance to rest again. He always keep his equipment
+    in pristine conditions, and often makes a show about being very organized and
+    level headed, even if the Fele blood runs deep in him, the abundant courage mixed
+    with his lack of fear more often than not clearly shows."
   ClassName: Fele - Soldier
   personalAbilityName: Martial Training
-  personalAbilityDescription: 
+  personalAbilityDescription: The years of service forged your body and your mind.
+    +15% dmg.

@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 9090be7b310246b42b61d2693b221675, type: 3}
   classData: {fileID: 11400000, guid: f3adfa69650d61b43be6456488ed45ba, type: 2}
-  lore: 
+  lore: "Yubel is a wild card: no one knows his true identity, not even his closer
+    friends. He\u2019s a writer, a poet and a rapper, famous in the urban scene.
+    One can usually find him dressed as a medieval jester, playing dices with some
+    homeless guy on the side of the streets. He always says that his passion for
+    storytelling comes from those who are less fortunate: Yubel loves the stories
+    that get narrated in the streets, and usually incorporate those urban legends
+    in his own works."
   ClassName: Ayatana - Writer
   personalAbilityName: Snake Eyes
-  personalAbilityDescription: 
+  personalAbilityDescription: You fame is just a mix of skill, talent and luck, face
+    it. At the start, the cost of 2 random cells of the skill tree becomes zero.

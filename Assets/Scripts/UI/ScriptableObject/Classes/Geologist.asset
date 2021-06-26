@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 2ef8bc5ad20b5914ab96a21aeb0620ec, type: 3}
   classData: {fileID: 11400000, guid: 37cb9a59d3dfd9e499151f87cd34c16d, type: 2}
-  lore: 
+  lore: 'Rocks are magical: they have an energy inside them that is invisible to
+    the eye, but effective to the body and mind. Atlantis loves to play around with
+    them in her free time, trying to decipher how they influence the energy of things
+    around them. She also studies them professionally, and hopes one day to publish
+    definitive proof of the magical properties of minerals and stones.'
   ClassName: Naturia -Geologist
   personalAbilityName: Pure Spring
-  personalAbilityDescription: 
+  personalAbilityDescription: You know the Earth, she calls you. Heal to full health
+    using fountains. You don't trigger fountains cooldowns if nobody is near you.

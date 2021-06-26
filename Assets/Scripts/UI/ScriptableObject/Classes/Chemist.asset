@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 2a871407dfcf44641af45341e63fd1aa, type: 3}
   classData: {fileID: 11400000, guid: ae5b4fad9be1a77479f488f15da97f3e, type: 2}
-  lore: 
+  lore: 'Helion is a brilliant scientist that earned a doctorate in chemistry extremely
+    young, and used her knowledge to help others up to her twenties: being in close
+    contact with dangerous and obscure chemicals on daily basis, though, made her
+    no longer think clearly, and she has become hateful and spiteful. Despite this,
+    she is still able to express appreciation, being willing to congratulate those
+    who have impressed her, especially in the chemical field. Her research has lead
+    her to learn many secrets on how the world works, at the cost of unconventional
+    and likely unethical experiments.'
   ClassName: Moonsighters - Chemist
   personalAbilityName: Pungent Fumes
-  personalAbilityDescription: 
+  personalAbilityDescription: 'The perfect recipe has been created: invigorating,
+    strong and fresh. +10% dmg & +10% hp.'

@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 67ad34b2220388545bd3e897592904e3, type: 3}
   classData: {fileID: 11400000, guid: 74bf2e224bce7ed47950cf3fceebddb6, type: 2}
-  lore: 
+  lore: "Former field journalist, Aerith traversed the world to film every war, comment
+    each and every conflict, and to show the world what was really happening where
+    the media weren't usually allowed. After getting shot in the chest during one
+    of her missions, and surviving (not without complications), she unfortunately
+    had to take a less \u201Cadventurous\u201D job, and settled to being the anchor
+    of one of the most influential news programs that there are. Even if she can\u2019t
+    be the one in the eye of the storm, she sure will spread the news to everyone
+    else."
   ClassName: Herin - Anchor
   personalAbilityName: Broadcast
-  personalAbilityDescription: 
+  personalAbilityDescription: "Everyone needs to know this, come on. When you get
+    downed, you appear on everyone\u2019s map. +5% proximity chat range."

@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 7b45926f39a91b943a593148ae4db5fd, type: 3}
   classData: {fileID: 11400000, guid: 01096132e7ac7ff48812738a3acf08b5, type: 2}
-  lore: 
+  lore: 'Sebastian believes in law and order above anything else: to him, peace in
+    the streets should always prevail over disorder. He lives his life rightfully,
+    always on edge as if he were always on duty. A strong believer in restorative
+    justice, he tries to never take a life if he can: in his free time he also volunteers
+    to help his community, which he strongly desires to see grow and flourish.'
   ClassName: Ceuin - Policeman
   personalAbilityName: Investigation
-  personalAbilityDescription: 
+  personalAbilityDescription: 'A good job is a quick job. Start with the item: [Tracker].
+    You can''t be tracked if you''re full health.'

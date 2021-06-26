@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: 7d4843a823ed7c9449585a111647867d, type: 3}
   classData: {fileID: 11400000, guid: 37cb9a59d3dfd9e499151f87cd34c16d, type: 2}
-  lore: 
+  lore: "Devon is a timid and reserved herbalist: he spends his free time creating
+    tinctures and brews, trying to see if any of them could have any beneficial property
+    for the body. Even if he\u2019s just out of high school, he has a prominent role
+    in the Naturia society as an adept shaman: apparently he\u2019s the reincarnation
+    of an old Oracle, so everyone has high expectations for him. But, in his eyes,
+    this is just a tiresome charade: he would much rather be a nobody and spend his
+    time alone with his plants, free and happy."
   ClassName: Naturia - Herbalist
   personalAbilityName: Strong Brew
-  personalAbilityDescription: 
+  personalAbilityDescription: A mixture of herbs and natural products that do wonders
+    for ones health. +15% hp.

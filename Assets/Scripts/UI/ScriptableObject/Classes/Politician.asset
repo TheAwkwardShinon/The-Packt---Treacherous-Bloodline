@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalAbility: {fileID: 21300000, guid: a1b2efd3ee90320448d4d1007a5d1bd7, type: 3}
   classData: {fileID: 11400000, guid: 01096132e7ac7ff48812738a3acf08b5, type: 2}
-  lore: 
+  lore: "One day Bonnie asked her mother what power was, and in response she got
+    \u201CIt\u2019s when the people listen to you\u201D. That\u2019s why she decided
+    to become an influential person: ruthless and deceivingly kind, she would and
+    has done anything in her power to reach a level of prestige that could lend her
+    a job in politics. She doesn\u2019t really know what she wants from this job,
+    but she wants it now. Maybe it\u2019s just the power."
   ClassName: Ceuin - Politician
   personalAbilityName: Down To Business
-  personalAbilityDescription: 
+  personalAbilityDescription: "In the end, everyone dreams to rule the world\u2026
+    but only a few of us posses the power to do it. +10% speed & +10% hp."
