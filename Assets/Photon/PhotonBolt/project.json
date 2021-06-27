@@ -4407,9 +4407,10 @@
           "Priority": 1,
           "PropertyType": {
             "$type": "Bolt.Compiler.PropertyTypeTransform, bolt.compiler",
-            "PositionSelection": 14,
-            "RotationSelection": 14,
+            "PositionSelection": 6,
+            "RotationSelection": 6,
             "ExtrapolationVelocityMode": 2,
+            "Space": 1,
             "PositionCompression": [
               {
                 "MinValue": -1024,
@@ -4462,6 +4463,8 @@
                 "BitsRequired": 16
               }
             ],
+            "PositionStrictCompare": true,
+            "RotationStrictCompare": true,
             "RotationCompressionQuaternion": {
               "MinValue": -1,
               "MaxValue": 1,
