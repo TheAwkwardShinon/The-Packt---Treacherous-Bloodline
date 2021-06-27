@@ -10,7 +10,7 @@ namespace ThePackt{
         public override void GainAbility(Player player)
         {
             base.GainAbility(player);
-            player.GetPlayerData().standardCircleSize += 3f;
+            player.GetPlayerData().standardCircleSize += 6f;
             player.SetFogOfWarDiameter( player.GetPlayerData().standardCircleSize);
         }
     }
