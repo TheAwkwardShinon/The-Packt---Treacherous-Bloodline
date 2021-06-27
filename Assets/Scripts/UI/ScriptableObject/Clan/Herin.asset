@@ -56,7 +56,7 @@ MonoBehaviour:
   - Cutting Edge
   - Damage Power Up 1
   - Damage Power Up 2
-  - Cacophony
+  - Ultimate
   clanLogo: {fileID: 21300000, guid: 2870291566faa8c4994e4722e4d9d2c6, type: 3}
   characterSprite: {fileID: 21300000, guid: 05ccb87c7bae5ad43b82fd73fc2765ff, type: 3}
   _rootAbility: {fileID: 11400000, guid: 1a3bb1b59c579d84285901b2d6baf204, type: 2}

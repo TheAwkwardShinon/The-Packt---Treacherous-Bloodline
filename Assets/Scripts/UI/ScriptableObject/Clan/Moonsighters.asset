@@ -55,7 +55,7 @@ MonoBehaviour:
   - Astral Conjunction
   - Hp Power Up 1
   - Hp Power Up 2
-  - Omniscence
+  - Ultimate
   clanLogo: {fileID: 21300000, guid: 5130df14df983a544b3e60f0ba031ca8, type: 3}
   characterSprite: {fileID: 21300000, guid: d0207a641df40d249ba530f0b507bb76, type: 3}
   _rootAbility: {fileID: 11400000, guid: 2a64d1e9480a5944c814f0b9632a851b, type: 2}

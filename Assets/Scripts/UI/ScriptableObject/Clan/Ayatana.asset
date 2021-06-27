@@ -54,7 +54,7 @@ MonoBehaviour:
   - Astral Conjunction
   - Damage Power Up 1
   - Damage Power Up 2
-  - Jester's Finale
+  - Ultimate
   clanLogo: {fileID: 21300000, guid: 8abc71217088a04498ea406e8ca008dc, type: 3}
   characterSprite: {fileID: 21300000, guid: e28a782807f7d2346b83722891c0755a, type: 3}
   _rootAbility: {fileID: 11400000, guid: e94cb471a0cfcd44db7ba7bfa984d663, type: 2}
