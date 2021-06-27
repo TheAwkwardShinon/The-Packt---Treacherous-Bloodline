@@ -499,34 +499,10 @@ namespace ThePackt
         #endregion
 
         #region getters
-     
+        public Utils.VectorAssociation[] GetPlayerSpawnPositions()
+        {
+            return playersSpawnPositions;
+        }
         #endregion
     }
 }
-
-
-/* public override void OnEvent(HealEvent evnt)
-        {
-             if (BoltNetwork.IsServer)
-            {
-                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
-                {
-                    Debug.Log("[INTERACTION] HEAL CALLBACK CORRECTLY CALLED");
-                    _player.Heal();
-                }
-                else {
-                    BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
-                    var newEvnt = HealEvent.Create(entity.Source);
-                    newEvnt.TargetPlayerNetworkID = evnt.TargetPlayerNetworkID;
-                    newEvnt.Send();
-                }
-            }
-            else{
-                if (_player.entity.NetworkId.Equals(evnt.TargetPlayerNetworkID))
-                {
-                    _player.Heal();
-                     Debug.Log("[INTERACTION] HEAL CALLBACK CORRECTLY CALLED");
-                }
-            }
-        }
-*/

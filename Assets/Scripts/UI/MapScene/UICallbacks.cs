@@ -6,23 +6,10 @@ using UnityEngine.SceneManagement;
 namespace ThePackt {
     public class UICallbacks : MonoBehaviour
     {
-        public BoltEntity timer;
+        [SerializeField] GameObject _networkManager;
 
         public void Disconnect()
         {
-            /*
-            if (BoltNetwork.IsServer)
-            {
-                foreach(BoltEntity e in BoltNetwork.Entities)
-                {
-                    if(e.GetComponent<TimerManager>() != null)
-                    {
-                        timer = e;
-                        timer.GetComponent<TimerManager>().addTime(30);
-                    }
-                }
-            }*/
-
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("[NETWORKLOG] server disconnecting");
@@ -37,6 +24,19 @@ namespace ThePackt {
                 evnt.Send();
             }
             
+        }
+
+        public void Respawn()
+        {
+            CharacterSelectionData selectedData = CharacterSelectionData.Instance;
+
+            foreach (Utils.VectorAssociation assoc in _networkManager.GetComponent<MapNetworkCallbacks>().GetPlayerSpawnPositions())
+            {
+                if (assoc.name == selectedData.GetCharacterSelected())
+                {
+                    selectedData.GetPlayerScript().gameObject.transform.position = assoc.position;
+                }
+            }
         }
     }
 }
