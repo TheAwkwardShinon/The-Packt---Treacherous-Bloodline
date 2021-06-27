@@ -23832,8 +23832,8 @@ MonoBehaviour:
   _searchingTooltipGotItTButton: {fileID: 1054001775}
   _eventSystem: {fileID: 895784725}
   _logoHandler: {fileID: 1481698303}
-  _maxConnectionTentatives: 3
-  _sessionSearchTimeout: 5
+  _maxConnectionTentatives: 4
+  _sessionSearchTimeout: 15
 --- !u!1 &1249319332
 GameObject:
   m_ObjectHideFlags: 0
