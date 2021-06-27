@@ -1807,7 +1807,7 @@ MonoBehaviour:
   _cooldown: 10
   _autoJoinTime: 5
   _autoAbandonTime: 5
-  _bulletPrefab: {fileID: 6276787510045633164, guid: c50ced9f87ddca64db112ddbb35bc68c, type: 3}
+  _bulletPrefab: {fileID: 6276787510045633164, guid: 72dbb2da722c0134b81635e7704373f0, type: 3}
   _spawnPoints:
   - {fileID: 1335414896150184384}
   - {fileID: 3115399470509244817}

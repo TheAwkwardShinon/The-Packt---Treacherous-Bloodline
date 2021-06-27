@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6694372955216321830}
   - component: {fileID: 2771004243570711574}
   m_Layer: 8
-  m_Name: EnemyBullet
+  m_Name: CannonBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 68ef2ac28b4f62246bdae1325cfdbb42, type: 3}
-  m_Color: {r: 0.09019608, g: 0.24705882, b: 0.37254903, a: 1}
+  m_Color: {r: 0.61960787, g: 0.101960786, b: 0.101960786, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
