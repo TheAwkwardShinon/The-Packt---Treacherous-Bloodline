@@ -30,7 +30,7 @@ namespace ThePackt{
                         _charSelectdata.SetCharacterIndex(9); //index for herbalist
                         break;
                 case 4: _charSelectdata.SetCharacterSelected(Constants.HERIN);
-                        _charSelectdata.SetCharacterIndex(0); //index for anchor
+                        _charSelectdata.SetCharacterIndex(8); //index for anchor
                         break;
                 case 5: _charSelectdata.SetCharacterSelected(Constants.CEUIN);
                         _charSelectdata.SetCharacterIndex(10); //index for lawyer

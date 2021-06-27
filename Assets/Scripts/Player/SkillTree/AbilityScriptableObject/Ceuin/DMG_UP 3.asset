@@ -16,6 +16,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cfa279f52fee8ed43846aaec52aa61ab, type: 2}
   - {fileID: 11400000, guid: 67f66489700afc2459474de7c052b12c, type: 2}
   - {fileID: 11400000, guid: 763711ce647047e43a66b22717a06f4e, type: 2}
-  abilityName: Damege Power Up 3
+  abilityName: Damage Power Up 3
   animationName: 4
   colorIndex: 3

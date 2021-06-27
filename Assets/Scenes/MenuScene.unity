@@ -11097,7 +11097,7 @@ MonoBehaviour:
   - {fileID: 823329070}
   - {fileID: 986297518}
   - {fileID: 1154950299}
-  _lore: {fileID: 2130861145}
+  _lore: {fileID: 150413254}
   _personalAbilityName: {fileID: 780230422}
   _className: {fileID: 1667759524}
   _abilitiesDescription: {fileID: 595986026}
@@ -13762,7 +13762,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Herin
 
-    Anchor'
+    Guide'
 --- !u!222 &731018432
 CanvasRenderer:
   m_ObjectHideFlags: 0

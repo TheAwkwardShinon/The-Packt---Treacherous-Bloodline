@@ -127,12 +127,12 @@ namespace ThePackt
                 Debug.Log("[MAIN] main quest started");
 
                 if(_localPlayer.isImpostor()){
-                    _objectiveText.text = " YOU ARE THE IMPOSTOR";
+                    _objectiveText.text = " YOU ARE THE BAD WOLF";
                     _objectiveText.color = Color.red;
                     _objectiveMessage.SetActive(true);
                 }
                 else{
-                    _objectiveText.text = " YOU ARE NOT THE IMPOSTOR";
+                    _objectiveText.text = " YOU ARE THE GOOD WOLF";
                     _objectiveText.color = Color.blue;
                     _objectiveMessage.SetActive(true);
                 }

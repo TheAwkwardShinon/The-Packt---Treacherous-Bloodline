@@ -23,6 +23,8 @@ MonoBehaviour:
     that could give his clients a new insight on the city he so deeply loves and
     cherishes."
   ClassName: Herin - Guide
-  personalAbilityName: Fast Walker
-  personalAbilityDescription: Gliding through the crowd, your agile figure gets where
-    it wants faster than anyone else. +15% speed.
+  personalAbilityName: Special Ability
+  personalAbilityDescription: '"You all are way too agitated... let''s slow down
+    a bit!"
+
+    The special attack in wolf form slows the target.'

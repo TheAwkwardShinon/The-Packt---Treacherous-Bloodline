@@ -15,6 +15,6 @@ MonoBehaviour:
   _unlockableAbilities:
   - {fileID: 11400000, guid: 97f3542401e3d304093197de6c463e50, type: 2}
   - {fileID: 11400000, guid: d49d9c4a769d40b4d8252f7e046297df, type: 2}
-  abilityName: Taste Like Iron
+  abilityName: Tastes Like Iron
   animationName: third
   colorIndex: 2

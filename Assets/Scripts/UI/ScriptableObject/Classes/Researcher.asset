@@ -22,6 +22,6 @@ MonoBehaviour:
     Kyren, if you can\u2019t make the most out of any given moment, then you don\u2019t
     deserve a single extra second."
   ClassName: Moonsighters - Researcher
-  personalAbilityName: Time Expert
-  personalAbilityDescription: You started to read a book about general relativity,
-    but you got lost in time. Time bombs are +50% effective.
+  personalAbilityName: Special Ability
+  personalAbilityDescription: "\"They don't understand how all of this works...pathetic.\"
+    \nThe special attack in wolf form lowers the damage output of the target."

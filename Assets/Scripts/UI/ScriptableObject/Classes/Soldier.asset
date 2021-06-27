@@ -22,6 +22,6 @@ MonoBehaviour:
     level headed, even if the Fele blood runs deep in him, the abundant courage mixed
     with his lack of fear more often than not clearly shows."
   ClassName: Fele - Soldier
-  personalAbilityName: Martial Training
-  personalAbilityDescription: The years of service forged your body and your mind.
-    +15% dmg.
+  personalAbilityName: Special Ability
+  personalAbilityDescription: "\"I AM THE FIRE THAT BURNS THIS CITY.\" \nThe special
+    attack in wolf form deals more damage than the one of other clans."

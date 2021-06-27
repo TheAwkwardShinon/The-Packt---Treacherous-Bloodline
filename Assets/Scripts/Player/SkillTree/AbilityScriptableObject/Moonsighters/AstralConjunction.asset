@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unlockableAbilities:
   - {fileID: 11400000, guid: d7b90f16b840a834f819146fab6cb4de, type: 2}
-  abilityName: Astral Conjuntion
+  abilityName: Astral Conjunction
   animationName: 10
   colorIndex: 9

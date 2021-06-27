@@ -22,6 +22,8 @@ MonoBehaviour:
     this is just a tiresome charade: he would much rather be a nobody and spend his
     time alone with his plants, free and happy."
   ClassName: Naturia - Herbalist
-  personalAbilityName: Strong Brew
-  personalAbilityDescription: A mixture of herbs and natural products that do wonders
-    for ones health. +15% hp.
+  personalAbilityName: Special Ability
+  personalAbilityDescription: '"You. Stay away from me."
+
+    The special attack
+    in wolf form inflicts a knock-back to the target.'

@@ -21,6 +21,8 @@ MonoBehaviour:
     tongue. Dashing, hot and young, this young wolf knows how this world works, and
     nobody will stop his pursuit of success, power, and fame."
   ClassName: Ceuin - Lawyer
-  personalAbilityName: Never Cornered
-  personalAbilityDescription: There must be a way, you know it. Up to +30% dmg the
-    lower your hp are.
+  personalAbilityName: Special Ability
+  personalAbilityDescription: '"We know our kind, better than anyone else."
+
+    The
+    special attack in wolf form copies the target special attack. No effect on enemies.'

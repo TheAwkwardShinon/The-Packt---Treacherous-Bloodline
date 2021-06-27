@@ -22,6 +22,8 @@ MonoBehaviour:
     that get narrated in the streets, and usually incorporate those urban legends
     in his own works."
   ClassName: Ayatana - Writer
-  personalAbilityName: Snake Eyes
-  personalAbilityDescription: You fame is just a mix of skill, talent and luck, face
-    it. At the start, the cost of 2 random cells of the skill tree becomes zero.
+  personalAbilityName: Special Ability
+  personalAbilityDescription: '"She didn''t see it coming, ya know?"
+
+    The special
+    attack in wolf form reduces the field of view of the target. It stuns enemies.'

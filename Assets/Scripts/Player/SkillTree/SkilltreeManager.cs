@@ -16,6 +16,8 @@ namespace ThePackt{
         [SerializeField] private Image _characterSprite;
         [SerializeField] private List<Image> _abilitiesImage;
         [SerializeField] private Text _personalAbilityName;
+
+        [SerializeField] private Text _personalAbilityDescription;
         [SerializeField] private Text _className;
         [SerializeField] private List<Text> _abilitiesDescription; //TODO change this to a single text (tooltip)
         [SerializeField] private Image _logo;
@@ -38,6 +40,7 @@ namespace ThePackt{
             
             _player =  GameObject.FindWithTag(_selectedData.GetCharacterSelected()).GetComponent<Player>();
             _personalAbilityName.text = _characters[_index].personalAbilityName;
+            _personalAbilityDescription.text = _characters[_index].personalAbilityDescription;
             _abilitiesImage[0].sprite = _characters[_index].personalAbility;
             _className.text = _characters[_index].ClassName;
             _characterSprite.sprite = _characters[_index].classData.characterSprite;

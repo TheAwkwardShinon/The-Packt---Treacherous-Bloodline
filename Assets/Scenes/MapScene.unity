@@ -7976,7 +7976,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You're the impostor
+  m_Text: You're the Bad Wolf
 --- !u!222 &594863493
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28262,6 +28262,7 @@ MonoBehaviour:
   - {fileID: 1898871188}
   - {fileID: 289892751}
   _personalAbilityName: {fileID: 1849472913}
+  _personalAbilityDescription: {fileID: 1945591152}
   _className: {fileID: 1822311261}
   _abilitiesDescription: []
   _logo: {fileID: 752120023}

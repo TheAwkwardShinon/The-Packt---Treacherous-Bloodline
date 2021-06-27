@@ -56,7 +56,7 @@ MonoBehaviour:
   - Unshackled
   - Speed Power Up 1
   - Speed Power Up 2
-  - Ritual Of Dawn
+  - Ultimate
   clanLogo: {fileID: 21300000, guid: 978876af08d11ca4390312e698016d15, type: 3}
   characterSprite: {fileID: 21300000, guid: 64414f2c7b1b80d4a9abf6dccdc152f8, type: 3}
   _rootAbility: {fileID: 11400000, guid: d11acd85ce71c344cafaad88dfedf938, type: 2}

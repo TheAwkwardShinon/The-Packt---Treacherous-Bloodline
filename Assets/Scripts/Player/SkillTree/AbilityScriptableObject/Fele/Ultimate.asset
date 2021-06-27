@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ultimate
   m_EditorClassIdentifier: 
   _unlockableAbilities: []
-  abilityName: 
+  abilityName: Ultimate
   animationName: 
-  colorIndex: 0
+  colorIndex: 15

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FeleSpeedStat2
   m_EditorClassIdentifier: 
   _unlockableAbilities:
-  - {fileID: 11400000, guid: 1b4602fad7de09c46a191c598cbae239, type: 2}
+  - {fileID: 11400000, guid: d31fd199c2e7d344f9e75ca742d9cd3d, type: 2}
   abilityName: Speed Power Up 2
   animationName: 12
   colorIndex: 11
