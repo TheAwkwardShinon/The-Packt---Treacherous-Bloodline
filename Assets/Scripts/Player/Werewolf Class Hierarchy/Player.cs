@@ -541,7 +541,7 @@ namespace ThePackt{
             _objectiveText.color = Color.yellow;
             _objectiveMessage.SetActive(true);
             _spendableTime += time;
-            _spendableExp += exp;
+            _spendableExp += (exp + exp * _playerData.experienceMultiplier);
 
             _questTitleText.text = _activeQuest._title;
 
