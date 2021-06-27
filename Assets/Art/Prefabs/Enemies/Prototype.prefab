@@ -499,7 +499,7 @@ MonoBehaviour:
   _attackRange: 0.4
   _attackPower: 8
   _attackRate: 0.8
-  _movementSpeed: 3
+  _movementSpeed: 2
   _slowedSpeed: 0.3
   _walkSfx: {fileID: 575646567715241601}
   _attackSfx: {fileID: 3579213105201263715}
