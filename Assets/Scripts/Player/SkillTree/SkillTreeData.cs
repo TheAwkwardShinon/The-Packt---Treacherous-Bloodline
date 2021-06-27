@@ -37,6 +37,7 @@ namespace ThePackt{
             _unlockableAbility = new List<AbilityData>();
             _unlockedAbility = new List<AbilityData>();
             _unlockableAbility.Add(_rootAbility);
+            Debug.LogError("[BUY ABILITY] unlockable " + _unlockableAbility[0].abilityName);
             string temp = _manager.getChardata().ClassName.Split('-')[0].Trim().ToLower();
             _player = GameObject.FindWithTag(temp).GetComponent<Player>();
            
@@ -49,10 +50,12 @@ namespace ThePackt{
 
         /* with this method the player gain an ability if he could buy it, then the method manage the skillTree progression */
         public void BuyAbility(string name, int cost){
-            //Debug.LogError("[BUY ABILITY] trying to buy: "+name + " at cost: "+cost);
+            Debug.LogError("[BUY ABILITY] trying to buy: "+name + " at cost: "+cost);
             foreach(AbilityData a in _unlockableAbility){
-                if(a.abilityName.Equals(name)){
-                    if(_player.GetPlayerData().points < cost){
+                
+                if (a.abilityName.Equals(name)){
+                    Debug.LogError("[BUY ABILITY] available " + name + ", cost: " + cost + " spendable: " + _player.GetSpendableExp());
+                    if (_player.GetSpendableExp() < cost){
                         _audioDeny.Play();
                         Debug.LogError("[BUY ABILITY] can't afford this ability due to its cost");
                         return;
@@ -66,7 +69,7 @@ namespace ThePackt{
                         }
                 
                         //Debug.LogError("[BUY ABILITY] you got sufficent money to buy it");
-                        _player.GetPlayerData().points -= cost;
+                        _player.SetSpendableExp(_player.GetSpendableExp() - cost);
                         if(a.HasChildren())
                             AddUnlockableAbility(a._unlockableAbilities);
                         a.GainAbility(_player);
@@ -79,6 +82,7 @@ namespace ThePackt{
                     }
                 }
             }
+            Debug.LogError("[BUY ABILITY] not unlockable");
             _audioDeny.Play();
             
         }

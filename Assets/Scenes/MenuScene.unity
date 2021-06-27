@@ -2187,7 +2187,7 @@ MonoBehaviour:
     the game will start. In the meantime, you can chat with the other connected players
     through the proximity voice chat (you have to be near the other players to talk
     to them) and become familiar with the controls. Your character might not be the
-    one you selected because when the selected one is already taken, you will be
+    one you selected because, when the selected one is already taken, you will be
     assigned a random character.
 --- !u!222 &97687860
 CanvasRenderer:
@@ -18410,7 +18410,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: When you are ready to play, click on the "Host" button to create a session
     and wait for other players to join. Otherwise, if you want to join an already
-    existing game click on the "Join" button and wait. Finding a game may require
+    existing game, click on the "Join" button and wait. Finding a game may require
     some time, cancel by clicking on the "Cancel" button and retry if the process
     is taking too much time.
 --- !u!222 &999923830
@@ -21664,7 +21664,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: You can choose your favourite playable character among the six available
-    by clicking on its showcase. Under every character it's special ability, which
+    by clicking on its showcase. Under every character they're special ability, which
     is a magic projectile that can be shoot while in werewolf form, is described.
     You can also explore the other menus to discover the skill tree of every character,
     change settings, learn control keys and see the game credits.
@@ -29826,10 +29826,10 @@ MonoBehaviour:
     a different type of quest. To activate a quest interact (pressing "E") with the
     crystal present in the room. A green crystal means the quest is available, blue
     means the quest is activated and red means the quest is unavailable, in fact
-    after being completed a quest needs time to recharge and become available again.
-    You can join an already activated room by entering the room for a few seconds
-    and you can abandon it by leaving the room for a few seconds. A quest is completed
-    when its goal is completed and is failed when no player is partecipating. '
+    after being completed or failed a quest needs time to recharge and become available
+    again. You can join an already activated quest by entering the room for a few
+    seconds and you can abandon it by leaving the room for a few seconds. A quest
+    is completed when its goal is completed and is failed when no player is partecipating. '
 --- !u!222 &1579024227
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31148,7 +31148,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: Your goal depends on your role. If you are a good wolf, you have to cooperate
     with the other players to find the portal room, complete the quests and become
-    strong enough to destroy all the portals before you are out of time. But you
+    strong enough to destroy all the portals before you run out of time. But you
     also have to watch out for the bad wolf and kill him if you discover their identity.
     In fact, if you are the bad wolf, you will have to pretend you are not until
     you become enough strong to kill all the other players. Or you can try using
@@ -37526,10 +37526,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Completing a quest grants you exp points to spend in the skill tree and
-    gain new powers or time spendable to subtract time to the timer if you are the
+  m_Text: Completing a quest grants you exp points to spend in the skill tree to
+    gain new powers, or time spendable to subtract time to the timer if you are the
     bad wolf or add it otherwise. To spend this rewards open the menu by pressing
-    "Esc" and click on an ability to buy it or switch tab and click on the right
+    "Esc" and click on an ability to buy it or switch tab and click on the corresponding
     button to add or subtract time.
 --- !u!222 &1987566610
 CanvasRenderer:
