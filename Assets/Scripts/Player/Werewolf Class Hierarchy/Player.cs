@@ -746,21 +746,24 @@ namespace ThePackt{
 
          public bool CheckIfTouchingPlayer()
         {
-            if(_isHuman){
-                Collider2D col = Physics2D.OverlapBox(_wallCheck.position, new Vector3(0.1f,0.5f,0f), 0f, 
+
+            return Physics2D.Raycast(transform.position, Vector2.right * _facingDirection, 0.4f, _playerData.WhatIsPlayer);
+
+            /*if(_isHuman){
+                Collider2D col = Physics2D.OverlapBox(transform.position, new Vector3(5f,2f,0f), 0f, 
                     _playerData.WhatIsPlayer);
-                if(!col.Equals(null))
-                    if(!col.gameObject.Equals(gameObject))
+                if(col != null)
+                    if(!col.gameObject.name.Equals(gameObject.name))
                         return true;
             }
             else{
-                Collider2D col = Physics2D.OverlapBox(_wallCheckWolf.position, new Vector3(0.1f,0.5f,0f), 0f, 
+                Collider2D col = Physics2D.OverlapBox(transform.position, new Vector3(5f,2f,0f), 0f, 
                     _playerData.WhatIsPlayer);
-                if(!col.Equals(null))
-                    if(!col.gameObject.Equals(gameObject))
+                if(col != null)
+                    if(!col.gameObject.name.Equals(gameObject.name))
                         return true;
-            }
-            return false;
+            }*/
+            //return false;
         }
 
         ///<summary>
