@@ -33712,7 +33712,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 30.24}
-  m_SizeDelta: {x: 137.91, y: 45.38}
+  m_SizeDelta: {x: 210, y: 45.38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5684435445695781651
 CanvasRenderer:
@@ -33755,7 +33755,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player
+  m_Text: Player - 0000
 --- !u!1 &3643334756421371723
 GameObject:
   m_ObjectHideFlags: 0
@@ -43592,7 +43592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sceneGuid: 
   _serializerGuid: b91d6ae1-f195-42e8-97fa-23afd5a060a9
-  _prefabId: 17
+  _prefabId: 18
   _updateRate: 1
   _autoFreezeProxyFrames: 0
   _clientPredicted: 1

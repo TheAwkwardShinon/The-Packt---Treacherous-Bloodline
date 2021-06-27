@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
-  _range: 7
-  _attackPower: 15
+  _range: 8
+  _attackPower: 12.5
 --- !u!61 &1105417505840875489
 BoxCollider2D:
   m_ObjectHideFlags: 0
