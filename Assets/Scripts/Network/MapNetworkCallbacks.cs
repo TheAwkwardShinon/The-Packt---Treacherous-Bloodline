@@ -451,6 +451,7 @@ namespace ThePackt
         {
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player =entity.GetComponent<Player>();
+             Debug.LogError(" evento trasformazion: "+player.tag);
             player.GetHumanObject().SetActive(false);
             player.GetWolfObject().SetActive(true);
 
@@ -459,7 +460,9 @@ namespace ThePackt
         public override void OnEvent(DetransformationEvent evnt)
         {
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+            
             Player player =entity.GetComponent<Player>();
+            Debug.LogError(" evento detrasformazion: "+player.tag);
             player.GetWolfObject().SetActive(false);
             player.GetHumanObject().SetActive(true);
             
