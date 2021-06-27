@@ -15,5 +15,6 @@ MonoBehaviour:
   _unlockableAbilities:
   - {fileID: 11400000, guid: 09491dec621fc1440943000781a41945, type: 2}
   - {fileID: 11400000, guid: 1ff2aef0cf5e0544fb70887b89d2a6fc, type: 2}
-  abilityName: Damage Power Up
+  abilityName: Damage Power Up 1
   animationName: first
+  colorIndex: 0

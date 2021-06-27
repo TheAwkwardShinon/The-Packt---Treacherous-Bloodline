@@ -544,9 +544,20 @@ namespace ThePackt{
             _spendableExp += exp;
 
             _questTitleText.text = _activeQuest._title;
-            _questDescriptionText.text = "You got "+ _activeQuest._timeReward.ToString()+" spendable time and ";
-            _questReward.text = _activeQuest._timeReward.ToString();
-            //TODO_questExpReward
+
+            if(time > 0 && exp > 0)
+            {
+                _questDescriptionText.text = "You received " + time + " spendable time and " + exp + " exp points";
+            }
+            else if (time > 0 && exp == 0)
+            {
+                _questDescriptionText.text = "You received " + time + " spendable time";
+            }
+            else
+            {
+                _questDescriptionText.text = "You received " + exp + " exp points";
+            }
+
             _questAction.text = "QUEST COMPLETED";
             _questPanel.SetActive(true);
 

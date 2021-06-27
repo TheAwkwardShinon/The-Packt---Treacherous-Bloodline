@@ -15,6 +15,6 @@ MonoBehaviour:
   _unlockableAbilities:
   - {fileID: 11400000, guid: b6a801706e202b64fb33cc8b21ba5341, type: 2}
   - {fileID: 11400000, guid: 9689fee330fd2c9429db0d26d620b49d, type: 2}
-  abilityName: Speed Power Up
+  abilityName: Speed Power Up 1
   animationName: first
   colorIndex: 0

@@ -12,6 +12,7 @@ namespace ThePackt{
         #region variables
 
         protected CharacterSelectionData _selectedData;
+        protected Player _player;
         [SerializeField] private Image _characterSprite;
         [SerializeField] private List<Image> _abilitiesImage;
         [SerializeField] private Text _personalAbilityName;
@@ -35,18 +36,23 @@ namespace ThePackt{
         }
         private void Start(){
             
-            Player player =  GameObject.FindWithTag(_selectedData.GetCharacterSelected()).GetComponent<Player>();
+            _player =  GameObject.FindWithTag(_selectedData.GetCharacterSelected()).GetComponent<Player>();
             _personalAbilityName.text = _characters[_index].personalAbilityName;
             _abilitiesImage[0].sprite = _characters[_index].personalAbility;
             _className.text = _characters[_index].ClassName;
             _characterSprite.sprite = _characters[_index].classData.characterSprite;
             _logo.sprite = _characters[_index].classData.clanLogo;
-            _spendableExp.text = player.GetSpendableExp().ToString();
-            if(player.isImpostor())
+            _spendableExp.text = _player.GetSpendableExp().ToString();
+            if(_player.isImpostor())
                 _impostorText.gameObject.SetActive(true);
             for(int i=1; i<=_characters[_index].classData._abilitisSprite.Count;i++){ 
                 _abilitiesImage[i].sprite = _characters[_index].classData._abilitisSprite[i-1];
             }
+        }
+
+        private void Update()
+        {
+            _spendableExp.text = _player.GetSpendableExp().ToString();
         }
 
         public CharacterShowCaseData getChardata(){
