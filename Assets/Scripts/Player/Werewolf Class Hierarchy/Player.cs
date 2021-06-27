@@ -1057,53 +1057,65 @@ namespace ThePackt{
         }
 
         public void SetTransformationVFXActive(){
-            ActivateVFXEvent evnt;
-            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
-            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
-            evnt.Active = true;
-            evnt.VFXName = "transformation";
-            evnt.Send();
+            if(entity.IsOwner){
+                ActivateVFXEvent evnt;
+                evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+                evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+                evnt.Active = true;
+                evnt.VFXName = "transformation";
+                evnt.Send();
+            }
         }
         public void SetTransformationVFXNotActive(){
-            ActivateVFXEvent evnt;
-            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
-            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
-            evnt.Active = false;
-            evnt.VFXName = "transformation";
-            evnt.Send();
+            if(entity.IsOwner){
+                ActivateVFXEvent evnt;
+                evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+                evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+                evnt.Active = false;
+                evnt.VFXName = "transformation";
+                evnt.Send();
+            }
         }
         public void SetHitVFXActive(){
-            ActivateVFXEvent evnt;
-            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
-            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
-            evnt.Active = true;
-            evnt.VFXName = "hit";
-            evnt.Send();
+            if(entity.IsOwner){
+                ActivateVFXEvent evnt;
+                evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+                evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+                evnt.Active = true;
+                evnt.VFXName = "hit";
+                evnt.Send();
+            }
         }
         public void SetHitVFXNotActive(){
-            ActivateVFXEvent evnt;
-            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
-            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
-            evnt.Active = false;
-            evnt.VFXName = "hit";
-            evnt.Send();
+            if(entity.IsOwner){
+                ActivateVFXEvent evnt;
+                evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+                evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+                evnt.Active = false;
+                evnt.VFXName = "hit";
+                evnt.Send();
+            }
         }
 
          public void SetShootVFXActive(){
-            ActivateVFXEvent evnt;
-            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
-            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
-            evnt.Active = true;
-            evnt.VFXName = "special";
-            evnt.Send();
+             if(entity.IsOwner){
+                ActivateVFXEvent evnt;
+                evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+                evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+                evnt.Active = true;
+                evnt.VFXName = "special";
+                evnt.Send();
+             }
         }
         public void SetShootVFXNotActive(){
-            ActivateVFXEvent evnt;
-            evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
-            evnt.TargetPlayerNetworkID = this.entity.NetworkId;
-            evnt.Active = false;
-            evnt.VFXName = "special";
-            evnt.Send();
+            if(entity.IsOwner){
+                ActivateVFXEvent evnt;
+                evnt = ActivateVFXEvent.Create(GlobalTargets.Everyone);
+                evnt.TargetPlayerNetworkID = this.entity.NetworkId;
+                evnt.Active = false;
+                evnt.VFXName = "special";
+                evnt.Send();
+            }
         }
 
         public void SetTransformationVFX(bool value){

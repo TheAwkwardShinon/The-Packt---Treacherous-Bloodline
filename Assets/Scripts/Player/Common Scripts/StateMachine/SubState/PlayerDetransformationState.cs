@@ -35,14 +35,16 @@ namespace ThePackt{
         }
          public override void AnimationFinishTrigger()
         {
-            _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
-            _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
-            DetransformationEvent evnt;
-            evnt = DetransformationEvent.Create(GlobalTargets.Everyone,ReliabilityModes.ReliableOrdered);
-            evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
-            evnt.Send();
-            /* _player.GetWolfObject().SetActive(false);
-            _player.GetHumanObject().SetActive(true);*/
+            if(_player.entity.IsOwner){
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                DetransformationEvent evnt;
+                evnt = DetransformationEvent.Create(GlobalTargets.Everyone,ReliabilityModes.ReliableOrdered);
+                evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                evnt.Send();
+                /* _player.GetWolfObject().SetActive(false);
+                _player.GetHumanObject().SetActive(true);*/
+            }
 
         }
 
