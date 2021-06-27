@@ -32,6 +32,8 @@ namespace ThePackt{
         [SerializeField] private List<CharacterShowCaseData> _characters;
         [SerializeField] private AudioSource _audioSource;
 
+        [SerializeField] private Text notPlayableText;
+
         private int _currentIndex = 0;
 
         #endregion
@@ -67,6 +69,21 @@ namespace ThePackt{
             _characterSprite.sprite = _characters[_currentIndex].classData.characterSprite;
             _logo.sprite = _characters[_currentIndex].classData.clanLogo;
             _lore.text = _characters[_currentIndex].lore;
+            _abilitiesDescription.text = _characters[_currentIndex].personalAbilityDescription;
+
+            
+            if(!_characters[_currentIndex].ClassName.Equals("Ceuin - Lawyer") &&!_characters[_currentIndex].ClassName.Equals("Ayatana - Writer")
+                && !_characters[_currentIndex].ClassName.Equals("Herin - Guide") && !_characters[_currentIndex].ClassName.Equals("Fele - Soldier") &&
+                !_characters[_currentIndex].ClassName.Equals("Naturia - Herbalist") && !_characters[_currentIndex].ClassName.Equals("Moonsighters - Researcher")){
+                _characterSprite.color = Color.black;
+                notPlayableText.gameObject.SetActive(true);
+            }
+
+            else{  
+                _characterSprite.color = Color.white;
+                notPlayableText.gameObject.SetActive(false);
+            }
+            
             /*to add description and other things */
             for(int i=1; i<=_characters[_currentIndex].classData._abilitisSprite.Count;i++){ 
                 _abilitiesImage[i].sprite = _characters[_currentIndex].classData._abilitisSprite[i-1];
