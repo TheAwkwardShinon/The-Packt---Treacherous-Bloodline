@@ -10,6 +10,7 @@ namespace ThePackt
     {
         [SerializeField] private GameObject _objectivePrefab;
         [SerializeField] private Transform[] _objectivePositions;
+        [SerializeField] private Transform _upLeftPosition;
         [SerializeField] private float _returnToMenuSeconds;
         private List<BoltEntity> _objectives;
         private List<BoltEntity> _notImpostors;
@@ -84,6 +85,7 @@ namespace ThePackt
 
             state.AddCallback("State", StateCallback);
         }
+
         public override void SimulateOwner()
         {
             if (_state == Constants.STARTED)
@@ -99,7 +101,17 @@ namespace ThePackt
         {
             if (BoltNetwork.IsServer)
             {
-                BoltEntity _spawnedObjective = BoltNetwork.Instantiate(_objectivePrefab, pos.position, pos.rotation);
+                var token = new ObjectiveDataToken();
+                if (pos == _upLeftPosition)
+                {
+                    token.SetIsUpLeft(true);
+                }
+                else
+                {
+                    token.SetIsUpLeft(false);
+                }
+
+                BoltEntity _spawnedObjective = BoltNetwork.Instantiate(_objectivePrefab, token, pos.position, pos.rotation);
                 _objectives.Add(_spawnedObjective);
 
                 _spawnedObjective.GetComponent<Objective>()._rotation = pos.rotation;

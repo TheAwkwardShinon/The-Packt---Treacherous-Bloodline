@@ -31,9 +31,19 @@ namespace ThePackt{
             _player.PlayInteractSFX();
 
             if(_interactionType.Equals("player")){
-                var evnt = StartHealingEvent.Create(BoltNetwork.Server);
-                evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
-                evnt.Send();
+
+                if (BoltNetwork.IsServer)
+                {
+                    var evnt = StartHealingEvent.Create(_interactionTarget.GetComponent<Player>().entity.Source);
+                    evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
+                    evnt.Send();
+                }
+                else
+                {
+                    var evnt = StartHealingEvent.Create(BoltNetwork.Server);
+                    evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
+                    evnt.Send();
+                }
             }
             _player._interactTooltip.SetActive(false);
         }
@@ -57,9 +67,19 @@ namespace ThePackt{
             if(Time.time > _startTime + _timeToInteract){
                 if(_interactionType.Equals("player")){
                     Debug.LogWarning("[INTERACTION STATE] heal event started");
-                    var evnt = HealEvent.Create(BoltNetwork.Server);
-                    evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId; //però devo farlo dell col testa di cazzo ricordatelo. COL = QUELLO CHE HAI COLPITO.
-                    evnt.Send();
+
+                    if (BoltNetwork.IsServer)
+                    {
+                        var evnt = HealEvent.Create(_interactionTarget.GetComponent<Player>().entity.Source);
+                        evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
+                        evnt.Send();
+                    }
+                    else
+                    {
+                        var evnt = HealEvent.Create(BoltNetwork.Server);
+                        evnt.TargetPlayerNetworkID = _interactionTarget.GetComponent<Player>().entity.NetworkId;
+                        evnt.Send();
+                    }
                 }
                 else _player.AcceptQuest(_interactionTarget.GetComponentInParent<Quest>());
                 _isAbilityDone = true;

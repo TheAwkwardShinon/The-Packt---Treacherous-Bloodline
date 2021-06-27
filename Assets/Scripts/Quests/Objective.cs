@@ -18,6 +18,7 @@ namespace ThePackt
         private MainQuest _mainQuest;
 
         private bool _isEnemyAlive;
+        private bool _isUpLeft;
         [SerializeField] private float _spawnCooldown;
         private float _spawnStartTime;
         private BoltEntity _spawnedEnemy;
@@ -27,7 +28,7 @@ namespace ThePackt
 
         public override void SimulateOwner()
         {
-            if (_spawnedEnemy != null && !_spawnedEnemy.IsAttached)
+            if ((_spawnedEnemy != null && !_spawnedEnemy.IsAttached) || _spawnedEnemy == null)
             {
                 _isEnemyAlive = false;
             }
@@ -55,7 +56,9 @@ namespace ThePackt
         {
             if (BoltNetwork.IsServer)
             {
-                _randomIndex = Random.Range(0, _enemyPrefabs.Length);
+                var token = (ObjectiveDataToken) entity.AttachToken;
+
+                _isUpLeft = token._isUpLeft;
                 _spawnedEnemy = null;
                 _spawnStartTime = Time.time;
                 _isEnemyAlive = false;
@@ -95,6 +98,15 @@ namespace ThePackt
         {
             if (BoltNetwork.IsServer)
             {
+                if (_isUpLeft)
+                {
+                    _randomIndex = Random.Range(1, _enemyPrefabs.Length);
+                }
+                else
+                {
+                    _randomIndex = Random.Range(0, _enemyPrefabs.Length);
+                }
+                
                 _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[_randomIndex], _spawnPoint.position, _spawnPoint.rotation);
                 _isEnemyAlive = true;
 
