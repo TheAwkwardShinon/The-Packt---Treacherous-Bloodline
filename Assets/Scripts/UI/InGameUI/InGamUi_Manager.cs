@@ -16,6 +16,7 @@ namespace ThePackt{
         private EventSystem _eventsystem;
 
         private GameObject _menuInGameUI;
+        private GameObject _tooltip;
 
         #endregion
 
@@ -28,6 +29,7 @@ namespace ThePackt{
                 _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTabGroup();
                 _eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
                 _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
+                 _tooltip =  GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTooltip();
             }
 
         }
@@ -37,6 +39,7 @@ namespace ThePackt{
                _tabgroup = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTabGroup();
                _eventsystem = GameObject.Find("EventSystem").GetComponent<EventSystem>(); 
                _menuInGameUI = GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetMenu();
+               _tooltip =  GameObject.Find("Canvas").GetComponent<HiddenCanvas>().GetTooltip();
             }
         }
         
@@ -69,6 +72,7 @@ namespace ThePackt{
             {
                 GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
                 _menuInGameUI.SetActive(false);
+                _tooltip.SetActive(false);
             }
             else if(context.canceled){
 

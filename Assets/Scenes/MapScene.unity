@@ -32743,6 +32743,7 @@ MonoBehaviour:
   _questPanel: {fileID: 949584762}
   _questHandler: {fileID: 1412463384}
   _objectiveMessage: {fileID: 1798211892}
+  _tooltip: {fileID: 811606252}
 --- !u!1 &910124863
 GameObject:
   m_ObjectHideFlags: 0

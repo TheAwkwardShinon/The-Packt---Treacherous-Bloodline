@@ -23,6 +23,8 @@ namespace ThePackt{
 
         [SerializeField] private GameObject _objectiveMessage;
 
+        [SerializeField] private GameObject _tooltip;
+
         public GameObject GetMenu(){
             return menu;
         }
@@ -55,6 +57,10 @@ namespace ThePackt{
 
         public Text GetReward(){
             return _questReward;
+        }
+
+        public GameObject GetTooltip(){
+            return _tooltip;
         }
         public QuestUIHandler GetQuestHandler(){
             return _questHandler;
