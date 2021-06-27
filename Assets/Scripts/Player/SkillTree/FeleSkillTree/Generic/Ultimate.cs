@@ -11,7 +11,7 @@ namespace ThePackt{
         public override void GainAbility(Player player)
         {
             base.GainAbility(player);
-            player.GetPlayerData().specialAttackCooldown -= 6f;
+            player.GetPlayerData().specialAttackCooldown -= 3f;
         }
     }
 }
