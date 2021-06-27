@@ -53,7 +53,7 @@ namespace ThePackt{
             Debug.LogError("[BUY ABILITY] trying to buy: "+name + " at cost: "+cost);
             foreach(AbilityData a in _unlockableAbility){
                 
-                if (a.abilityName.Equals(name)){
+                if (a.abilityName.Equals(name) && !_unlockedAbility.Contains(a)){
                     Debug.LogError("[BUY ABILITY] available " + name + ", cost: " + cost + " spendable: " + _player.GetSpendableExp());
                     if (_player.GetSpendableExp() < cost){
                         _audioDeny.Play();

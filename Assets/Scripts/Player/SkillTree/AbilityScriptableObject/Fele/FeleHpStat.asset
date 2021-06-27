@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unlockableAbilities:
   - {fileID: 11400000, guid: 8e4d7de4680f9e247a1ecd306866f554, type: 2}
-  abilityName: Hp Power Up
+  abilityName: Hp Power Up 1
   animationName: 5
   colorIndex: 4

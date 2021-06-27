@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unlockableAbilities:
   - {fileID: 11400000, guid: 1b4602fad7de09c46a191c598cbae239, type: 2}
-  abilityName: Speed Power Up
+  abilityName: Speed Power Up 1
   animationName: 11
   colorIndex: 10

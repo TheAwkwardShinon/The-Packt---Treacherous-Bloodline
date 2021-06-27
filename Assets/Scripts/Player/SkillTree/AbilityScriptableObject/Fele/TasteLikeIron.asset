@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d895079bd05e6a4d947cf662172e3e1, type: 3}
-  m_Name: DMG_UP
+  m_Script: {fileID: 11500000, guid: 397419c9b231cf34180e49195dbb3360, type: 3}
+  m_Name: TasteLikeIron
   m_EditorClassIdentifier: 
   _unlockableAbilities:
-  - {fileID: 11400000, guid: 999be828b092ff949b1d6401079df891, type: 2}
-  abilityName: Damage Power Up 1
-  animationName: 11
-  colorIndex: 10
+  - {fileID: 11400000, guid: 8e4d7de4680f9e247a1ecd306866f554, type: 2}
+  abilityName: Tastes Like Iron
+  animationName: 8
+  colorIndex: 7

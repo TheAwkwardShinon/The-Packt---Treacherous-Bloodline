@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FeleDmgStat3
   m_EditorClassIdentifier: 
   _unlockableAbilities:
-  - {fileID: 11400000, guid: 3fa9b8a709359f04a95e4edf40ee72ea, type: 2}
+  - {fileID: 11400000, guid: b44672b404c1fcd4b88548529ff9471e, type: 2}
   - {fileID: 11400000, guid: 4c4b9fdc53e8c7b43952f0a4e45b0aea, type: 2}
   - {fileID: 11400000, guid: 46b11382cd4a39a488fe7063b43ceae8, type: 2}
   abilityName: Damage Power Up 3
