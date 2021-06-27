@@ -203,6 +203,29 @@ namespace ThePackt
 
                     _selectedData.SetNickname("Player-" + UnityEngine.Random.Range(1, 9999));
                     _selectedData.SetCharacterSelected(assoc.name);
+
+                    switch (assoc.name)
+                    {
+                        case Constants.MOONSIGHTERS:
+                            _selectedData.SetCharacterIndex(14); //index for researcher
+                            break;
+                        case Constants.FELE:
+                            _selectedData.SetCharacterIndex(15); //index for soldier
+                            break;
+                        case Constants.AYATANA:
+                            _selectedData.SetCharacterIndex(17); //index for writer
+                            break;
+                        case Constants.NATURIA:
+                            _selectedData.SetCharacterIndex(9); //index for herbalist
+                            break;
+                        case Constants.HERIN:
+                            _selectedData.SetCharacterIndex(8); //index for anchor
+                            break;
+                        case Constants.CEUIN:
+                            _selectedData.SetCharacterIndex(10); //index for lawyer
+                            break;
+                    }
+
                     BoltNetwork.Instantiate(assoc.prefab, spawnPos, Quaternion.identity);
                     spawned = true;
                     break;
