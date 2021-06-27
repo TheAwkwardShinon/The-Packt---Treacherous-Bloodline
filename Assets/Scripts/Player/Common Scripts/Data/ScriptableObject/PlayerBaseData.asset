@@ -37,12 +37,12 @@ MonoBehaviour:
   bleedOutTime: 30
   numOfReviveAction: 0
   damageMultiplier: 0
-  powerBaseWerewolf: 20
-  rangeBaseWerewolf: 0.3
+  powerBaseWerewolf: 30
+  rangeBaseWerewolf: 0.4
   powerBaseHuman: 10
   baseHumanCooldown: 0.5
   baseWerewolfCooldown: 0.5
-  specialAttackCooldown: 10
+  specialAttackCooldown: 5
   healAfterHit: 0
   interactRange: 1
   whatIsGround:
@@ -73,7 +73,7 @@ MonoBehaviour:
   experienceMultiplier: 0
   maxLifePoints: 100
   currentLifePoints: 100
-  transformStateDuration: 40
+  transformStateDuration: 15
   _startTransformationTime: 0
   healing: 0
   isSlowed: 0
