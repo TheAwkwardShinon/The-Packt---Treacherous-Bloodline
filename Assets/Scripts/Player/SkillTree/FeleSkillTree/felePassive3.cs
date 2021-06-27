@@ -11,7 +11,7 @@ namespace ThePackt{
         public override void GainAbility(Player player)
         {
             base.GainAbility(player);
-            player.GetPlayerData().healAfterHit += 0.01f * player.GetPlayerData().maxLifePoints; //cura dell'1% della vita totale per ogni colpo andato a segno.
+            player.GetPlayerData().healAfterHit += 0.06f * player.GetPlayerData().maxLifePoints; //cura dell'1% della vita totale per ogni colpo andato a segno.
         }
     }
 }
