@@ -63,7 +63,7 @@ Transform:
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 3279391392897061481}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &2651920396063864349
 Tilemap:
@@ -694,7 +694,7 @@ Transform:
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 3279391392897061481}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &2651920396954974416
 Tilemap:
@@ -1530,6 +1530,8 @@ Transform:
   - {fileID: 3118781463474277797}
   - {fileID: 3899487621569446700}
   - {fileID: 2437837577747366489}
+  - {fileID: 6384082049990529124}
+  - {fileID: 832478283762232255}
   - {fileID: 2651920396954974418}
   - {fileID: 2651920396063864351}
   - {fileID: 1118221949891199206}
@@ -1662,6 +1664,7 @@ MonoBehaviour:
   _expReward: 0
   _timeReward: 45
   _cooldown: 10
+  _completementsForLevel: 3
   _autoJoinTime: 5
   _autoAbandonTime: 5
   _itemPrefabs:
@@ -1673,6 +1676,8 @@ MonoBehaviour:
   - {fileID: 3118781463474277797}
   - {fileID: 3899487621569446700}
   - {fileID: 2437837577747366489}
+  _numberOfItems: 4
+  _numberLevelIncrement: 2
   _fogOfWarDiameter: 30
 --- !u!156049354 &2398241187721871340
 Grid:
@@ -1899,6 +1904,36 @@ Transform:
   m_Father: {fileID: 3279391392897061481}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4247954288627154049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 832478283762232255}
+  m_Layer: 0
+  m_Name: SpawnPoint (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &832478283762232255
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4247954288627154049}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.43, y: 2.85, z: -0.3357909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3279391392897061481}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4306944153451579081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,6 +1993,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3279391392897061481}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6059087525490205982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6384082049990529124}
+  m_Layer: 0
+  m_Name: SpawnPoint (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6384082049990529124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6059087525490205982}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.92, y: 1.92, z: -0.3357909}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3279391392897061481}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7352534704165976637
 GameObject:
@@ -2022,7 +2087,7 @@ Transform:
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 3279391392897061481}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &7622229214608814757
 Tilemap:

@@ -9,6 +9,8 @@ namespace ThePackt
         protected CharacterSelectionData _selectedData;
         [SerializeField] private GameObject[] _itemPrefabs;
         [SerializeField] private Transform[] _spawnPoints;
+        [SerializeField] private int _numberOfItems;
+        [SerializeField] private int _numberLevelIncrement;
         [SerializeField] private float _fogOfWarDiameter;
         private List<BoltEntity> _spawnedItems;
 
@@ -25,6 +27,8 @@ namespace ThePackt
             _failAction = DespawnItems;
 
             _localPlayer = _selectedData.GetPlayerScript();
+
+            _type = Constants.ITEM;
         }
 
         protected override void Update()
@@ -39,12 +43,23 @@ namespace ThePackt
 
         protected void SpawnItems()
         {
+            List<Transform> tmp = new List<Transform>();
+            foreach(Transform sp in _spawnPoints)
+            {
+                tmp.Add(sp);
+            }
+
             if (BoltNetwork.IsServer)
             {
-                foreach (var sp in _spawnPoints)
+                for (int i = 0; i < _numberOfItems && tmp.Count > 0; i++) 
                 {
-                    int randomIndex = Random.Range(0, _itemPrefabs.Length - 1);
-                    BoltEntity spawnedItem = BoltNetwork.Instantiate(_itemPrefabs[randomIndex], sp.position, sp.rotation);
+                    //int randomIndex = Random.Range(0, _itemPrefabs.Length - 1);
+                    int randomIndex = Random.Range(0, tmp.Count);
+                    Transform sp = tmp[randomIndex];
+
+                    tmp.RemoveAt(randomIndex);
+
+                    BoltEntity spawnedItem = BoltNetwork.Instantiate(_itemPrefabs[0], sp.position, sp.rotation);
                     _spawnedItems.Add(spawnedItem);
                 }
             }
@@ -76,6 +91,15 @@ namespace ThePackt
             }
 
             _spawnedItems = new List<BoltEntity>();
+        }
+
+        public override void SetDifficultyLevel(int level)
+        {
+            base.SetDifficultyLevel(level);
+
+            _numberOfItems += _numberLevelIncrement * (level - 1);
+
+            Debug.Log("[MAPGEN] item. level: " + level);
         }
         #endregion
     }

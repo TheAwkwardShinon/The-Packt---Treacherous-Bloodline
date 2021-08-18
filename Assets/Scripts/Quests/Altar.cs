@@ -10,6 +10,7 @@ namespace ThePackt
         private float _completeness;
         [SerializeField] private float _fogOfWarDiameter;
         [SerializeField] private float _completeValue;
+        [SerializeField] private float _completeValueLevelIncrement;
         [SerializeField] private float _increment;
         [SerializeField] private Sprite _completeSprite;
         [SerializeField] protected GameObject _completenessBar;
@@ -26,6 +27,13 @@ namespace ThePackt
         {
             _players = new List<BoltEntity>();
             _chargeStarted = false;
+
+            var token = (LevelDataToken)entity.AttachToken;
+
+            if (token != null)
+            {
+                _completeValue += _completeValueLevelIncrement * (token._level - 1);
+            }
 
             _completenessSlider = _completenessBar.GetComponent<Slider>();
             _completenessImage.color = _completenessGradient.Evaluate(1f);

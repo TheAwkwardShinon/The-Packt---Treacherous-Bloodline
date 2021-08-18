@@ -24,6 +24,8 @@ namespace ThePackt
             _failAction = DespawnEnemies;
 
             _localPlayer = _selectedData.GetPlayerScript();
+
+            _type = Constants.ENEMY;
         }
 
         protected void SpawnEnemies()
@@ -33,7 +35,11 @@ namespace ThePackt
                 foreach(var sp in _spawnPoints)
                 {
                     int randomIndex = Random.Range(0, _enemyPrefabs.Length);
-                    BoltEntity spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[randomIndex], sp.position, sp.rotation);
+                    var token = new LevelDataToken();
+
+                    token.SetLevel(_difficultyLevel);
+
+                    BoltEntity spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[randomIndex], token, sp.position, sp.rotation);
                     spawnedEnemy.GetComponent<Enemy>().SetRoom(this);
                     _spawnedEnemies.Add(spawnedEnemy);
                 }
@@ -62,6 +68,13 @@ namespace ThePackt
                     BoltNetwork.Destroy(enemy);
                 }
             }
+        }
+
+        public override void SetDifficultyLevel(int level)
+        {
+            base.SetDifficultyLevel(level);
+
+            Debug.Log("[MAPGEN] enemy. level: " + level);
         }
         #endregion
     }

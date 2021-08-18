@@ -77,6 +77,7 @@ namespace ThePackt{
         {
             BoltNetwork.RegisterTokenClass<SessionDataToken>();
             BoltNetwork.RegisterTokenClass<ObjectiveDataToken>();
+            BoltNetwork.RegisterTokenClass<LevelDataToken>();
         }
 
         public override void BoltStartDone()

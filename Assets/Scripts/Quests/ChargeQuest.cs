@@ -24,6 +24,8 @@ namespace ThePackt
             _failAction = DespawnAltars;
 
             _localPlayer = _selectedData.GetPlayerScript();
+
+            _type = Constants.CHARGE;
         }
 
         protected override void Update()
@@ -45,7 +47,11 @@ namespace ThePackt
                 foreach (var sp in _spawnPoints)
                 {
                     int randomIndex = Random.Range(0, _altarPrefabs.Length - 1);
-                    BoltEntity spawnedAltar = BoltNetwork.Instantiate(_altarPrefabs[randomIndex], sp.position, sp.rotation);
+                    var token = new LevelDataToken();
+
+                    token.SetLevel(_difficultyLevel);
+
+                    BoltEntity spawnedAltar = BoltNetwork.Instantiate(_altarPrefabs[randomIndex], token, sp.position, sp.rotation);
                     _spawnedAltars.Add(spawnedAltar);
                 }
             }
@@ -77,6 +83,13 @@ namespace ThePackt
             }
 
             _spawnedAltars = new List<BoltEntity>();
+        }
+
+        public override void SetDifficultyLevel(int level)
+        {
+            base.SetDifficultyLevel(level);
+
+            Debug.Log("[MAPGEN] charge. level: " + level);
         }
         #endregion
     }

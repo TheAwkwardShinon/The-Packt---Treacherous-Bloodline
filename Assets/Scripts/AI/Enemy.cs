@@ -10,6 +10,7 @@ namespace ThePackt
         #region variables
         [Header("General")]
         [SerializeField] protected float _health;
+        [SerializeField] protected float _healthLevelIncrement; //increment of helth for each level of the quest
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
@@ -70,7 +71,17 @@ namespace ThePackt
 
             if (BoltNetwork.IsServer)
             {
-                state.Health = _health;
+                var token = (LevelDataToken) entity.AttachToken;
+
+                if (token != null)
+                {
+                    _health += _healthLevelIncrement * (token._level - 1);
+                    state.Health = _health;
+                }
+                else
+                {
+                    state.Health = _health;
+                }
 
                 _damageMap = new Dictionary<BoltEntity, float>();
                 _hitTimeMap = new Dictionary<BoltEntity, float>();

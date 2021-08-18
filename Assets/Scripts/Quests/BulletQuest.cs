@@ -9,6 +9,7 @@ namespace ThePackt
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform[] _spawnPoints;
         [SerializeField] private float _duration;
+        [SerializeField] private float _durationLevelIncrement;
 
         #region methods
         private void Awake()
@@ -26,6 +27,14 @@ namespace ThePackt
             _inProgressAction = SpawnBullets;
 
             _localPlayer = _selectedData.GetPlayerScript();
+
+            _type = Constants.BULLET;
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(transform.position, 2f * new Vector3(11f, 6f, 0f));
         }
 
         protected void SpawnBullets()
@@ -56,6 +65,17 @@ namespace ThePackt
                     break;
                 }
             }
+        }
+
+        public override void SetDifficultyLevel(int level)
+        {
+            base.SetDifficultyLevel(level);
+
+            _duration += _durationLevelIncrement * (level - 1);
+
+            _description += " for " + _duration + " seconds!";
+
+            Debug.Log("[MAPGEN] bullet. level: " + level + "   duration: " + _duration);
         }
 
         #endregion

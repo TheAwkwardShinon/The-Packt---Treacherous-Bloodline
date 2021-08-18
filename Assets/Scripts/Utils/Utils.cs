@@ -19,6 +19,13 @@ namespace ThePackt
         }
 
         [Serializable]
+        public class PrefabIntegerAssociation
+        {
+            public int num;
+            public GameObject prefab;
+        }
+
+        [Serializable]
         public class VectorAssociation
         {
             public string name;

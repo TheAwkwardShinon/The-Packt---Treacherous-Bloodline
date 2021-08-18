@@ -31,6 +31,13 @@ namespace ThePackt
         public const int READY = 0;
         #endregion 
 
+        #region quest type
+        public const int BULLET = 3;
+        public const int ENEMY = 2;
+        public const int ITEM = 1;
+        public const int CHARGE = 0;
+        #endregion 
+
         #region altar
         public const int NOTCHARGING = 0;
         public const int CHARGING = 1;

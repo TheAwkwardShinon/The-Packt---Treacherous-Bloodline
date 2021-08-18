@@ -23,7 +23,13 @@ namespace ThePackt
         public float _expReward;
         public float _timeReward;
         public float _cooldown;
-        
+        protected int _type;
+
+        protected int _difficultyLevel;
+        protected int _maxDifficultyLevel;
+        protected int _numberOfCompletements;
+        [SerializeField] protected int _completementsForLevel;
+
         protected int _state;
 
         protected float _enteringTime;
@@ -70,6 +76,7 @@ namespace ThePackt
 
             _timerJoin = false;
             _timerAbandon = false;
+            _numberOfCompletements = 0;
 
             state.AddCallback("State", StateCallback);
         }
@@ -387,6 +394,12 @@ namespace ThePackt
             {
                 _localPlayer.ObtainRewards(_expReward, _timeReward);
                 _localPlayerPartecipates = false;
+                _numberOfCompletements++;
+
+                if((_numberOfCompletements % _completementsForLevel == 0) && _difficultyLevel < _maxDifficultyLevel)
+                {
+                    IncrementDifficultyLevel();
+                }
             }
 
             if (_state == Constants.FAILED && _localPlayerPartecipates)
@@ -422,6 +435,11 @@ namespace ThePackt
         {
             return _state;
         }
+
+        public int GetQuestType()
+        {
+            return _type;
+        }
         #endregion
 
         #region setters
@@ -436,6 +454,23 @@ namespace ThePackt
         public void SetPlayers(List<BoltEntity> plyrs)
         {
             _playersPartecipating = plyrs;
+        }
+
+        public virtual void SetDifficultyLevel(int level)
+        {
+            _difficultyLevel = level;
+        }
+
+        public virtual void SetMaxDifficultyLevel(int level)
+        {
+            _maxDifficultyLevel = level;
+        }
+
+        public virtual void IncrementDifficultyLevel()
+        {
+            Debug.Log("[MAPGEN] incremented level of " + _title);
+
+            SetDifficultyLevel(_difficultyLevel + 1);
         }
         #endregion
     }

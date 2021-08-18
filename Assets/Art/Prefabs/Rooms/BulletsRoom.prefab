@@ -1801,10 +1801,11 @@ MonoBehaviour:
   _activeSprite: {fileID: 8020143640844766479, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _notReadySprite: {fileID: -1259408508766424310, guid: 4efd6fdaa245b724790ee94e1252579b, type: 3}
   _title: Heavy rain
-  _description: Dodge the bullets and survive for 20 seconds!
+  _description: Dodge the bullets and survive
   _expReward: 1
   _timeReward: 0
   _cooldown: 10
+  _completementsForLevel: 3
   _autoJoinTime: 5
   _autoAbandonTime: 5
   _bulletPrefab: {fileID: 6276787510045633164, guid: 72dbb2da722c0134b81635e7704373f0, type: 3}
@@ -1817,6 +1818,7 @@ MonoBehaviour:
   - {fileID: 8142872788562296612}
   - {fileID: 5179162744593043852}
   _duration: 20
+  _durationLevelIncrement: 5
 --- !u!156049354 &4785949756583497723
 Grid:
   m_ObjectHideFlags: 0
