@@ -640,7 +640,9 @@ MonoBehaviour:
   _minStandStillTime: 2
   _maxStandStillTime: 3
   _seekThreshold: 0.5
-  _unreachabilityTime: 4
+  _unreachabilityTime: 20
+  _reachabilityRestoreTime: 12
+  _keepSameTargetTime: 12
   _attackPoint: {fileID: 7073679686002194314}
   _bulletPrefab: {fileID: 6276787510045633164, guid: c50ced9f87ddca64db112ddbb35bc68c, type: 3}
 --- !u!1 &8077119646747862203

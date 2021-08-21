@@ -88,8 +88,11 @@ namespace ThePackt
 
                         BoltEntity hitEntity = collision.GetComponent<Player>().entity;
                         DealDamage(hitEntity);
-                        SetHitTime(hitEntity);
+                        //SetHitTime(hitEntity);
+                        
                         _lastAttackTime = Time.time;
+
+                        RegisterTargetHit(hitEntity);
                     }
                 }
             }

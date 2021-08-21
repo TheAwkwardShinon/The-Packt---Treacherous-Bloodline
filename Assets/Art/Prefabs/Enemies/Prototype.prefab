@@ -515,7 +515,9 @@ MonoBehaviour:
   _minStandStillTime: 1
   _maxStandStillTime: 2
   _seekThreshold: 0.6
-  _unreachabilityTime: 4
+  _unreachabilityTime: 25
+  _reachabilityRestoreTime: 15
+  _keepSameTargetTime: 15
 --- !u!1 &6181980213178154832
 GameObject:
   m_ObjectHideFlags: 0

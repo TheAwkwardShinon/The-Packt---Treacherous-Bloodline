@@ -6,6 +6,8 @@ namespace ThePackt
 {
     public class EnemyBullet : Bullet
     {
+        protected BaseEnemy _owner { get; private set; }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (entity.IsOwner)
@@ -40,7 +42,17 @@ namespace ThePackt
                     evnt.Damage = _attackPower;
                     evnt.Send();
                 }
+
+                if (_owner)
+                {
+                    _owner.RegisterTargetHit(player.entity);
+                }
             }
+        }
+
+        public void SetOwner(BaseEnemy enemy)
+        {
+            _owner = enemy;
         }
     }
 }

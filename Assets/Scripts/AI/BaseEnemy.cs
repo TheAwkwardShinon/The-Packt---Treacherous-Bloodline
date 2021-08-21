@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace ThePackt
 {
@@ -42,11 +44,17 @@ namespace ThePackt
 		[Header("Seek")]
 		[SerializeField] private float _seekThreshold;
 		[SerializeField] private float _unreachabilityTime;
+		[SerializeField] private float _reachabilityRestoreTime;
+		[SerializeField] private float _keepSameTargetTime;
+		[SerializeField] private Tilemap _groundTileMap;
+		[SerializeField] private Tilemap _wallTileMap;
 		private bool _jump;
 		protected BoltEntity _target;
-		private BoltEntity _prevTarget;
+		private bool _targetCanBeSet;
+		private float _lastTargetChangedTime;
 		private float _xDiff;
 		private float _yDiff;
+		private float _dist;
 		protected bool _attack;
 		protected float _lastAttackTime;
 		private float _lastJumpTime;
@@ -186,6 +194,7 @@ namespace ThePackt
 			{
 				_xDiff = _target.GetComponent<Player>().transform.position.x - transform.position.x;
 				_yDiff = _target.GetComponent<Player>().transform.position.y - transform.position.y;
+				_dist = Vector2.Distance(_target.transform.position, transform.position);
 			}
 		}
 
@@ -209,7 +218,7 @@ namespace ThePackt
 			{
 				Gizmos.DrawRay(transform.position + new Vector3(0, 0.1f, 0), -transform.right * _avoidRange);
 			}
-			//
+			
 			Gizmos.color = Color.red;
 			Gizmos.DrawWireSphere(transform.position, _attackRange);
 
@@ -228,7 +237,6 @@ namespace ThePackt
 
 			Gizmos.color = Color.magenta;
 			Gizmos.DrawRay(transform.position + new Vector3(0, _col.bounds.size.y, 0), -transform.right * 3);
-			//_col.bounds.size.y
 
 			Gizmos.color = Color.white;
 			Vector2 start = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f + Vector3.right * _facingDirection * _avoidRange;
@@ -241,21 +249,21 @@ namespace ThePackt
 			Debug.Log("[BASEENEMY] idle");
 
 			_rb.velocity = new Vector2(0, _currentVelocity.y);
-			//inizio animazione?
+			//start animation?
 		}
 
 		private void StartJumping()
 		{
 			Debug.Log("[BASEENEMY] jumping");
 
-			//inizio animazione?
+			//start animation?
 		}
 
 		private void StartWalking()
 		{
 			Debug.Log("[BASEENEMY] walking");
 
-			//inizio animazione?
+			//start animation?
 		}
 
 		private void StartAttacking()
@@ -264,7 +272,7 @@ namespace ThePackt
 
 			_rb.velocity = new Vector2(0, _currentVelocity.y);
 
-			//inizio animazione?
+			//start animation?
 		}
 
 		private void StartWandering()
@@ -272,6 +280,10 @@ namespace ThePackt
 			Debug.Log("[BASEENEMY] wandering");
 
 			_lastAttacker = null;
+			_lastTargetHitTime = 0f;
+			_targetCanBeSet = true;
+
+			Debug.Log("[TRGT] now in wandering, target can be changed");
 			//_target = null;
 
 			_lastDirectionChangeTime = 0f;
@@ -321,13 +333,6 @@ namespace ThePackt
 			{
 				//if there is not a target go in the current direction
 
-				/*
-				var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
-				evnt.EntityID = entity.NetworkId;
-				evnt.Sound = Constants.WALK;
-				evnt.Send();
-				*/
-
 				if (_slowed)
 				{
 					_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
@@ -351,13 +356,6 @@ namespace ThePackt
 
 				if (!_attack)
 				{
-					/*
-					var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
-					evnt.EntityID = entity.NetworkId;
-					evnt.Sound = Constants.WALK;
-					evnt.Send();
-					*/
-
 					if (_slowed)
                     {
 						_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
@@ -397,7 +395,7 @@ namespace ThePackt
 		{
 			RaycastHit2D[] hits = new RaycastHit2D[1];
 			ContactFilter2D filter = new ContactFilter2D();
-			//filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall"));
+			
 			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
 
 			int numHits = _col.Cast(-transform.right, filter, hits, _avoidRange, true);
@@ -407,13 +405,11 @@ namespace ThePackt
 				//Debug.Log("[BASEENEMY] avoid flipping");
 
 				Flip();
-				//_lastDirectionChangeTime = Time.time;
 			}
             else
             {
 				Vector2 _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f + Vector3.right * _facingDirection * _avoidRange;
 				RaycastHit2D groundInFront = Physics2D.Raycast(_workspace, -transform.up, 0.1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
-				//Collider2D groundInFront = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
 
 				if (!groundInFront)
                 {
@@ -427,41 +423,110 @@ namespace ThePackt
 
 		private void SelectTarget()
 		{
-			/*
-            if (_lastAttacker)
+			//sense near players if some player have never been sensed
+			if(_damageMap.Count < 6)
             {
-				_target = _lastAttacker;
-			}
-			*/
-
-			/*
-			if(_hitTimeMap.ContainsKey(_target))
-            {
-				if(Time.time >= _hitTimeMap[_target] + _unreachabilityTime)
+				ContactFilter2D filter = new ContactFilter2D();
+				filter.SetLayerMask(LayerMask.GetMask("Players"));
+				int nearPlayersNum = Physics2D.OverlapCircle(transform.position, _perceptionRange, filter, _nearPlayers);
+				foreach (var col in _nearPlayers)
 				{
-					Debug.Log("[BASEENEMY] target unreachable");
-					_prevTarget = _target;
-					_target = null;
+					if (col)
+					{
+						BoltEntity ent = col.gameObject.GetComponent<Player>().entity;
+						if (!_damageMap.ContainsKey(ent))
+						{
+							_damageMap.Add(ent, 0);
+						}
+					}
+				}
+			}
+
+			//remove from the unreachable ones the targets whose unreachability has to be restored
+			List<BoltEntity> toRemove = new List<BoltEntity>();
+			foreach(var entry in _unreachableTargets)
+            {
+				if (Time.time >= entry.Value + _reachabilityRestoreTime)
+				{
+					Debug.Log("[TRGT] target " + entry.Key.NetworkId + " now reachable");
+
+					toRemove.Add(entry.Key);
+				}
+			}
+
+			foreach(var elem in toRemove)
+				_unreachableTargets.Remove(elem);
+
+			//if target is unreachable for a certain amount of time, the target can be changed and the current target is added to the unreachable ones
+			if (Time.time >= _lastTargetHitTime + _unreachabilityTime)
+			{
+				Debug.Log("[TRGT] target unreachable");
+				_targetCanBeSet = true;
+				_lastTargetHitTime = Time.time;
+
+				if (_unreachableTargets.ContainsKey(_target))
+				{
+					_unreachableTargets[_target] = Time.time;
 				}
 				else
 				{
-					_prevTarget = null;
+					_unreachableTargets.Add(_target, Time.time);
 				}
 			}
-			*/
 
-			Debug.Log("[BASEENEMY] target " + _target);
-
-			if (_damageMap.Count > 0)
+			//if the target cannot be currently changed, check if the time that must pass after the target can change has passed
+			//the target can be set anyway if the current target is not in room or is dead
+			bool inRoomAlive = IsInRoomAndAlive(_target);
+			if (!_targetCanBeSet && (Time.time >= _keepSameTargetTime + _lastTargetChangedTime || !inRoomAlive))
 			{
+				_targetCanBeSet = true;
+
+				Debug.Log("[TRGT] can be changed: " + inRoomAlive);
+			}
+
+			if (_damageMap.Count > 0 && _targetCanBeSet)
+			{
+				//if the target can now be changed, pick the one that dealt more damage among the ones that are:
+				//- still in the room
+				//- still alive
+				//- not in the unreachable list
+
 				var sortedDict = from entry in _damageMap orderby entry.Value descending select entry;
 
+				bool set = false;
 				foreach (var entry in sortedDict)
 				{
-					if (IsInRoomAndAlive(entry.Key) && entry.Key)
-					{
-						_target = entry.Key;
+					if (IsInRoomAndAlive(entry.Key) && entry.Key && !_unreachableTargets.ContainsKey(entry.Key))
+					{ 
+						SetTarget(entry.Key);
+						set = true;
 						break;
+					}
+				}
+
+				if(!set && !inRoomAlive)
+                {
+					//if no target was set, pick from the unreachable ones hoping the picked one is now reachable
+					Debug.Log("[TRGT] picking from unreachable ones");
+
+					set = false;
+					foreach (var ent in _unreachableTargets.Keys)
+					{
+						if (IsInRoomAndAlive(ent))
+						{
+							_unreachableTargets.Remove(ent);
+							SetTarget(ent);
+							set = true;
+							break;
+						}
+					}
+
+					//if no target was set, it means no target is available. So set it to null, so that the transition will make the state change to wandering 
+					if (!set)
+					{
+						Debug.Log("[TRGT] not set and not alive and in room");
+
+						_target = null;
 					}
 				}
 			}
@@ -478,7 +543,8 @@ namespace ThePackt
 
 		private void CheckIfTargetIsReached()
 		{
-			if (Math.Abs(_xDiff) <= _seekThreshold && IsInRoomAndAlive(_target))
+			//Math.Abs(_xDiff) <= _seekThreshold
+			if (_dist <= _seekThreshold && IsInRoomAndAlive(_target))
 			{
 				Debug.Log("[BASEENEMY] target reached");
 				_standStill = true;
@@ -487,22 +553,48 @@ namespace ThePackt
 
 		private void CheckIfTargetIsFar()
 		{
-			if (Math.Abs(_xDiff) > _seekThreshold)
+			//Math.Abs(_xDiff) > _seekThreshold
+			if (_dist > _seekThreshold)
 			{
 				Debug.Log("[BASEENEMY] target far");
 				_standStill = false;
 			}
 		}
 
-		private void CheckIfTargetIsAbove()
+		private void CheckIfIShouldJump()
 		{
-			if (Time.time >= _lastJumpTime + _jumpCooldown)
+
+			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
 			{
-				float targetY = _target.GetComponent<Player>().transform.position.y;
-				//_target.GetComponent<Player>()._isGrounded
-				if ((targetY > transform.position.y + _col.bounds.size.y) && IsGrounded())
+				if (IsTargetAbove() && IsGrounded())
 				{
 					Debug.Log("[BASEENEMY] target above");
+					_jump = true;
+				}
+			}
+		}
+
+		private void CheckIfTargetIsAbove()
+		{
+			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
+			{
+				if (IsTargetAbove() && IsGrounded())
+				{
+					Debug.Log("[BASEENEMY] target above");
+					_jump = true;
+				}
+			}
+		}
+
+		private void CheckIfTargetIsGrounded()
+		{
+			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
+			{
+				bool targetGrounded = _target.GetComponent<Player>()._isGrounded;
+				
+				if (!targetGrounded && IsGrounded())
+				{
+					Debug.Log("[BASEENEMY] target not grounded");
 					_jump = true;
 				}
 			}
@@ -523,22 +615,29 @@ namespace ThePackt
 		#region fsm exit actions
 		private void StopIdle()
 		{
-			//fine animazione?
+			//end animation?
 		}
 
 		private void StopJumping()
 		{
-			//fine animazione?
+			//end animation?
 		}
 
 		private void StopWalking()
 		{
-			//fine animazione?
+			//end animation?
 		}
 
 		private void StopAttacking()
 		{
-			//fine animazione?
+			//end animation?
+		}
+
+		private bool IsTargetAbove()
+		{
+			float targetY = _target.GetComponent<Player>().transform.position.y;
+
+			return targetY > transform.position.y + _col.bounds.size.y;
 		}
 		#endregion
 
@@ -581,11 +680,7 @@ namespace ThePackt
 
 		private bool NoTarget()
 		{
-			if (!IsInRoomAndAlive(_target))
-			{
-				_target = null;
-			}
-
+			Debug.Log("[TRGT] qui qui" + _target == null);
 			return _target == null;
 		}
 
@@ -604,7 +699,7 @@ namespace ThePackt
 				{
 					Debug.Log("[BASEENEMY] player near");
 
-					_target = _nearPlayers[0].gameObject.GetComponent<Player>().entity;
+					SetTarget(nearPlayer);
 					return true;
 				}
 			}
@@ -616,7 +711,7 @@ namespace ThePackt
 		{
 			if (_lastAttacker != null && IsInRoomAndAlive(_lastAttacker))
 			{
-				_target = _lastAttacker;
+				SetTarget(_lastAttacker);
 
 				return true;
 			}
@@ -663,8 +758,33 @@ namespace ThePackt
 			Vector2 _workspace = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f;
 			return Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x - 0.01f, 0.1f, 0f), 0f, LayerMask.GetMask("Players", "Ground", "Objectives", "Enemies"));
 		}
-		#endregion
+        #endregion
 
-		#endregion
-	}
+        #region setters
+		private void SetTarget(BoltEntity ent)
+        {
+			_targetCanBeSet = false;
+			_lastTargetChangedTime = Time.time;
+
+			if (!_damageMap.ContainsKey(ent))
+			{
+				_damageMap.Add(ent, 0);
+			}
+
+			Debug.Log("[TRGT] changed to " + ent.NetworkId);
+
+			_target = ent;
+		}
+
+		public void RegisterTargetHit(BoltEntity ent)
+		{
+			if (_target = ent)
+			{
+				_lastTargetHitTime = Time.time;
+			}
+		}
+	#endregion
+
+	#endregion
+}
 }

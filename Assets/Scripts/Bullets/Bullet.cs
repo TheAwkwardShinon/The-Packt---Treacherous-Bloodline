@@ -15,7 +15,6 @@ namespace ThePackt
         protected Player _player;
         private Rigidbody2D _rb;
         private Vector2 _startPos;
-        protected Player _owner { get; private set; }
         #endregion
 
         #region methods
@@ -77,11 +76,6 @@ namespace ThePackt
         public void SetAttackPower(float value)
         {
             _attackPower = value;
-        }
-
-        public void SetOwner(Player plyr)
-        {
-            _owner = plyr;
         }
 
         #endregion

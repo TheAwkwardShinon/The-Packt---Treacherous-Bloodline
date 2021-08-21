@@ -42,8 +42,10 @@ namespace ThePackt
         protected FSM _fsm;
 
         protected BoltEntity _lastAttacker;
+        protected float _lastTargetHitTime;
         protected Dictionary<BoltEntity,float> _damageMap;
-        protected Dictionary<BoltEntity, float> _hitTimeMap;
+        protected Dictionary<BoltEntity, float> _unreachableTargets;
+        //protected Dictionary<BoltEntity, float> _hitTimeMap;
         protected Quest _room;
 
         #region sfx
@@ -84,7 +86,8 @@ namespace ThePackt
                 }
 
                 _damageMap = new Dictionary<BoltEntity, float>();
-                _hitTimeMap = new Dictionary<BoltEntity, float>();
+                _unreachableTargets = new Dictionary<BoltEntity, float>();
+                //_hitTimeMap = new Dictionary<BoltEntity, float>();
             }
 
             state.AddCallback("Health", HealthCallback);
@@ -243,6 +246,7 @@ namespace ThePackt
             return false;
         }
 
+        /*
         protected void SetHitTime(BoltEntity hitEntity)
         {
             if (_hitTimeMap.ContainsKey(hitEntity))
@@ -254,6 +258,7 @@ namespace ThePackt
                 _hitTimeMap.Add(hitEntity, Time.time);
             }
         }
+        */
 
         public void PlayWalkSFX()
         {

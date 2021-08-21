@@ -68,22 +68,22 @@ namespace ThePackt{
             }
             switch(clan){
                 case "ayatana": blt = BoltNetwork.Instantiate(_player.GetAyatanaBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
-                                blt.GetComponent<Bullet>().SetOwner(_player);
+                                blt.GetComponent<PlayerBullet>().SetOwner(_player);
                             break;
                 case "ceuin": blt = BoltNetwork.Instantiate(_player.GetCeuinBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
-                              blt.GetComponent<Bullet>().SetOwner(_player);
+                              blt.GetComponent<PlayerBullet>().SetOwner(_player);
                             break;
                 case "fele": blt = BoltNetwork.Instantiate(_player.GetFeleBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
-                             blt.GetComponent<Bullet>().SetOwner(_player);
+                             blt.GetComponent<PlayerBullet>().SetOwner(_player);
                             break;
                 case "herin": blt = BoltNetwork.Instantiate(_player.GetHerinBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
-                              blt.GetComponent<Bullet>().SetOwner(_player);
+                              blt.GetComponent<PlayerBullet>().SetOwner(_player);
                             break;
                 case "moonsighters": blt = BoltNetwork.Instantiate(_player.GetMoonsighterBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
-                                     blt.GetComponent<Bullet>().SetOwner(_player);
+                                     blt.GetComponent<PlayerBullet>().SetOwner(_player);
                             break;
                 case "naturia": blt = BoltNetwork.Instantiate(_player.GetNaturiaBullet(), _player.GetSpecialAttackPoint().position, _player.GetSpecialAttackPoint().rotation);
-                                blt.GetComponent<Bullet>().SetOwner(_player);
+                                blt.GetComponent<PlayerBullet>().SetOwner(_player);
                              break;
             }
             

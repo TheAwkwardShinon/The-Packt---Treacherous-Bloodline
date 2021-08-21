@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace ThePackt
 {
-    public class PlayerBullet : Bullet { 
+    public class PlayerBullet : Bullet {
+
+        protected Player _owner { get; private set; }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -156,6 +158,11 @@ namespace ThePackt
                     evnt.Send();
                 }
             }
+        }
+
+        public void SetOwner(Player plyr)
+        {
+            _owner = plyr;
         }
     }
 }
