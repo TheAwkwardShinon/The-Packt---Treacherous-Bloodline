@@ -31,11 +31,13 @@ namespace ThePackt
             _type = Constants.BULLET;
         }
 
+        /*
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawCube(transform.position, 2f * new Vector3(11f, 6f, 0f));
         }
+        */
 
         protected void SpawnBullets()
         {

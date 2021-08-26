@@ -7,10 +7,17 @@ namespace ThePackt
     {
         #region methods
 
-        
+
         #endregion
 
         #region inner classes
+        [Serializable]
+        public class CustomVector3
+        {
+            public bool isNull;
+            public Vector3 vector;
+        }
+
         [Serializable]
         public class PrefabAssociation
         {

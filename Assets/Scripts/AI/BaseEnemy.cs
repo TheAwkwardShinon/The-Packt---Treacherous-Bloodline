@@ -17,7 +17,7 @@ namespace ThePackt
 		[Header("Specific")]
 		[SerializeField] private float _reactionTime;
 		[SerializeField] private float _jumpVelocity;
-		[SerializeField] private float _jumpCooldown;
+		[SerializeField] private float _jumpCooldown; //1 for proto and 3 for mage
 		[SerializeField] private float _avoidRange;
 		[SerializeField] private float _perceptionRange;
 
@@ -43,14 +43,15 @@ namespace ThePackt
 		#region seek
 		[Header("Seek")]
 		[SerializeField] private float _seekThreshold;
+		[SerializeField] private float _waypointThreshold;
 		[SerializeField] private float _unreachabilityTime;
 		[SerializeField] private float _reachabilityRestoreTime;
 		[SerializeField] private float _keepSameTargetTime;
-		[SerializeField] private Tilemap _groundTileMap;
-		[SerializeField] private Tilemap _wallTileMap;
 		private bool _jump;
 		protected BoltEntity _target;
+		protected Utils.CustomVector3 _targetWaypoint;
 		private bool _targetCanBeSet;
+		private bool _waypointCanBeSet;
 		private float _lastTargetChangedTime;
 		private float _xDiff;
 		private float _yDiff;
@@ -128,6 +129,7 @@ namespace ThePackt
 			seekWalk.enterActions.Add(StartWalking);
 			seekWalk.stayActions.Add(CheckIfTargetIsInRange);
 			seekWalk.stayActions.Add(CheckIfTargetIsAbove);
+			seekWalk.stayActions.Add(CheckIfIShouldJump);
 			seekWalk.stayActions.Add(CheckIfTargetIsReached);
 			seekWalk.stayActions.Add(Walk);
 			seekWalk.exitActions.Add(StopWalking);
@@ -280,8 +282,10 @@ namespace ThePackt
 			Debug.Log("[BASEENEMY] wandering");
 
 			_lastAttacker = null;
+			_targetWaypoint = null;
 			_lastTargetHitTime = 0f;
 			_targetCanBeSet = true;
+			_waypointCanBeSet = true;
 
 			Debug.Log("[TRGT] now in wandering, target can be changed");
 			//_target = null;
@@ -329,43 +333,48 @@ namespace ThePackt
 
 		private void Walk()
 		{
-			if (_target == null)
-			{
-				//if there is not a target go in the current direction
-
-				if (_slowed)
+				if (_target == null || !IsGrounded())
 				{
-					_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
+					//if there is not a target go in the current direction
+
+					if (_slowed)
+					{
+						_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
+					}
+					else
+					{
+						_rb.velocity = new Vector2(_movementSpeed * _facingDirection, _currentVelocity.y);
+					}
 				}
 				else
 				{
-					_rb.velocity = new Vector2(_movementSpeed * _facingDirection, _currentVelocity.y);
-				}
-			}
-			else
-			{
-				//if there is a target seek it
+					//if there is a target seek it
 
-				//if the player has a higher x it means he is at my right
-				int targetDirection = _xDiff > 0 ? 1 : -1;
-				//flip if the target direction differ from the facing direction
-				if (targetDirection != _facingDirection)
-				{
-					Flip();
-				}
+					//if the player has a higher x it means he is at my right
+					int targetDirection;
+					if (!(_targetWaypoint == null))
+						targetDirection = (_targetWaypoint.vector.x - transform.position.x) > 0 ? 1 : -1;
+					else
+						targetDirection = _xDiff > 0 ? 1 : -1;
 
-				if (!_attack)
-				{
-					if (_slowed)
-                    {
-						_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
+					//flip if the target direction differ from the facing direction
+					if (targetDirection != _facingDirection && IsGrounded())
+					{
+						Flip();
 					}
-                    else
-                    {
-						_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
+
+					if (!_attack)
+					{
+						if (_slowed)
+						{
+							_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
+						}
+						else
+						{
+							_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
+						}
 					}
 				}
-			}
 		}
 
 		private void CheckIfMustWalk()
@@ -566,16 +575,193 @@ namespace ThePackt
 
 			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
 			{
-				if (IsTargetAbove() && IsGrounded())
+				//IsTargetAbove() && IsGrounded()
+				if (IsGrounded())
 				{
-					Debug.Log("[BASEENEMY] target above");
-					_jump = true;
+					if(!(_targetWaypoint == null) && _targetWaypoint.vector.y < _col.bounds.center.y && Math.Abs(_targetWaypoint.vector.x - _col.bounds.center.x) <= _waypointThreshold)
+                    {
+						_jump = true;
+						_targetWaypoint = null;
+						_waypointCanBeSet = true;
+					}
+
+					/*
+					Debug.Log("[PATH] target above " + Physics2D.gravity.y);
+
+					Vector3Int myCell = _groundTilemap.WorldToCell(transform.position);
+					Debug.Log("[PATH] my cell: " + myCell + "  " + _groundTilemap.HasTile(myCell));
+					Vector3Int targetCell = _groundTilemap.WorldToCell(_target.transform.position);
+					Debug.Log("[PATH] target cell: " + targetCell + "  " + _groundTilemap.HasTile(targetCell));
+
+					float jumpRange = (_movementSpeed * _jumpVelocity * 2) / -Physics2D.gravity.y;
+					float maxHeight = (_jumpVelocity * _jumpVelocity) / -(Physics2D.gravity.y * 2);
+
+					Bounds colBounds = GetComponent<BoxCollider2D>().bounds;
+					float startHeight = colBounds.center.y - colBounds.extents.y;
+
+					Bounds targetColBounds = _target.GetComponent<BoxCollider2D>().bounds;
+					float targetHeight = targetColBounds.center.y - targetColBounds.extents.y;
+
+					Debug.Log("[PATH] height " + (startHeight + maxHeight));
+
+					if (startHeight + maxHeight > targetHeight)
+                    {
+						if (transform.position.x + jumpRange >= _target.transform.position.x)
+						{
+							RaycastHit2D[] hits = new RaycastHit2D[1];
+							ContactFilter2D filter = new ContactFilter2D();
+
+							filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
+
+							int numHits = _col.Cast(transform.up, filter, hits, _target.transform.position.y - transform.position.y, true);
+
+							if (numHits == 0)
+							{
+								_jump = true;
+							}
+						}
+					}
+
+					*/
 				}
 			}
 		}
 
 		private void CheckIfTargetIsAbove()
 		{
+			if(_target && _target.GetComponent<Player>()._isGrounded && IsGrounded() && _waypointCanBeSet)
+            {
+				//_waypointCanBeSet = false;
+				_targetWaypoint = new Utils.CustomVector3();
+ 
+				Dictionary<Vector3, float> distVectDict = new Dictionary<Vector3, float>();
+				_targetWaypoint.vector = Vector3.positiveInfinity;
+
+				if (IsTargetBelow())
+				{
+					Debug.LogError("ppp below");
+
+					//float minDist = Mathf.Infinity;
+					foreach (var wp in _waypoints)
+					{
+						//among the wayponts lower than me
+						if (wp.y < _col.bounds.center.y)
+						{
+							//find immediately higher level
+							float maxY = -Mathf.Infinity;
+							foreach (var nwp in _waypoints)
+							{
+								if (nwp.y < wp.y && nwp.y > maxY)
+								{
+									maxY = nwp.y;
+								}
+							}
+
+							//find in immediately higher level the waypoint least distant from target and keep the distance value
+							float minDist = Mathf.Infinity;
+							foreach (var nwp in _waypoints)
+							{
+								if (nwp.y == maxY)
+								{
+									float dist = Vector3.Distance(nwp, _target.transform.position);
+
+									if (dist < minDist)
+									{
+										minDist = dist;
+									}
+								}
+							}
+
+							/*
+							//find the waypoint least distant from target and keep the distance value
+							float dist = Vector3.Distance(wp, _target.transform.position);
+							if (dist < minDist)
+							{
+								minDist = dist;
+							}
+							*/
+
+							//add the examined waypoint with the distance value
+							distVectDict.Add(wp, minDist);
+							// + 0.2f * Vector3.Distance(wp, _col.bounds.center)
+						}
+					}
+
+					//order in ascending order and pick the first reachable element (minimum)
+					var sortedDict = from entry in distVectDict orderby entry.Value ascending select entry;
+
+					foreach (var entry in sortedDict)
+					{
+						if (IsReachable(entry.Key))
+						{
+							_targetWaypoint.vector = entry.Key;
+							break;
+						}
+					}
+				}
+				else if (IsTargetAbove() || !IsReachable(_target.transform.position))
+				{
+					Debug.LogError("ppp above");
+
+					//find nearest waypoint which is lower than me and whose nearest point at the next higher level is nearest to the target
+					foreach (var wp in _waypoints)
+					{
+						//among the wayponts lower than me
+						if (wp.y < _col.bounds.center.y)
+						{
+							//find immediately higher level
+							float minY = Mathf.Infinity;
+							foreach (var nwp in _waypoints)
+							{
+								if (nwp.y > wp.y && nwp.y < minY)
+								{
+									minY = nwp.y;
+								}
+							}
+
+							//find in immediately higher level the waypoint least distant from target and keep the distance value
+							float minDist = Mathf.Infinity;
+							foreach (var nwp in _waypoints)
+							{
+								if (nwp.y == minY)
+								{
+									float dist = Vector3.Distance(nwp, _target.transform.position);
+
+									if (dist < minDist)
+									{
+										minDist = dist;
+									}
+								}
+							}
+
+							//add the examined waypoint with the distance value.0
+							distVectDict.Add(wp, minDist);
+							// + 0.2f * Vector3.Distance(wp, _col.bounds.center)
+						}
+					}
+
+					//order in ascending order and pick the first reachable element (minimum)
+					var sortedDict = from entry in distVectDict orderby entry.Value ascending select entry;
+
+					foreach (var entry in sortedDict)
+					{
+						if (IsReachable(entry.Key))
+						{
+							_targetWaypoint.vector = entry.Key;
+							break;
+						}
+					}
+				}
+                else
+                {
+					_targetWaypoint = null;
+				}
+			}
+			
+			if(_targetWaypoint != null)
+				Debug.LogWarning("[PATH] " + _targetWaypoint.vector);
+
+			/*
 			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
 			{
 				if (IsTargetAbove() && IsGrounded())
@@ -584,6 +770,7 @@ namespace ThePackt
 					_jump = true;
 				}
 			}
+			*/
 		}
 
 		private void CheckIfTargetIsGrounded()
@@ -635,9 +822,29 @@ namespace ThePackt
 
 		private bool IsTargetAbove()
 		{
-			float targetY = _target.GetComponent<Player>().transform.position.y;
+			float targetY = _target.GetComponent<BoxCollider2D>().bounds.center.y - _target.GetComponent<BoxCollider2D>().bounds.size.y/2;
 
-			return targetY > transform.position.y + _col.bounds.size.y;
+			return targetY > _col.bounds.center.y - _col.bounds.size.y/2;
+		}
+
+		private bool IsTargetBelow()
+		{
+			float targetY = _target.GetComponent<BoxCollider2D>().bounds.center.y - _target.GetComponent<BoxCollider2D>().bounds.size.y/2;
+
+			return targetY < _col.bounds.center.y - _col.bounds.size.y/2;
+		}
+
+		private bool IsReachable(Vector2 target)
+		{
+			RaycastHit2D[] hits = new RaycastHit2D[1];
+			ContactFilter2D filter = new ContactFilter2D();
+
+			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall"));
+
+			Vector2 dir = new Vector2(target.x - _col.bounds.center.x, 0f).normalized;
+			int numHits = _col.Cast(dir, filter, hits, Vector2.Distance(target, _col.bounds.center), true);
+
+			return numHits == 0;
 		}
 		#endregion
 
@@ -724,7 +931,7 @@ namespace ThePackt
 		private void Flip()
 		{
 			_facingDirection *= -1;
-			transform.Rotate(0.0f, 180.0f, 0.0f);
+			transform.Rotate(0f, 180f, 0f);
 		}
 
 		protected bool IsInRoomAndAlive(BoltEntity plyr)

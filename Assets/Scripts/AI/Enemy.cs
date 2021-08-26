@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 namespace ThePackt
 {
@@ -10,7 +11,7 @@ namespace ThePackt
         #region variables
         [Header("General")]
         [SerializeField] protected float _health;
-        [SerializeField] protected float _healthLevelIncrement; //increment of helth for each level of the quest
+        [SerializeField] protected float _healthLevelIncrement; //increment of health for each level of the quest
         [SerializeField] protected Canvas canvas;
         [SerializeField] protected GameObject healthBar;
         [SerializeField] protected Image healthImage;
@@ -38,7 +39,6 @@ namespace ThePackt
         protected Rigidbody2D _rb;
         protected Collider2D _col;
         protected Slider healthSlider;
-        //protected Vector3 _canvasPos;
         protected FSM _fsm;
 
         protected BoltEntity _lastAttacker;
@@ -47,13 +47,16 @@ namespace ThePackt
         protected Dictionary<BoltEntity, float> _unreachableTargets;
         //protected Dictionary<BoltEntity, float> _hitTimeMap;
         protected Quest _room;
+        protected Tilemap _groundTilemap;
+        protected Tilemap _wallTilemap;
+        protected Tilemap _waypointsTilemap;
+        protected List<Vector3> _waypoints;
 
         #region sfx
         [Header("SFX")]
         [SerializeField] protected GameObject _walkSfx;
         [SerializeField] protected GameObject _attackSfx;
         [SerializeField] protected GameObject _hurtSfx;
-        private bool _callbackAdded = false;
         #endregion
 
         #endregion
@@ -293,6 +296,12 @@ namespace ThePackt
         public void SetRoom(Quest value)
         {
             _room = value;
+
+            _waypoints = ((EnemyQuest)_room).GetWaypoints();
+
+            _waypointsTilemap = ((EnemyQuest)_room).GetWaypointsTilemap();
+            _groundTilemap = ((EnemyQuest)_room).GetGroundTilemap();
+            _wallTilemap = ((EnemyQuest)_room).GetWallTilemap();
         }
         #endregion
     }
