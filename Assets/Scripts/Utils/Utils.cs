@@ -12,10 +12,25 @@ namespace ThePackt
 
         #region inner classes
         [Serializable]
-        public class CustomVector3
+        public class NullableVector3
         {
-            public bool isNull;
             public Vector3 vector;
+
+            public NullableVector3(Vector3 v)
+            {
+                vector = v;
+            }
+        }
+
+        [Serializable]
+        public class NullableVector2
+        {
+            public Vector2 vector;
+
+            public NullableVector2(Vector2 v)
+            {
+                vector = v;
+            }
         }
 
         [Serializable]

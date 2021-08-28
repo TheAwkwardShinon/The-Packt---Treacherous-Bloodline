@@ -17,12 +17,13 @@ namespace ThePackt
 		[Header("Specific")]
 		[SerializeField] private float _reactionTime;
 		[SerializeField] private float _jumpVelocity;
-		[SerializeField] private float _jumpCooldown; //1 for proto and 3 for mage
+		[SerializeField] private float _jumpCooldown; //1 for prototype and 3 for mage
 		[SerializeField] private float _avoidRange;
 		[SerializeField] private float _perceptionRange;
 
 		private Vector2 _currentVelocity;
 		private Collider2D[] _nearPlayers;
+		private bool _isGrounded;
 
 		protected SpecificAttack _specificAttack;
 		protected CheckSpecificRange _checkSpecificRange;
@@ -49,9 +50,14 @@ namespace ThePackt
 		[SerializeField] private float _keepSameTargetTime;
 		private bool _jump;
 		protected BoltEntity _target;
-		protected Utils.CustomVector3 _targetWaypoint;
+		protected Utils.NullableVector3 _targetWaypoint;
 		private bool _targetCanBeSet;
-		private bool _waypointCanBeSet;
+		private Platform _nextPlatform;
+		private Platform _currentPlatform;
+		private Platform _lastTargetPlatform;
+		private Utils.NullableVector2 _jumpPoint;
+		private Vector2 _jumpPlatformVelocity;
+		private int[][] _adjacencyMatrix;
 		private float _lastTargetChangedTime;
 		private float _xDiff;
 		private float _yDiff;
@@ -68,6 +74,8 @@ namespace ThePackt
 		protected override void Awake()
 		{
 			base.Awake();
+
+			_adjacencyMatrix = Constants.ADJACENCYMATRIX;
 
 			_nearPlayers = new Collider2D[6];
 		}
@@ -128,7 +136,7 @@ namespace ThePackt
 			FSMState seekWalk = new FSMState();
 			seekWalk.enterActions.Add(StartWalking);
 			seekWalk.stayActions.Add(CheckIfTargetIsInRange);
-			seekWalk.stayActions.Add(CheckIfTargetIsAbove);
+			seekWalk.stayActions.Add(CheckTargetPlatform);
 			seekWalk.stayActions.Add(CheckIfIShouldJump);
 			seekWalk.stayActions.Add(CheckIfTargetIsReached);
 			seekWalk.stayActions.Add(Walk);
@@ -192,11 +200,24 @@ namespace ThePackt
 		{
 			_currentVelocity = _rb.velocity;
 
+			_isGrounded = IsGrounded();
+
 			if (_target)
 			{
 				_xDiff = _target.GetComponent<Player>().transform.position.x - transform.position.x;
 				_yDiff = _target.GetComponent<Player>().transform.position.y - transform.position.y;
 				_dist = Vector2.Distance(_target.transform.position, transform.position);
+
+                if (_target.GetComponent<Player>()._isGrounded)
+                {
+					BoxCollider2D targetCollider = _target.GetComponent<BoxCollider2D>();
+					_lastTargetPlatform = GetPlatform(targetCollider);
+				}
+
+                if (_isGrounded)
+                {
+					_currentPlatform = GetPlatform((BoxCollider2D) _col);
+				}
 			}
 		}
 
@@ -209,6 +230,7 @@ namespace ThePackt
 			}
 		}
 
+		/*
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.yellow;
@@ -244,6 +266,7 @@ namespace ThePackt
 			Vector2 start = _col.bounds.center + Vector3.down * _col.bounds.size.y * 0.5f + Vector3.right * _facingDirection * _avoidRange;
 			Gizmos.DrawRay(start, -transform.up * 0.1f);
 		}
+		*/
 
 		#region fsm enter actions
 		private void StartIdle()
@@ -285,10 +308,11 @@ namespace ThePackt
 			_targetWaypoint = null;
 			_lastTargetHitTime = 0f;
 			_targetCanBeSet = true;
-			_waypointCanBeSet = true;
+			_nextPlatform = null;
+			_currentPlatform = null;
+			_jumpPoint = null;
 
 			Debug.Log("[TRGT] now in wandering, target can be changed");
-			//_target = null;
 
 			_lastDirectionChangeTime = 0f;
 			_changeDirectionTime = 2f;
@@ -322,7 +346,6 @@ namespace ThePackt
 			{
 				//if it is not the first time and enough time from the last flip elapsed, stop
 
-				//Debug.Log("[BASEENEMY] time: " + Time.time + "    last change: " + _lastDirectionChangeTime + "     change time " + _changeDirectionTime);
 				if (Time.time >= _lastDirectionChangeTime + _changeDirectionTime)
 				{
 					_standStill = true;
@@ -333,53 +356,66 @@ namespace ThePackt
 
 		private void Walk()
 		{
-				if (_target == null || !IsGrounded())
+			if (_target == null || !_isGrounded || _jump)
+			{
+				Debug.LogWarning("eeeee " + _jumpPlatformVelocity.x + "  " + _jumpPlatformVelocity.y);
+				//if there is not a target go in the current direction
+				if (_slowed)
 				{
-					//if there is not a target go in the current direction
-
-					if (_slowed)
-					{
-						_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
-					}
-					else
-					{
-						_rb.velocity = new Vector2(_movementSpeed * _facingDirection, _currentVelocity.y);
-					}
+					_rb.velocity = new Vector2(_slowedSpeed * _facingDirection, _currentVelocity.y);
 				}
 				else
 				{
-					//if there is a target seek it
+					_rb.velocity = new Vector2(_jumpPlatformVelocity.x * _facingDirection, _currentVelocity.y);
+				}
 
-					//if the player has a higher x it means he is at my right
-					int targetDirection;
-					if (!(_targetWaypoint == null))
-						targetDirection = (_targetWaypoint.vector.x - transform.position.x) > 0 ? 1 : -1;
-					else
-						targetDirection = _xDiff > 0 ? 1 : -1;
+				if (_nextPlatform != null && Math.Abs(_nextPlatform.GetPlatformCenter().x - _col.bounds.center.x) <= _waypointThreshold)
+                {
+					_rb.velocity = new Vector2(0f, _currentVelocity.y); ;
+				}
+			}
+			else
+			{
+				//if there is a target seek it
 
-					//flip if the target direction differ from the facing direction
-					if (targetDirection != _facingDirection && IsGrounded())
-					{
-						Flip();
-					}
-
-					if (!_attack)
-					{
-						if (_slowed)
-						{
-							_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
-						}
-						else
-						{
-							_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
-						}
+				//if the platform center has a higher x it means he is at my right
+				int targetDirection = 1;
+				if (_nextPlatform != null && _currentPlatform != null && _jumpPoint != null)
+				{
+					targetDirection = (_jumpPoint.vector.x - transform.position.x) > 0 ? 1 : -1;
+				}
+				else if(_nextPlatform != null && _currentPlatform != null)
+				{
+					if (_currentPlatform.left.position.y > _nextPlatform.left.position.y)
+                    {
+						targetDirection = (_nextPlatform.GetPlatformCenter().x - transform.position.x) > 0 ? 1 : -1;
 					}
 				}
+				else
+					targetDirection = _xDiff > 0 ? 1 : -1;
+
+				//flip if the target direction differ from the facing direction
+				if (targetDirection != _facingDirection)
+				{
+					Flip();
+				}
+
+				if (!_attack)
+				{
+					if (_slowed)
+					{
+						_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
+					}
+					else
+					{
+						_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
+					}
+				}
+			}
 		}
 
 		private void CheckIfMustWalk()
 		{
-			//Debug.Log("[BASEENEMY] time: " + Time.time + "   last stand: " + _lastStandStillTime + "     stand time " + _standStillTime);
 			if (Time.time >= _lastStandStillTime + _standStillTime && !_stunned)
 			{
 				Flip();
@@ -394,7 +430,7 @@ namespace ThePackt
 
 		private void Jump()
 		{
-			_rb.velocity = new Vector2(_currentVelocity.x, _jumpVelocity);
+			_rb.velocity = new Vector2(_jumpPlatformVelocity.x * _facingDirection, _jumpPlatformVelocity.y); ;
 			_lastJumpTime = Time.time;
 
 			_jump = false;
@@ -411,8 +447,6 @@ namespace ThePackt
 
 			if (numHits > 0)
 			{
-				//Debug.Log("[BASEENEMY] avoid flipping");
-
 				Flip();
 			}
             else
@@ -573,206 +607,171 @@ namespace ThePackt
 		private void CheckIfIShouldJump()
 		{
 
-			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
+			if (Time.time >= _lastJumpTime + _jumpCooldown && _target && IsGrounded())
 			{
-				//IsTargetAbove() && IsGrounded()
-				if (IsGrounded())
-				{
-					if(!(_targetWaypoint == null) && _targetWaypoint.vector.y < _col.bounds.center.y && Math.Abs(_targetWaypoint.vector.x - _col.bounds.center.x) <= _waypointThreshold)
-                    {
-						_jump = true;
-						_targetWaypoint = null;
-						_waypointCanBeSet = true;
-					}
-
-					/*
-					Debug.Log("[PATH] target above " + Physics2D.gravity.y);
-
-					Vector3Int myCell = _groundTilemap.WorldToCell(transform.position);
-					Debug.Log("[PATH] my cell: " + myCell + "  " + _groundTilemap.HasTile(myCell));
-					Vector3Int targetCell = _groundTilemap.WorldToCell(_target.transform.position);
-					Debug.Log("[PATH] target cell: " + targetCell + "  " + _groundTilemap.HasTile(targetCell));
-
-					float jumpRange = (_movementSpeed * _jumpVelocity * 2) / -Physics2D.gravity.y;
-					float maxHeight = (_jumpVelocity * _jumpVelocity) / -(Physics2D.gravity.y * 2);
-
-					Bounds colBounds = GetComponent<BoxCollider2D>().bounds;
-					float startHeight = colBounds.center.y - colBounds.extents.y;
-
-					Bounds targetColBounds = _target.GetComponent<BoxCollider2D>().bounds;
-					float targetHeight = targetColBounds.center.y - targetColBounds.extents.y;
-
-					Debug.Log("[PATH] height " + (startHeight + maxHeight));
-
-					if (startHeight + maxHeight > targetHeight)
-                    {
-						if (transform.position.x + jumpRange >= _target.transform.position.x)
-						{
-							RaycastHit2D[] hits = new RaycastHit2D[1];
-							ContactFilter2D filter = new ContactFilter2D();
-
-							filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
-
-							int numHits = _col.Cast(transform.up, filter, hits, _target.transform.position.y - transform.position.y, true);
-
-							if (numHits == 0)
-							{
-								_jump = true;
-							}
-						}
-					}
-
-					*/
-				}
-			}
-		}
-
-		private void CheckIfTargetIsAbove()
-		{
-			if(_target && _target.GetComponent<Player>()._isGrounded && IsGrounded() && _waypointCanBeSet)
-            {
-				//_waypointCanBeSet = false;
-				_targetWaypoint = new Utils.CustomVector3();
- 
-				Dictionary<Vector3, float> distVectDict = new Dictionary<Vector3, float>();
-				_targetWaypoint.vector = Vector3.positiveInfinity;
-
-				if (IsTargetBelow())
-				{
-					Debug.LogError("ppp below");
-
-					//float minDist = Mathf.Infinity;
-					foreach (var wp in _waypoints)
-					{
-						//among the wayponts lower than me
-						if (wp.y < _col.bounds.center.y)
-						{
-							//find immediately higher level
-							float maxY = -Mathf.Infinity;
-							foreach (var nwp in _waypoints)
-							{
-								if (nwp.y < wp.y && nwp.y > maxY)
-								{
-									maxY = nwp.y;
-								}
-							}
-
-							//find in immediately higher level the waypoint least distant from target and keep the distance value
-							float minDist = Mathf.Infinity;
-							foreach (var nwp in _waypoints)
-							{
-								if (nwp.y == maxY)
-								{
-									float dist = Vector3.Distance(nwp, _target.transform.position);
-
-									if (dist < minDist)
-									{
-										minDist = dist;
-									}
-								}
-							}
-
-							/*
-							//find the waypoint least distant from target and keep the distance value
-							float dist = Vector3.Distance(wp, _target.transform.position);
-							if (dist < minDist)
-							{
-								minDist = dist;
-							}
-							*/
-
-							//add the examined waypoint with the distance value
-							distVectDict.Add(wp, minDist);
-							// + 0.2f * Vector3.Distance(wp, _col.bounds.center)
-						}
-					}
-
-					//order in ascending order and pick the first reachable element (minimum)
-					var sortedDict = from entry in distVectDict orderby entry.Value ascending select entry;
-
-					foreach (var entry in sortedDict)
-					{
-						if (IsReachable(entry.Key))
-						{
-							_targetWaypoint.vector = entry.Key;
-							break;
-						}
-					}
-				}
-				else if (IsTargetAbove() || !IsReachable(_target.transform.position))
-				{
-					Debug.LogError("ppp above");
-
-					//find nearest waypoint which is lower than me and whose nearest point at the next higher level is nearest to the target
-					foreach (var wp in _waypoints)
-					{
-						//among the wayponts lower than me
-						if (wp.y < _col.bounds.center.y)
-						{
-							//find immediately higher level
-							float minY = Mathf.Infinity;
-							foreach (var nwp in _waypoints)
-							{
-								if (nwp.y > wp.y && nwp.y < minY)
-								{
-									minY = nwp.y;
-								}
-							}
-
-							//find in immediately higher level the waypoint least distant from target and keep the distance value
-							float minDist = Mathf.Infinity;
-							foreach (var nwp in _waypoints)
-							{
-								if (nwp.y == minY)
-								{
-									float dist = Vector3.Distance(nwp, _target.transform.position);
-
-									if (dist < minDist)
-									{
-										minDist = dist;
-									}
-								}
-							}
-
-							//add the examined waypoint with the distance value.0
-							distVectDict.Add(wp, minDist);
-							// + 0.2f * Vector3.Distance(wp, _col.bounds.center)
-						}
-					}
-
-					//order in ascending order and pick the first reachable element (minimum)
-					var sortedDict = from entry in distVectDict orderby entry.Value ascending select entry;
-
-					foreach (var entry in sortedDict)
-					{
-						if (IsReachable(entry.Key))
-						{
-							_targetWaypoint.vector = entry.Key;
-							break;
-						}
-					}
-				}
-                else
+				if(_nextPlatform != null && _currentPlatform != null && _jumpPoint != null && Math.Abs(_jumpPoint.vector.x - _col.bounds.center.x) <= _waypointThreshold)
                 {
-					_targetWaypoint = null;
-				}
-			}
-			
-			if(_targetWaypoint != null)
-				Debug.LogWarning("[PATH] " + _targetWaypoint.vector);
+					int targetDirection;
+					float centerX = _nextPlatform.GetPlatformCenter().x;
+					targetDirection = (centerX - transform.position.x) > 0 ? 1 : -1;
 
-			/*
-			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
+					//flip if the target direction differ from the facing direction
+					if (targetDirection != _facingDirection)
+					{
+						Flip();
+					}
+
+					float yMax = 0f;
+					float range = 0f;
+					if (_currentPlatform.left.position.y < _nextPlatform.left.position.y)
+                    {
+						yMax = (_nextPlatform.left.position.y + (_col.bounds.size.y * 1f)) - _col.bounds.center.y;
+
+						//float arrivalX = _nextPlatform.left.position.x > _col.bounds.center.x ? _nextPlatform.left.position.x - _col.bounds.size.x : _nextPlatform.right.position.x + _col.bounds.size.x;
+						float arrivalX = _nextPlatform.left.position.x > _col.bounds.center.x ? _nextPlatform.left.position.x + _col.bounds.size.x : _nextPlatform.right.position.x - _col.bounds.size.x;
+						range = Math.Abs(arrivalX - _col.bounds.center.x);
+					}
+                    else
+                    {
+						yMax = (_nextPlatform.left.position.y + (_col.bounds.size.y * 2f)) - _col.bounds.center.y;
+						range = Math.Abs(centerX - _col.bounds.center.x);
+					}
+
+					float vY = Mathf.Sqrt(yMax * -(Physics2D.gravity.y * 2));
+					float vX = (range * -Physics2D.gravity.y) / (2 * vY);
+
+					Debug.LogWarning("bbbb " + vX + "  " + vY);
+					_jumpPlatformVelocity = new Vector2(vX, vY);
+
+					_jump = true;
+				}
+
+				/*
+				Debug.Log("[PATH] target above " + Physics2D.gravity.y);
+
+				Vector3Int myCell = _groundTilemap.WorldToCell(transform.position);
+				Debug.Log("[PATH] my cell: " + myCell + "  " + _groundTilemap.HasTile(myCell));
+				Vector3Int targetCell = _groundTilemap.WorldToCell(_target.transform.position);
+				Debug.Log("[PATH] target cell: " + targetCell + "  " + _groundTilemap.HasTile(targetCell));
+
+				float jumpRange = (_movementSpeed * _jumpVelocity * 2) / -Physics2D.gravity.y;
+				float maxHeight = (_jumpVelocity * _jumpVelocity) / -(Physics2D.gravity.y * 2);
+
+				Bounds colBounds = GetComponent<BoxCollider2D>().bounds;
+				float startHeight = colBounds.center.y - colBounds.extents.y;
+
+				Bounds targetColBounds = _target.GetComponent<BoxCollider2D>().bounds;
+				float targetHeight = targetColBounds.center.y - targetColBounds.extents.y;
+
+				Debug.Log("[PATH] height " + (startHeight + maxHeight));
+
+				if (startHeight + maxHeight > targetHeight)
+                {
+					if (transform.position.x + jumpRange >= _target.transform.position.x)
+					{
+						RaycastHit2D[] hits = new RaycastHit2D[1];
+						ContactFilter2D filter = new ContactFilter2D();
+
+						filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
+
+						int numHits = _col.Cast(transform.up, filter, hits, _target.transform.position.y - transform.position.y, true);
+
+						if (numHits == 0)
+						{
+							_jump = true;
+						}
+					}
+				}
+
+				*/
+			}
+
+			if (!_jump)
 			{
-				if (IsTargetAbove() && IsGrounded())
+				Vector2 _workspace = _col.bounds.center + Vector3.down * (_col.bounds.size.y * 0.5f + 0.1f);
+				Collider2D hit = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x, 0.005f, 0f), 0f, LayerMask.GetMask("Players", "Enemies", "Objectives"));
+				if (hit)
 				{
-					Debug.Log("[BASEENEMY] target above");
+					_jumpPlatformVelocity = new Vector2(_currentVelocity.x, _jumpVelocity);
 					_jump = true;
 				}
 			}
-			*/
 		}
 
+
+		private void CheckTargetPlatform()
+		{
+            if (IsGrounded())
+            {
+				if(_lastTargetPlatform != null)
+                {
+					Debug.LogWarning("ppppp target " + _lastTargetPlatform.num);
+				}
+				if (_currentPlatform != null)
+				{
+					Debug.LogWarning("ppppp current " + _currentPlatform.num);
+				}
+
+				if (_currentPlatform != null && _lastTargetPlatform != null && _lastTargetPlatform.num != _currentPlatform.num)
+				{
+					_nextPlatform = GetPlatform(_adjacencyMatrix[_currentPlatform.num][_lastTargetPlatform.num]);
+
+					Debug.LogWarning("ppppp next " + _nextPlatform.num);
+
+					if (_currentPlatform.left.position.y == _nextPlatform.left.position.y)
+					{
+						_jumpPoint = new Utils.NullableVector2(_currentPlatform.GetPlatformCenter());
+					}
+					else if(_currentPlatform.left.position.y < _nextPlatform.left.position.y)
+					{
+						_jumpPoint = new Utils.NullableVector2(_currentPlatform.GetPlatformCenter());
+
+						/*
+						float jumpRange = (_movementSpeed * _jumpVelocity * 2) / -Physics2D.gravity.y;
+						Vector2 nextPlatformCenter = _nextPlatform.GetPlatformCenter();
+
+						int sign = (nextPlatformCenter.x - _col.bounds.center.x) > 0 ? -1 : 1;
+						float jumpPointX = nextPlatformCenter.x + (sign * jumpRange);
+						jumpPointX = jumpPointX > _currentPlatform.right.position.x - _col.bounds.size.x / 2 - 0.1f ? _currentPlatform.right.position.x - _col.bounds.size.x/2 - 0.1f : jumpPointX;
+						jumpPointX = jumpPointX < _currentPlatform.left.position.x + _col.bounds.size.x / 2 + 0.1f ? _currentPlatform.left.position.x + _col.bounds.size.x / 2 + 0.1f : jumpPointX;
+
+						_jumpPoint = new Utils.NullableVector2(new Vector2(jumpPointX, _currentPlatform.left.position.y));
+
+						RaycastHit2D hit = Physics2D.BoxCast(new Vector2(_jumpPoint.vector.x + _col.bounds.size.x / 2, _jumpPoint.vector.y + _col.bounds.size.y / 2), new Vector2(_col.bounds.size.x, _jumpPoint.vector.y - _nextPlatform.left.position.y), 0f, Vector2.up, LayerMask.GetMask("Ground", "Wall", "EnemyInvisibleWall"));
+
+                        if (hit)
+						{ 
+
+							sign = -sign;
+							jumpPointX = nextPlatformCenter.x + (sign * jumpRange);
+							jumpPointX = jumpPointX > _currentPlatform.right.position.x - _col.bounds.size.x / 2 - 0.1f ? _currentPlatform.right.position.x - _col.bounds.size.x / 2 - 0.1f : jumpPointX;
+							jumpPointX = jumpPointX < _currentPlatform.left.position.x + _col.bounds.size.x / 2 + 0.1f ? _currentPlatform.left.position.x + _col.bounds.size.x / 2 + 0.1f : jumpPointX;
+
+							Debug.LogWarning("ppppp hit " + jumpPointX);
+
+							_jumpPoint = new Utils.NullableVector2(new Vector2(jumpPointX, _currentPlatform.left.position.y));
+						}
+						*/
+					}
+                    else
+                    {
+						_jumpPoint = null;
+
+					}
+				}
+				else
+				{
+					_nextPlatform = null;
+					_jumpPoint = null;
+				}
+			}
+            else
+            {
+				//_nextPlatform = null;
+				_jumpPoint = null;
+			}
+		}
+		
 		private void CheckIfTargetIsGrounded()
 		{
 			if (Time.time >= _lastJumpTime + _jumpCooldown && _target)
@@ -818,33 +817,6 @@ namespace ThePackt
 		private void StopAttacking()
 		{
 			//end animation?
-		}
-
-		private bool IsTargetAbove()
-		{
-			float targetY = _target.GetComponent<BoxCollider2D>().bounds.center.y - _target.GetComponent<BoxCollider2D>().bounds.size.y/2;
-
-			return targetY > _col.bounds.center.y - _col.bounds.size.y/2;
-		}
-
-		private bool IsTargetBelow()
-		{
-			float targetY = _target.GetComponent<BoxCollider2D>().bounds.center.y - _target.GetComponent<BoxCollider2D>().bounds.size.y/2;
-
-			return targetY < _col.bounds.center.y - _col.bounds.size.y/2;
-		}
-
-		private bool IsReachable(Vector2 target)
-		{
-			RaycastHit2D[] hits = new RaycastHit2D[1];
-			ContactFilter2D filter = new ContactFilter2D();
-
-			filter.SetLayerMask(LayerMask.GetMask("Ground", "Wall"));
-
-			Vector2 dir = new Vector2(target.x - _col.bounds.center.x, 0f).normalized;
-			int numHits = _col.Cast(dir, filter, hits, Vector2.Distance(target, _col.bounds.center), true);
-
-			return numHits == 0;
 		}
 		#endregion
 
@@ -934,6 +906,59 @@ namespace ThePackt
 			transform.Rotate(0f, 180f, 0f);
 		}
 
+		private Platform GetPlatform(BoxCollider2D collider)
+        {
+			Vector2 rightCorner = new Vector2(collider.bounds.center.x + (collider.bounds.size.x / 2) + 0.1f, collider.bounds.center.y - (collider.bounds.size.y / 2));
+			var hit = Physics2D.Raycast(rightCorner, new Vector2(0f, -1f), 0.1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+
+			Vector2 position = Vector2.zero;
+            if (hit)
+            {
+				position = hit.point;
+			}
+            else
+            {
+				Vector2 leftCorner = new Vector2(collider.bounds.center.x - (collider.bounds.size.x / 2) - 0.1f, collider.bounds.center.y - (collider.bounds.size.y / 2));
+				hit = Physics2D.Raycast(leftCorner, new Vector2(0f, -1f), 0.1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+
+				if (hit)
+                {
+					position = hit.point;
+				}
+			}
+
+			foreach(var platform in _platforms)
+            {
+				if (Math.Abs(position.y - platform.left.position.y) <= 0.01f && position.x + 0.01f >= platform.left.position.x && position.x - 0.01f <= platform.right.position.x)
+                {
+					return platform;
+                }
+            }
+
+			return null;
+        }
+
+		private Platform GetPlatform(int num)
+		{
+			foreach (var platform in _platforms)
+			{
+				if (platform.num == num)
+				{
+					return platform;
+				}
+			}
+
+			return null;
+		}
+		
+		public void RegisterTargetHit(BoltEntity ent)
+		{
+			if (_target = ent)
+			{
+				_lastTargetHitTime = Time.time;
+			}
+		}
+
 		protected bool IsInRoomAndAlive(BoltEntity plyr)
 		{
 			if (_room != null)
@@ -981,14 +1006,6 @@ namespace ThePackt
 			Debug.Log("[TRGT] changed to " + ent.NetworkId);
 
 			_target = ent;
-		}
-
-		public void RegisterTargetHit(BoltEntity ent)
-		{
-			if (_target = ent)
-			{
-				_lastTargetHitTime = Time.time;
-			}
 		}
 	#endregion
 

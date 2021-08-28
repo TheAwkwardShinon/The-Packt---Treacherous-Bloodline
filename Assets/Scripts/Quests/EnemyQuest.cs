@@ -13,6 +13,7 @@ namespace ThePackt
         [SerializeField] private Tilemap _waypointsTilemap;
         [SerializeField] private Tilemap _groundTilemap;
         [SerializeField] private Tilemap _wallTilemap;
+        [SerializeField] private Platform[] _platforms;
         private List<Vector3> _waypoints;
         private List<BoltEntity> _spawnedEnemies;
 
@@ -39,23 +40,21 @@ namespace ThePackt
         {
             base.Attached();
 
-            foreach (var position in _waypointsTilemap.cellBounds.allPositionsWithin)
+            foreach (var platform in _platforms)
             {
-                if (_waypointsTilemap.HasTile(position))
-                {
-                    var hit = Physics2D.Raycast(_waypointsTilemap.GetCellCenterWorld(position), new Vector2(0f, -1f), 3f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
-                    _waypoints.Add(hit.point);
-                    Debug.Log("[PATH] waypoint: " + hit.point);
-                }
+                var hit = Physics2D.Raycast(platform.left.position, new Vector2(0f, -1f), 1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+                platform.left.position = hit.point;
+                platform.right.position = new Vector2(platform.right.position.x, hit.point.y);
             }
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            foreach (var w in _waypoints)
+            foreach (var platform in _platforms)
             {
-                Gizmos.DrawWireSphere(w, 0.1f);
+                Gizmos.DrawWireSphere(platform.left.position, 0.1f);
+                Gizmos.DrawWireSphere(platform.right.position, 0.1f);
             }
         }
 
@@ -127,6 +126,11 @@ namespace ThePackt
         public List<Vector3> GetWaypoints()
         {
             return _waypoints;
+        }
+
+        public Platform[] GetPlaforms()
+        {
+            return _platforms;
         }
         #endregion
         #endregion

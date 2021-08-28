@@ -50,7 +50,8 @@ namespace ThePackt
         protected Tilemap _groundTilemap;
         protected Tilemap _wallTilemap;
         protected Tilemap _waypointsTilemap;
-        protected List<Vector3> _waypoints;
+        //protected List<Vector3> _waypoints;
+        protected Platform[] _platforms;
 
         #region sfx
         [Header("SFX")]
@@ -297,11 +298,12 @@ namespace ThePackt
         {
             _room = value;
 
-            _waypoints = ((EnemyQuest)_room).GetWaypoints();
+            //_waypoints = ((EnemyQuest)_room).GetWaypoints();
 
             _waypointsTilemap = ((EnemyQuest)_room).GetWaypointsTilemap();
             _groundTilemap = ((EnemyQuest)_room).GetGroundTilemap();
             _wallTilemap = ((EnemyQuest)_room).GetWallTilemap();
+            _platforms = ((EnemyQuest)_room).GetPlaforms();
         }
         #endregion
     }

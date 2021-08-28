@@ -27,9 +27,14 @@ namespace ThePackt
 			{
 				if (_target == col.GetComponent<Player>().entity)
 				{
-					_attack = true;
+					var hit = Physics2D.Raycast(_attackPoint.position, col.bounds.center - _attackPoint.position, Vector2.Distance(col.bounds.center, _attackPoint.position) + 1f, LayerMask.GetMask("Players", "Ground", "Wall", "Enemies", "Objectives"));
+					
+					if (hit.collider.GetComponent<Player>() && _target == hit.collider.GetComponent<Player>().entity)
+					{
+						_attack = true;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
