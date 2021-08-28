@@ -50,16 +50,24 @@ namespace ThePackt
         public const int HURT = 0;
         #endregion 
 
-        public static readonly int[][] ADJACENCYMATRIX = { new int [] { -1, 1, 1, 1, 7, 7, 7, 7, 7, 7 },
-                                                           new int [] { 0, -1, 2, 3, 4, 4, 7, 7, 7, 7 },
+        public static readonly int[][] ADJACENCYMATRIXENEMYQUEST = { new int [] { -1, 1, 1, 1, 7, 7, 7, 7, 7, 7 },
+                                                           new int [] { 0, -1, 2, 4, 4, 4, 7, 7, 7, 7 },
                                                            new int [] { 1, 1, -1, 1, 1, 1, 1, 1, 1, 1 },
-                                                           new int [] { 1, 1, 1, -1, 1, 1, 1, 1, 1, 1 },
-                                                           new int [] { 0, 1, 1, 1, -1, 5, 6, 6, 6, 6 },
+                                                           new int [] { 0, 4, 4, -1, 4, 4, 4, 4, 4, 4 },
+                                                           new int [] { 1, 1, 1, 3, -1, 5, 6, 6, 6, 6 },
                                                            new int [] { 4, 4, 4, 4, 4, -1, 4, 4, 4, 4 },
-                                                           new int [] { 7, 7, 7, 7, 4, 4, -1, 7, 7, 7 },
+                                                           new int [] { 7, 7, 7, 4, 4, 4, -1, 7, 7, 7 },
                                                            new int [] { 0, 1, 1, 1, 6, 6, 6, -1, 8, 8 },
                                                            new int [] { 7, 7, 7, 7, 7, 7, 7, 7, -1, 9 },
                                                            new int [] { 8, 8, 8, 8, 8, 8, 8, 8, 8, -1 },
-        };//
+        };
+
+        public static readonly int[][] ADJACENCYMATRIXMAINQUEST = { new int [] { -1, 1, 2, 1, 2, 1 },
+                                                               new int [] { 0, -1, 2, 3, 3, 3 },
+                                                               new int [] { 0, 1, -1, 3, 3, 3 },
+                                                               new int [] { 2, 1, 2, -1, 4, 5 },
+                                                               new int [] { 3, 3, 3, 3, -1, 3 },
+                                                               new int [] { 3, 3, 3, 3, 3, -1 },
+        };
     }
 }

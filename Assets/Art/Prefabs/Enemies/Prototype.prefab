@@ -506,16 +506,17 @@ MonoBehaviour:
   _attackSfx: {fileID: 3579213105201263715}
   _hurtSfx: {fileID: 6181980213178154832}
   _reactionTime: 0.1
-  _jumpVelocity: 6
+  _jumpVelocity: 5
   _jumpCooldown: 0
   _avoidRange: 0.6
   _perceptionRange: 1.5
+  _targetHealthWeight: 0.5
   _minChangeDirectionTime: 0.5
   _maxChangeDirectionTime: 4.5
   _minStandStillTime: 1
   _maxStandStillTime: 2
   _seekThreshold: 0.6
-  _waypointThreshold: 0.1
+  _jumpPointThreshold: 0.2
   _unreachabilityTime: 20
   _reachabilityRestoreTime: 12
   _keepSameTargetTime: 12

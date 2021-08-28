@@ -108,6 +108,7 @@ namespace ThePackt
                 }
                 
                 _spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[_randomIndex], _spawnPoint.position, _spawnPoint.rotation);
+                _spawnedEnemy.GetComponent<Enemy>().SetRoom(MainQuest.Instance);
                 _isEnemyAlive = true;
 
                 if(!_spawnedEnemy)

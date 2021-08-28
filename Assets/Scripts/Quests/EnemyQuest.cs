@@ -10,11 +10,7 @@ namespace ThePackt
         protected CharacterSelectionData _selectedData;
         [SerializeField] private GameObject[] _enemyPrefabs;
         [SerializeField] private Transform[] _spawnPoints;
-        [SerializeField] private Tilemap _waypointsTilemap;
-        [SerializeField] private Tilemap _groundTilemap;
-        [SerializeField] private Tilemap _wallTilemap;
         [SerializeField] private Platform[] _platforms;
-        private List<Vector3> _waypoints;
         private List<BoltEntity> _spawnedEnemies;
 
         #region methods
@@ -22,8 +18,6 @@ namespace ThePackt
         {
             _selectedData = CharacterSelectionData.Instance;
             _spawnedEnemies = new List<BoltEntity>();
-
-            _waypoints = new List<Vector3>();
 
             _completeCondition = AreEnemiesDead;
 
@@ -48,6 +42,7 @@ namespace ThePackt
             }
         }
 
+        /*
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -57,6 +52,7 @@ namespace ThePackt
                 Gizmos.DrawWireSphere(platform.right.position, 0.1f);
             }
         }
+        */
 
         protected void SpawnEnemies()
         {
@@ -108,27 +104,8 @@ namespace ThePackt
         }
 
         #region getters
-        public Tilemap GetWaypointsTilemap()
-        {
-            return _waypointsTilemap;
-        }
 
-        public Tilemap GetGroundTilemap()
-        {
-            return _groundTilemap;
-        }
-
-        public Tilemap GetWallTilemap()
-        {
-            return _wallTilemap;
-        }
-
-        public List<Vector3> GetWaypoints()
-        {
-            return _waypoints;
-        }
-
-        public Platform[] GetPlaforms()
+        public Platform[] GetPlatforms()
         {
             return _platforms;
         }

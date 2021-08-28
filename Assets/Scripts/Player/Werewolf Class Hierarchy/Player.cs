@@ -473,7 +473,7 @@ namespace ThePackt{
             //Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
             if (entity.IsOwner)
             {
-                state.Health -= damage;
+                //state.Health -= damage;
                 if(_playerData.tasteLikeIron && _playerData.tasteLikeIronStart.Count == 0){
                     _playerData.tasteLikeIronStart = new List<float>();
                      _playerData.tasteLikeIronStart.Add(Time.time);
@@ -997,6 +997,11 @@ namespace ThePackt{
         public bool GetIsHuman()
         {
             return _isHuman;
+        }
+
+        public float GetHealth()
+        {
+            return _playerData.currentLifePoints;
         }
 
         public uint getConnectionID()

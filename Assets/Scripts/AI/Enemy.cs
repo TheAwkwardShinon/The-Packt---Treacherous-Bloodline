@@ -298,13 +298,14 @@ namespace ThePackt
         {
             _room = value;
 
-            //_waypoints = ((EnemyQuest)_room).GetWaypoints();
-
-            _waypointsTilemap = ((EnemyQuest)_room).GetWaypointsTilemap();
-            _groundTilemap = ((EnemyQuest)_room).GetGroundTilemap();
-            _wallTilemap = ((EnemyQuest)_room).GetWallTilemap();
-            _platforms = ((EnemyQuest)_room).GetPlaforms();
+            _platforms = ((EnemyQuest)_room).GetPlatforms();
         }
+
+        public void SetRoom(MainQuest value)
+        {
+            _platforms = value.GetPlatforms();
+        }
+        
         #endregion
     }
 }

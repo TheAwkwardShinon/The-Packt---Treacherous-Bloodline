@@ -10,6 +10,7 @@ namespace ThePackt
     {
         [SerializeField] private GameObject _objectivePrefab;
         [SerializeField] private Transform[] _objectivePositions;
+        [SerializeField] private Platform[] _platforms;
         [SerializeField] private Transform _upLeftPosition;
         [SerializeField] private float _returnToMenuSeconds;
         private List<BoltEntity> _objectives;
@@ -94,6 +95,16 @@ namespace ThePackt
                 { 
                     state.State = Constants.COMPLETED;
                 }
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            foreach (var platform in _platforms)
+            {
+                Gizmos.DrawWireSphere(platform.left.position, 0.1f);
+                Gizmos.DrawWireSphere(platform.right.position, 0.1f);
             }
         }
 
@@ -351,6 +362,11 @@ namespace ThePackt
         public int GetQuestState()
         {
             return _state;
+        }
+
+        public Platform[] GetPlatforms()
+        {
+            return _platforms;
         }
         #endregion
 
