@@ -473,7 +473,7 @@ namespace ThePackt{
             //Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
             if (entity.IsOwner)
             {
-                //state.Health -= damage;
+                state.Health -= damage;
                 if(_playerData.tasteLikeIron && _playerData.tasteLikeIronStart.Count == 0){
                     _playerData.tasteLikeIronStart = new List<float>();
                      _playerData.tasteLikeIronStart.Add(Time.time);
@@ -880,7 +880,7 @@ namespace ThePackt{
         }
 
         ///<summary>
-        ///TODO add summary
+        ///shows question abandoned panel and abandon the quest
         ///</summary>
         public void AbandonQuest()
         {
@@ -897,9 +897,6 @@ namespace ThePackt{
                 _activeQuest = null;
                 hasActiveQuest = false;
                 SetFogOfWarDiameter(_playerData.standardCircleSize);
-
-                
-               
             }
         }
 
@@ -999,9 +996,9 @@ namespace ThePackt{
             return _isHuman;
         }
 
-        public float GetHealth()
+        public float GetLostHealth()
         {
-            return _playerData.currentLifePoints;
+            return _playerData.maxLifePoints - _playerData.currentLifePoints;
         }
 
         public uint getConnectionID()

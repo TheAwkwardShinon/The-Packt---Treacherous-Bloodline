@@ -94,14 +94,20 @@ namespace ThePackt
             {
                 _timerJoin = false;
 
-                Join(_localPlayer.entity);
+                if (_localPlayer.entity.IsAttached)
+                {
+                    Join(_localPlayer.entity);
+                }
             }
            
             if (_timerAbandon && Time.time >= _leavingTime + _autoAbandonTime)
             {
                 _timerAbandon = false;
 
-                Abandon(_localPlayer.entity);
+                if (_localPlayer.entity.IsAttached)
+                {
+                    Abandon(_localPlayer.entity);
+                }
             }
 
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("MapScene") && _hiddenCanvas == null){

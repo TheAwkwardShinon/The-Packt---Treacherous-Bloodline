@@ -61,7 +61,6 @@ namespace ThePackt
 		private int[][] _adjacencyMatrix;
 		private float _lastTargetChangedTime;
 		private float _xDiff;
-		private float _yDiff;
 		private float _dist;
 		protected bool _attack;
 		protected float _lastAttackTime;
@@ -204,8 +203,13 @@ namespace ThePackt
 			if (_target)
 			{
 				_xDiff = _target.GetComponent<Player>().transform.position.x - transform.position.x;
-				_yDiff = _target.GetComponent<Player>().transform.position.y - transform.position.y;
 				_dist = Vector2.Distance(_target.transform.position, transform.position);
+
+                if (_target.IsAttached && !_target.IsOwner)
+                {
+					_target.GetComponent<Player>().CheckIfGrounded();
+
+				}
 
                 if (_target.GetComponent<Player>()._isGrounded)
                 {
@@ -396,6 +400,10 @@ namespace ThePackt
 					float centerX = _nextPlatform.GetPlatformCenter().x;
 					targetDirection = (centerX - transform.position.x) > 0 ? 1 : -1;
 				}
+				else if (!_isGrounded)
+				{
+					targetDirection = _facingDirection;
+				}
 				else if(_nextPlatform != null && _currentPlatform != null && _jumpPoint == null)
 				{
 					targetDirection = (_nextPlatform.GetPlatformCenter().x - transform.position.x) > 0 ? 1 : -1;
@@ -502,7 +510,10 @@ namespace ThePackt
             {
 				if (Time.time >= entry.Value + _reachabilityRestoreTime)
 				{
-					Debug.Log("[TRGT] target " + entry.Key.NetworkId + " now reachable");
+                    if (entry.Key.IsAttached)
+                    {
+						Debug.Log("[TRGT] target " + entry.Key.NetworkId + " now reachable");
+					}
 
 					toRemove.Add(entry.Key);
 				}
@@ -514,7 +525,7 @@ namespace ThePackt
 			//if target is unreachable for a certain amount of time, the target can be changed and the current target is added to the unreachable ones
 			if (Time.time >= _lastTargetHitTime + _unreachabilityTime)
 			{
-				Debug.Log("[TRGT] target unreachable");
+				Debug.Log("[TRGT] target unreachable, target can be changed");
 				_targetCanBeSet = true;
 				_lastTargetHitTime = Time.time;
 
@@ -535,22 +546,34 @@ namespace ThePackt
 			{
 				_targetCanBeSet = true;
 
-				Debug.Log("[TRGT] can be changed: " + inRoomAlive);
+				Debug.Log("[TRGT] can be changed now");
 			}
 
 			if (_damageMap.Count > 0 && _targetCanBeSet)
 			{
-				//if the target can now be changed, pick the one that dealt more damage among the ones that are:
+				//if the target can now be changed, pick the one that dealt more damage and has less life points among the ones that are:
 				//- still in the room
 				//- still alive
 				//- not in the unreachable list
 
-				var sortedDict = from entry in _damageMap orderby (entry.Value + _targetHealthWeight * entry.Key.GetComponent<Player>().GetHealth()) descending select entry;
+				toRemove = new List<BoltEntity>();
+				foreach (var entry in _damageMap)
+				{
+					if (!entry.Key.IsAttached)
+					{
+						toRemove.Add(entry.Key);
+					}
+				}
+
+				foreach (var elem in toRemove)
+					_damageMap.Remove(elem);
+
+				var sortedDict = from entry in _damageMap orderby (entry.Value + _targetHealthWeight * entry.Key.GetComponent<Player>().GetLostHealth()) descending select entry;
 
 				bool set = false;
 				foreach (var entry in sortedDict)
 				{
-					if (IsInRoomAndAlive(entry.Key) && entry.Key && !_unreachableTargets.ContainsKey(entry.Key))
+					if (entry.Key && IsInRoomAndAlive(entry.Key) && !_unreachableTargets.ContainsKey(entry.Key))
 					{ 
 						SetTarget(entry.Key);
 						set = true;
@@ -561,7 +584,7 @@ namespace ThePackt
 				if(!set && !inRoomAlive)
                 {
 					//if no target was set, pick from the unreachable ones hoping the picked one is now reachable
-					Debug.Log("[TRGT] picking from unreachable ones");
+					//Debug.Log("[TRGT] picking from unreachable ones");
 
 					set = false;
 					foreach (var ent in _unreachableTargets.Keys)
@@ -576,9 +599,9 @@ namespace ThePackt
 					}
 
 					//if no target was set, it means no target is available. So set it to null, so that the transition will make the state change to wandering 
-					if (!set)
+					if (!set && !IsInRoomAndAlive(_target))
 					{
-						Debug.Log("[TRGT] not set and not alive and in room");
+						//Debug.Log("[TRGT] not set and not alive and in room");
 
 						_target = null;
 					}
@@ -618,7 +641,7 @@ namespace ThePackt
 		private void CheckIfIShouldJump()
 		{
 
-			if (Time.time >= _lastJumpTime + _jumpCooldown && _target && IsGrounded())
+			if (Time.time >= _lastJumpTime + _jumpCooldown && _target && _isGrounded)
 			{
 				if(_nextPlatform != null && _currentPlatform != null && _jumpPoint != null && Math.Abs(_jumpPoint.vector.x - _col.bounds.center.x) <= _jumpPointThreshold)
                 {
@@ -663,7 +686,7 @@ namespace ThePackt
 
 		private void CheckTargetPlatform()
 		{
-            if (IsGrounded())
+			if (_isGrounded)
             {
 				if(_lastTargetPlatform != null)
                 {
@@ -680,11 +703,7 @@ namespace ThePackt
 
 					Debug.LogWarning("ppppp next " + _nextPlatform.num);
 
-					if (_currentPlatform.left.position.y == _nextPlatform.left.position.y)
-					{
-						_jumpPoint = new Utils.NullableVector2(_currentPlatform.GetPlatformCenter());
-					}
-					else if(_currentPlatform.left.position.y < _nextPlatform.left.position.y)
+					if (_currentPlatform.left.position.y <= _nextPlatform.left.position.y)
 					{
 						_jumpPoint = new Utils.NullableVector2(_currentPlatform.GetPlatformCenter());
 					}
@@ -713,7 +732,7 @@ namespace ThePackt
 			{
 				bool targetGrounded = _target.GetComponent<Player>()._isGrounded;
 				
-				if (!targetGrounded && IsGrounded())
+				if (!targetGrounded && _isGrounded)
 				{
 					Debug.Log("[BASEENEMY] target not grounded");
 					_jump = true;
@@ -794,7 +813,6 @@ namespace ThePackt
 
 		private bool NoTarget()
 		{
-			Debug.Log("[TRGT] qui qui" + _target == null);
 			return _target == null;
 		}
 
@@ -844,7 +862,7 @@ namespace ThePackt
 		private Platform GetPlatform(BoxCollider2D collider)
         {
 			Vector2 rightCorner = new Vector2(collider.bounds.center.x + (collider.bounds.size.x / 2) + 0.1f, collider.bounds.center.y - (collider.bounds.size.y / 2));
-			var hit = Physics2D.Raycast(rightCorner, new Vector2(0f, -1f), 0.1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+			var hit = Physics2D.Raycast(rightCorner, new Vector2(0f, -1f), 0.2f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
 
 			Vector2 position = Vector2.zero;
             if (hit)
@@ -854,7 +872,7 @@ namespace ThePackt
             else
             {
 				Vector2 leftCorner = new Vector2(collider.bounds.center.x - (collider.bounds.size.x / 2) - 0.1f, collider.bounds.center.y - (collider.bounds.size.y / 2));
-				hit = Physics2D.Raycast(leftCorner, new Vector2(0f, -1f), 0.1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
+				hit = Physics2D.Raycast(leftCorner, new Vector2(0f, -1f), 0.2f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
 
 				if (hit)
                 {
@@ -862,7 +880,7 @@ namespace ThePackt
 				}
 			}
 
-			foreach(var platform in _platforms)
+			foreach (var platform in _platforms)
             {
 				if (Math.Abs(position.y - platform.left.position.y) <= 0.01f && position.x + 0.01f >= platform.left.position.x && position.x - 0.01f <= platform.right.position.x)
                 {
@@ -888,7 +906,7 @@ namespace ThePackt
 		
 		public void RegisterTargetHit(BoltEntity ent)
 		{
-			if (_target = ent)
+			if (_target == ent)
 			{
 				_lastTargetHitTime = Time.time;
 			}
@@ -898,14 +916,14 @@ namespace ThePackt
 		{
 			if (_room != null)
 			{
-				if (_room.CheckIfPlayerIsInRoom(plyr) && plyr.IsAttached)
+				if (plyr && plyr.IsAttached && _room.CheckIfPlayerIsInRoom(plyr))
 				{
 					return true;
 				}
 			}
 			else
 			{
-				if (MainQuest.Instance.CheckIfPlayerIsInRoom(plyr) && plyr.IsAttached)
+				if (plyr && plyr.IsAttached && MainQuest.Instance.CheckIfPlayerIsInRoom(plyr))
 				{
 					return true;
 				}
@@ -929,7 +947,6 @@ namespace ThePackt
             {
 				if(hit != _col)
                 {
-					Debug.LogWarning("eeee stopped " + hit.gameObject.name);
 					return true;
                 }
 			}
@@ -942,14 +959,25 @@ namespace ThePackt
 		private void SetTarget(BoltEntity ent)
         {
 			_targetCanBeSet = false;
+			Debug.Log("[TRGT] target set and cannot be changed");
+
 			_lastTargetChangedTime = Time.time;
+			_lastTargetHitTime = Time.time;
 
 			if (!_damageMap.ContainsKey(ent))
 			{
 				_damageMap.Add(ent, 0);
 			}
 
-			Debug.Log("[TRGT] changed to " + ent.NetworkId);
+			/*
+			string s = "[TRGT] changed to ";
+
+			if (ent.IsAttached)
+            {
+				s += ent.NetworkId;
+			}
+			Debug.LogWarning(s);
+			*/
 
 			_target = ent;
 		}
