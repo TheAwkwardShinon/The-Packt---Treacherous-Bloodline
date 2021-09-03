@@ -48,8 +48,9 @@ namespace ThePackt
         public const int ATTACK = 2;
         public const int WALK = 1;
         public const int HURT = 0;
-        #endregion 
+        #endregion
 
+        #region pathfinding
         public static readonly int[][] ADJACENCYMATRIXENEMYQUEST = { new int [] { -1, 1, 1, 1, 7, 7, 7, 7, 7, 7 },
                                                            new int [] { 0, -1, 2, 4, 4, 4, 7, 7, 7, 7 },
                                                            new int [] { 1, 1, -1, 1, 1, 1, 1, 1, 1, 1 },
@@ -69,5 +70,6 @@ namespace ThePackt
                                                                new int [] { 3, 3, 3, 3, -1, 3 },
                                                                new int [] { 3, 3, 3, 3, 3, -1 },
         };
+        #endregion
     }
 }

@@ -14,10 +14,12 @@ namespace ThePackt
     public class Quest : Bolt.EntityBehaviour<IQuestState>
     {
         #region variables
+        [Header("Sprites")]
         [SerializeField] protected Sprite _readySprite;
         [SerializeField] protected Sprite _activeSprite;
         [SerializeField] protected Sprite _notReadySprite;
 
+        [Header("Details")]
         public string _title;
         [TextArea(0,50)]public string _description;
         public float _expReward;
@@ -25,47 +27,52 @@ namespace ThePackt
         public float _cooldown;
         protected int _type;
 
+        protected int _state;
+
+        #region difficulty level
         protected int _difficultyLevel;
         protected int _maxDifficultyLevel;
         protected int _numberOfCompletements;
-        [SerializeField] protected int _completementsForLevel;
+        [SerializeField] protected int _completementsForLevel; //number of completements needed to make the difficulty level increase
+        #endregion
 
-        protected int _state;
-
+        #region partecipation
         protected float _enteringTime;
         protected float _leavingTime;
         [SerializeField] protected float _autoJoinTime = 5.0f;
         [SerializeField] protected float _autoAbandonTime = 5.0f;
         protected bool _timerJoin;
         protected bool _timerAbandon;
+        protected bool _localPlayerPartecipates;
+        protected Player _localPlayer;
+        protected List<BoltEntity> _playersInRoom;
+        protected List<BoltEntity> _playersPartecipating;
+        #endregion
 
+        #region restart
         protected float _startTime;
         protected float _endTime;
         protected bool _timerEnd;
+        #endregion
 
-        protected bool _localPlayerPartecipates;
-        protected Player _localPlayer;
-
-        protected List<BoltEntity> _playersInRoom;
-        protected List<BoltEntity> _playersPartecipating;
-
+        #region delegates
         protected CompleteCondition _completeCondition;
         protected StartAction _startAction;
         protected StartAction _inProgressAction;
         protected FailAction _failAction;
+        #endregion
 
+        #region ui
         private HiddenCanvas _hiddenCanvas;
         private GameObject _objectiveMessage;
         private Text _objectiveText;
-
+        #endregion
         #endregion
 
 
         #region methods
-        // Start is called before the first frame update
         public override void Attached()
         {
-
             _playersInRoom = new List<BoltEntity>();
             _playersPartecipating = new List<BoltEntity>();
 
@@ -81,15 +88,19 @@ namespace ThePackt
             state.AddCallback("State", StateCallback);
         }
 
+        //executed on every machine
         protected virtual void Update()
         {
+            /*
             string s = "";
             foreach (BoltEntity e in _playersInRoom)
             {
                 s += e.NetworkId + ", ";
             }
-            //Debug.Log("[QUESTA] in room: " + s);
+            Debug.Log("[QUEST] in room: " + s);
+            */
 
+            //make the local player join when joining timer timeouts
             if (_timerJoin && Time.time >= _enteringTime + _autoJoinTime)
             {
                 _timerJoin = false;
@@ -99,7 +110,8 @@ namespace ThePackt
                     Join(_localPlayer.entity);
                 }
             }
-           
+
+            //make the local player abandon when abandoning timer timeouts
             if (_timerAbandon && Time.time >= _leavingTime + _autoAbandonTime)
             {
                 _timerAbandon = false;
@@ -117,42 +129,35 @@ namespace ThePackt
             }
         }
 
-        // Update is called once per frame
+        //executed only on the server
         public override void SimulateOwner()
         {
             if (_state == Constants.STARTED)
             {
-                if (CheckIfCompleted())
-                {
+                //if the quest is started check if it is completed, otherwise execute the _inProgressAction delegate
+                if (_completeCondition())
                     state.State = Constants.COMPLETED;
-                  
-                }
                 else if (_inProgressAction != null)
-                {
                     _inProgressAction();
-                }
             }
             else
             {
-                //Debug.Log("[QUESTTIMER] reactivation. timerend: " + _timerEnd + "; Time: " + Time.time + "; cooldown: " + _cooldown);
+                //reactivate the quest when the cooldown timeouts
                 if (_timerEnd && Time.time >= _endTime + _cooldown)
                 {
                     Debug.Log("[QUEST] quest reactivated " + _title);
-
-                    //TODO special effect
-
                     state.State = Constants.READY;
                     _timerEnd = false;
                 }
             }
         }
-        
+
+        ///<summary>
+        ///accept the quest by sending quest start notification to the server
+        ///</summary>
         public void Accept()
         {
             if (_state == Constants.READY)
-            {
-                //send quest start notification to the server passing the bolt network id of the quest
-
                 if (BoltNetwork.IsServer)
                 {
                     Debug.Log("[QUEST] server accepted quest");
@@ -161,39 +166,26 @@ namespace ThePackt
                 else{
 
                     Debug.Log("[QUEST] accepted event from client to server for quest " + entity.NetworkId);
-
                     QuestAcceptedEvent evnt = QuestAcceptedEvent.Create(BoltNetwork.Server);
                     evnt.QuestNetworkID = entity.NetworkId;
                     evnt.Send();
                 }
-            }
-            else
-            {
-                Debug.Log("[QUEST] not ready");
-            }
         }
 
+        ///<summary>
+        ///abandon quest by sending quest abandoning notification to the server for the abandoning player
+        ///</summary>
         public void Abandon(BoltEntity playerEntity)
         {
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("[QUEST] server abandoned the quest " + _title);
-
                 RemovePlayer(playerEntity);
 
-                string s = "";
-                foreach (BoltEntity e in _playersPartecipating)
-                {
-                    s += e.NetworkId + ", ";
-                }
-                Debug.Log("[QUEST] partecipating: " + s);
-
+                //if no player partecipating remains the quest fails
                 if (_playersPartecipating.Count == 0)
                 {
                     Debug.Log("[QUEST] no more partecipating players. quest " + _title + " failed");
-
-                    //timer and visual effect that indicates that the quest is failing???
-
                     state.State = Constants.FAILED;
                 }
             }
@@ -211,20 +203,15 @@ namespace ThePackt
             _localPlayer.AbandonQuest();
         }
 
+        ///<summary>
+        ///join quest by sending quest joining notification to the server for the joining player
+        ///</summary>
         public void Join(BoltEntity playerEntity)
         {
             if (BoltNetwork.IsServer)
             {
                 Debug.Log("[QUEST] server joined the quest " + _title);
-
                 AddPlayer(playerEntity);
-
-                string s = "";
-                foreach (BoltEntity e in _playersPartecipating)
-                {
-                    s += e.NetworkId + ", ";
-                }
-                Debug.Log("[QUEST] partecipating: " + s);
             }
             else
             {
@@ -239,59 +226,61 @@ namespace ThePackt
             _localPlayerPartecipates = true;
             _localPlayer.JoinQuest(this);
         }
-     
+
+        //triggered when something enters the room
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            //if the entered collider is a player
             Player enteredPlayer = collision.GetComponent<Player>();
-            if (enteredPlayer != null)
+            if (enteredPlayer)
             {
+                //add the player to the players in room
                 if (!_playersInRoom.Contains(enteredPlayer.entity))
                 {
                     Debug.Log("[QUEST] player entered");
-
                     _playersInRoom.Add(enteredPlayer.entity);
                 }
 
+                //if the quest is started and the entered player is the local player
                 if (_localPlayer == enteredPlayer && state.State == Constants.STARTED)
-                {
                     if (!_localPlayerPartecipates)
                     {
                         Debug.Log("[QUEST] starting timer for joining local player");
 
                         //TODO visualize timer for joining the quest
 
+                        //if the player is not partecipating start timer for the player to join
                         _enteringTime = Time.time;
                         _timerJoin = true;
                     }
-                    else
+                    else if (_timerAbandon)
                     {
-                        if (_timerAbandon)
-                        {
-                            Debug.Log("[QUEST] stopping timer for leaving local player");
+                        Debug.Log("[QUEST] stopping timer for leaving local player");
 
-                            //TODO hide timer for leaving the quest
+                        //TODO hide timer for leaving the quest
 
-                            _timerAbandon = false;
-                        }
+                        //if the player is partecipating stop timer for the player to abandon
+                        _timerAbandon = false;
                     }
-                }
             }
         }
 
+        //triggered when something exits the room
         private void OnTriggerExit2D(Collider2D collision)
         {
+            //if the entered collider is a player
             Player exitingPlayer = collision.GetComponent<Player>();
-            if (exitingPlayer != null)
+            if (exitingPlayer)
             {
+                //remove the player from the players in room
                 if (_playersInRoom.Contains(exitingPlayer.entity))
                 {
                     Debug.Log("[QUEST] player leaved");
-
                     _playersInRoom.Remove(exitingPlayer.entity);
                 }
 
+                //if the quest is started and the entered player is the local player
                 if (_localPlayer == exitingPlayer && state.State == Constants.STARTED)
-                {
                     if (!_localPlayerPartecipates)
                     {
                         if (_timerJoin)
@@ -300,6 +289,7 @@ namespace ThePackt
 
                             //TODO hide timer for joining the quest
 
+                            //if the player is not partecipating stop the timer for the player to join
                             _timerJoin = false;
                         }
                     }
@@ -309,13 +299,90 @@ namespace ThePackt
 
                         //TODO visualize timer for leaving the quest
 
+                        //if the player is partecipating start timer for the player to abandon
                         _leavingTime = Time.time;
                         _timerAbandon = true;
                     }
+            }
+        }
+
+        ///<summary>
+        ///callback called when the quest state changes
+        ///</summary>
+        private void StateCallback()
+        {
+            Debug.Log("[QUEST] " + _state);
+            _state = state.State;
+            gameObject.GetComponent<AudioSource>().Play();
+
+            if (_state == Constants.READY)
+            {
+                GetComponent<SpriteRenderer>().sprite = _readySprite;
+            }
+            else if (_state == Constants.STARTED)
+            {
+                GetComponent<SpriteRenderer>().sprite = _activeSprite;
+
+                //if the quest started the server executes the _startAction (if there is one)
+                if (BoltNetwork.IsServer)
+                {
+                    _startTime = Time.time;
+                    if (_startAction != null)
+                        _startAction();
+                }
+
+                //if the quest started and the local player is in room make him join the quest
+                if (_playersInRoom.Contains(_localPlayer.entity))
+                    _localPlayer.JoinQuest(this);
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().sprite = _notReadySprite;
+
+                //if quest is failed or completed the server starts the reactivation cooldown
+                if (BoltNetwork.IsServer)
+                {
+                    Debug.Log("[QUEST] cooldown started");
+                    _endTime = Time.time;
+                    _timerEnd = true;
+
+                    //if it is failed the server executes the _failAction
+                    if (_state == Constants.FAILED && _failAction != null)
+                        _failAction();
+
+                    //if it is completed the server checks if the difficulty level must be increased
+                    if (_state == Constants.COMPLETED)
+                    {
+                        _numberOfCompletements++;
+                        if ((_numberOfCompletements % _completementsForLevel == 0) && _difficultyLevel < _maxDifficultyLevel)
+                            IncrementDifficultyLevel();
+                    }
+                }
+
+                //if quest is completed and the local player is partecipating give him the rewards
+                if (_state == Constants.COMPLETED && _localPlayerPartecipates)
+                {
+                    _localPlayer.ObtainRewards(_expReward, _timeReward);
+                    _localPlayerPartecipates = false;
+                }
+
+                //if quest is failed and the local player is partecipating show the fail panel and remove him from the quest
+                if (_state == Constants.FAILED && _localPlayerPartecipates)
+                {
+                    _objectiveText.text = "QUEST FAILED";
+                    _objectiveText.color = Color.red;
+                    _objectiveMessage.SetActive(true);
+
+                    _timerJoin = false;
+                    _timerAbandon = false;
+                    _localPlayerPartecipates = false;
                 }
             }
         }
 
+        ///<summary>
+        ///removes player plyr from partecipating players
+        ///</summary>
         public void RemovePlayer(BoltEntity plyr)
         {
             if (_playersPartecipating.Contains(plyr))
@@ -324,6 +391,9 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///adds player plyr to partecipating players
+        ///</summary>
         public void AddPlayer(BoltEntity plyr)
         {
             if (!_playersPartecipating.Contains(plyr))
@@ -332,109 +402,22 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///returns true the player plyr is in room, false otherwise
+        ///</summary>
         public bool CheckIfPlayerIsInRoom(BoltEntity plyr)
         {
-            if (_playersInRoom.Contains(plyr))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool CheckIfCompleted()
-        {
-            return _completeCondition();
-        }
-
-        private void StateCallback()
-        {
-            _state = state.State;
-
-            gameObject.GetComponent<AudioSource>().Play();
-
-            Debug.Log("[QUEST] " + _state);
-
-            if (_state == Constants.READY)
-            {
-                GetComponent<SpriteRenderer>().sprite = _readySprite;
-            }
-            else if(_state == Constants.STARTED)
-            {
-                GetComponent<SpriteRenderer>().sprite = _activeSprite;
-
-                if (BoltNetwork.IsServer)
-                {
-                    _startTime = Time.time;
-
-                    if (_startAction != null)
-                    {
-                        _startAction();
-                    }
-                }
-            }
-            else
-            {
-                GetComponent<SpriteRenderer>().sprite = _notReadySprite;
-
-                if (BoltNetwork.IsServer)
-                {
-                    Debug.Log("[QUEST] cooldown started");
-
-                    _endTime = Time.time;
-                    _timerEnd = true;
-
-                    if (_state == Constants.FAILED && _failAction != null)
-                    {
-                        _failAction();
-                    }
-                }
-            }
-
-            if (_state == Constants.STARTED && _playersInRoom.Contains(_localPlayer.entity))
-            {
-                _localPlayer.JoinQuest(this);
-            }
-
-            if (_state == Constants.COMPLETED && _localPlayerPartecipates)
-            {
-                _localPlayer.ObtainRewards(_expReward, _timeReward);
-                _localPlayerPartecipates = false;
-                _numberOfCompletements++;
-
-                if((_numberOfCompletements % _completementsForLevel == 0) && _difficultyLevel < _maxDifficultyLevel)
-                {
-                    IncrementDifficultyLevel();
-                }
-            }
-
-            if (_state == Constants.FAILED && _localPlayerPartecipates)
-            {
-                _objectiveText.text = "QUEST FAILED";
-                _objectiveText.color = Color.red;
-                _objectiveMessage.SetActive(true);
-            
-                _timerJoin = false;
-                _timerAbandon = false;
-                _localPlayerPartecipates = false;
-            }
-        }
-
-        public void LocalPartecipate()
-        {
-            Join(_localPlayer.entity);
+            return _playersInRoom.Contains(plyr) ? true : false;
         }
         #endregion
 
         #region getters
+        ///<summary>
+        ///returns partecipating players
+        ///</summary>
         public List<BoltEntity> GetPlayers()
         {
             return _playersPartecipating;
-        }
-
-        public List<BoltEntity> GetPlayersInRoom()
-        {
-            return _playersInRoom;
         }
 
         public int GetQuestState()
@@ -472,10 +455,12 @@ namespace ThePackt
             _maxDifficultyLevel = level;
         }
 
+        ///<summary>
+        ///increment difficulty level of 1
+        ///</summary>
         public virtual void IncrementDifficultyLevel()
         {
             Debug.Log("[MAPGEN] incremented level of " + _title);
-
             SetDifficultyLevel(_difficultyLevel + 1);
         }
         #endregion

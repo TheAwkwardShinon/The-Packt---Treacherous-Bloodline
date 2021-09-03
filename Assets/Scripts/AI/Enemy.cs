@@ -22,6 +22,25 @@ namespace ThePackt
         [SerializeField] protected float _movementSpeed;
         [SerializeField] protected float _slowedSpeed;
 
+        protected int _facingDirection;
+        protected Rigidbody2D _rb;
+        protected Collider2D _col;
+        protected Slider healthSlider;
+        protected FSM _fsm;
+
+        #region target selection
+        protected BoltEntity _lastAttacker;
+        protected float _lastTargetHitTime;
+        protected Dictionary<BoltEntity,float> _damageMap;
+        protected Dictionary<BoltEntity, float> _unreachableTargets;
+        #endregion
+
+        #region pathfinding
+        protected Quest _room;
+        protected Platform[] _platforms;
+        #endregion
+
+        #region ability effects
         protected float _lastStunTime;
         protected float _stunTime;
         protected bool _stunned;
@@ -34,24 +53,7 @@ namespace ThePackt
         protected float _damageReductionTime;
         protected bool _damageReduced;
         protected float _damageReductionValue;
-
-        protected int _facingDirection;
-        protected Rigidbody2D _rb;
-        protected Collider2D _col;
-        protected Slider healthSlider;
-        protected FSM _fsm;
-
-        protected BoltEntity _lastAttacker;
-        protected float _lastTargetHitTime;
-        protected Dictionary<BoltEntity,float> _damageMap;
-        protected Dictionary<BoltEntity, float> _unreachableTargets;
-        //protected Dictionary<BoltEntity, float> _hitTimeMap;
-        protected Quest _room;
-        protected Tilemap _groundTilemap;
-        protected Tilemap _wallTilemap;
-        protected Tilemap _waypointsTilemap;
-        //protected List<Vector3> _waypoints;
-        protected Platform[] _platforms;
+        #endregion
 
         #region sfx
         [Header("SFX")]
@@ -72,9 +74,10 @@ namespace ThePackt
 
         public override void Attached()
         {
-            // synchronize the bolt player state transform with the player gameobject transform
+            //synchronize the bolt enemy state transform with the enemy's gameobject transform
             state.SetTransforms(state.Transform, transform);
 
+            //the server adjusts the initial health based on the difficulty level of the quest
             if (BoltNetwork.IsServer)
             {
                 var token = (LevelDataToken) entity.AttachToken;
@@ -91,7 +94,6 @@ namespace ThePackt
 
                 _damageMap = new Dictionary<BoltEntity, float>();
                 _unreachableTargets = new Dictionary<BoltEntity, float>();
-                //_hitTimeMap = new Dictionary<BoltEntity, float>();
             }
 
             state.AddCallback("Health", HealthCallback);
@@ -99,19 +101,20 @@ namespace ThePackt
             healthSlider = healthBar.GetComponent<Slider>();
             healthImage.color = healthGradient.Evaluate(1f);
             healthSlider.maxValue = _health;
-            //_canvasPos = canvas.transform.localPosition;
         }
 
         public virtual void Update()
         {
             if (entity.IsOwner)
             {
+                //change _facingDirection based on the actual facing direction
                 _facingDirection = 1;
                 if (IsFacingLeft())
                 {
                     _facingDirection = -1;
                 }
 
+                //debuff timeout timers
                 if (_stunned && Time.time >= _lastStunTime + _stunTime)
                 {
                     _stunned = false;
@@ -129,15 +132,18 @@ namespace ThePackt
             }
 
             canvas.transform.rotation = Quaternion.identity;
-            //canvas.transform.localPosition = _canvasPos;
         }
 
+        ///<summary>
+        ///apply the specified damage to the health and increase the data of the total damage dealt by the specified attacker
+        ///</summary>
         public void ApplyDamage(float damage, Player attacker)
         {
             Debug.Log("[ENEMY] apply damage: " + entity.IsOwner + ". From attacker: " + attacker.tag);
 
             if (BoltNetwork.IsServer)
             {
+                //play hurt sound
                 var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
                 evnt.EntityID = entity.NetworkId;
                 evnt.Sound = Constants.HURT;
@@ -145,7 +151,6 @@ namespace ThePackt
 
                 state.Health -= damage;
                 _lastAttacker = attacker.entity;
-
                 if (_damageMap.ContainsKey(attacker.entity))
                 {
                     _damageMap[attacker.entity] += damage;
@@ -157,8 +162,12 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///destroys the attached gameobject
+        ///</summary>
         private void Die()
         {
+            //play death sound
             var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
             evnt.EntityID = entity.NetworkId;
             evnt.Sound = Constants.DEATH;
@@ -168,7 +177,9 @@ namespace ThePackt
             BoltNetwork.Destroy(gameObject);
         }
 
-        //called when state.Health is modified -> we update the local health and do checks on it
+        ///<summary>
+        ///called when health is modified
+        ///</summary>
         private void HealthCallback()
         {
             _health = state.Health;
@@ -177,6 +188,7 @@ namespace ThePackt
             healthSlider.value = _health;
             healthImage.color = healthGradient.Evaluate(healthSlider.normalizedValue);
 
+            //if health is now lower then zero i'm dead
             if (entity.IsOwner && _health <= 0)
             {
                 Debug.Log("[ENEMY] dead");
@@ -184,19 +196,21 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///deals damage to the specified hitPlayer
+        ///</summary>
         protected void DealDamage(BoltEntity hitPlayer)
         {
             Debug.Log("[BASEENEMY] hit player " + hitPlayer.NetworkId);
 
+            //if the damage is debuffed reduce it and clamp it if below minimum
             float damage = 0;
             if (_damageReduced)
                 damage = _attackPower - _damageReductionValue;
             else damage = _attackPower;
 
             if(damage <= 0)
-            {
                 damage = 0.1f;
-            }
 
             if (hitPlayer.IsOwner)
             {
@@ -211,35 +225,9 @@ namespace ThePackt
             }
         }
 
-        public void ApplySlow(float time)
-        {
-            _slowTime = time;
-            _lastSlowTime = Time.time;
-            _slowed = true;
-        }
-
-        public void ApplyDamageReduction(float time, float reductionValue)
-        {
-            _damageReductionTime = time;
-            _lastDamageReductionTime = Time.time;
-            _damageReduced = true;
-
-            _damageReductionValue = reductionValue;
-        }
-
-        public void ApplyKnockback(Vector3 direction, float power)
-        {
-            _rb.AddForce(direction * power);
-        }
-
-        public void Stun(float time)
-        {
-            Debug.Log("[STUN]");
-            _stunTime = time;
-            _lastStunTime = Time.time;
-            _stunned = true;
-        }
-
+        ///<summary>
+        ///returns true if the enemy is facing left, false otherwise
+        ///</summary>
         protected bool IsFacingLeft()
         {
             if (transform.right.x > 0)
@@ -250,20 +238,50 @@ namespace ThePackt
             return false;
         }
 
-        /*
-        protected void SetHitTime(BoltEntity hitEntity)
+        #region ability effects
+        ///<summary>
+        ///inflicts the slowed status to the enemy
+        ///</summary>
+        public void ApplySlow(float time)
         {
-            if (_hitTimeMap.ContainsKey(hitEntity))
-            {
-                _hitTimeMap[hitEntity] = Time.time;
-            }
-            else
-            {
-                _hitTimeMap.Add(hitEntity, Time.time);
-            }
+            _slowTime = time;
+            _lastSlowTime = Time.time;
+            _slowed = true;
         }
-        */
 
+        ///<summary>
+        ///inflicts the damage reduced status to the enemy
+        ///</summary>
+        public void ApplyDamageReduction(float time, float reductionValue)
+        {
+            _damageReductionTime = time;
+            _lastDamageReductionTime = Time.time;
+            _damageReduced = true;
+
+            _damageReductionValue = reductionValue;
+        }
+
+        ///<summary>
+        ///applies knockback to the enemy
+        ///</summary>
+        public void ApplyKnockback(Vector3 direction, float power)
+        {
+            _rb.AddForce(direction * power);
+        }
+
+        ///<summary>
+        ///inflicts the stunned status to the enemy
+        ///</summary>
+        public void Stun(float time)
+        {
+            Debug.Log("[STUN]");
+            _stunTime = time;
+            _lastStunTime = Time.time;
+            _stunned = true;
+        }
+        #endregion
+
+        #region sound effects
         public void PlayWalkSFX()
         {
             _walkSfx.GetComponent<AudioSource>().Play();
@@ -278,6 +296,7 @@ namespace ThePackt
         {
             _hurtSfx.GetComponent<AudioSource>().Play();
         }
+        #endregion
 
         #endregion
 
@@ -289,16 +308,11 @@ namespace ThePackt
         #endregion
 
         #region setter
-        public void SetHealth(float value)
-        {
-            _health = value;
-        }
-
-        public void SetRoom(Quest value)
+        public void SetRoom(Quest value, Platform[] platforms)
         {
             _room = value;
 
-            _platforms = ((EnemyQuest)_room).GetPlatforms();
+            _platforms = platforms;
         }
 
         public void SetRoom(MainQuest value)

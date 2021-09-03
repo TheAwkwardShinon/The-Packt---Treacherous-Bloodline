@@ -4936,7 +4936,7 @@ MonoBehaviour:
   _attackPower: 5
   _circleSize: 0.6
   _debuffTime: 15
-  _stunTime: 30
+  _stunTime: 10
 --- !u!82 &4253553490250659868
 AudioSource:
   m_ObjectHideFlags: 0

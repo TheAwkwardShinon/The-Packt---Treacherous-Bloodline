@@ -10,7 +10,6 @@ namespace ThePackt
         [SerializeField] private float _minRotation;
         [SerializeField] private float _maxRotation;
         [SerializeField] private float _avoidRange;
-        private Vector2 _currentVelocity;
         private Vector3 _direction;
 
         public override void Attached()
@@ -24,29 +23,23 @@ namespace ThePackt
         {
             base.SimulateOwner();
 
+            //at each frame set the direction and attack
             SetDirection();
-
             Attack();
 
             if (!_stunned)
             {
+                //then check if there is a wall in front
                 CheckInFront();
 
+                //finally move towards the facing direction
                 if (_slowed)
-                {
                     _rb.velocity = new Vector2(_slowedSpeed * -transform.right.x, _slowedSpeed * -transform.right.y);
-                }
                 else
-                {
                     _rb.velocity = new Vector2(_movementSpeed * -transform.right.x, _movementSpeed * -transform.right.y);
-                }
-
-                _currentVelocity = _rb.velocity;
             }
             else
-            {
                 _rb.velocity = Vector2.zero;
-            }
         }
 
         public override void Update()
@@ -56,6 +49,7 @@ namespace ThePackt
             canvas.transform.rotation = transform.rotation;
         }
 
+        /*
         private void OnDrawGizmos()
 		{
             Gizmos.color = Color.yellow;
@@ -64,27 +58,11 @@ namespace ThePackt
             Gizmos.color = Color.red;
 			Gizmos.DrawWireSphere(_col.bounds.center, _attackRange);
 		}
-
-        /*
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            Debug.Log("[SKULL] collision");
-       
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Ground") || collision.gameObject.layer == LayerMask.NameToLayer("Wall") 
-                || collision.gameObject.layer == LayerMask.NameToLayer("Objectives") || collision.gameObject.layer == LayerMask.NameToLayer("Ceiling")
-                || collision.gameObject.layer == LayerMask.NameToLayer("EnemyInvisibleWall"))
-            {
-                ChangeDirection();
-            }
-            else if (collision.gameObject.layer == LayerMask.NameToLayer("Players"))
-            {
-                Player player = collision.gameObject.GetComponent<Player>();
-
-                DealDamage(player.entity);
-            }
-        }
         */
 
+        ///<summary>
+        ///check if there is an obstacle in front, if so change direction
+        ///</summary>
         private void CheckInFront()
         {
             RaycastHit2D[] hits = new RaycastHit2D[1];
@@ -101,9 +79,12 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///change the facing direction
+        ///</summary>
         private void ChangeDirection()
         {
-            float randomZ = UnityEngine.Random.Range(_minRotation, _maxRotation);
+            float randomZ = Random.Range(_minRotation, _maxRotation);
             Debug.Log("[SKULL] change " + randomZ);
 
             Quaternion angle = Quaternion.Euler(new Vector3(0, 0, randomZ));
@@ -111,22 +92,19 @@ namespace ThePackt
             _direction = angle * transform.right;
 
             SetDirection();
-
-            //transform.Rotate(new Vector3(0, 0, randomZ));
         }
 
+        ///<summary>
+        ///set the facing direction to _direction
+        ///</summary>
         private void SetDirection()
         {
             transform.right = _direction;
-
-            /*
-            if (transform.up.y < 0)
-            {
-                transform.up = -transform.up;
-            }
-            */
         }
 
+        ///<summary>
+        ///deal damage to all the players in _attackRange
+        ///</summary>
         private void Attack()
         {
             Collider2D[] playersInRange = Physics2D.OverlapCircleAll(_col.bounds.center, _attackRange, LayerMask.GetMask("Players"));
@@ -137,6 +115,5 @@ namespace ThePackt
                 DealDamage(hitEntity);
             }
         }
-
     }
 }

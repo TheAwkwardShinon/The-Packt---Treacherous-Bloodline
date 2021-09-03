@@ -497,7 +497,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  _attackRange: 0.4
+  _attackRange: 0.5
   _attackPower: 8
   _attackRate: 0.8
   _movementSpeed: 2
@@ -515,7 +515,7 @@ MonoBehaviour:
   _maxChangeDirectionTime: 4.5
   _minStandStillTime: 1
   _maxStandStillTime: 2
-  _seekThreshold: 0.6
+  _seekThreshold: 0.4
   _jumpPointThreshold: 0.2
   _unreachabilityTime: 30
   _reachabilityRestoreTime: 8

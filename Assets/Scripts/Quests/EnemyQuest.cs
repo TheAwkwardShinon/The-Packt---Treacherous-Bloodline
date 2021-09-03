@@ -34,6 +34,7 @@ namespace ThePackt
         {
             base.Attached();
 
+            //iterate on platform objects of the room and project the extremes down to the platform walkable ground 
             foreach (var platform in _platforms)
             {
                 var hit = Physics2D.Raycast(platform.left.position, new Vector2(0f, -1f), 1f, LayerMask.GetMask("Ground", "EnemyInvisibleGround"));
@@ -54,6 +55,10 @@ namespace ThePackt
         }
         */
 
+        ///<summary>
+        ///spawn a random enemy chosen among the _enemyPrefabs at each spawn point in _spawnPoints. The spawned enemies will have 
+        ///different strength parameters based on the difficulty level of this quest
+        ///</summary>
         protected void SpawnEnemies()
         {
             if (BoltNetwork.IsServer)
@@ -63,15 +68,21 @@ namespace ThePackt
                     int randomIndex = Random.Range(0, _enemyPrefabs.Length);
                     var token = new LevelDataToken();
 
+                    //prepare the token with the info on the difficuty level
                     token.SetLevel(_difficultyLevel);
 
                     BoltEntity spawnedEnemy = BoltNetwork.Instantiate(_enemyPrefabs[randomIndex], token, sp.position, sp.rotation);
-                    spawnedEnemy.GetComponent<Enemy>().SetRoom(this);
+
+                    //set the belonging room of the enemy to this, also the platforms will be passed to the enemy
+                    spawnedEnemy.GetComponent<Enemy>().SetRoom(this, _platforms);
                     _spawnedEnemies.Add(spawnedEnemy);
                 }
             }
         }
 
+        ///<summary>
+        ///checks if all the spawned enemies are dead
+        ///</summary>
         protected bool AreEnemiesDead()
         {
             foreach (var enemy in _spawnedEnemies)
@@ -85,6 +96,9 @@ namespace ThePackt
             return true;
         }
 
+        ///<summary>
+        ///despawn all spawned enemies
+        ///</summary>
         protected void DespawnEnemies()
         {
             foreach(var enemy in _spawnedEnemies)
@@ -96,20 +110,15 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///sets the difficulty level of this room
+        ///</summary>
         public override void SetDifficultyLevel(int level)
         {
             base.SetDifficultyLevel(level);
 
             Debug.Log("[MAPGEN] enemy. level: " + level);
         }
-
-        #region getters
-
-        public Platform[] GetPlatforms()
-        {
-            return _platforms;
-        }
-        #endregion
         #endregion
     }
 }

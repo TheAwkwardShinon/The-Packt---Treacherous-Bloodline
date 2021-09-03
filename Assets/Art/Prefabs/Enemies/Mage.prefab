@@ -640,7 +640,7 @@ MonoBehaviour:
   _maxChangeDirectionTime: 4.5
   _minStandStillTime: 2
   _maxStandStillTime: 3
-  _seekThreshold: 0.5
+  _seekThreshold: 2
   _jumpPointThreshold: 0.2
   _unreachabilityTime: 30
   _reachabilityRestoreTime: 10

@@ -42,16 +42,6 @@ namespace ThePackt
             gameEnded = false;
         }
 
-        public override void Detached()
-        {
-            Debug.Log("[TIMER] detatched");
-        }
-
-        public override void SimulateOwner()
-        {
-            Debug.Log("[TIMER] attached? " + entity.IsAttached);
-        }
-
         private void Update()
         {
             if (!gameEnded)
@@ -124,6 +114,9 @@ namespace ThePackt
             }
         }
 
+        ///<summary>
+        ///converts a float time to a string in format mm:ss
+        ///</summary>
         private string ConvertToString(float time)
         {
             int minutes = (int)(time / 60);
@@ -141,12 +134,12 @@ namespace ThePackt
                 secondsString = "0" + secondsString;
             }
 
-            //Debug.Log("[TIMER] stringa: " + minutesString + ":" + secondsString);
-
             return minutesString + ":" + secondsString;
         }
 
-        //adds time in seconds (modifies the start time). Only the server can do it
+        ///<summary>
+        ///adds time in seconds to the timer (modifying the start time). Only the server can do it
+        ///</summary>
         public void addTime(float time)
         {
             if (entity.IsOwner)
@@ -155,7 +148,9 @@ namespace ThePackt
             }
         }
 
-        //subtracts time in seconds (modifies the start time). Only the server can do it
+        ///<summary>
+        ///subtracts time in seconds to the timer (modifying the start time). Only the server can do it
+        ///</summary>
         public void subTime(float time)
         {
             Debug.Log("[TIMER] " + BoltNetwork.IsServer);
@@ -167,13 +162,14 @@ namespace ThePackt
         }
 
         #region callbacks
+        ///<summary>
+        ///callback called when the start time changes
+        ///</summary>
         private void StartTimeCallback()
         {
             startTime = state.StartTime;
 
             Debug.Log("[TIMER] callback: " + startTime);
-
-            //insert timer modification notifications here as this is called on clients too
         }
         #endregion
 

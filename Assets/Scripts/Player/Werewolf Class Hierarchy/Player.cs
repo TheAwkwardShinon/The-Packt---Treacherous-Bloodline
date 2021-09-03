@@ -658,8 +658,8 @@ namespace ThePackt{
             return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f), 0f, _playerData.whatIsGround|_playerData.whatIsWall);
         }
 
+        /*
         public void OnDrawGizmos(){
-            //
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f));
             Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f));
@@ -668,16 +668,8 @@ namespace ThePackt{
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_attackPoint.position, _playerBaseData.rangeBaseWerewolf);
-
-            /*
-            Gizmos.color = Color.yellow;
-            Vector2 target = new Vector2(_col.bounds.center.x, _col.bounds.center.y + _col.bounds.size.y / 2 - _col.bounds.size.y / 4);
-            Vector2 origin = Vector2.zero;
-            Vector2 direction = target - origin;
-            Ray r = new Ray(origin, direction);
-            Gizmos.DrawRay(r);
-            */
         }
+        */
 
         ///<summary>
         ///method that returns true if the player is grounded, false instead
@@ -851,7 +843,7 @@ namespace ThePackt{
         }
 
         ///<summary>
-        ///TODO add summary
+        ///shows quest joined panel and join the quest
         ///</summary>
         public void JoinQuest(Quest quest)
         {
@@ -861,7 +853,7 @@ namespace ThePackt{
 
                 _activeQuest = quest;
                 hasActiveQuest = true;
-                quest.LocalPartecipate();
+                quest.Join(entity);
 
                 Debug.Log("[QUEST] player joined the quest " + quest._title);
                 if(_questTitleText == null)
@@ -880,7 +872,7 @@ namespace ThePackt{
         }
 
         ///<summary>
-        ///shows question abandoned panel and abandon the quest
+        ///shows quest abandoned panel and abandon the quest
         ///</summary>
         public void AbandonQuest()
         {

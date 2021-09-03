@@ -19,6 +19,9 @@ namespace ThePackt
 			_checkSpecificRange = CheckIfTargetIsInBulletRange;
 		}
 
+		///<summary>
+		///makes the enemy change to attack state if the target is in _attackRange and could be reached by a bullet
+		///</summary>
 		private void CheckIfTargetIsInBulletRange()
 		{
 			Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
@@ -40,30 +43,27 @@ namespace ThePackt
 			}
 		}
 
+		///<summary>
+		///shoot a bullet in the target drection if the enemy is facinf towards the target
+		///</summary>
 		private void BulletAttack()
 		{
-			Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
-
-			foreach (var col in playersInRange)
+			//if i'm facing towards the target
+			if ((Time.time >= _lastAttackTime + _attackRate) && ((_target.transform.position.x <= transform.position.x && IsFacingLeft()) || (_target.transform.position.x >= transform.position.x && !IsFacingLeft())))
 			{
-				if(col.GetComponent<Player>().entity == _target) {
-					if ((_target.transform.position.x <= transform.position.x && IsFacingLeft()) || (_target.transform.position.x >= transform.position.x && !IsFacingLeft()))
-					{
-						var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
-						evnt.EntityID = entity.NetworkId;
-						evnt.Sound = Constants.ATTACK;
-						evnt.Send();
+				var evnt = PlayEnemySoundEvent.Create(Bolt.GlobalTargets.Everyone, Bolt.ReliabilityModes.ReliableOrdered);
+				evnt.EntityID = entity.NetworkId;
+				evnt.Sound = Constants.ATTACK;
+				evnt.Send();
 
-						_attackPoint.transform.right = col.bounds.center - _attackPoint.position;
-						GameObject blt = BoltNetwork.Instantiate(_bulletPrefab, _attackPoint.position, _attackPoint.rotation);
-						blt.GetComponent<Bullet>().SetAttackPower(_attackPower);
-						blt.GetComponent<EnemyBullet>().SetOwner(this);
-						_lastAttackTime = Time.time;
-					}
-				}
+				//shoot
+				_attackPoint.transform.right = _target.GetComponent<Collider2D>().bounds.center - _attackPoint.position;
+				GameObject blt = BoltNetwork.Instantiate(_bulletPrefab, _attackPoint.position, _attackPoint.rotation);
+				blt.GetComponent<Bullet>().SetAttackPower(_attackPower);
+				blt.GetComponent<EnemyBullet>().SetOwner(this);
+				_lastAttackTime = Time.time;
 			}
 		}
-
 		#endregion
 	}
 }
