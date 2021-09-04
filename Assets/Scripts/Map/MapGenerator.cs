@@ -126,7 +126,6 @@ namespace ThePackt
             int maxLevel = DetermineInvertedDifficultyLevel(mainRoomPos, farthestPointIndex);
             Debug.Log("[MAPGEN] max level " + maxLevel);
 
-            //initialize list of counters for the occurrencies of the room types in the neighborhood
             GameObject toSpawn;
             for (int i = 0; i < nPoints; i++)
             {
@@ -211,7 +210,7 @@ namespace ThePackt
             //can be found by continuously increasing of 2f * _adjacentRoomsRange the size of a rectangle centered int the main room until
             //the spawn point with index i is contained in it
             int maxLevel = 0;
-            Rect r = new Rect(mainRoomPos, 2f * _adjacentRoomsRange);
+            Rect r = new Rect(mainRoomPos, 2f * _adjacentRoomsRange * _adjacentRoomsRangeMultiplier);
             r.center = mainRoomPos;
             bool found = false;
             while (!found)
@@ -223,7 +222,7 @@ namespace ThePackt
                 }
                 else
                 {
-                    r.size += 2f * _adjacentRoomsRange;
+                    r.size += 2f * _adjacentRoomsRange * _adjacentRoomsRangeMultiplier;
                     r.center = mainRoomPos;
                 }
             }

@@ -52,8 +52,9 @@ namespace ThePackt
         /*
         private void OnDrawGizmos()
 		{
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(_col.bounds.center, -transform.right * _avoidRange);
+            _col = GetComponent<Collider2D>();
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(_col.bounds.center + new Vector3(-_col.bounds.size.x/2, 0.003f,0f), -transform.right * _avoidRange);
 
             Gizmos.color = Color.red;
 			Gizmos.DrawWireSphere(_col.bounds.center, _attackRange);
