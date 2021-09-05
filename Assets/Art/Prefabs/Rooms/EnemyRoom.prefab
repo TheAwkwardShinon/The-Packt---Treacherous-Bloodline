@@ -2372,7 +2372,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7124812900452610839}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.877, y: -0.7665, z: 0}
+  m_LocalPosition: {x: -2.877, y: -0.7624038, z: 0}
   m_LocalScale: {x: 0.9756398, y: 0.32481, z: 1}
   m_Children: []
   m_Father: {fileID: 7129168060154182108}
@@ -2583,9 +2583,6 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 31634780266360509}
   - {fileID: 5679213253151320372}
-  _waypointsTilemap: {fileID: 0}
-  _groundTilemap: {fileID: 689365686569465789}
-  _wallTilemap: {fileID: 689365687787961172}
   _platforms:
   - num: 0
     left: {fileID: 4822148097773142518}

@@ -115,9 +115,9 @@ namespace ThePackt
 			*/
 
 			//switch to idle also if stunned
-			FSMTransition StunTrans = new FSMTransition(IsStunned);
+			FSMTransition WanderStunTrans = new FSMTransition(IsStunned, new FSMAction[] { StunnedReaction });
 			FSMTransition WalkTimeoutTrans = new FSMTransition(MustStandStill, new FSMAction[]{ WalkTimeoutReaction });
-			wanderWalk.AddTransition(StunTrans, wanderIdle);
+			wanderWalk.AddTransition(WanderStunTrans, wanderIdle);
 			wanderWalk.AddTransition(WalkTimeoutTrans, wanderIdle);
 
 			FSMTransition IdleTimeoutTrans = new FSMTransition(MustNotStandStill, new FSMAction[] { IdleTimeoutReaction });
@@ -137,8 +137,8 @@ namespace ThePackt
 			//walk state. Otherwise check if under the enemy's feet there is an anemy or a player, if so pass to the jumping state to jump away 
 			FSMState seekIdle = new FSMState();
 			seekIdle.enterActions.Add(StartIdle);
-			seekIdle.stayActions.Add(CheckSpecificRangeResult);
 			seekIdle.stayActions.Add(FlipIfNeeded);
+			seekIdle.stayActions.Add(CheckSpecificRangeResult);
 			seekIdle.exitActions.Add(StopIdle);
 
 			//if walking while seeking check the target platform and do pathfinding if needed, then walk in the direction needed for the
@@ -148,14 +148,15 @@ namespace ThePackt
 			//in cooldown, if so pass to the idle state 
 			FSMState seekWalk = new FSMState();
 			seekWalk.enterActions.Add(StartSeekWalking);
-			seekWalk.stayActions.Add(CheckSpecificRangeResult);
 			seekWalk.stayActions.Add(CheckTargetPlatform);
 			seekWalk.stayActions.Add(Walk);
+			seekWalk.stayActions.Add(CheckSpecificRangeResult);
 			seekWalk.exitActions.Add(StopWalking);
 
-			//if attacking while seeking just attack once then go to idle state
+			//if attacking while seeking just flip towards target, attack once then go to idle state
 			FSMState seekAttack = new FSMState();
 			seekAttack.enterActions.Add(StartAttacking);
+			seekAttack.stayActions.Add(FlipIfNeeded);
 			seekAttack.stayActions.Add(Attack);
 			seekAttack.exitActions.Add(StopAttacking);
 
@@ -168,6 +169,7 @@ namespace ThePackt
 			//switch to idle also if stunned
 			FSMTransition TargetInRangeTrans = new FSMTransition(IsTargetInRange);
 			FSMTransition TargetReachedTrans = new FSMTransition(IsTargetNear);
+			FSMTransition StunTrans = new FSMTransition(IsStunned);
 			//the jump velocity is prepared when the transition to jump is triggered
 			FSMTransition JumpTrans = new FSMTransition(ShouldIJump, new FSMAction[] { JumpPrepare });
 			FSMTransition JumpAwayTrans = new FSMTransition(ShouldIJumpAway, new FSMAction[] { JumpAwayPrepare });
@@ -626,6 +628,7 @@ namespace ThePackt
             if (_isGrounded && IsInRoomAndAlive(_target))
             {
 				return !_checkSpecificRangeResult;
+				//return !_checkSpecificRange();
 			}
 
 			return false;
@@ -639,6 +642,7 @@ namespace ThePackt
 			if (_isGrounded && IsInRoomAndAlive(_target))
 			{
 				return _checkSpecificRangeResult;
+				//return _checkSpecificRange();
 			}
 
 			return false;
@@ -720,6 +724,7 @@ namespace ThePackt
 			if (!_stunned && _isGrounded && (Time.time >= _lastAttackTime + _attackRate) && IsInRoomAndAlive(_target))
 			{
 				return _checkSpecificRangeResult;
+				//return _checkSpecificRange();
 			}
 
 			return false;
@@ -764,24 +769,37 @@ namespace ThePackt
 		}
 
 		///<summary>
-		///starts the idle timer
+		///starts a random idle timer
 		///</summary>
 		private void WalkTimeoutReaction()
 		{
 			_lastStandStillTime = Time.time;
+
+			//generate a random stand still time
+			_standStillTime = UnityEngine.Random.Range(_minStandStillTime, _maxStandStillTime);
 		}
 
 		///<summary>
-		///makes the enemy flip and starts the walk timer
+		///starts a idle timer with duration qual to _stunTime
+		///</summary>
+		private void StunnedReaction()
+		{
+			_lastStandStillTime = Time.time;
+
+			//generate a random stand still time
+			_standStillTime = _stunTime;
+		}
+
+		///<summary>
+		///makes the enemy flip and starts a random walk timer
 		///</summary>
 		private void IdleTimeoutReaction()
 		{
 			Flip();
 			_lastDirectionChangeTime = Time.time;
 
-			//generate also a random change direction time and stand still time
+			//generate a random change direction time
 			_changeDirectionTime = UnityEngine.Random.Range(_minChangeDirectionTime, _maxChangeDirectionTime);
-			_standStillTime = UnityEngine.Random.Range(_minStandStillTime, _maxStandStillTime);
 		}
 
 		///<summary>
