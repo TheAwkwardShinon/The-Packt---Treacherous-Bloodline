@@ -52,6 +52,7 @@ namespace ThePackt
 		protected bool _attacking;
 		protected float _lastAttackTime;
 		private float _lastJumpTime;
+		private bool _checkSpecificRangeResult;
 
 		#region target selection
 		protected BoltEntity _target;
@@ -136,6 +137,7 @@ namespace ThePackt
 			//walk state. Otherwise check if under the enemy's feet there is an anemy or a player, if so pass to the jumping state to jump away 
 			FSMState seekIdle = new FSMState();
 			seekIdle.enterActions.Add(StartIdle);
+			seekIdle.stayActions.Add(CheckSpecificRangeResult);
 			seekIdle.stayActions.Add(FlipIfNeeded);
 			seekIdle.exitActions.Add(StopIdle);
 
@@ -146,6 +148,7 @@ namespace ThePackt
 			//in cooldown, if so pass to the idle state 
 			FSMState seekWalk = new FSMState();
 			seekWalk.enterActions.Add(StartSeekWalking);
+			seekWalk.stayActions.Add(CheckSpecificRangeResult);
 			seekWalk.stayActions.Add(CheckTargetPlatform);
 			seekWalk.stayActions.Add(Walk);
 			seekWalk.exitActions.Add(StopWalking);
@@ -469,6 +472,14 @@ namespace ThePackt
 				}
 			}
 		}
+
+		///<summary>
+		///assigns to _checkSpecificRangeResult the result of the delegate _checkSpecificRange
+		///</summary>
+		private void CheckSpecificRangeResult()
+		{
+			_checkSpecificRangeResult = _checkSpecificRange();
+		}
 		#endregion
 
 		#region seek actions
@@ -614,7 +625,7 @@ namespace ThePackt
 		{
             if (_isGrounded && IsInRoomAndAlive(_target))
             {
-				return !_checkSpecificRange();
+				return !_checkSpecificRangeResult;
 			}
 
 			return false;
@@ -627,7 +638,7 @@ namespace ThePackt
 		{
 			if (_isGrounded && IsInRoomAndAlive(_target))
 			{
-				return _checkSpecificRange();
+				return _checkSpecificRangeResult;
 			}
 
 			return false;
@@ -708,7 +719,7 @@ namespace ThePackt
 			//if i'm not stunned, the attacj is not on cooldown and the target is in room and alive
 			if (!_stunned && _isGrounded && (Time.time >= _lastAttackTime + _attackRate) && IsInRoomAndAlive(_target))
 			{
-				return _checkSpecificRange();
+				return _checkSpecificRangeResult;
 			}
 
 			return false;
