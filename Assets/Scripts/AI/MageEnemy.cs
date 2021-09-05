@@ -16,13 +16,13 @@ namespace ThePackt
 			base.Attached();
 
 			_specificAttack = BulletAttack;
-			_checkSpecificRange = CheckIfTargetIsInBulletRange;
+			_checkSpecificRange = IsTargetInBulletRange;
 		}
 
 		///<summary>
 		///makes the enemy change to attack state if the target is in _attackRange and could be reached by a bullet
 		///</summary>
-		private void CheckIfTargetIsInBulletRange()
+		private bool IsTargetInBulletRange()
 		{
 			Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
 
@@ -34,13 +34,13 @@ namespace ThePackt
 					var hit = Physics2D.Raycast(_attackPoint.position, col.bounds.center - _attackPoint.position, Vector2.Distance(col.bounds.center, _attackPoint.position) + 0.2f, LayerMask.GetMask("Players", "Ground", "Wall", "Enemies", "Objectives"));
 					
 					if (hit && hit.collider.GetComponent<Player>() && _target == hit.collider.GetComponent<Player>().entity)
-					{
-						_attack = true;
-
-						break;
+					{ 
+						return true;
 					}
 				}
 			}
+
+			return false;
 		}
 
 		///<summary>

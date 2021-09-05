@@ -14,25 +14,23 @@ namespace ThePackt
             base.Attached();
 
             _specificAttack = MeleeAttack;
-            _checkSpecificRange = CheckIfTargetIsInMeleeRange;
+            _checkSpecificRange = IsTargetInMeleeRange;
         }
 
         ///<summary>
 		///makes the enemy change to attack state if the target is in _attackRange
 		///</summary>
-        private void CheckIfTargetIsInMeleeRange()
+        private bool IsTargetInMeleeRange()
         {
-            if (Time.time >= _lastAttackTime + _attackRate)
-            {
-                Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
+            Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
 
-                foreach (var col in playersInRange)
-                    if (_target == col.GetComponent<Player>().entity)
-                    {
-                        _attack = true;
-                        break;
-                    }
-            }
+            foreach (var col in playersInRange)
+                if (_target == col.GetComponent<Player>().entity)
+                {
+                    return true;
+                }
+
+            return false;
         }
 
         ///<summary>

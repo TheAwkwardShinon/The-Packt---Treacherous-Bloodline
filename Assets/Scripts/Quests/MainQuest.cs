@@ -257,7 +257,7 @@ namespace ThePackt
                 //remove the player from the players in room
                 if (_playersInRoom.Contains(exitingPlayer.entity))
                 {
-                    Debug.Log("[QUEST] player leaved");
+                    Debug.Log("[MAIN] player leaved");
 
                     _playersInRoom.Remove(exitingPlayer.entity);
                 }

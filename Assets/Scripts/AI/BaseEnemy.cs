@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 namespace ThePackt
 {
 	public delegate void SpecificAttack();
-	public delegate void CheckSpecificRange();
+	public delegate bool CheckSpecificRange();
 
 	public class BaseEnemy : Enemy
 	{
@@ -39,7 +39,6 @@ namespace ThePackt
 		private float _changeDirectionTime;
 		private float _lastStandStillTime;
 		private float _standStillTime;
-		private bool _standStill;
 		#endregion
 
 		#region seek
@@ -49,10 +48,8 @@ namespace ThePackt
 		[SerializeField] private float _unreachabilityTime;
 		[SerializeField] private float _reachabilityRestoreTime;
 		[SerializeField] private float _keepSameTargetTime;
-		private bool _jump;
 		private float _xDiff;
-		private float _dist;
-		protected bool _attack;
+		protected bool _attacking;
 		protected float _lastAttackTime;
 		private float _lastJumpTime;
 
@@ -89,17 +86,16 @@ namespace ThePackt
 			base.Attached();
 
 			#region wander fsm
-			//if idle in wandering check if the time to be idle ended and if so change state to wandering walk at the next update
+			//if idle in wandering check if the time to be idle ended and if so change state to wandering walk (at the transition the walk timer 
+			//starts)
 			FSMState wanderIdle = new FSMState();
 			wanderIdle.enterActions.Add(StartIdle);
-			wanderIdle.stayActions.Add(CheckIfMustWalk);
 			wanderIdle.exitActions.Add(StopIdle);
 
-			//if walking in wandering check if the time to be walking ended and if so change state to wandering idle at the next update
-			//also walk in front and change direction to avoid walls or pits
+			//if walking in wandering walk in front and change direction to avoid walls or pits. then check if the time to be walking ended
+			//and if so change state to wandering idle (at the transition the idle timer starts)
 			FSMState wanderWalk = new FSMState();
-			wanderWalk.enterActions.Add(StartWalking);
-			wanderWalk.stayActions.Add(CheckIfMustStandStill);
+			wanderWalk.enterActions.Add(StartWanderWalking);
 			wanderWalk.stayActions.Add(Walk);
 			wanderWalk.stayActions.Add(Avoid);
 			wanderWalk.exitActions.Add(StopWalking);
@@ -119,11 +115,11 @@ namespace ThePackt
 
 			//switch to idle also if stunned
 			FSMTransition StunTrans = new FSMTransition(IsStunned);
-			FSMTransition WalkTimeoutTrans = new FSMTransition(MustStandStill);
+			FSMTransition WalkTimeoutTrans = new FSMTransition(MustStandStill, new FSMAction[]{ WalkTimeoutReaction });
 			wanderWalk.AddTransition(StunTrans, wanderIdle);
 			wanderWalk.AddTransition(WalkTimeoutTrans, wanderIdle);
 
-			FSMTransition IdleTimeoutTrans = new FSMTransition(MustNotStandStill);
+			FSMTransition IdleTimeoutTrans = new FSMTransition(MustNotStandStill, new FSMAction[] { IdleTimeoutReaction });
 			wanderIdle.AddTransition(IdleTimeoutTrans, wanderWalk);
 
 			FSM fsmWander = new FSM(wanderWalk);
@@ -135,29 +131,22 @@ namespace ThePackt
 			#endregion
 
 			#region seek fsm
-			//if idle while seeking flip towards the target is needed and check if the target is in attack range and the enemy can attack,
-			//if so pass to the attack state at the next update. Also check if the target is far or near, if it is not near pass to the 
-			//walk state at the next update. Also check if under the enemy's feet there is an anemy or a player, if so pass to the 
-			//jumping state at the next update
+			//if idle while seeking flip towards the target is needed and check if the target is in attack range and the enemy can attack it,
+			//if so pass to the attack state. Otherwise if the target is not in range or the enemy attack could not reach it pass to the
+			//walk state. Otherwise check if under the enemy's feet there is an anemy or a player, if so pass to the jumping state to jump away 
 			FSMState seekIdle = new FSMState();
 			seekIdle.enterActions.Add(StartIdle);
 			seekIdle.stayActions.Add(FlipIfNeeded);
-			seekIdle.stayActions.Add(CheckIfTargetIsInRange);
-			seekIdle.stayActions.Add(CheckIfTargetIsReached);
-			seekIdle.stayActions.Add(CheckIfIShouldJumpAway);
 			seekIdle.exitActions.Add(StopIdle);
 
-			//if walking while seeking check if the target is in attack range and the enemy can attack, if so pass to the attack state
-			//at the next update. Check the target platform and do pathfinding if needed, then check if the enemy should jump because is near a
-			//jump point or because under the enemy's feet there is an enemy or a player. Also check if the target is far or near, if it is
-			// near pass to the idle state at the next update. Finally based on the previous perceptions walk in a certain direction 
+			//if walking while seeking check the target platform and do pathfinding if needed, then walk in the direction needed for the
+			//pathfinding. if the target is in attack range and the enemy can attack it pass to the attack state, otherwise check
+			//if the enemy should pass to the jump state because is near a jump point or because under the enemy's feet there
+			//is an enemy or a player. Otherwise check if the target is in range and the enemy attack could reach it, but the attack is still
+			//in cooldown, if so pass to the idle state 
 			FSMState seekWalk = new FSMState();
-			seekWalk.enterActions.Add(StartWalking);
-			seekWalk.stayActions.Add(CheckIfTargetIsInRange);
+			seekWalk.enterActions.Add(StartSeekWalking);
 			seekWalk.stayActions.Add(CheckTargetPlatform);
-			seekWalk.stayActions.Add(CheckIfIShouldJump);
-			seekWalk.stayActions.Add(CheckIfIShouldJumpAway);
-			seekWalk.stayActions.Add(CheckIfTargetIsReached);
 			seekWalk.stayActions.Add(Walk);
 			seekWalk.exitActions.Add(StopWalking);
 
@@ -173,18 +162,22 @@ namespace ThePackt
 			seekJump.stayActions.Add(Jump);
 			seekJump.exitActions.Add(StopJumping);
 
-			FSMTransition TargetInRangeTrans = new FSMTransition(MustAttack);
-			FSMTransition TargetReachedTrans = new FSMTransition(MustStandStill);
-			FSMTransition TargetAboveTrans = new FSMTransition(MustJump);
+			//switch to idle also if stunned
+			FSMTransition TargetInRangeTrans = new FSMTransition(IsTargetInRange);
+			FSMTransition TargetReachedTrans = new FSMTransition(IsTargetNear);
+			//the jump velocity is prepared when the transition to jump is triggered
+			FSMTransition JumpTrans = new FSMTransition(ShouldIJump, new FSMAction[] { JumpPrepare });
+			FSMTransition JumpAwayTrans = new FSMTransition(ShouldIJumpAway, new FSMAction[] { JumpAwayPrepare });
 			seekWalk.AddTransition(StunTrans, seekIdle);
 			seekWalk.AddTransition(TargetInRangeTrans, seekAttack);
-			seekWalk.AddTransition(TargetAboveTrans, seekJump);
+			seekWalk.AddTransition(JumpTrans, seekJump);
+			seekWalk.AddTransition(JumpAwayTrans, seekJump);
 			seekWalk.AddTransition(TargetReachedTrans, seekIdle);
 
-			FSMTransition TargetFarTrans = new FSMTransition(MustNotStandStill);
+			FSMTransition TargetFarTrans = new FSMTransition(MustReachTarget);
 			seekIdle.AddTransition(TargetInRangeTrans, seekAttack);
 			seekIdle.AddTransition(TargetFarTrans, seekWalk);
-			seekIdle.AddTransition(TargetAboveTrans, seekJump);
+			seekIdle.AddTransition(JumpAwayTrans, seekJump);
 
 			FSMTransition AttackEndTrans = new FSMTransition(AttackFinished);
 			seekAttack.AddTransition(AttackEndTrans, seekIdle);
@@ -203,8 +196,9 @@ namespace ThePackt
 
 			//global fsm that starts from the wandering state and goes to seek state when there is a target. When there is no more a target
 			//it returns to wandering
+			//the target is set when the transition to seeking is triggered
 			FSMTransition playerNearTrans = new FSMTransition(PlayerNear);
-			FSMTransition hitByPlayerTrans = new FSMTransition(HitByPlayer);
+			FSMTransition hitByPlayerTrans = new FSMTransition(HitByPlayer, new FSMAction[] { HitByPlayerReaction });
 			wander.AddTransition(playerNearTrans, seek);
 			wander.AddTransition(hitByPlayerTrans, seek);
 
@@ -304,10 +298,7 @@ namespace ThePackt
 
 		private void StartIdle()
 		{
-			if (!_standStill)
-				_standStill = true;
-
-			Debug.Log("[BASEENEMY] idle " + _standStill);
+			Debug.Log("[BASEENEMY] idle");
 
 			_rb.velocity = new Vector2(0, _currentVelocity.y);
 
@@ -318,17 +309,37 @@ namespace ThePackt
 		{
 			Debug.Log("[BASEENEMY] jumping");
 
+			if (_nextPlatform != null && _currentPlatform != null && _jumpPoint != null)
+			{
+				//face towards the next platform if i have one
+				float centerX = _nextPlatform.GetPlatformCenter().x;
+				int targetDirection = (centerX - transform.position.x) > 0 ? 1 : -1;
+
+				//flip if the target direction differ from the facing direction
+				if (targetDirection != _facingDirection)
+					Flip();
+			}
+
 			_rb.velocity = new Vector2(_jumpNeededVelocity.x * _facingDirection, _jumpNeededVelocity.y);
 			_lastJumpTime = Time.time;
-
-			_jump = false;
 
 			//start animation?
 		}
 
-		private void StartWalking()
+		private void StartWanderWalking()
 		{
-			Debug.Log("[BASEENEMY] walking " + _standStill);
+			Debug.Log("[BASEENEMY] walking");
+
+			//if it is the first update in wandering, do not flip
+			if (_lastDirectionChangeTime == 0)
+				_lastDirectionChangeTime = Time.time;
+
+			//start animation?
+		}
+
+		private void StartSeekWalking()
+		{
+			Debug.Log("[BASEENEMY] walking");
 
 			//start animation?
 		}
@@ -337,6 +348,7 @@ namespace ThePackt
 		{
 			Debug.Log("[BASEENEMY] attacking");
 
+			_attacking = true;
 			_rb.velocity = new Vector2(0, _currentVelocity.y);
 
 			//start animation?
@@ -360,7 +372,6 @@ namespace ThePackt
 			_changeDirectionTime = 2f;
 			_lastStandStillTime = 0f;
 			_standStillTime = 1f;
-			_standStill = false;
 		}
 
 		private void StartSeeking()
@@ -372,51 +383,12 @@ namespace ThePackt
 				_adjacencyMatrix = Constants.ADJACENCYMATRIXENEMYQUEST;
 			else
 				_adjacencyMatrix = Constants.ADJACENCYMATRIXMAINQUEST;
-
-			//set the state varaibles to false at start
-			_standStill = false;
-			_attack = false;
-			_jump = false;
 		}
 		#endregion
 
 		#region fsm stay actions
 
 		#region wander actions
-		///<summary>
-		///checks if in the next update the enemy must stand still
-		///</summary>
-		private void CheckIfMustStandStill()
-		{
-			//if it is the first update in wandering, do not flip
-			if (_lastDirectionChangeTime == 0)
-				_lastDirectionChangeTime = Time.time;
-			else
-				if (Time.time >= _lastDirectionChangeTime + _changeDirectionTime)
-				{
-					//if it is not the first update and enough time from the last flip elapsed, go to idle
-					_standStill = true;
-					_lastStandStillTime = Time.time;
-				}
-		}
-
-		///<summary>
-		///checks if in the next update the enemy must walk and flips if so. also generates random time values to wait until changing direction
-		///and standing still
-		///</summary>
-		private void CheckIfMustWalk()
-		{
-			if (Time.time >= _lastStandStillTime + _standStillTime && !_stunned)
-			{
-				Flip();
-				_lastDirectionChangeTime = Time.time;
-				_standStill = false;
-
-				//generate also a random change direction time and stand still time
-				_changeDirectionTime = UnityEngine.Random.Range(_minChangeDirectionTime, _maxChangeDirectionTime);
-				_standStillTime = UnityEngine.Random.Range(_minStandStillTime, _maxStandStillTime);
-			}
-		}
 
 		///<summary>
 		///changes facing direction if needed and then walks straigth forward. used for both wandering and seeking
@@ -438,15 +410,9 @@ namespace ThePackt
 
 				int targetDirection = 1;
 				//if i did pathfinding and i have to jump on a higher platform or at the same level i have a jump point to reach
-				if (_nextPlatform != null && _currentPlatform != null && _jumpPoint != null && !_jump)
+				if (_nextPlatform != null && _currentPlatform != null && _jumpPoint != null)
                 {
 					targetDirection = (_jumpPoint.vector.x - transform.position.x) > 0 ? 1 : -1;
-				}
-				else if (_nextPlatform != null && _currentPlatform != null && _jumpPoint != null && _jump)
-				{
-					//if i'm going to jump at the next update face towards the next platform
-					float centerX = _nextPlatform.GetPlatformCenter().x;
-					targetDirection = (centerX - transform.position.x) > 0 ? 1 : -1;
 				}
 				else if (!_isGrounded)
 				{
@@ -470,14 +436,11 @@ namespace ThePackt
 					Flip();
 				}
 
-				//then i just walk in the facing direction if i'm not jumping or attacking in the nect update
-				if (!_attack && !_jump)
-				{
-					if (_slowed)
-						_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
-					else
-						_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
-				}
+				//then i just walk in the facing direction if i'm not jumping or attacking in the next update
+				if (_slowed)
+					_rb.velocity = new Vector2(_slowedSpeed * targetDirection, _currentVelocity.y);
+				else
+					_rb.velocity = new Vector2(_movementSpeed * targetDirection, _currentVelocity.y);
 			}
 		}
 
@@ -617,7 +580,7 @@ namespace ThePackt
 		private void Attack()
 		{
 			_specificAttack();
-			_attack = false;
+			_attacking = false;
 		}
 
 		///<summary>
@@ -644,89 +607,66 @@ namespace ThePackt
 		}
 
 		///<summary>
-		///sets the _standStill state variable to true if the target is not more distant than _seekThreshold to make the enemy go to idle, 
-		///is set to false otherwise causing the enemy to stay in the walking state
+		///returns true if the enemy is grounded and target is in room, but not in attack range or the attack could not reach it,, 
+		///false otherwise
 		///</summary>
-		private void CheckIfTargetIsReached()
+		private bool IsTargetFar()
 		{
-			if (IsInRoomAndAlive(_target))
+            if (_isGrounded && IsInRoomAndAlive(_target))
             {
-				_dist = Vector2.Distance(_target.transform.position, transform.position);
-				if (_dist <= _seekThreshold)
-					_standStill = true;
-				else
-					_standStill = false;
+				return !_checkSpecificRange();
 			}
+
+			return false;
 		}
 
 		///<summary>
-		///sets the _jump state variable to true if the target is not more distant than _jumpPointThreshold to the jump point, if the 
-		///jump is not on cooldown and if the enemy is grounded. also the jump velocity is determined in its components
+		///returns true if the enemy is grounded, the target is in room, in attack range and the attack could reach it, false otherwise
 		///</summary>
-		private void CheckIfIShouldJump()
+		private bool IsTargetNear()
 		{
-			if (Time.time >= _lastJumpTime + _jumpCooldown && _target && _isGrounded)
+			if (_isGrounded && IsInRoomAndAlive(_target))
+			{
+				return _checkSpecificRange();
+			}
+
+			return false;
+		}
+
+		///<summary>
+		///returns true if the target is not more distant than _jumpPointThreshold to the jump point, if the jump is not on cooldown and if 
+		///the enemy is grounded
+		///</summary>
+		private bool ShouldIJump()
+		{
+			if (!_stunned && !_slowed && _target && _isGrounded && Time.time >= _lastJumpTime + _jumpCooldown)
 			{
 				if(_nextPlatform != null && _currentPlatform != null && _jumpPoint != null && Math.Abs(_jumpPoint.vector.x - _col.bounds.center.x) <= _jumpPointThreshold)
                 {
-					float yMax = 0f;
-					float range = 0f;
-					//if the current platform is lower than the next one
-					if (_currentPlatform.left.position.y < _nextPlatform.left.position.y)
-                    {
-						//the max height to reach with the jump is 1 size of the collider above the next platform
-						yMax = (_nextPlatform.left.position.y + (_col.bounds.size.y * 1f)) - _col.bounds.center.y;
-
-						//float arrivalX = _nextPlatform.left.position.x > _col.bounds.center.x ? _nextPlatform.left.position.x - _col.bounds.size.x : _nextPlatform.right.position.x + _col.bounds.size.x;
-						//the range to reach with the jump is 2 size of the collider inside the platform
-						float arrivalX = _nextPlatform.left.position.x > _col.bounds.center.x ? _nextPlatform.left.position.x + _col.bounds.size.x * 2f: _nextPlatform.right.position.x - _col.bounds.size.x * 2f;
-						range = Math.Abs(arrivalX - _col.bounds.center.x);
-					}
-                    else
-                    {
-						//if the current platform is at the same height as the next one
-
-						//the max height to reach with the jump is 2 size of the collider above the next platform
-						yMax = (_nextPlatform.left.position.y + (_col.bounds.size.y * 2f)) - _col.bounds.center.y;
-						//the range to reach with the jump is the next platform's center
-						range = Math.Abs(_nextPlatform.GetPlatformCenter().x - _col.bounds.center.x);
-					}
-
-					//with the projectile trajectory formulas determine the needed velocity components
-					float vY = Mathf.Sqrt(yMax * -(Physics2D.gravity.y * 2));
-					float vX = (range * -Physics2D.gravity.y) / (2 * vY);
-					_jumpNeededVelocity = new Vector2(vX, vY);
-
-					_jump = true;
+					return true;
 				}
 			}
+
+			return false;
 		}
 
 		///<summary>
-		///sets the _jump state variable to true if the target is on top of another enemy or on a player. also flip to a random direction
+		///returns true if the target is on top of another enemy or on a player
 		///</summary>
-		private void CheckIfIShouldJumpAway()
+		private bool ShouldIJumpAway()
         {
-			if (!_jump)
-			{
+			if(!_stunned && !_slowed)
+            {
 				//if i'm not already jumping at the next update check under the feet if there is an enemy or a player
 				Vector2 _workspace = _col.bounds.center + Vector3.down * (_col.bounds.size.y * 0.5f + 0.1f);
 				Collider2D hit = Physics2D.OverlapBox(_workspace, new Vector3(_col.bounds.size.x, 0.005f, 0f), 0f, LayerMask.GetMask("Players", "Enemies"));
 				if (hit)
 				{
-					_jumpNeededVelocity = new Vector2(_movementSpeed, _jumpVelocity);
-					_jump = true;
-
-					//also flip to a random direction
-					int targetDirection = UnityEngine.Random.Range(0, 2);
-					if (targetDirection == 0)
-						targetDirection--;
-					if (targetDirection != _facingDirection)
-					{
-						Flip();
-					}
+					return true;
 				}
 			}
+
+			return false;
 		}
 
 		///<summary>
@@ -737,22 +677,11 @@ namespace ThePackt
 			//if i'm on the ground
 			if (_isGrounded)
             {
-				if(_lastTargetPlatform != null)
-                {
-					Debug.LogWarning("ppppp target " + _lastTargetPlatform.num);
-				}
-				if (_currentPlatform != null)
-				{
-					Debug.LogWarning("ppppp current " + _currentPlatform.num);
-				}
-
 				//if the target is on another platform
 				if (_currentPlatform != null && _lastTargetPlatform != null && _lastTargetPlatform.num != _currentPlatform.num)
 				{
 					//get the next platform to reach in the path to the target platform using the adjacency matrix
 					_nextPlatform = GetPlatform(_adjacencyMatrix[_currentPlatform.num][_lastTargetPlatform.num]);
-
-					Debug.LogWarning("ppppp next " + _nextPlatform.num);
 
 					//if the next platform is above pick the jump point
 					if (_currentPlatform.left.position.y <= _nextPlatform.left.position.y)
@@ -771,15 +700,18 @@ namespace ThePackt
 		}
 
 		///<summary>
-		///checks if the target is in the specific range of the enemy and so if the enemy should attack
+		///returns true if the enemy is grounded, not stunned, the attack is not in cooldown and the target is in room, in 
+		///attack range and the attack could reach it
 		///</summary>
-		private void CheckIfTargetIsInRange()
+		private bool IsTargetInRange()
 		{
 			//if i'm not stunned, the attacj is not on cooldown and the target is in room and alive
-			if (!_stunned && (Time.time >= _lastAttackTime + _attackRate) && IsInRoomAndAlive(_target))
+			if (!_stunned && _isGrounded && (Time.time >= _lastAttackTime + _attackRate) && IsInRoomAndAlive(_target))
 			{
-				_checkSpecificRange();
+				return _checkSpecificRange();
 			}
+
+			return false;
 		}
 		#endregion
 
@@ -809,42 +741,135 @@ namespace ThePackt
 		}
 		#endregion
 
+		#region transitions actions
+		//methods run when the corresponding transition is triggered
+
+		///<summary>
+		///sets the target as the last attacker
+		///</summary>
+		private void HitByPlayerReaction()
+		{
+			SetTarget(_lastAttacker);
+		}
+
+		///<summary>
+		///starts the idle timer
+		///</summary>
+		private void WalkTimeoutReaction()
+		{
+			_lastStandStillTime = Time.time;
+		}
+
+		///<summary>
+		///makes the enemy flip and starts the walk timer
+		///</summary>
+		private void IdleTimeoutReaction()
+		{
+			Flip();
+			_lastDirectionChangeTime = Time.time;
+
+			//generate also a random change direction time and stand still time
+			_changeDirectionTime = UnityEngine.Random.Range(_minChangeDirectionTime, _maxChangeDirectionTime);
+			_standStillTime = UnityEngine.Random.Range(_minStandStillTime, _maxStandStillTime);
+		}
+
+		///<summary>
+		///sets the velocity components needed for the jump
+		///</summary>
+		private void JumpPrepare()
+		{
+			float yMax;
+			float range;
+			//if the current platform is lower than the next one
+			if (_currentPlatform.left.position.y < _nextPlatform.left.position.y)
+			{
+				//the max height to reach with the jump is 1 size of the collider above the next platform
+				yMax = (_nextPlatform.left.position.y + (_col.bounds.size.y * 1f)) - _col.bounds.center.y;
+
+				//float arrivalX = _nextPlatform.left.position.x > _col.bounds.center.x ? _nextPlatform.left.position.x - _col.bounds.size.x : _nextPlatform.right.position.x + _col.bounds.size.x;
+				//the range to reach with the jump is 2 size of the collider inside the platform
+				float arrivalX = _nextPlatform.left.position.x > _col.bounds.center.x ? _nextPlatform.left.position.x + _col.bounds.size.x * 1.75f : _nextPlatform.right.position.x - _col.bounds.size.x * 1.75f;
+				range = Math.Abs(arrivalX - _col.bounds.center.x);
+			}
+			else
+			{
+				//if the current platform is at the same height as the next one
+
+				//the max height to reach with the jump is 1.5 size of the collider above the next platform
+				yMax = (_nextPlatform.left.position.y + (_col.bounds.size.y * 1.5f)) - _col.bounds.center.y;
+				//the range to reach with the jump is the next platform's center
+				range = Math.Abs(_nextPlatform.GetPlatformCenter().x - _col.bounds.center.x);
+			}
+
+			//with the projectile trajectory formulas determine the needed velocity components
+			float vY = Mathf.Sqrt(yMax * -(Physics2D.gravity.y * 2));
+			float vX = (range * -Physics2D.gravity.y) / (2 * vY);
+			_jumpNeededVelocity = new Vector2(vX, vY);
+		}
+
+		///<summary>
+		///sets the velocity components needed for the jump and makes the enemy flip to a random direction
+		///</summary>
+		private void JumpAwayPrepare()
+		{
+			_jumpNeededVelocity = new Vector2(_movementSpeed, _jumpVelocity);
+
+			//also flip to a random direction
+			int targetDirection = UnityEngine.Random.Range(0, 2);
+			if (targetDirection == 0)
+				targetDirection--;
+			if (targetDirection != _facingDirection)
+				Flip();
+		}
+		#endregion
+
 		#region fsm conditions
 		//conditions that trigger transitions based on how the state variables were setted
 
+		///<summary>
+		///returns true if the walk timer timeouted
+		///</summary>
 		private bool MustStandStill()
+		{ 
+			if (Time.time >= _lastDirectionChangeTime + _changeDirectionTime)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		///<summary>
+		///returns true if the idle timer timeouted
+		///</summary>
+		private bool MustNotStandStill()
 		{
-			return _standStill;
+			if (Time.time >= _lastStandStillTime + _standStillTime)
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		private bool IsStunned()
-		{ 
+		{
 			return _stunned;
 		}
 
-		private bool MustNotStandStill()
+		private bool MustReachTarget()
 		{
-			return !_standStill && !_stunned;
-		}
-
-		private bool MustJump()
-		{
-			return _jump && !_stunned && !_slowed;
+			return IsTargetFar() && !_stunned;
 		}
 
 		private bool JumpFinished()
 		{
-			return !_jump && IsLanded();
-		}
-
-		private bool MustAttack()
-		{
-			return _attack && !_stunned;
+			return IsLanded();
 		}
 
 		private bool AttackFinished()
 		{
-			return !_attack;
+			return !_attacking;
 		}
 
 		private bool NoTarget()
@@ -853,7 +878,7 @@ namespace ThePackt
 		}
 
 		///<summary>
-		///sets as target the first player in the sensing range
+		///returns true and sets as target the first player in room in the sensing range if there is one, false otherwise
 		///</summary>
 		private bool PlayerNear()
 		{ 
@@ -868,7 +893,6 @@ namespace ThePackt
 				BoltEntity nearPlayer = _nearPlayers[0].gameObject.GetComponent<Player>().entity;
 				if (IsInRoomAndAlive(nearPlayer))
 				{
-					Debug.Log("[BASEENEMY] player near");
 					SetTarget(nearPlayer);
 					return true;
 				}
@@ -878,14 +902,12 @@ namespace ThePackt
 		}
 
 		///<summary>
-		///sets as target the player that attacked the enemy
+		///returns true if a player in the room hit the enemy, false otherwise
 		///</summary>
 		private bool HitByPlayer()
 		{
 			if (_lastAttacker != null && IsInRoomAndAlive(_lastAttacker))
 			{
-				SetTarget(_lastAttacker);
-
 				return true;
 			}
 
@@ -973,8 +995,10 @@ namespace ThePackt
 		protected bool IsInRoomAndAlive(BoltEntity plyr)
 		{
 			if (_room != null)
+            {
 				if (plyr && plyr.IsAttached && _room.CheckIfPlayerIsInRoom(plyr))
 					return true;
+			}
 			else
 				if (plyr && plyr.IsAttached && MainQuest.Instance.CheckIfPlayerIsInRoom(plyr))
 					return true;
@@ -1008,14 +1032,12 @@ namespace ThePackt
 
 			return false;
 		}
-		#endregion
 
-		#region setters
 		///<summary>
 		///sets the target to the passed entity, also registering the time and adding the entity to the damage map if needed
 		///</summary>
 		private void SetTarget(BoltEntity ent)
-        {
+		{
 			Debug.Log("[TRGT] target set and cannot be changed");
 			_targetCanBeSet = false;
 			_target = ent;
@@ -1028,8 +1050,8 @@ namespace ThePackt
 				_damageMap.Add(ent, 0);
 			}
 		}
-	#endregion
 
-	#endregion
-}
+		#endregion
+		#endregion
+	}
 }
