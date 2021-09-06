@@ -25,7 +25,7 @@ namespace ThePackt
             Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
 
             foreach (var col in playersInRange)
-                if (_target == col.GetComponent<Player>().entity)
+                if (_target == col.GetComponent<Player>().entity && IsPlayerReachable(col))
                 {
                     return true;
                 }
