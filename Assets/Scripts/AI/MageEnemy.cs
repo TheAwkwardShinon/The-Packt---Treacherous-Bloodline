@@ -19,10 +19,21 @@ namespace ThePackt
 			_checkSpecificRange = IsTargetInBulletRange;
 		}
 
-		///<summary>
-		///makes the enemy change to attack state if the target is in _attackRange and could be reached by a bullet
-		///</summary>
-		private bool IsTargetInBulletRange()
+		/*
+        private void OnDrawGizmos()
+        {
+			Matrix4x4 rotationMatrix = Matrix4x4.TRS(_attackPoint.position, Quaternion.FromToRotation(Vector2.right, new Vector3(1f,1f,0f) - _attackPoint.position), Vector2.one);
+			Gizmos.matrix = rotationMatrix;
+
+			Gizmos.color = Color.magenta;
+			Gizmos.DrawCube(_attackPoint.position, new Vector2(0.1f, _bulletPrefab.GetComponent<BoxCollider2D>().size.y * _bulletPrefab.transform.lossyScale.y));
+		}
+		*/
+
+        ///<summary>
+        ///makes the enemy change to attack state if the target is in _attackRange and could be reached by a bullet
+        ///</summary>
+        private bool IsTargetInBulletRange()
 		{
 			Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, _attackRange, LayerMask.GetMask("Players"));
 
@@ -30,8 +41,9 @@ namespace ThePackt
 			{
 				if (_target == col.GetComponent<Player>().entity)
 				{
-					//ENHANCE: keep into consideration the bullet dimensions
-					var hit = Physics2D.Raycast(_attackPoint.position, col.bounds.center - _attackPoint.position, Vector2.Distance(col.bounds.center, _attackPoint.position) + 0.2f, LayerMask.GetMask("Players", "Ground", "Wall", "Enemies", "Objectives"));
+					float bulletY = _bulletPrefab.GetComponent<BoxCollider2D>().size.y * _bulletPrefab.transform.lossyScale.y;
+					float angle = Vector2.Angle(Vector2.right, col.bounds.center - _attackPoint.position);
+					var hit = Physics2D.BoxCast(_attackPoint.position, new Vector2(0.1f, bulletY), angle, col.bounds.center - _attackPoint.position, Vector2.Distance(col.bounds.center, _attackPoint.position), LayerMask.GetMask("Players", "Ground", "Wall", "Enemies", "Objectives"));
 					
 					if (hit && hit.collider.GetComponent<Player>() && _target == hit.collider.GetComponent<Player>().entity)
 					{ 
