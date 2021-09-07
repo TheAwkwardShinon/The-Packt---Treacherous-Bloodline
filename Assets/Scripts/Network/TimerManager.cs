@@ -36,6 +36,10 @@ namespace ThePackt
         {
             state.AddCallback("StartTime", StartTimeCallback);
 
+            //dev options
+            gameDuration = CharacterSelectionData.Instance.GetTimeDuration();
+            timerDuration = CharacterSelectionData.Instance.GetTimeDuration() + 10;
+
             timerText = GameObject.Find("TimerText").GetComponent<Text>();
             gameStarting = false;
             gameStarted = false;

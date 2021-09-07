@@ -14,6 +14,7 @@ namespace ThePackt
         public Utils.VectorAssociation[] playersSpawnPositions;
         [SerializeField] private GameObject _timeManagerPrefab;
         [SerializeField] private Canvas _blackScreenCanvas;
+        [SerializeField] private Canvas _fogOfWarCanvas;
         [SerializeField] private float _loadingScreenTime;
         private BoltEntity _timeManager;
         private Player _player;
@@ -22,6 +23,8 @@ namespace ThePackt
 
         public override void SceneLoadLocalDone(string scene, IProtocolToken token)
         {
+            _fogOfWarCanvas.gameObject.SetActive(_selectedData.GetFogEnabled());
+
             _player = _selectedData.GetPlayerScript();
             _player.ActivateFogCircle();
 

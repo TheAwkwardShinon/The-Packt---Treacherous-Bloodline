@@ -12,6 +12,10 @@ namespace ThePackt{
         private Player _playerScript = null;
         private string _disconnectReason = null;
         private string _sessionId = null;
+        private int _timeDuration = 360;
+        private int _playersNumber = 6;
+        private bool _damageEnabled = true;
+        private bool _fogEnabled = true;
 
         private int _characterIndex = 0;
 
@@ -42,6 +46,26 @@ namespace ThePackt{
             return _sessionId;
         }
 
+        public int GetTimeDuration()
+        {
+            return _timeDuration;
+        }
+
+        public bool GetDamageEnabled()
+        {
+            return _damageEnabled;
+        }
+
+        public int GetPlayersNumber()
+        {
+            return _playersNumber;
+        }
+
+        public bool GetFogEnabled()
+        {
+            return _fogEnabled;
+        }
+
         public void SetNickname(string name){
             _playerNickname = name;
         }
@@ -67,6 +91,26 @@ namespace ThePackt{
         public void SetSessionId(string value)
         {
             _sessionId = value;
+        }
+
+        public void SwitchFogEnabled()
+        {
+            _fogEnabled = !_fogEnabled;
+        }
+
+        public void SwitchDamageEnabled()
+        {
+            _damageEnabled = !_damageEnabled;
+        }
+
+        public void SetPlayersNumber(int value)
+        {
+            _playersNumber = value;
+        }
+
+        public void SetTimeDuration(int value)
+        {
+            _timeDuration = value;
         }
 
         public void Reset(){

@@ -84,7 +84,8 @@ namespace ThePackt
                 if (BoltNetwork.IsServer)
                 {
                     _playerNumber++;
-                    if (_playerNumber == _minPlayerNumber)
+                    //dev options
+                    if (_playerNumber == _selectedData.GetPlayersNumber())
                     {
                         StartCoroutine("StartGame");
                     }

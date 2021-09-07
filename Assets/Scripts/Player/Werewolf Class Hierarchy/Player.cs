@@ -473,7 +473,9 @@ namespace ThePackt{
             //Debug.Log("[HEALTH] apply damage: " + entity.IsOwner);
             if (entity.IsOwner)
             {
-                state.Health -= damage;
+                if (_selectedData.GetDamageEnabled())
+                    state.Health -= damage;
+
                 if(_playerData.tasteLikeIron && _playerData.tasteLikeIronStart.Count == 0){
                     _playerData.tasteLikeIronStart = new List<float>();
                      _playerData.tasteLikeIronStart.Add(Time.time);
