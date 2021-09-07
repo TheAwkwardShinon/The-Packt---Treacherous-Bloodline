@@ -661,7 +661,8 @@ namespace ThePackt{
         }
 
         /*
-        public void OnDrawGizmos(){
+        public void OnDrawGizmos()
+        {
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f));
             Gizmos.DrawCube(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f));
@@ -670,8 +671,12 @@ namespace ThePackt{
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_attackPoint.position, _playerBaseData.rangeBaseWerewolf);
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, 2f);
         }
         */
+        
 
         ///<summary>
         ///method that returns true if the player is grounded, false instead

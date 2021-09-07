@@ -41913,6 +41913,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeInputField: {fileID: 1928708649}
   _playersInputField: {fileID: 1692630867}
+  _fogToggle: {fileID: 1402908489}
+  _damageToggle: {fileID: 1307357238}
 --- !u!1 &2130861143
 GameObject:
   m_ObjectHideFlags: 0

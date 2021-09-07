@@ -26,7 +26,7 @@ namespace ThePackt
             _fogOfWarCanvas.gameObject.SetActive(_selectedData.GetFogEnabled());
 
             _player = _selectedData.GetPlayerScript();
-            _player.ActivateFogCircle();
+            //_player.ActivateFogCircle();
 
             List<BoltEntity> players = new List<BoltEntity>();
             foreach (BoltEntity ent in BoltNetwork.Entities)

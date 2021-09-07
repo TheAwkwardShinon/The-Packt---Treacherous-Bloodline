@@ -7,25 +7,36 @@ namespace ThePackt
     {
         [SerializeField] private InputField _timeInputField;
         [SerializeField] private InputField _playersInputField;
+        [SerializeField] private Toggle _fogToggle;
+        [SerializeField] private Toggle _damageToggle;
         private CharacterSelectionData _charSelectdata;
 
         private void Start()
         {
             _charSelectdata = CharacterSelectionData.Instance;
+
+            _timeInputField.text = _charSelectdata.GetTimeDuration().ToString();
+            _playersInputField.text = _charSelectdata.GetPlayersNumber().ToString();
+            _fogToggle.SetIsOnWithoutNotify(_charSelectdata.GetFogEnabled());
+            _damageToggle.SetIsOnWithoutNotify(_charSelectdata.GetDamageEnabled());
         }
 
         public void SetFogPreference()
         {
-            Debug.Log("UII setting fog");
+            Debug.Log("UII setting fog " + _charSelectdata.GetFogEnabled());
 
             _charSelectdata.SwitchFogEnabled();
+
+            Debug.Log("UII set fog " + _charSelectdata.GetFogEnabled());
         }
 
         public void SetDamagePreference()
         {
-            Debug.Log("UII setting damage");
+            Debug.Log("UII setting damage " + _charSelectdata.GetDamageEnabled());
 
             _charSelectdata.SwitchDamageEnabled();
+
+            Debug.Log("UII set damage " + _charSelectdata.GetDamageEnabled());
         }
 
         public void SetTimePreference()
