@@ -90,7 +90,7 @@ namespace ThePackt
 			//if idle in wandering check if the time to be idle ended and if so change state to wandering walk (at the transition the walk timer 
 			//starts)
 			FSMState wanderIdle = new FSMState();
-			wanderIdle.enterActions.Add(StartIdle);
+			wanderIdle.enterActions.Add(StartWanderIdle);
 			wanderIdle.exitActions.Add(StopIdle);
 
 			//if walking in wandering walk in front and change direction to avoid walls or pits. then check if the time to be walking ended
@@ -136,7 +136,7 @@ namespace ThePackt
 			//if so pass to the attack state. Otherwise if the target is not in range or the enemy attack could not reach it pass to the
 			//walk state. Otherwise check if under the enemy's feet there is an anemy or a player, if so pass to the jumping state to jump away 
 			FSMState seekIdle = new FSMState();
-			seekIdle.enterActions.Add(StartIdle);
+			seekIdle.enterActions.Add(StartSeekIdle);
 			seekIdle.stayActions.Add(FlipIfNeeded);
 			seekIdle.stayActions.Add(CheckSpecificRangeResult);
 			seekIdle.exitActions.Add(StopIdle);
@@ -301,11 +301,23 @@ namespace ThePackt
 		#region fsm enter actions 
 		//methods run when entering the corresponding a state
 
-		private void StartIdle()
+		private void StartWanderIdle()
 		{
 			Debug.Log("[BASEENEMY] idle");
 
 			_rb.velocity = new Vector2(0, _currentVelocity.y);
+
+			//start animation?
+		}
+
+		private void StartSeekIdle()
+		{
+			Debug.Log("[BASEENEMY] idle");
+
+			_rb.velocity = new Vector2(0, _currentVelocity.y);
+
+			if(_target) 
+				CheckSpecificRangeResult();
 
 			//start animation?
 		}
@@ -345,6 +357,9 @@ namespace ThePackt
 		private void StartSeekWalking()
 		{
 			Debug.Log("[BASEENEMY] walking");
+
+			if (_target)
+				CheckSpecificRangeResult();
 
 			//start animation?
 		}
