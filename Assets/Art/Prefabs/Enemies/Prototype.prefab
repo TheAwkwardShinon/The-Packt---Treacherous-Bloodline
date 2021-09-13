@@ -517,7 +517,7 @@ MonoBehaviour:
   _maxStandStillTime: 2
   _seekThreshold: 0.4
   _jumpPointThreshold: 0.1
-  _unreachabilityTime: 30
+  _unreachabilityTime: 15
   _reachabilityRestoreTime: 8
   _keepSameTargetTime: 8
 --- !u!1 &6181980213178154832

@@ -533,6 +533,7 @@ namespace ThePackt
 			//if i couldn't hit the current target for a certain amount of time (_unreachabilityTime), the target can be changed
 			//and the current target is added to the unreachable ones
 			bool inRoomAlive = IsInRoomAndAlive(_target);
+			Debug.Log("[TRGT] unreachable? " + Time.time + " >= " + _lastTargetHitTime + " + " + _unreachabilityTime);
 			if (Time.time >= _lastTargetHitTime + _unreachabilityTime)
 			{
 				Debug.Log("[TRGT] target unreachable, target can be changed");
@@ -566,6 +567,7 @@ namespace ThePackt
 			if (_targetCanBeSet && _damageMap.Count > 0)
 			{
 				bool set = false;
+				BoltEntity oldTarget = _target;
 
 				//if the target can now be changed, pick the player that has the highest score: dealt damage + lost life points and that is:
 				//- still in the room
@@ -575,7 +577,7 @@ namespace ThePackt
 				foreach (var entry in sortedDict)
 					if (entry.Key && IsInRoomAndAlive(entry.Key) && !_unreachableTargets.ContainsKey(entry.Key))
 					{ 
-						SetTarget(entry.Key);
+						SetTarget(entry.Key, oldTarget);
 						set = true;
 						break;
 					}
@@ -589,7 +591,7 @@ namespace ThePackt
 						if (IsInRoomAndAlive(ent))
 						{
 							_unreachableTargets.Remove(ent);
-							SetTarget(ent);
+							SetTarget(ent, oldTarget);
 							set = true;
 							break;
 						}
@@ -780,7 +782,7 @@ namespace ThePackt
 		///</summary>
 		private void HitByPlayerReaction()
 		{
-			SetTarget(_lastAttacker);
+			SetTarget(_lastAttacker, null);
 		}
 
 		///<summary>
@@ -937,7 +939,7 @@ namespace ThePackt
 				BoltEntity nearPlayer = _nearPlayers[0].gameObject.GetComponent<Player>().entity;
 				if (IsInRoomAndAlive(nearPlayer))
 				{
-					SetTarget(nearPlayer);
+					SetTarget(nearPlayer, null);
 					return true;
 				}
 			}
@@ -1080,14 +1082,15 @@ namespace ThePackt
 		///<summary>
 		///sets the target to the passed entity, also registering the time and adding the entity to the damage map if needed
 		///</summary>
-		private void SetTarget(BoltEntity ent)
+		private void SetTarget(BoltEntity ent, BoltEntity old)
 		{
 			Debug.Log("[TRGT] target set and cannot be changed");
 			_targetCanBeSet = false;
 			_target = ent;
 
 			_lastTargetChangedTime = Time.time;
-			_lastTargetHitTime = Time.time;
+			if (!old || ent != old) 
+				_lastTargetHitTime = Time.time;
 
 			if (!_damageMap.ContainsKey(ent))
 			{

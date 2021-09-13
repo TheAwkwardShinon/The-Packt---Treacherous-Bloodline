@@ -43,7 +43,7 @@ namespace ThePackt
 				{
 					float bulletY = _bulletPrefab.GetComponent<BoxCollider2D>().size.y * _bulletPrefab.transform.lossyScale.y;
 					float angle = Vector2.Angle(Vector2.right, col.bounds.center - _attackPoint.position);
-					var hit = Physics2D.BoxCast(_attackPoint.position, new Vector2(0.1f, bulletY), angle, col.bounds.center - _attackPoint.position, Vector2.Distance(col.bounds.center, _attackPoint.position), LayerMask.GetMask("Players", "Ground", "Wall", "Enemies", "Objectives"));
+					var hit = Physics2D.BoxCast(_attackPoint.position, new Vector2(0.1f, bulletY), angle, col.bounds.center - _attackPoint.position, Vector2.Distance(col.bounds.center, _attackPoint.position), LayerMask.GetMask("Players", "Ground", "Wall"));
 					
 					if (hit && hit.collider.GetComponent<Player>() && _target == hit.collider.GetComponent<Player>().entity)
 					{ 

@@ -642,7 +642,7 @@ MonoBehaviour:
   _maxStandStillTime: 3
   _seekThreshold: 2
   _jumpPointThreshold: 0.1
-  _unreachabilityTime: 30
+  _unreachabilityTime: 15
   _reachabilityRestoreTime: 10
   _keepSameTargetTime: 10
   _attackPoint: {fileID: 7073679686002194314}

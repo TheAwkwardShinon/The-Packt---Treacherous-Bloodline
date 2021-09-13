@@ -30,8 +30,8 @@ namespace ThePackt
         protected int _state;
 
         #region difficulty level
-        protected int _difficultyLevel;
-        protected int _maxDifficultyLevel;
+        [SerializeField] protected int _difficultyLevel; //shown in inspector only for debug purposes
+        [SerializeField] protected int _maximumReachableLevel;
         protected int _numberOfCompletements;
         [SerializeField] protected int _completementsForLevel; //number of completements needed to make the difficulty level increase
         #endregion
@@ -354,7 +354,7 @@ namespace ThePackt
                     if (_state == Constants.COMPLETED)
                     {
                         _numberOfCompletements++;
-                        if ((_numberOfCompletements % _completementsForLevel == 0) && _difficultyLevel < _maxDifficultyLevel)
+                        if ((_numberOfCompletements % _completementsForLevel == 0) && _difficultyLevel < _maximumReachableLevel)
                             IncrementDifficultyLevel();
                     }
                 }
@@ -448,11 +448,8 @@ namespace ThePackt
         public virtual void SetDifficultyLevel(int level)
         {
             _difficultyLevel = level;
-        }
 
-        public virtual void SetMaxDifficultyLevel(int level)
-        {
-            _maxDifficultyLevel = level;
+            Debug.Log("[MAPGEN] level set : " + _difficultyLevel);
         }
 
         ///<summary>

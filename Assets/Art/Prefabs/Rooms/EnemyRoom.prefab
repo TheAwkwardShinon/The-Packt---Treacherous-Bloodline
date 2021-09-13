@@ -2573,6 +2573,8 @@ MonoBehaviour:
   _expReward: 1
   _timeReward: 0
   _cooldown: 10
+  _difficultyLevel: 0
+  _maximumReachableLevel: 4
   _completementsForLevel: 3
   _autoJoinTime: 5
   _autoAbandonTime: 5

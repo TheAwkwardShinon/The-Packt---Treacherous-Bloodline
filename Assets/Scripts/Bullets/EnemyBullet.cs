@@ -18,7 +18,7 @@ namespace ThePackt
                 }
 
                 // Does not destroy bullets on impact with other bullets or enemies
-                if (!(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets") && !(LayerMask.LayerToName(collision.gameObject.layer) == "Room") && !(LayerMask.LayerToName(collision.gameObject.layer) == "Enemies"))
+                if (!(LayerMask.LayerToName(collision.gameObject.layer) == "Bullets") && !(LayerMask.LayerToName(collision.gameObject.layer) == "Room") && !(LayerMask.LayerToName(collision.gameObject.layer) == "Enemies") && !(LayerMask.LayerToName(collision.gameObject.layer) == "Objectives"))
                 {
                     BoltNetwork.Destroy(gameObject);
                 }

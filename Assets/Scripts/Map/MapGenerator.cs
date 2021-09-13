@@ -194,10 +194,9 @@ namespace ThePackt
                     toSpawn = _roomPrefabs[randomIndex].prefab;
                 }
 
-                //spawn the picked type asitting also the difficulty level and the max difficulty level
+                //spawn the picked type asitting also the difficulty level
                 BoltEntity spawnedRoom = BoltNetwork.Instantiate(toSpawn, _roomsSpawnPoints[i], toSpawn.transform.rotation);
                 spawnedRoom.GetComponent<Quest>().SetDifficultyLevel(level);
-                spawnedRoom.GetComponent<Quest>().SetMaxDifficultyLevel(maxLevel);
             }
         }
 
