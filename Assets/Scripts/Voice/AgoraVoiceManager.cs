@@ -1,4 +1,4 @@
-using agora_gaming_rtc;
+//using agora_gaming_rtc;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace ThePackt
     {
         public string agoraAppID;
         public string channelName;
-        private IRtcEngine _mRtcEngine = null;
+        //private IRtcEngine _mRtcEngine = null;
 
         /*
         // Start is called before the first frame update

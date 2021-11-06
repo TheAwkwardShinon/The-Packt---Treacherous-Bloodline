@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 30
+  _healthLevelIncrement: 0
   canvas: {fileID: 4437259079655088251}
   healthBar: {fileID: 4437259080920808958}
   healthImage: {fileID: 4437259080231090682}

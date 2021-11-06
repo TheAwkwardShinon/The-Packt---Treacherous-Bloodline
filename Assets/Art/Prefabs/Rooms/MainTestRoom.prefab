@@ -322,6 +322,8 @@ MonoBehaviour:
   _objectivePositions:
   - {fileID: 0}
   - {fileID: 0}
+  _platforms: []
+  _upLeftPosition: {fileID: 0}
   _returnToMenuSeconds: 5
   _startSound: {fileID: 0}
   _victorySound: {fileID: 0}

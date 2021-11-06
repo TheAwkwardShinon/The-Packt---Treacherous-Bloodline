@@ -333,6 +333,9 @@ MonoBehaviour:
   _expReward: 0
   _timeReward: 15
   _cooldown: 10
+  _difficultyLevel: 0
+  _maximumReachableLevel: 0
+  _completementsForLevel: 0
   _autoJoinTime: 5
   _autoAbandonTime: 5
   _bulletPrefab: {fileID: 6276787510045633164, guid: c50ced9f87ddca64db112ddbb35bc68c, type: 3}
@@ -341,6 +344,7 @@ MonoBehaviour:
   - {fileID: 7728853553958771067}
   - {fileID: 4418783578239014099}
   _duration: 15
+  _durationLevelIncrement: 0
 --- !u!1 &3487519964141432871
 GameObject:
   m_ObjectHideFlags: 0

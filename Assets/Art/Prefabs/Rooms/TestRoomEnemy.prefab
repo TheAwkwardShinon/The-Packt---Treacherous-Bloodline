@@ -246,6 +246,9 @@ MonoBehaviour:
   _expReward: 15
   _timeReward: 0
   _cooldown: 10
+  _difficultyLevel: 0
+  _maximumReachableLevel: 0
+  _completementsForLevel: 0
   _autoJoinTime: 5
   _autoAbandonTime: 5
   _enemyPrefabs:
@@ -255,6 +258,7 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 5978001639705057578}
   - {fileID: 2042062640175783587}
+  _platforms: []
 --- !u!114 &3487519965577382656
 MonoBehaviour:
   m_ObjectHideFlags: 0

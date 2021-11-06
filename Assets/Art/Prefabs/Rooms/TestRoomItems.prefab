@@ -270,6 +270,9 @@ MonoBehaviour:
   _expReward: 5
   _timeReward: 5
   _cooldown: 10
+  _difficultyLevel: 0
+  _maximumReachableLevel: 0
+  _completementsForLevel: 0
   _autoJoinTime: 5
   _autoAbandonTime: 5
   _itemPrefabs:
@@ -277,6 +280,8 @@ MonoBehaviour:
   _spawnPoints:
   - {fileID: 5978001639705057578}
   - {fileID: 7728853553958771067}
+  _numberOfItems: 0
+  _numberLevelIncrement: 0
   _fogOfWarDiameter: 1
 --- !u!1 &3487519964141432871
 GameObject:
