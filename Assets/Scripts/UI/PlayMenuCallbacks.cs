@@ -164,6 +164,12 @@ namespace ThePackt{
             }
         }
 
+        public override void ConnectAttempt(UdpEndPoint endpoint, IProtocolToken token)
+        {
+            Debug.Log("[CONNECTIONLOG] attempting connection");
+        }
+
+
         public override void ConnectRefused(UdpEndPoint endpoint, IProtocolToken token)
         {
             Debug.Log("[CONNECTIONLOG] connection refused");
@@ -206,6 +212,7 @@ namespace ThePackt{
 
                     if (photonSession.Source == UdpSessionSource.Photon && !_triedSessions.Contains(session.Key))
                     {
+                        Debug.Log("[CONNECTIONLOG] joining: " + session.ToString());
                         _searchingTooltipFindText.text = "Game Found...";
                         BoltMatchmaking.JoinSession(photonSession, null);
                         _triedSessions.Add(session.Key);

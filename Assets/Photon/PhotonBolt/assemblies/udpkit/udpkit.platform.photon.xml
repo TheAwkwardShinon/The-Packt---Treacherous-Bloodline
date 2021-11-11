@@ -196,6 +196,11 @@
             Gets the max number of connections acceptable in the room.
             </summary>
         </member>
+        <member name="P:UdpKit.Platform.PhotonPlatformConfig.CustomSTUNServer">
+            <summary>
+            Set a custom STUN Server to be used on the punch process
+            </summary>
+        </member>
         <member name="F:UdpKit.Platform.PhotonPlatformConfig.BackgroundConnectionTimeout">
             <summary>
             Amount of time the background connection with the Photon Servers will be maintained until

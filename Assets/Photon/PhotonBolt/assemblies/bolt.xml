@@ -2519,6 +2519,11 @@
             The max data payload size of a packet
             </summary>
         </member>
+        <member name="F:BoltConfig.packetStreamSize">
+            <summary>
+            The Stream UDP Packet Size in Byte
+            </summary>
+        </member>
         <member name="F:BoltConfig.maxEntityPriority">
             <summary>
             The max priority value for updating an entity
