@@ -48,7 +48,10 @@ namespace ThePackt
 
                 _selectedData.SetDisconnectReason(disconnectReason.ToString());
 
-                SceneManager.LoadScene(Constants.MENU);
+                if(SceneManager.GetActiveScene().name != Constants.MENU)
+                {
+                    SceneManager.LoadScene(Constants.MENU);
+                }
             });
         }
 

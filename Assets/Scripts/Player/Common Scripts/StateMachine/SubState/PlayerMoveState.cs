@@ -40,7 +40,7 @@ namespace ThePackt{
                 {
                     _stateMachine.ChangeState(_player._idleState);
                 }
-                else if (_yInput == -1)
+                else if (_yInput == -1 && (!_player.CheckIfTouchingPlayerOrEnemy() && !_player.CheckIfTouchingWall()))
                 {
                     if(_player.GetIsHuman()){
                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-4.783879f,-18.35041f);
