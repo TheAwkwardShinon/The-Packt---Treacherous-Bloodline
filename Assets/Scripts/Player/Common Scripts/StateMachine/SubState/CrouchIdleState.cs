@@ -1,3 +1,4 @@
+using Bolt;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,13 +38,27 @@ namespace ThePackt{
 
          public override void AnimationFinishTrigger()
         {
-            if(_player.GetIsHuman()){
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-4.783879f,-18.35041f);
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(38.76051f,10.20428f);
+            SetColliderSizeEvent evnt;
+            evnt = SetColliderSizeEvent.Create(GlobalTargets.Everyone);
+            evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+
+            if (_player.GetIsHuman()){
+                
+                evnt.Offset = new Vector2(-0.7352595f, -16.41497f);
+                evnt.Size = new Vector2(8.667796f, 15.04198f);
+
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f, -16.41497f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f, 15.04198f);
             }else{
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.583345f,-9.130901f);
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(36.60429f,29.61012f);
+
+                evnt.Offset = new Vector2(-1.780157f, -14.78343f);
+                evnt.Size = new Vector2(24.9682f, 18.30506f);
+
+                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f, -14.78343f);
+                _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f, 18.30506f);
             }
+
+            evnt.Send();
 
         }
 
@@ -62,14 +77,29 @@ namespace ThePackt{
                 else if(_yInput !=-1 && !_isTouchingCeiling)
                 {   
                     SetCrouch(false);
-                    if(_player.GetIsHuman()){
-                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+
+                    SetColliderSizeEvent evnt;
+                    evnt = SetColliderSizeEvent.Create(GlobalTargets.Everyone);
+                    evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+
+                    if (_player.GetIsHuman()){
+
+                        evnt.Offset = new Vector2(-0.7352595f, -5.962845f);
+                        evnt.Size = new Vector2(8.667796f, 35.94624f);
+
+                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
                          _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
                     }
                     else{
+
+                        evnt.Offset = new Vector2(-1.780157f, -5.962845f);
+                        evnt.Size = new Vector2(24.9682f, 35.94624f);
+
                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
                         _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
                     }
+                    evnt.Send();
+
                     _stateMachine.ChangeState(_player._idleState);
                 }
             } 

@@ -491,8 +491,15 @@ namespace ThePackt
             }
         }
 
+        public override void OnEvent(SetColliderSizeEvent evnt)
+        {
+            BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+            Player player = entity.GetComponent<Player>();
 
-        
+            _player.GetComponent<BoxCollider2D>().offset = evnt.Offset;
+            _player.GetComponent<BoxCollider2D>().size = evnt.Size;
+        }
+
 
 
         #endregion
