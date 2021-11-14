@@ -365,7 +365,6 @@ namespace ThePackt{
 
 
         public void ChangeSelectedElement(GameObject go){
-            Debug.Log("[AUUU] change selected");
             _eventSystem.SetSelectedGameObject(go);
         }
         #endregion
