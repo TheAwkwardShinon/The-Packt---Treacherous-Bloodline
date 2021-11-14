@@ -16,6 +16,8 @@ namespace ThePackt{
         private Color _tabIdle = new Color(255,255,255,255);
         private Color _tabHover = Color.red;
 
+        private LogoOnCharSelection charSelection;
+
         [SerializeField] private GameObject _tooltip;
 
         private PlayerInput inputSystem;
@@ -36,6 +38,7 @@ namespace ThePackt{
             _selectedTab = button;
             _switchtabAudio.Play();
             ResetTabs();
+
             button.background.color = _tabActive;
             int index = button.transform.GetSiblingIndex();
             for(int i=0;i< objectsToSwap.Count;i++){
@@ -43,6 +46,7 @@ namespace ThePackt{
                     
                     objectsToSwap[i].SetActive(true);
                     _eventSystem.SetSelectedGameObject(_firstSelectedOnTab[i].gameObject);
+                    //charSelection.Reset();
                 }
                 else{
                     objectsToSwap[i].SetActive(false);
