@@ -496,8 +496,8 @@ namespace ThePackt
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player = entity.GetComponent<Player>();
 
-            _player.GetComponent<BoxCollider2D>().offset = evnt.Offset;
-            _player.GetComponent<BoxCollider2D>().size = evnt.Size;
+            player.GetComponent<BoxCollider2D>().offset = evnt.Offset;
+            player.GetComponent<BoxCollider2D>().size = evnt.Size;
         }
 
 
