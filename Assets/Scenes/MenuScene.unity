@@ -25186,6 +25186,7 @@ MonoBehaviour:
   - {fileID: 1100310145}
   - {fileID: 1222119358}
   - {fileID: 1839286555}
+  _logoSelectionHandler: {fileID: 1481698303}
   _tooltip: {fileID: 1990934479}
   _eventSystem: {fileID: 895784725}
   _firstSelectedOnTab:

@@ -16,7 +16,7 @@ namespace ThePackt{
         private Color _tabIdle = new Color(255,255,255,255);
         private Color _tabHover = Color.red;
 
-        private LogoOnCharSelection charSelection;
+        [SerializeField] private LogoOnCharSelection _logoSelectionHandler;
 
         [SerializeField] private GameObject _tooltip;
 
@@ -46,6 +46,8 @@ namespace ThePackt{
                     
                     objectsToSwap[i].SetActive(true);
                     _eventSystem.SetSelectedGameObject(_firstSelectedOnTab[i].gameObject);
+                    if(GetCurrentTab().gameObject.Equals(tabButtons[0].gameObject))
+                        _logoSelectionHandler.Reset();
                     //charSelection.Reset();
                 }
                 else{
