@@ -40,14 +40,15 @@ namespace ThePackt{
                 _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f, -5.962845f);
                 _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f, 35.94624f);
 
+                _player.GetWolfObject().SetActive(false);
+                _player.GetHumanObject().SetActive(true);
+
                 Debug.Log("[SIZEEE3] " + _player.GetComponent<BoxCollider2D>().size);
 
                 DetransformationEvent evnt;
                 evnt = DetransformationEvent.Create(GlobalTargets.Everyone,ReliabilityModes.ReliableOrdered);
                 evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
                 evnt.Send();
-                /* _player.GetWolfObject().SetActive(false);
-                _player.GetHumanObject().SetActive(true);*/
             }
 
         }

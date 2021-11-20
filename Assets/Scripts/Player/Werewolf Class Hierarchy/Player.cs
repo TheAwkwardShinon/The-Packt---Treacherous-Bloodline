@@ -223,6 +223,8 @@ namespace ThePackt{
             _facingDirection = -1;
             _stateMachine.Initialize(_idleState);
 
+            //((BoxCollider2D)_col).size = new Vector2(1, 1);
+
             //disable input handling if the player is not the owner
             if (!entity.IsOwner)
             {
