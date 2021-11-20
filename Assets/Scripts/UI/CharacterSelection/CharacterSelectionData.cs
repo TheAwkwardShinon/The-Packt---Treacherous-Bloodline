@@ -13,6 +13,7 @@ namespace ThePackt{
         private string _disconnectReason = null;
         private string _sessionId = null;
         private int _timeDuration = 360;
+        private int _initialPoints = 0;
         private int _playersNumber = 6;
         private bool _damageEnabled = true;
         private bool _fogEnabled = true;
@@ -49,6 +50,11 @@ namespace ThePackt{
         public int GetTimeDuration()
         {
             return _timeDuration;
+        }
+
+        public int GetInitialPoints()
+        {
+            return _initialPoints;
         }
 
         public bool GetDamageEnabled()
@@ -106,6 +112,11 @@ namespace ThePackt{
         public void SetPlayersNumber(int value)
         {
             _playersNumber = value;
+        }
+
+        public void SetInitialPoints(int value)
+        {
+            _initialPoints = value;
         }
 
         public void SetTimeDuration(int value)

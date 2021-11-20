@@ -254,6 +254,8 @@ namespace ThePackt{
             healthImage.color = healthGradient.Evaluate(1f);
             healthSlider.maxValue = _playerData.maxLifePoints;
 
+            _spendableExp = _selectedData.GetInitialPoints();
+
             // synchronize the bolt player state transform with the player gameobject transform
             state.SetTransforms(state.Transform, transform);
 

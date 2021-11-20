@@ -9,12 +9,14 @@ namespace ThePackt
         [SerializeField] private InputField _playersInputField;
         [SerializeField] private Toggle _fogToggle;
         [SerializeField] private Toggle _damageToggle;
+        [SerializeField] private InputField _pointsInputField;
         private CharacterSelectionData _charSelectdata;
 
         private void Start()
         {
             _charSelectdata = CharacterSelectionData.Instance;
 
+            _pointsInputField.text = _charSelectdata.GetInitialPoints().ToString();
             _timeInputField.text = _charSelectdata.GetTimeDuration().ToString();
             _playersInputField.text = _charSelectdata.GetPlayersNumber().ToString();
             _fogToggle.SetIsOnWithoutNotify(_charSelectdata.GetFogEnabled());
@@ -91,6 +93,33 @@ namespace ThePackt
             Debug.Log("UII setting players " + value);
 
             _charSelectdata.SetPlayersNumber(value);
+        }
+
+        public void SetInitialPointsPreference()
+        {
+            int value;
+            if (_pointsInputField.text != "-" && int.TryParse(_pointsInputField.text, out value))
+            {
+                if (value < 0)
+                {
+                    value = 0;
+                    _pointsInputField.text = "0";
+                }
+                else if (value > 100)
+                {
+                    value = 100;
+                    _pointsInputField.text = "100";
+                }
+            }
+            else
+            {
+                value = 0;
+                _pointsInputField.text = "0";
+            }
+
+            Debug.Log("UII setting points " + value);
+
+            _charSelectdata.SetInitialPoints(value);
         }
     }
 }
