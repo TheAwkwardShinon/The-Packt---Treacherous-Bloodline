@@ -660,7 +660,8 @@ namespace ThePackt{
             return Physics2D.OverlapBox(_ceilingCheck.position,new Vector3(0.10f, 0.1f, 0f), 0f, _playerData.whatIsGround|_playerData.whatIsWall);
         }
 
-        public void OnDrawGizmos()
+        
+        /*public void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
             Gizmos.DrawCube(_ledgeCheck.position,new Vector3(0.08f, 0.1f, 0f));
@@ -673,7 +674,7 @@ namespace ThePackt{
 
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, 2f);
-        }
+        }*/
         
 
         ///<summary>

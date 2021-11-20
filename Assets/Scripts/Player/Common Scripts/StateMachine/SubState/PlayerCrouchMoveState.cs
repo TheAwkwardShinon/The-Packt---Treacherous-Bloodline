@@ -57,6 +57,8 @@ namespace ThePackt{
                         evnt.Offset = new Vector2(-0.7352595f, -5.962845f);
                         evnt.Size = new Vector2(8.667796f, 35.94624f);
 
+                        Debug.Log("[SIZEEE] crouch move o");
+
                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f, -5.962845f);
                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f, 35.94624f);
                     }
@@ -65,6 +67,8 @@ namespace ThePackt{
 
                         evnt.Offset = new Vector2(-1.780157f, -5.962845f);
                         evnt.Size = new Vector2(24.9682f, 35.94624f);
+
+                        Debug.Log("[SIZEEE] crouch move o");
 
                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f, -5.962845f);
                         _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f, 35.94624f);
@@ -91,6 +95,8 @@ namespace ThePackt{
                         evnt.Offset = new Vector2(-0.7352595f, -5.962845f);
                         evnt.Size = new Vector2(8.667796f, 35.94624f);
 
+                        Debug.Log("[SIZEEE] crouch move o");
+
                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f, -5.962845f);
                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f, 35.94624f);
                     }
@@ -99,6 +105,8 @@ namespace ThePackt{
 
                         evnt.Offset = new Vector2(-1.780157f, -5.962845f);
                         evnt.Size = new Vector2(24.9682f, 35.94624f);
+
+                        Debug.Log("[SIZEEE] crouch move o");
 
                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f, -5.962845f);
                         _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f, 35.94624f);

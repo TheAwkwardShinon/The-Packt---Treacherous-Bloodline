@@ -456,9 +456,13 @@ namespace ThePackt
 
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player =entity.GetComponent<Player>();
-             Debug.LogError(" evento trasformazion: "+player.tag);
+            Debug.LogError(" evento trasformazion: "+player.tag);
             player.GetHumanObject().SetActive(false);
             player.GetWolfObject().SetActive(true);
+
+            //player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f, -5.962845f);
+            //player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f, 35.94624f);
+            Debug.Log("[SIZEEE3] " + player.GetComponent<BoxCollider2D>().size);
 
             Debug.Log("[VFX TRANS] set");
         }
@@ -473,6 +477,10 @@ namespace ThePackt
             Debug.LogError(" evento detrasformazion: "+player.tag);
             player.GetWolfObject().SetActive(false);
             player.GetHumanObject().SetActive(true);
+
+            //player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f, -5.962845f);
+            //player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f, 35.94624f);
+            Debug.Log("[SIZEEE4] " + player.GetComponent<BoxCollider2D>().size);
 
             Debug.Log("[VFX DETRANS] set");
         }
@@ -496,8 +504,13 @@ namespace ThePackt
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player = entity.GetComponent<Player>();
 
-            player.GetComponent<BoxCollider2D>().offset = evnt.Offset;
-            player.GetComponent<BoxCollider2D>().size = evnt.Size;
+            Debug.Log("[SIZEEE1] " + player.GetComponent<BoxCollider2D>().size);
+            Debug.Log("[SIZEEE2] " + player.gameObject.name + "   " + evnt.Size);
+            if (player != _player && player.GetComponent<BoxCollider2D>().size != new Vector2(evnt.Size.x, evnt.Size.y))
+            {
+                player.GetComponent<BoxCollider2D>().offset = evnt.Offset;
+                player.GetComponent<BoxCollider2D>().size = evnt.Size;
+            }
         }
 
 
