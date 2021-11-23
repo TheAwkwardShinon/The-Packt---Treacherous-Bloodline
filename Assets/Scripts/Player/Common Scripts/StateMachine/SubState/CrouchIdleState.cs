@@ -93,8 +93,8 @@ namespace ThePackt{
 
                         Debug.Log("[SIZEEE] crouch o");
 
-                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
-                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                       // _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
+                        // _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
                     }
                     else{
 

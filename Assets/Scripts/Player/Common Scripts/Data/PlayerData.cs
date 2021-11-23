@@ -28,8 +28,6 @@ namespace ThePackt{
 
         [Header("Dash State")]
         public float dashCooldown = 0.5f;
-        public float maxHoldTime = 1f;
-        public float holdTimeScale = 0.25f;
         public float dashTime = 0.2f;
         public float dashVelocity = 30f;
         public float dashEndYMultiplier = 0.2f;
@@ -37,15 +35,10 @@ namespace ThePackt{
 
         [Header("Crouch States")]
         public float crouchMovementVelocity = 5f;
-        public float crouchColliderHeight = 0.8f;
-        public float standColliderHeight = 1.6f;
-        public float standColliderWidth = 0.8f;
         public float ceilingHeight = 0.5f;
 
         [Header("Down States")]
-        public float downColliderHeight = 0.4f;
-        public float downColliderWidth = 1.3f;
-
+  
         public float downedStartTime = 0f;
         public float bleedOutTime = 15f;
         public float numOfReviveAction = 0f;
@@ -70,7 +63,6 @@ namespace ThePackt{
 
         [Header("Layer masks")]
         public LayerMask whatIsGround;
-        public LayerMask whatIsCeiling;
         public LayerMask whatIsWall;
         public LayerMask whatIsLedge;
         public LayerMask whatIsRoom;
@@ -78,8 +70,6 @@ namespace ThePackt{
         public LayerMask WhatIsPlayer;
         public LayerMask WhatIsEnemy;
 
-        public float ceilingCheckRadius = 0.3f;
-        public float groundCheckRadius = 0.3f;
         public float wallCheckDistance = 0.5f;
 
         [Header("gameplay")]
@@ -92,7 +82,6 @@ namespace ThePackt{
 
         public float _startTransformationTime;
 
-        public bool healing = false;
 
         [Header("Debuff Slow")]
         public bool isSlowed = false;
@@ -106,7 +95,7 @@ namespace ThePackt{
 
         public float timeOffogDebuff = 0f;
         public float debuffFogStartTime = 0f;
-        public float sizeOfCircle = 0f;
+      
         public float standardCircleSize = 2f;
         public bool isFogDebuffActive = false;
 
@@ -134,7 +123,7 @@ namespace ThePackt{
         public float socialAnimalMultiplier = 0.06f;
         public int numOfNearPlayer = 0;
 
-        public List<GameObject> _sprites;
+
 
         
 

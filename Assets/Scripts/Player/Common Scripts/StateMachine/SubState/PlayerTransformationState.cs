@@ -36,7 +36,7 @@ namespace ThePackt{
                 _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f, -5.962845f);
                 _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f, 35.94624f);
 
-               // _player.GetWolfObject().SetActive(true);
+                //_player.GetWolfObject().SetActive(true);
                 //_player.GetHumanObject().SetActive(false);
 
                 Debug.Log("[SIZEEE4] " + _player.GetComponent<BoxCollider2D>().size);
