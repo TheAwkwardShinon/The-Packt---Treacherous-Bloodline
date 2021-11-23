@@ -35,15 +35,22 @@ namespace ThePackt{
             _player.GetPlayerData().ceilingHeight = _heightValue;
         }
 
-         public override void AnimationFinishTrigger()
+       public override void AnimationFinishTrigger()
         {
+            SetColliderSizeEvent evnt;
+            evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
+
+
             if(_player.GetIsHuman()){
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-4.783879f,-18.35041f);
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(38.76051f,10.20428f);
+                evnt.Offset = new Vector2(-1.39756346f,-8.94320488f);
+                evnt.Size = new Vector2(11.9792986f,29.9855232f);
+
             }else{
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.583345f,-9.130901f);
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(36.60429f,29.61012f);
+                evnt.Offset = new Vector2(-2.93918324f,-8.61205387f);
+                evnt.Size = new Vector2(28.6108532f,30.6478252f);
             }
+            evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+            evnt.Send();
 
         }
 
@@ -61,15 +68,19 @@ namespace ThePackt{
                 }
                 else if(_yInput !=-1 && !_isTouchingCeiling)
                 {   
+                    SetColliderSizeEvent evnt;
+                    evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
                     SetCrouch(false);
                     if(_player.GetIsHuman()){
-                         _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
-                         _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+                         evnt.Offset =  new Vector2(-0.7352595f,-5.962845f);
+                         evnt.Size = new Vector2(8.667796f,35.94624f);
                     }
                     else{
-                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
-                        _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                       evnt.Offset = new Vector2(-1.780157f,-5.962845f);
+                       evnt.Size = new Vector2(24.9682f,35.94624f);
                     }
+                    evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                    evnt.Send();
                     _stateMachine.ChangeState(_player._idleState);
                 }
             } 
