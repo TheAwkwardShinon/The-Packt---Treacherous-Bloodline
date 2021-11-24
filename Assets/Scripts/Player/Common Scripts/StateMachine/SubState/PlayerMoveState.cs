@@ -42,13 +42,23 @@ namespace ThePackt{
                 }
                 else if (_yInput == -1)
                 {
-                    if(_player.GetIsHuman()){
-                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-4.783879f,-18.35041f);
-                        _player.GetComponent<BoxCollider2D>().size = new Vector2(38.76051f,10.20428f);
-                    }else{
-                        _player.GetComponent<BoxCollider2D>().offset = new Vector2(-5.583345f,-9.130901f);
-                        _player.GetComponent<BoxCollider2D>().size = new Vector2(36.60429f,29.61012f);
+                    SetColliderSizeEvent evnt;
+                    evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
+
+                    if (_player.GetIsHuman())
+                    {
+                        evnt.Offset = new Vector2(-1.39756346f, -8.94320488f);
+                        evnt.Size = new Vector2(11.9792986f, 29.9855232f);
+
                     }
+                    else
+                    {
+                        evnt.Offset = new Vector2(-2.93918324f, -8.61205387f);
+                        evnt.Size = new Vector2(28.6108532f, 30.6478252f);
+                    }
+                    evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                    evnt.Send();
+
                     _stateMachine.ChangeState(_player._crouchMoveState);
                 }
             }        

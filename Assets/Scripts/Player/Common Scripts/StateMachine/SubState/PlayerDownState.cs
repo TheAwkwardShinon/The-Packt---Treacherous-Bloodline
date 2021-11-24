@@ -39,14 +39,21 @@ namespace ThePackt{
 
         public override void AnimationFinishTrigger()
         {
-            if(_player.GetIsHuman()){
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(35.94624f,-18.82179f);
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(33.21022f,10.22835f);
-            }else{
-                _player.GetComponent<BoxCollider2D>().offset = new Vector2(4.416998f,-12.08582f);
-                _player.GetComponent<BoxCollider2D>().size = new Vector2(33.30902f,23.7003f);
+            SetColliderSizeEvent evnt;
+            evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
+
+            if (_player.GetIsHuman())
+            {
+                evnt.Offset = new Vector2(0.920493364f, -12.7514372f);
+                evnt.Size = new Vector2(13.9662056f, 22.3690586f);
             }
-            
+            else
+            {
+                evnt.Offset = new Vector2(-1.231987f, -11.0956793f);
+                evnt.Size = new Vector2(26.8810806f, 26.3428669f);
+            }
+            evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+            evnt.Send();
         }
 
         public override void LogicUpdate()
@@ -58,20 +65,27 @@ namespace ThePackt{
                 return;
             }
 
-
-
             if(_player.state.Health >= _player.GetPlayerData().maxLifePoints * 0.3f){
                  Debug.LogWarning("[DOWNED STATE] ---> IDLE");
                 _isStand = true;
                 _player.state.isDowned = false;
-                if(_player.GetIsHuman()){
-                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
-                    _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+
+                SetColliderSizeEvent evnt;
+                evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
+
+                if (_player.GetIsHuman())
+                {
+                    evnt.Offset = new Vector2(-0.7352595f, -5.962845f);
+                    evnt.Size = new Vector2(8.667796f, 35.94624f);
                 }
-                else{
-                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
-                    _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                else
+                {
+                    evnt.Offset = new Vector2(-1.780157f, -5.962845f);
+                    evnt.Size = new Vector2(24.9682f, 35.94624f);
                 }
+                evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                evnt.Send();
+
                 _stateMachine.ChangeState(_player._idleState);
             }else if(_xInput != 0){
                 Debug.LogWarning("[DOWNED STATE] ---> DOWNED MOVE STATE");

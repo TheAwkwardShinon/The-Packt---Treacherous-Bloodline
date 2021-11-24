@@ -39,7 +39,6 @@ namespace ThePackt{
                 return;
             }
 
-
             _player.SetVelocityX(_player.GetPlayerData().crouchMovementVelocity * _player._facingDirection);
             _player.CheckIfShouldFlip(_xInput);
 
@@ -47,14 +46,23 @@ namespace ThePackt{
                 Debug.LogWarning("[DOWNED MOVE STATE] ---> IDLE");
                 _player.state.isDowned = false;
                 _isStand = true;
-                if(_player.GetIsHuman()){
-                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f,-5.962845f);
-                    _player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f,35.94624f);
+
+                SetColliderSizeEvent evnt;
+                evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
+
+                if (_player.GetIsHuman())
+                {
+                    evnt.Offset = new Vector2(-0.7352595f, -5.962845f);
+                    evnt.Size = new Vector2(8.667796f, 35.94624f);
                 }
-                else{
-                    _player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f,-5.962845f);
-                    _player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f,35.94624f);
+                else
+                {
+                    evnt.Offset = new Vector2(-1.780157f, -5.962845f);
+                    evnt.Size = new Vector2(24.9682f, 35.94624f);
                 }
+                evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                evnt.Send();
+
                 _stateMachine.ChangeState(_player._idleState);
             } 
             else if(_xInput == 0)

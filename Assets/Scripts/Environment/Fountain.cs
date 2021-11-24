@@ -40,7 +40,7 @@ namespace ThePackt
             if(BoltNetwork.IsServer && _state == Constants.READY)
             {
                 Player enteredPlayer = collision.GetComponent<Player>();
-                if (enteredPlayer != null && enteredPlayer.GetPlayerData().currentLifePoints < enteredPlayer.GetPlayerData().maxLifePoints)
+                if (enteredPlayer != null && !enteredPlayer._isDowned && enteredPlayer.GetPlayerData().currentLifePoints < enteredPlayer.GetPlayerData().maxLifePoints)
                 {
                     if (enteredPlayer.entity.IsOwner)
                     {
@@ -65,7 +65,7 @@ namespace ThePackt
             if (BoltNetwork.IsServer && _state == Constants.READY)
             {
                 Player enteredPlayer = collision.GetComponent<Player>();
-                if (enteredPlayer != null && enteredPlayer.GetPlayerData().currentLifePoints < enteredPlayer.GetPlayerData().maxLifePoints)
+                if (enteredPlayer != null && !enteredPlayer._isDowned &&  enteredPlayer.GetPlayerData().currentLifePoints < enteredPlayer.GetPlayerData().maxLifePoints)
                 {
                     if (enteredPlayer.entity.IsOwner)
                     {

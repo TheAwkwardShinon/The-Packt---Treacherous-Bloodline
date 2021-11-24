@@ -92,34 +92,6 @@ namespace ThePackt{
 
         #endregion
 
-        /*
-                public void OnPrimaryAttackInput(InputAction.CallbackContext context)
-                {
-                    if (context.started)
-                    {
-                        _attackInputs[(int)CombatInputs.primary] = true;
-                    }
-
-                    if (context.canceled)
-                    {
-                        _attackInputs[(int)CombatInputs.primary] = false;
-                    }
-                }
-
-                public void OnSecondaryAttackInput(InputAction.CallbackContext context)
-                {
-                    if (context.started)
-                    {
-                        _attackInputs[(int)CombatInputs.secondary] = true;
-                    }
-
-                    if (context.canceled)
-                    {
-                        _attackInputs[(int)CombatInputs.secondary] = false;
-                    }
-                }
-        */
-
         #region input 
         
         ///<summary> 
@@ -177,9 +149,9 @@ namespace ThePackt{
         ///</summary>
         public void OnTransformationInput(InputAction.CallbackContext context)
         {
-            //MainQuest mainQuest = MainQuest.Instance;
-            //if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
-            //{
+            MainQuest mainQuest = MainQuest.Instance;
+            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
+            {
                 if (context.started)
                 {
                     if (player.GetIsHuman())
@@ -194,7 +166,7 @@ namespace ThePackt{
                 {
                     _transformInputStop = true;
                 }
-           // }
+            }
         }
         
         ///<summary> 
@@ -235,8 +207,8 @@ namespace ThePackt{
         public void OnAttackInput(InputAction.CallbackContext context)
         {
             MainQuest mainQuest = MainQuest.Instance;
-            //if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
-            //{
+            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
+            {
                 if (context.started)
                 {
                     if (!player.GetIsHuman() || CheckSetAttackDirection())
@@ -250,13 +222,13 @@ namespace ThePackt{
                 {
                     _attackInputsStop[Constants.BASE] = true;
                 }
-            //}
+            }
         }
          public void OnSpecialAttackInput(InputAction.CallbackContext context)
         {
-            //MainQuest mainQuest = MainQuest.Instance;
-            //if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
-            //{
+            MainQuest mainQuest = MainQuest.Instance;
+            if (mainQuest != null && mainQuest.GetQuestState() == Constants.STARTED)
+            {
                 if (context.started)
                 {
                     if (player._specialAttack.CheckIfCanAttack() && CheckSetAttackDirection())
@@ -270,7 +242,7 @@ namespace ThePackt{
                 {
                     _specialAttackInputStop = true;
                 }
-            //}
+            }
         }
 
          public void OnActivateUIInput(InputAction.CallbackContext context)
@@ -287,7 +259,6 @@ namespace ThePackt{
             }
         }
 
-        //TODO ora funziona mouse
         private bool CheckSetAttackDirection()
         {
             Transform attPoint = player.GetAttackPoint();
