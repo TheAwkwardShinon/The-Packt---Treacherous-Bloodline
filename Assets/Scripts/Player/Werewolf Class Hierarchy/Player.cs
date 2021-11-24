@@ -746,22 +746,6 @@ namespace ThePackt{
          public bool CheckIfTouchingPlayerOrEnemy()
         {
             return Physics2D.Raycast(transform.position, Vector2.right * _facingDirection, 0.4f, _playerData.WhatIsPlayer) || Physics2D.Raycast(transform.position, Vector2.right * _facingDirection, 0.4f, _playerData.WhatIsEnemy);
-
-            /*if(_isHuman){
-                Collider2D col = Physics2D.OverlapBox(transform.position, new Vector3(5f,2f,0f), 0f, 
-                    _playerData.WhatIsPlayer);
-                if(col != null)
-                    if(!col.gameObject.name.Equals(gameObject.name))
-                        return true;
-            }
-            else{
-                Collider2D col = Physics2D.OverlapBox(transform.position, new Vector3(5f,2f,0f), 0f, 
-                    _playerData.WhatIsPlayer);
-                if(col != null)
-                    if(!col.gameObject.name.Equals(gameObject.name))
-                        return true;
-            }*/
-            //return false;
         }
 
         ///<summary>
