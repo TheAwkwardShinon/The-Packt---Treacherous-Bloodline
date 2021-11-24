@@ -86,7 +86,13 @@ namespace ThePackt{
             {
                 if (context.started)
                 {
-                    _tabgroup.ChangeTabLeft();    
+                    if (_tabgroup.GetCurrentTab().gameObject.Equals(_playTab))
+                    {
+                        _logoSelectionHandler.Reset();
+                        _playerInformationData.Reset();
+                    }
+
+                _tabgroup.ChangeTabLeft();    
                 }
                 else if(context.canceled){
 
@@ -97,6 +103,12 @@ namespace ThePackt{
         {
             if (context.started)
             {
+                if (_tabgroup.GetCurrentTab().gameObject.Equals(_playTab))
+                {
+                    _logoSelectionHandler.Reset();
+                    _playerInformationData.Reset();
+                }
+
                 _tabgroup.ChangeTabRight();
             }
             else if(context.canceled){
