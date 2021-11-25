@@ -52,8 +52,12 @@ namespace ThePackt{
                 evnt.Offset = new Vector2(-1.231987f, -11.0956793f);
                 evnt.Size = new Vector2(26.8810806f, 26.3428669f);
             }
-            evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
-            evnt.Send();
+
+            if (_player.GetComponent<BoxCollider2D>().size != new Vector2(evnt.Size.x, evnt.Size.y))
+            {
+                evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                evnt.Send();
+            }
         }
 
         public override void LogicUpdate()
@@ -83,8 +87,12 @@ namespace ThePackt{
                     evnt.Offset = new Vector2(-1.780157f, -5.962845f);
                     evnt.Size = new Vector2(24.9682f, 35.94624f);
                 }
-                evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
-                evnt.Send();
+
+                if (_player.GetComponent<BoxCollider2D>().size != new Vector2(evnt.Size.x, evnt.Size.y))
+                {
+                    evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                    evnt.Send();
+                }
 
                 _stateMachine.ChangeState(_player._idleState);
             }else if(_xInput != 0){

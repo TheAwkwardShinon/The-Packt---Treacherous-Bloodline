@@ -18,6 +18,8 @@ namespace ThePackt
 
         public override void OnEvent(SetColliderSizeEvent evnt)
         {
+            Debug.Log("[SIZE] setting collider size");
+
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player = entity.GetComponent<Player>();
             player.GetComponent<BoxCollider2D>().size = evnt.Size;

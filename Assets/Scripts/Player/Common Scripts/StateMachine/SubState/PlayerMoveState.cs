@@ -41,7 +41,7 @@ namespace ThePackt{
                     _stateMachine.ChangeState(_player._idleState);
                 }
                 else if (_yInput == -1)
-                {
+                {       
                     SetColliderSizeEvent evnt;
                     evnt = SetColliderSizeEvent.Create(Bolt.GlobalTargets.Everyone);
 
@@ -56,8 +56,12 @@ namespace ThePackt{
                         evnt.Offset = new Vector2(-2.93918324f, -8.61205387f);
                         evnt.Size = new Vector2(28.6108532f, 30.6478252f);
                     }
-                    evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
-                    evnt.Send();
+
+                    if (_player.GetComponent<BoxCollider2D>().size != new Vector2(evnt.Size.x, evnt.Size.y))
+                    {
+                        evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
+                        evnt.Send();
+                    }
 
                     _stateMachine.ChangeState(_player._crouchMoveState);
                 }
