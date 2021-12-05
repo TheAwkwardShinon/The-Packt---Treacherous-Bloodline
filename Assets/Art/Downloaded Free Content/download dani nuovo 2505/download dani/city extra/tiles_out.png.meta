@@ -53,6 +53,12 @@ TextureImporter:
   - first:
       213: 2927415881063126596
     second: tiles_out_16
+  - first:
+      213: 8232433887593837466
+    second: tiles_out_17
+  - first:
+      213: 2331675670663794913
+    second: tiles_out_18
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -273,7 +279,7 @@ TextureImporter:
         serializedVersion: 2
         x: 144
         y: 370
-        width: 48
+        width: 16
         height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -358,7 +364,7 @@ TextureImporter:
         x: 146
         y: 206
         width: 12
-        height: 18
+        height: 17
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -444,7 +450,7 @@ TextureImporter:
         width: 72
         height: 75
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -465,7 +471,7 @@ TextureImporter:
         width: 67
         height: 70
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -486,7 +492,7 @@ TextureImporter:
         width: 74
         height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -494,6 +500,48 @@ TextureImporter:
       bones: []
       spriteID: 446da94db3540a820800000000000000
       internalID: 2927415881063126596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_out_17
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 336
+        width: 80
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a933be2e00b7f3270800000000000000
+      internalID: 8232433887593837466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tiles_out_18
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 288
+        width: 67
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e016513ba6cb5020800000000000000
+      internalID: 2331675670663794913
       vertices: []
       indices: 
       edges: []
