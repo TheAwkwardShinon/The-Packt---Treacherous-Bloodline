@@ -31,5 +31,5 @@ Material:
     - _ShadedDistance: 2.5
     - _VisibleDistance: 1.5
     m_Colors:
-    - _PlayerPosition: {r: 10.81308, g: -6.1299143, b: 0, a: 0}
+    - _PlayerPosition: {r: 5.8080344, g: -6.129918, b: 0, a: 0}
   m_BuildTextureStacks: []
