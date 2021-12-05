@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: 3750017243048431243
     second: cyberpunk-corridor-foreground_1
+  - first:
+      213: -2440002004452664163
+    second: cyberpunk-corridor-foreground_2
+  - first:
+      213: -3531238918044215435
+    second: cyberpunk-corridor-foreground_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -105,7 +111,7 @@ TextureImporter:
         width: 22
         height: 176
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -126,7 +132,7 @@ TextureImporter:
         width: 83
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -134,6 +140,48 @@ TextureImporter:
       bones: []
       spriteID: b8ecd7960dcba0430800000000000000
       internalID: 3750017243048431243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cyberpunk-corridor-foreground_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 0
+        width: 9
+        height: 114
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9c9b59ca1f532ed0800000000000000
+      internalID: -2440002004452664163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cyberpunk-corridor-foreground_3
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 123
+        width: 16
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57790f0d9e48efec0800000000000000
+      internalID: -3531238918044215435
       vertices: []
       indices: 
       edges: []
