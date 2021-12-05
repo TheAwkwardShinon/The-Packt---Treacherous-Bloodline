@@ -38,11 +38,17 @@ namespace ThePackt{
             if(_player.entity.IsOwner){
 
                 DetransformationEvent evnt;
-                evnt = DetransformationEvent.Create(GlobalTargets.Everyone,ReliabilityModes.ReliableOrdered);
+                evnt = DetransformationEvent.Create(GlobalTargets.Everyone);
                 evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
                 evnt.Send();
-            }
 
+                SetColliderSizeEvent sizeEvent;
+                sizeEvent = SetColliderSizeEvent.Create(GlobalTargets.Everyone);
+                sizeEvent.TargetPlayerNetworkID = _player.entity.NetworkId;
+                sizeEvent.Offset =  new Vector2(-0.7352595f, -5.962845f);
+                sizeEvent.Size =  new Vector2(8.667796f, 35.94624f);
+                sizeEvent.Send();
+            }
         }
 
         public override void FixedUpdate()

@@ -38,6 +38,8 @@ namespace ThePackt{
         public void OnChangeCharacterRight(InputAction.CallbackContext context){
                 if (context.started)
                 {
+                    if(_loreTab.Equals(null) || _playTab.Equals(null))return;
+
                     if(_tabgroup.GetCurrentTab().gameObject.Equals(_loreTab)){
                         if(_showcaseManager.GetClicked()){
                             _showcaseManager.CharacterSelectionRight();
@@ -52,6 +54,8 @@ namespace ThePackt{
             public void OnChangeCharacterLeft(InputAction.CallbackContext context){
                 if (context.started)
                 {
+                    if(_loreTab.Equals(null) || _playTab.Equals(null))return;
+
                     if(_tabgroup.GetCurrentTab().gameObject.Equals(_loreTab)){
                         if(_showcaseManager.GetClicked()){
                             _showcaseManager.CharacterSelectionLeft();
@@ -66,6 +70,7 @@ namespace ThePackt{
             public void OnDeselect(InputAction.CallbackContext context){
                 if (context.started)
                 {
+                    if(_loreTab.Equals(null) || _playTab.Equals(null))return;
                    
                     if(_tabgroup.GetCurrentTab().gameObject.Equals(_loreTab)){
                         if(_showcaseManager.GetClicked()){

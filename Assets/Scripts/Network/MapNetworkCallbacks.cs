@@ -452,35 +452,21 @@ namespace ThePackt
 
         public override void OnEvent(TransformationEvent evnt)
         {
-            Debug.Log("[VFX TRANS] received");
-
-            BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
+             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             Player player =entity.GetComponent<Player>();
-             Debug.LogError(" evento trasformazion: "+player.tag);
             player.GetHumanObject().SetActive(false);
             player.GetWolfObject().SetActive(true);
-
-            player.GetComponent<BoxCollider2D>().offset = new Vector2(-1.780157f, -5.962845f);
-            player.GetComponent<BoxCollider2D>().size = new Vector2(24.9682f, 35.94624f);
-
-            Debug.Log("[VFX TRANS] set");
+            player.SetTransformationVFX(false);
         }
 
         public override void OnEvent(DetransformationEvent evnt)
         {
-            Debug.Log("[VFX DETRANS] received");
-
             BoltEntity entity = BoltNetwork.FindEntity(evnt.TargetPlayerNetworkID);
             
             Player player =entity.GetComponent<Player>();
-            Debug.LogError(" evento detrasformazion: "+player.tag);
             player.GetWolfObject().SetActive(false);
             player.GetHumanObject().SetActive(true);
-
-            player.GetComponent<BoxCollider2D>().offset = new Vector2(-0.7352595f, -5.962845f);
-            player.GetComponent<BoxCollider2D>().size = new Vector2(8.667796f, 35.94624f);
-
-            Debug.Log("[VFX DETRANS] set");
+            player.SetTransformationVFX(false);
         }
 
         public override void OnEvent(ActivateVFXEvent evnt)

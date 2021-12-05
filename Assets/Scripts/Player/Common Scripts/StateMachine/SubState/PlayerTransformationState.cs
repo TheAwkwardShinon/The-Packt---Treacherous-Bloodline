@@ -34,10 +34,20 @@ namespace ThePackt{
         {
             if(_player.entity.IsOwner){
 
+                if (_player.entity.IsOwner) {
                 TransformationEvent evnt;
-                evnt = TransformationEvent.Create(GlobalTargets.Everyone,ReliabilityModes.ReliableOrdered);
+                evnt = TransformationEvent.Create(GlobalTargets.Everyone);
                 evnt.TargetPlayerNetworkID = _player.entity.NetworkId;
                 evnt.Send();
+
+
+                SetColliderSizeEvent sizeEvent;
+                sizeEvent = SetColliderSizeEvent.Create(GlobalTargets.Everyone);
+                sizeEvent.TargetPlayerNetworkID = _player.entity.NetworkId;
+                sizeEvent.Offset =  new Vector2(-1.780157f, -5.962845f);
+                sizeEvent.Size = new Vector2(24.9682f, 35.94624f);
+                sizeEvent.Send();
+            }
             }
 
             

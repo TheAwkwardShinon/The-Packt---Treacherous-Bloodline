@@ -604,6 +604,7 @@ MonoBehaviour:
   - {fileID: 653467865}
   - {fileID: 1412463382}
   - {fileID: 1117429222}
+  _logoSelectionHandler: {fileID: 0}
   _tooltip: {fileID: 811606252}
   _eventSystem: {fileID: 1530321343}
   _firstSelectedOnTab:
@@ -618,32 +619,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33265673}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0c7d3c0dcc5e4d42b7527165fb04bb3, type: 3}
+  m_Script: {fileID: 11500000, guid: 48a704d4b4685ca45bcf9e1d30fb14df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamepadSprite:
-  - {fileID: 21300000, guid: 4ff5bedbe3ed793479df44c2e7fce9c9, type: 3}
-  - {fileID: 21300000, guid: 7242f89c6b8883440b398d0013307c25, type: 3}
-  - {fileID: 21300000, guid: 43d4dc2c6754a9444854c664d4eb3791, type: 3}
-  - {fileID: 21300000, guid: 86794b68b9e792441aec44fe7784d588, type: 3}
-  - {fileID: 21300000, guid: f0274faa5a4201b48ab5da6053bd76e8, type: 3}
-  - {fileID: 21300000, guid: 7d04b12db03570a42bd9f66876264725, type: 3}
-  keyboardSprite:
-  - {fileID: 21300000, guid: bd7a9641efc28584c9d21e1ec280fd39, type: 3}
-  - {fileID: 21300000, guid: db5d54fddd3d77f41bf9000633120b3f, type: 3}
-  - {fileID: 21300000, guid: 6de4e90d8523f18448cb434954695a11, type: 3}
-  - {fileID: 21300000, guid: 6de4e90d8523f18448cb434954695a11, type: 3}
-  - {fileID: 21300000, guid: 27a97bc76bca58c47902b90f58297fc9, type: 3}
-  - {fileID: 21300000, guid: 3661d5e8aaa26564b96b8dad4ca126e9, type: 3}
-  iconsMenu:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &34036494
 GameObject:
   m_ObjectHideFlags: 0
@@ -5354,7 +5334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &403471169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7261,7 +7241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &559881484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35701,7 +35681,7 @@ RectTransform:
   - {fileID: 748958650}
   - {fileID: 1997180715}
   m_Father: {fileID: 1520810248}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -39496,7 +39476,7 @@ RectTransform:
   - {fileID: 176838467}
   - {fileID: 780666922}
   m_Father: {fileID: 1520810248}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -41359,8 +41339,8 @@ RectTransform:
   m_Children:
   - {fileID: 33265674}
   - {fileID: 653467866}
-  - {fileID: 1117429223}
   - {fileID: 1412463383}
+  - {fileID: 1117429223}
   - {fileID: 1364684423}
   m_Father: {fileID: 910080995}
   m_RootOrder: 0

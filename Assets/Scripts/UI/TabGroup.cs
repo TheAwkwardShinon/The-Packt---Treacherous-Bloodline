@@ -40,16 +40,17 @@ namespace ThePackt{
             ResetTabs();
             button.background.color = _tabActive;
             int index = button.transform.GetSiblingIndex();
+            Debug.LogError("[UI] index = "+index);
             for(int i=0;i< objectsToSwap.Count;i++){
                 if(i == index){
-                    
                     objectsToSwap[i].SetActive(true);
                     _eventSystem.SetSelectedGameObject(_firstSelectedOnTab[i].gameObject);
 
-                    if (GetCurrentTab().gameObject.Equals(tabButtons[0].gameObject))
+                    if (GetCurrentTab().gameObject.name.Equals(tabButtons[0].gameObject) && _logoSelectionHandler != null)
                         _logoSelectionHandler.Reset();
                 }
                 else{
+                    Debug.LogError("[UI] set unactive : "+objectsToSwap[i].name);
                     objectsToSwap[i].SetActive(false);
                 }
             }
@@ -60,6 +61,7 @@ namespace ThePackt{
 
         public void OnTabExit(tabButton button){
             ResetTabs();
+            
         }
 
         public void OnTabEnter(tabButton button){
